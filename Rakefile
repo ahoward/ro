@@ -90,6 +90,16 @@ task :gemspec do
   test_files  = test(?e, "test/#{ lib }.rb") ? "test/#{ lib }.rb" : nil
   summary     = object.respond_to?(:summary) ? object.summary : "summary: #{ lib } kicks the ass"
   description = object.respond_to?(:description) ? object.description : "description: #{ lib } kicks the ass"
+  license = object.respond_to?(:license) ? object.license : nil
+
+  if license.nil?
+    license =
+      begin
+        IO.binread('LICENSE')
+      rescue
+        "Same As Ruby's"
+      end
+  end
 
   if This.extensions.nil?
     This.extensions = []
@@ -127,6 +137,7 @@ task :gemspec do
             spec.platform = Gem::Platform::RUBY
             spec.summary = <%= lib.inspect %>
             spec.description = <%= description.inspect %>
+            spec.license = <%= license.inspect %>
 
             spec.files =\n<%= files.sort.pretty_inspect %>
             spec.executables = <%= executables.inspect %>
