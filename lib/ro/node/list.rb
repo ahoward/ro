@@ -117,6 +117,14 @@ module Ro
           node.nil? ? super : node
         end
       end
+
+      def binding
+        Kernel.binding
+      end
+
+      def _binding
+        Kernel.binding
+      end
     end
   end
 end

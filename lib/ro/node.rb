@@ -37,6 +37,63 @@ module Ro
       name
     end
 
+    def node
+      self
+    end
+
+    def asset_path(*args, &block)
+      File.join(relative_path, 'assets')
+    end
+
+    def url_for(*args, &block)
+      options = Map.options_for!(args)
+
+      cache_buster = options.delete('_') != false
+
+      path_info = Ro.relative_path_for(args)
+
+      path = File.join(@path.to_s, 'assets', path_info)
+      #glob = File.join(@path.to_s, 'assets', '**', path_info) 
+      glob = "#{ path }*" 
+
+      candidates = Dir.glob(glob)
+
+      case candidates.size
+        when 0
+          raise ArgumentError.new("no asset matching #{ glob }")
+        when 1
+          path = candidates.first
+
+          path_info = path.gsub(/^#{ Regexp.escape(Ro.root) }/, '')
+
+          if cache_buster
+            timestamp = File.stat(path).mtime.to_i
+            options['_'] = timestamp
+          end
+        else
+          raise ArgumentError.new("too many assets matching #{ glob }")
+      end
+
+      url = File.join(mount, path_info)
+
+      if options.empty?
+        url
+      else
+        query_string = Ro.query_string_for(options)
+        "#{ url }?#{ query_string }"
+      end
+    end
+
+    def mount(*args)
+      path_info = Ro.absolute_path_for(Ro.mount, relative_path)
+      [Ro.asset_host, path_info].compact.join('/')
+    end
+
+    def relative_path
+      re = /^#{ Regexp.escape(Ro.root) }/
+      @path.to_s.gsub(re, '')
+    end
+
     def method_missing(method, *args, &block)
       Ro.log "Ro::Node(#{ identifier })#method_missing(#{ method.inspect }, #{ args.inspect })"
 
@@ -146,7 +203,7 @@ module Ro
 
         @attributes.update(data)
 
-        %w( src assets ).each do |key|
+        %w( assets ).each do |key|
           raise ArgumentError.new("attributes.yml may not contain the key '#{ key }'") if @attributes.has_key?(key)
         end
 
@@ -167,12 +224,12 @@ module Ro
         next if basename == 'attributes.yml'
 
         value = Ro.render(path, node)
-        @attributes.set(key, value)
+        @attributes.set(key => value)
       end
     end
 
     def _load_sources
-      glob = File.join(@path, 'src/*')
+      glob = File.join(@path, 'assets/source/*')
       node = self
 
       Dir.glob(glob) do |path|
@@ -184,16 +241,12 @@ module Ro
         next if basename == 'attributes.yml'
 
         value = Ro.render_source(path, node)
-        @attributes.set(:src, basename, value)
+        @attributes.set([:assets, :source, basename] => value)
       end
     end
 
-    def binding
+    def _binding
       Kernel.binding
-    end
-
-    def node
-      self
     end
 
     def _cache_key

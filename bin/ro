@@ -1,0 +1,61 @@
+#! /usr/bin/env ruby
+
+Main {
+
+  option('--root', '-r'){
+    argument :required
+  }
+
+  mode(:console){
+    def run
+      if params['root'].given? 
+        Ro.root = params['root'].value 
+      end
+
+      require 'pry'
+
+      Pry.hooks.clear_all
+
+      basename = File.basename(Ro.root) 
+
+      prompt = "./#{ basename } >> "
+
+      Pry.config.prompt = proc{|*a| prompt } 
+
+      console = Console.new(Ro.nodes)
+
+      console.binding.pry
+    end
+
+    class Console < Ro::BlankSlate
+      def initialize(nodes)
+        @nodes = nodes
+      end
+
+      def binding
+        Kernel.binding
+      end
+
+      def reload!
+        Object.send(:remove_const, :Ro)
+        load "#{ $libdir }/ro.rb" 
+        "#{ $libdir }/ro.rb" 
+      end
+
+      def method_missing(method, *args, &block)
+        @nodes.send(method, *args, &block)
+      end
+    end
+  }
+
+}
+
+BEGIN {
+  require 'main'
+
+  $bindir = File.dirname(__FILE__)
+  $libdir = File.expand_path("#{ $bindir }/../lib/")
+
+  require "#{ $libdir }/ro.rb" 
+}
+

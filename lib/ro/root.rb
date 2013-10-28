@@ -4,7 +4,7 @@ module Ro
       super(Util.realpath(root.to_s))
     ensure
       raise ArgumentError.new("root=#{ root.inspect }") if root.nil?
-      raise ArgumentError.new("root=#{ root.inpsect }") unless test(?d, root)
+      raise ArgumentError.new("root=#{ root.inspect }") unless test(?d, root)
     end
 
     def root

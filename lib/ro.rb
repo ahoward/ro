@@ -6,6 +6,7 @@
   require 'digest/md5'
   require 'logger'
   require 'erb'
+  require 'cgi'
 
 #
   module Ro
@@ -83,13 +84,15 @@
       Root.new(
         case
           when defined?(Rails.root)
-            Rails.root.to_s
+            root = Rails.root.to_s
+            File.join(root, 'public', 'ro')
 
           when defined?(Middleman::Application)
-            Middleman::Application.server.root.to_s
+            root = Middleman::Application.server.root.to_s
+            File.join(root, 'source', 'ro')
 
           else
-            "./ro"
+            ENV['RO_ROOT'] || "./ro"
         end
       )
     }
@@ -102,6 +105,14 @@
       nil
     }
 
+    Fattr(:mount){
+      '/ro'
+    }
+
+    Fattr(:asset_host){
+      nil
+    }
+
     def Ro.nodes(*args, &block)
       root.nodes(*args, &block)
     end
@@ -109,7 +120,7 @@
     def Ro.relative_path(path, *args)
       options = Map.options_for!(args)
       path = File.expand_path(String(path))
-      relative = File.expand_path(String(args.shift || options[:relative] || options[:to]))
+      relative = File.expand_path(String(args.shift || options[:relative] || options[:to]) || options[:from])
       Pathname.new(path).relative_path_from(Pathname.new(relative)).to_s
     end
 
@@ -162,7 +173,7 @@
           when Binding
             node
           when Node
-            node.binding
+            node._binding
           when nil
             nil
           else
@@ -179,6 +190,51 @@
     def Ro.render_source(*args, &block)
       Template.render_source(*args, &block)
     end
+
+    def Ro.paths_for(*args)
+      path = args.flatten.compact.join('/')
+      path.gsub!(%r|[.]+/|, '/')
+      path.squeeze!('/')
+      path.sub!(%r|^/|, '')
+      path.sub!(%r|/$|, '')
+      paths = path.split('/')
+    end
+
+    def Ro.absolute_path_for(*args)
+      path = ('/' + paths_for(*args).join('/')).squeeze('/')
+      path unless path.empty?
+    end
+
+    def Ro.relative_path_for(*args)
+      path = absolute_path_for(*args).sub(%r{^/+}, '')
+      path unless path.empty?
+    end
+      
+    def Ro.normalize_path(arg, *args)
+      absolute_path_for(arg, *args)
+    end
+
+    def Ro.query_string_for(hash, options = {})
+      options = Map.for(options)
+      escape = options.has_key?(:escape) ? options[:escape] : true
+      pairs = [] 
+      esc = escape ? proc{|v| CGI.escape(v.to_s)} : proc{|v| v.to_s}
+      hash.each do |key, values|
+        key = key.to_s
+        values = [values].flatten
+        values.each do |value|
+          value = value.to_s
+          if value.empty?
+            pairs << [ esc[key] ]
+          else
+            pairs << [ esc[key], esc[value] ].join('=')
+          end
+        end
+      end
+      pairs.replace pairs.sort_by{|pair| pair.size}
+      pairs.join('&')
+    end
+
   end
 
 #

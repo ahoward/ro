@@ -1,16 +1,25 @@
 todo:
 
-  - need asset/url_for management
+  - helper/model extension
 
-  - ./bin/ro shell
-    - binding of all nodes?
+      Ro.helper(:posts) do
+      end
+
+      Ro.model(:posts) do
+      end
+
+      Post = Ro.model(:posts)
+
+      Post.class_eval do
+      end
 
   - a real live test suite
 
 
-
-
 done:
+  - asset loading and url generation
+  - ./bin/ro shell
+    - binding of all nodes?
   - need source file loading
   - attribute templates
   - need relationships
