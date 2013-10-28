@@ -1,0 +1,11 @@
+first_name: Ara
+
+last_name: Howard
+
+related:
+  posts:
+    - hello-world
+
+  sample_posts:
+    posts:
+      - hello-world

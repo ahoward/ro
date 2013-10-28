@@ -1,0 +1,84 @@
+todo:
+  - need source file loading
+
+  - need asset/url_for management
+
+  - ./bin/ro shell
+    - binding of all nodes?
+
+  - a real live test suite
+
+
+
+
+done:
+  - need relationships
+    - ro.posts.related
+    - ro.posts.related.tags
+    - ro.posts.related[:tags]
+    - ro.posts.first.related.tags
+    - ro.posts.first.related[:tags]
+  - to_ary should not cause loading to fire
+  - node_sets
+    - ro -> node_set
+    - ro.posts -> node_set
+    - ro.posts
+  - should rollection be 'directory.ls'
+  - basic lib structure
+  - awesome tilt methods
+  - an extremely clever cache
+  - instrument logging/debugging
+
+
+
+
+
+
+
+
+
+
+ro # all nodes
+
+ro.posts  #=> set of all post nodes
+
+ro.posts.tags #=> set of all tags related to any post
+
+ro.tags.posts #=> set of all posts related to any tag
+
+ro.posts{ name == 'foobar' }
+
+ro.posts.first.tags
+
+ro.posts.page(10, :per => 10)
+
+ro.posts.first.url_for(:foobar)
+
+ro/people/foo-bar/attributes.yaml
+ro/people/foo-bar/attributes.yml
+ro/people/foo-bar/bio.md
+ro/people/foo-bar/source/a.rb
+ro/people/foo-bar/assets/mugshot.png
+
+
+
+
+
+require 'ro/model'
+
+
+
+
+----
+
+class People < Ro::Model
+  root :people
+end
+
+Ro.root
+
+Ro.nodes
+
+def ro(*args, &block)
+  Ro.nodes(*args, &block)
+end
