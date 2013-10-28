@@ -1,5 +1,4 @@
 todo:
-  - need source file loading
 
   - need asset/url_for management
 
@@ -12,6 +11,8 @@ todo:
 
 
 done:
+  - need source file loading
+  - attribute templates
   - need relationships
     - ro.posts.related
     - ro.posts.related.tags

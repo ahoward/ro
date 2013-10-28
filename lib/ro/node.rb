@@ -12,8 +12,8 @@ module Ro
       @type = File.basename(File.dirname(@path))
       @root = Ro::Root.new(File.dirname(File.dirname(@path)))
       @loaded = false
-      @attributes = nil
-      @in_method_missing = false
+      @loading = false
+      @attributes = Map.new
     end
 
     def id
@@ -40,15 +40,13 @@ module Ro
     def method_missing(method, *args, &block)
       Ro.log "Ro::Node(#{ identifier })#method_missing(#{ method.inspect }, #{ args.inspect })"
 
-      in_method_missing = !!@in_method_missing
+      key = method.to_s
 
-      return super if in_method_missing
-
-      @in_method_missing = true
+      if @attributes.has_key?(key)
+        return @attributes[key]
+      end
 
       _load do
-        key = method.to_s
-
         return(
           if @attributes.has_key?(key)
             @attributes[key]
@@ -57,14 +55,12 @@ module Ro
           end
         )
       end
-    ensure
-      @in_method_missing = in_method_missing
     end
 
     def attributes
       _load{ @attributes }
     end
-
+    
     def instance_eval(*args, &block)
       _load{ super }
     end
@@ -108,43 +104,15 @@ module Ro
       }
     end
 
-    class Related
-      fattr :attributes
-
-      def initialize(attributes)
-        @attributes = attributes
-      end
-
-      def all
-        related = @attributes.get(:related) || Map.new
-        names = related.keys
-        self[names]
-      end
-
-      def [](name)
-        name = File.basename(name.to_s)
-
-        value = @attributes.get(:related, name)
-        
-        type, names =
-          case value
-            when Hash
-              value.to_a.first
-            else
-              [name, value]
-          end
-
-        names = Array(names).flatten.compact.uniq
-
-        list = ro[type]
-
-        list.where(*names)
-      end
-    end
-
     def _load(&block)
       unless @loaded
+        if @loading
+          return(block ? block.call : :loading)
+        end
+
+        @loading = true
         @loaded = _load_from_cache_or_disk
+        @loading = false
       end
 
       block ? block.call : @loaded
@@ -163,8 +131,8 @@ module Ro
         Ro.log "loading #{ identifier } from disk"
         @attributes = Map.new
         _load_attributes_yml
-        #_load_attribute_templates
-        #_load_sources
+        _load_attribute_files
+        _load_sources
         Ro.cache.write(cache_key, @attributes)
         :disk
       end
@@ -175,8 +143,57 @@ module Ro
         buf = IO.binread(_attributes_yml)
         data = YAML.load(buf)
         data = data.is_a?(Hash) ? data : {'_' => data}
+
         @attributes.update(data)
+
+        %w( src assets ).each do |key|
+          raise ArgumentError.new("attributes.yml may not contain the key '#{ key }'") if @attributes.has_key?(key)
+        end
+
+        @attributes
       end
+    end
+
+    def _load_attribute_files
+      glob = File.join(@path, '*')
+      node = self
+
+      Dir.glob(glob) do |path|
+        next if test(?d, path)
+
+        basename = File.basename(path)
+        key, ext = basename.split('.', 2)
+
+        next if basename == 'attributes.yml'
+
+        value = Ro.render(path, node)
+        @attributes.set(key, value)
+      end
+    end
+
+    def _load_sources
+      glob = File.join(@path, 'src/*')
+      node = self
+
+      Dir.glob(glob) do |path|
+        next if test(?d, path)
+
+        basename = File.basename(path)
+        key, ext = basename.split('.', 2)
+
+        next if basename == 'attributes.yml'
+
+        value = Ro.render_source(path, node)
+        @attributes.set(:src, basename, value)
+      end
+    end
+
+    def binding
+      Kernel.binding
+    end
+
+    def node
+      self
     end
 
     def _cache_key

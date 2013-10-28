@@ -5,6 +5,7 @@
   require 'yaml'
   require 'digest/md5'
   require 'logger'
+  require 'erb'
 
 #
   module Ro
@@ -153,6 +154,30 @@
       options[:join] = '_'
       args.push(options)
       Slug.for(*args, &block)
+    end
+
+    def Ro.erb(content, node = nil)
+      binding =
+        case node
+          when Binding
+            node
+          when Node
+            node.binding
+          when nil
+            nil
+          else
+            instance_eval{ Kernel.binding }
+        end
+
+      ERB.new(content.to_s).result(binding)
+    end
+
+    def Ro.render(*args, &block)
+      Template.render(*args, &block)
+    end
+
+    def Ro.render_source(*args, &block)
+      Template.render_source(*args, &block)
     end
   end
 

@@ -106,13 +106,7 @@ module Ro
       def method_missing(method, *args, &block)
         Ro.log "Ro::List(#{ identifier })#method_missing(#{ method.inspect }, #{ args.inspect })"
 
-        in_method_missing = !!@in_method_missing
-
-        return super if in_method_missing
-
-        @in_method_missing = true
-
-        if @scope.nil?
+        if @type.nil?
           type = method.to_s
           list = self[type]
           super unless list
@@ -122,8 +116,6 @@ module Ro
           node = self[name]
           node.nil? ? super : node
         end
-      ensure
-        @in_method_missing = in_method_missing
       end
     end
   end
