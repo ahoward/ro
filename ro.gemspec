@@ -10,10 +10,7 @@ Gem::Specification::new do |spec|
   spec.license = "Same As Ruby's"
 
   spec.files =
-[":",
- ":w",
- "=p",
- "README.md",
+["README.md",
  "Rakefile",
  "bin",
  "bin/ro",
@@ -24,13 +21,10 @@ Gem::Specification::new do |spec|
  "lib/co/node.rb",
  "lib/co/node/list.rb",
  "lib/co/util.rb",
- "lib/lib",
  "lib/ro",
  "lib/ro.rb",
  "lib/ro/blankslate.rb",
  "lib/ro/cache.rb",
- "lib/ro/db",
- "lib/ro/db/collection",
  "lib/ro/initializers",
  "lib/ro/initializers/env.rb",
  "lib/ro/initializers/tilt.rb",
