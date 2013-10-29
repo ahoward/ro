@@ -1,7 +1,4 @@
 todo:
-
-  - load all asset urls
-
   - helper/model extension
 
       Ro.helper(:posts) do
@@ -19,6 +16,7 @@ todo:
 
 
 done:
+  - load all asset urls
   - asset loading and url generation
   - ./bin/ro shell
     - binding of all nodes?
