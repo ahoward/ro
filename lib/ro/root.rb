@@ -1,7 +1,7 @@
 module Ro
   class Root < ::String
     def initialize(root)
-      super(Util.realpath(root.to_s))
+      super(Ro.realpath(root.to_s))
     ensure
       raise ArgumentError.new("root=#{ root.inspect }") if root.nil?
       raise ArgumentError.new("root=#{ root.inspect }") unless test(?d, root)

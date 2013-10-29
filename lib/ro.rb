@@ -235,6 +235,14 @@
       pairs.join('&')
     end
 
+    def Ro.realpath(path)
+      begin
+        Pathname.new(path.to_s).expand_path.realpath.to_s
+      rescue Object
+        File.expand_path(path.to_s)
+      end
+    end
+
   end
 
 #
@@ -252,7 +260,6 @@
                 
     slug.rb
     blankslate.rb
-    util.rb
 
     root.rb
 
