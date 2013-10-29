@@ -30,7 +30,7 @@ module Ro
     end
 
     def to_s
-      inpsect
+      inspect
     end
 
     def basename
@@ -108,6 +108,8 @@ module Ro
     end
 
     def method_missing(method, *args, &block)
+      super if method.to_s == 'to_ary'
+
       Ro.log "Ro::Node(#{ identifier })#method_missing(#{ method.inspect }, #{ args.inspect })"
 
       key = method.to_s

@@ -12,20 +12,51 @@ Main {
         Ro.root = params['root'].value 
       end
 
-      require 'pry'
-
-      Pry.hooks.clear_all
-
       basename = File.basename(Ro.root) 
 
-      prompt = "./#{ basename } >> "
+      ARGV.clear
+      require 'irb'
 
-      Pry.config.prompt = proc{|*a| prompt } 
+      Kernel.module_eval do
+        def reload!
+          Object.send(:remove_const, :Ro)
+          load "#{ $libdir }/ro.rb" 
+          "#{ $libdir }/ro.rb" 
+        end
+      end
 
-      console = Console.new(Ro.nodes)
+      $HACK = IRB.method(:load_modules)
 
-      console.binding.pry
+      def IRB.load_modules
+        $HACK.call()
+
+        basename = File.basename(Ro.root)
+
+        IRB.conf[:PROMPT][:RO] = {
+          :PROMPT_I=>"Ro(./#{ basename }):%03n:%i> ",
+          :PROMPT_N=>"Ro(./#{ basename }):%03n:%i> ",
+          :PROMPT_S=>"Ro(./#{ basename }):%03n:%i%l ",
+          :PROMPT_C=>"Ro(./#{ basename }):%03n:%i* ",
+          :RETURN=>"=> %s\n"
+        }
+
+        IRB.conf[:PROMPT_MODE] = :RO
+        IRB.conf[:AUTO_INDENT] = true
+      end
+
+
+      ::IRB.start
     end
+
+=begin
+    module Console
+      def reload!
+        Object.send(:remove_const, :Ro)
+        load "#{ $libdir }/ro.rb" 
+        "#{ $libdir }/ro.rb" 
+      end
+    end
+=end
 
     class Console < Ro::BlankSlate
       def initialize(nodes)
