@@ -7,12 +7,6 @@ ro
 TL;DR
 --------
 
-```bash
-
-  ~ > tree ./ro
-
-```
-
 <pre>
 
     ro
