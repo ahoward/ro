@@ -1,5 +1,5 @@
 todo:
-  - helper/model extension
+  - helper/model extension ?
 
       Ro.helper(:posts) do
       end

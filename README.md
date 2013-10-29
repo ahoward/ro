@@ -121,6 +121,12 @@ it features:
 - data driven relationships
 
 
+ro is the *perfect* companion to a site built by static site generator such as
+middleman (http://middlemanapp.com/).  especially a middleman site with a
+companion rails' application doing concurrent modifications of the site's
+content... ;-)
+
+
 INSTALL
 -------
 
