@@ -25,7 +25,6 @@ module Ro
     end
 
     def inspect
-      #"#{ self.class.name }(#{ type }/#{ name })"
       identifier
     end
 
@@ -95,6 +94,11 @@ module Ro
         query_string = Ro.query_string_for(options)
         "#{ url }?#{ query_string }"
       end
+    end
+
+    def source_for(*args)
+      key = Ro.relative_path_for(:assets, :source, args).split('/')
+      get(key)
     end
 
     def mount(*args)
