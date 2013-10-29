@@ -34,6 +34,12 @@ TL;DR
 
 ```ruby
 
+  ro
+    #=> all the content nodes
+
+  ro.posts
+    #=> all the post nodes
+
   ro.people                                 
     #=> all people nodes
 
