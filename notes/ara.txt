@@ -1,5 +1,7 @@
 todo:
 
+  - load all asset urls
+
   - helper/model extension
 
       Ro.helper(:posts) do

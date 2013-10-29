@@ -41,6 +41,14 @@ module Ro
       self
     end
 
+    def get(*args)
+      attributes.get(*args)
+    end
+
+    def [](*args)
+      attributes.get(*args)
+    end
+
     def asset_path(*args, &block)
       File.join(relative_path, 'assets')
     end
@@ -53,14 +61,19 @@ module Ro
       path_info = Ro.relative_path_for(args)
 
       path = File.join(@path.to_s, 'assets', path_info)
-      #glob = File.join(@path.to_s, 'assets', '**', path_info) 
-      glob = "#{ path }*" 
 
-      candidates = Dir.glob(glob)
+      globs = 
+        [
+          File.join(@path.to_s, 'assets', "#{ path_info }"),
+          File.join(@path.to_s, 'assets', "#{ path_info }*"),
+          File.join(@path.to_s, 'assets', "**/#{ path_info }")
+        ]
+
+      candidates = globs.map{|glob| Dir.glob(glob)}.flatten.compact.uniq
 
       case candidates.size
         when 0
-          raise ArgumentError.new("no asset matching #{ glob }")
+          raise ArgumentError.new("no asset matching #{ globs.inspect }")
         when 1
           path = candidates.first
 
@@ -71,10 +84,10 @@ module Ro
             options['_'] = timestamp
           end
         else
-          raise ArgumentError.new("too many assets matching #{ glob }")
+          raise ArgumentError.new("too many assets (#{ candidates.inspect }) matching #{ globs.inspect }")
       end
 
-      url = File.join(mount, path_info)
+      url = File.join(Ro.mount, path_info)
 
       if options.empty?
         url
@@ -182,16 +195,23 @@ module Ro
 
       if cached
         Ro.log "loading #{ identifier } from cache"
+
         @attributes = Map.new.update(cached)
-        :cache
+
+        return :cache
       else
         Ro.log "loading #{ identifier } from disk"
+
         @attributes = Map.new
+
         _load_attributes_yml
         _load_attribute_files
         _load_sources
+        _load_asset_urls
+
         Ro.cache.write(cache_key, @attributes)
-        :disk
+
+        return :disk
       end
     end
 
@@ -242,6 +262,25 @@ module Ro
 
         value = Ro.render_source(path, node)
         @attributes.set([:assets, :source, basename] => value)
+      end
+    end
+
+    def _load_asset_urls
+      glob = File.join(@path, 'assets/**/**')
+      node = self
+
+      Dir.glob(glob) do |path|
+        next if test(?d, path)
+
+        relative_path = Ro.relative_path(path, :to => "#{ @path }/assets")
+
+        url = url_for(relative_path)
+        key = relative_path.split('/')
+
+        next if key.first == 'source'
+        key.unshift('assets')
+
+        @attributes.set(key => url)
       end
     end
 
