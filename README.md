@@ -70,9 +70,10 @@ TL;DR
 
 ```
 
-```bash
+TRY
+---
 
-  ### CHECK IT OUT!
+```bash
 
   ~ > git clone https://github.com/ahoward/ro.git
   ~ > cd ro
