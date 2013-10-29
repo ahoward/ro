@@ -46,6 +46,8 @@ TL;DR
   ro.people.ara.url_for('ara-glacier.jpg') #=> external, timestamped,  url for this asset
 
   ro.people.ara.source('a.rb')             #=> syntax highlighted source yo!
+
+  ro.posts.find('second-awesome-post').body #=> html-z yo
   
 
 ```
