@@ -70,7 +70,7 @@ ro is library for managing your site's content in git, as god intended.
 it features:
 
 - super fast loading via a robust caching/promise strategy
-- all templates supported via tilt (https://github.com/rtomayko/tilt)
+- *all* teh templates supported via tilt (https://github.com/rtomayko/tilt)
 - the awesomest markdown ever, with syntax highlighting and even erb evaluation
 - an awesome command line tool for introspecting your data (./ro console)
 
@@ -78,7 +78,7 @@ it features:
 INSTALL
 -------
 
-gem install ro (coming soon)
+gem install ro
 
 
 DOCS
