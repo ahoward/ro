@@ -53,11 +53,13 @@ TL;DR
 ```
 
 ```bash
-  # CHECK IT OUT!
+
+  ### CHECK IT OUT!
 
   ~ > git clone https://github.com/ahoward/ro.git
   ~ > cd ro
   ~> ./bin/ro console
+
 ```
 
 DESCRIPTION
