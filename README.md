@@ -34,20 +34,24 @@ TL;DR
 
 ```ruby
 
-  ro.people   #=> all people nodes
-  ro[:people] #=> same thing
+  ro.people                                 #=> all people nodes
+  ro[:people]                               #=> same thing
 
-  ro.people.ara     #=> data for the person named 'ara'
-  ro[:people][:ara] #=> same thing
+  ro.people.ara                             #=> data for the person named 'ara'
+  ro[:people][:ara]                         #=> same thing
 
 
-  ro.people.ara.first_name #=> give you *one* guess ;-) !
+  ro.people.ara.first_name                  #=> give you *one* guess ;-) !
 
-  ro.people.ara.url_for('ara-glacier.jpg') #=> external, timestamped,  url for this asset
+  ro.people.ara.url_for('ara-glacier.jpg')  #=> external, timestamped,  url for this asset
 
-  ro.people.ara.source('a.rb')             #=> syntax highlighted source yo!
+  ro.people.ara.source('a.rb')              #=> syntax highlighted source yo!
 
   ro.posts.find('second-awesome-post').body #=> html-z yo
+
+
+  ro.people.ara.related(:posts)             #=> all related posts
+  ro.people.ara.related(:featured_posts)    #=> all featured posts
   
 
 ```
@@ -73,6 +77,7 @@ it features:
 - *all* teh templates supported via tilt (https://github.com/rtomayko/tilt)
 - the awesomest markdown ever, with syntax highlighting and even erb evaluation
 - an awesome command line tool for introspecting your data (./ro console)
+- data driven relationships
 
 
 INSTALL

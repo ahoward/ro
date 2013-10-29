@@ -3,7 +3,7 @@
 
 Gem::Specification::new do |spec|
   spec.name = "ro"
-  spec.version = "1.0.0"
+  spec.version = "1.1.0"
   spec.platform = Gem::Platform::RUBY
   spec.summary = "ro"
   spec.description = "description: ro kicks the ass"
@@ -15,6 +15,8 @@ Gem::Specification::new do |spec|
  "=p",
  "README.md",
  "Rakefile",
+ "bin",
+ "bin/ro",
  "lib",
  "lib/co",
  "lib/co/db.rb",
@@ -28,9 +30,7 @@ Gem::Specification::new do |spec|
  "lib/ro/blankslate.rb",
  "lib/ro/cache.rb",
  "lib/ro/db",
- "lib/ro/db.rb",
  "lib/ro/db/collection",
- "lib/ro/db/collection.rb",
  "lib/ro/initializers",
  "lib/ro/initializers/env.rb",
  "lib/ro/initializers/tilt.rb",
@@ -40,20 +40,29 @@ Gem::Specification::new do |spec|
  "lib/ro/root.rb",
  "lib/ro/slug.rb",
  "lib/ro/template.rb",
- "lib/ro/util.rb",
  "notes",
  "notes/ara.txt",
  "ro",
  "ro.gemspec",
  "ro/people",
  "ro/people/ara",
+ "ro/people/ara/assets",
+ "ro/people/ara/assets/ara-glacier.jpg",
+ "ro/people/ara/assets/source",
+ "ro/people/ara/assets/source/a.rb",
  "ro/people/ara/attributes.yml",
+ "ro/people/ara/bio.md.erb",
+ "ro/people/noah",
+ "ro/people/noah/attributes.yml",
  "ro/posts",
- "ro/posts/foobar",
  "ro/posts/hello-world",
- "ro/posts/hello-world/attributes.yml"]
+ "ro/posts/hello-world/attributes.yml",
+ "ro/posts/hello-world/body.md",
+ "ro/posts/second-awesome-post",
+ "ro/posts/second-awesome-post/attributes.yml",
+ "ro/posts/second-awesome-post/body.md"]
 
-  spec.executables = []
+  spec.executables = ["ro"]
   
   spec.require_path = "lib"
 
