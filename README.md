@@ -79,6 +79,32 @@ TRY
   ~ > cd ro
   ~> ./bin/ro console
 
+
+  a:~/git/ahoward/ro $ ./bin/ro console
+  Ro(./ro):001:0> ro.people
+  => [people/ara, people/noah]
+
+  Ro(./ro):002:0> ro.people.ara
+  => people/ara
+
+  Ro(./ro):003:0> ro.people.ara.first_name
+  => "Ara"
+
+  Ro(./ro):004:0> ro.people.ara.bio
+  => "<ul>\n<li>one</li>\n<li>two</li>\n<li>three</li>\n</ul>\n\n<p>pretty syntax highlighting</p>\n<div class=\"highlight\"><pre>  <span class=\"vi\">@a</span> <span class=\"o\">=</span> <span class=\"mi\">42</span>\n</pre></div>\n<p>Ara</p>\n\n<p>/ro/people/ara/assets/ara-glacier.jpg?_=1382999368</p>\n"
+
+  Ro(./ro):005:0> ro.people.ara.url_for('ara-glacier')
+  => "/ro/people/ara/assets/ara-glacier.jpg?_=1382999368"
+
+  Ro(./ro):006:0> ro.people.ara.related
+  => [posts/hello-world, posts/second-awesome-post]
+
+  Ro(./ro):007:0> ro.people.ara.related.posts
+  => [posts/hello-world, posts/second-awesome-post]
+
+  Ro(./ro):008:0> ro.people.ara.related(:featured_posts)
+  => [posts/second-awesome-post]
+
 ```
 
 DESCRIPTION
