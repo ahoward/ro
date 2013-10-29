@@ -46,6 +46,9 @@ TL;DR
   ro[:people][:ara]                         
     #=> same thing
 
+  ro['people']['ara']                         
+    #=> same thing
+
   ro.people.ara.first_name                  
     #=> give you *one* guess ;-) !
 
