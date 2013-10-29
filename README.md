@@ -58,7 +58,6 @@ TL;DR
   ro.posts.find('second-awesome-post').body 
     #=> html-z yo
 
-
   ro.people.ara.related(:posts)             
     #=> all related posts
 
