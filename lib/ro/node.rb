@@ -194,6 +194,11 @@ module Ro
       block ? block.call : @loaded
     end
 
+    def reload(&block)
+      @loaded = false
+      _load(&block)
+    end
+
     def _load_from_cache_or_disk
       cache_key = _cache_key
 
@@ -311,11 +316,11 @@ module Ro
         entries.push([relative_path, timestamp.iso8601(2)]) 
       end
 
-      signature = entries.map{|pair| pair.join('@')}.join(', ')
+      fingerprint = entries.map{|pair| pair.join('@')}.join(', ')
 
-      md5 = Ro.md5(signature)
+      md5 = Ro.md5(fingerprint)
 
-      "#{ @path }-#{ md5 }"
+      [@path, md5]
     end
 
     def _load_from_cache

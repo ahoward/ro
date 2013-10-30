@@ -24,13 +24,6 @@
         'pygments'          => [ 'pygments.rb'       , ' >= 0.5.0' ] ,
         'coerce'            => [ 'coerce'            , ' >= 0.0.4' ] ,
         'stringex'          => [ 'stringex'          , ' >= 2.1.0' ] ,
-      # 'rails'             => [ 'rails'             , ' >= 3.1'   ] ,
-      # 'tagz'              => [ 'tagz'              , ' >= 9.9.2' ] ,
-      # 'multi_json'        => [ 'multi_json'        , ' >= 1.0.3' ] ,
-      # 'uuidtools'         => [ 'uuidtools'         , ' >= 2.1.2' ] ,
-      # 'wrap'              => [ 'wrap'              , ' >= 1.5.0' ] ,
-      # 'rails_current'     => [ 'rails_current'     , ' >= 1.8.0' ] ,
-      # 'rails_errors2html' => [ 'rails_errors2html' , ' >= 1.3.0' ] ,
       }
     end
 

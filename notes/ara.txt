@@ -1,4 +1,44 @@
 todo:
+
+  - ro::model
+
+      class Post < Ro::Model
+        root 'ro'
+
+        directory 'posts'
+
+        attributes(
+        )
+
+        files(
+          'bio.md.erb'
+        )
+
+        assets(
+          'logo.jpg'
+        )
+
+        sources(
+          'a.rb'
+        )
+
+        def Post.find(*args)
+        end
+
+        def Post.where(*args)
+        end
+
+        def save
+          saved = (
+            save_attributes &&
+            save_files &&
+            save_assets &&
+            save_sources
+            commit
+          )
+        end
+      end
+
   - helper/model extension ?
 
       Ro.helper(:posts) do
