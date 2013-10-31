@@ -218,7 +218,7 @@ module Ro
         _load_attributes_yml
         _load_attribute_files
         _load_sources
-        _load_urls
+        _load_assets
 
         Ro.cache.write(cache_key, @attributes)
 
@@ -276,7 +276,7 @@ module Ro
       end
     end
 
-    def _load_urls
+    def _load_assets
       glob = File.join(@path, 'assets/**/**')
       node = self
 
