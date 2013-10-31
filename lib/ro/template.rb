@@ -17,8 +17,13 @@ module Ro
           when 'yml'
             content = YAML.load(content)
           else
-            tilt = Tilt[ext].new{ content  }
-            content = tilt.render(node)
+            tilt = Tilt[ext] || Tilt['txt']
+
+            if tilt.nil?
+              content
+            else
+              content = tilt.new{ content }.render(node)
+            end
         end
       end
 
@@ -39,7 +44,12 @@ module Ro
         if exts.empty?
           code = content
           language = ext
-          content = ::Pygments.highlight(code, :lexer => language, :options => {:encoding => 'utf-8'})
+          content = 
+            begin
+              ::Pygments.highlight(code, :lexer => language, :options => {:encoding => 'utf-8'})
+            rescue
+              content
+            end
         else
           case ext.to_s.downcase
             when 'erb', 'eruby'

@@ -6,6 +6,14 @@ Main {
     argument :required
   }
 
+  def run
+    if argv.empty? and test(?d, Ro.root)
+      exec "#{ $0 } console"
+    else
+      help!
+    end
+  end
+
   mode(:console){
     def run
       if params['root'].given? 
