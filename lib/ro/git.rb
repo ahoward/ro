@@ -31,6 +31,20 @@ module Ro
         FileUtils.mkdir_p(dir) unless exists
 
         Dir.chdir(dir) do
+        # .git
+        #
+          git_root = `git rev-parse --show-cdup`
+
+          if git_root.strip.empty?
+            git_root = '.'
+          end
+
+          dot_git = File.expand_path(File.join(git_root, '.git'))
+
+          unless test(?d, dot_git)
+            raise Error.new("missing .git directory #{ dot_git }")
+          end
+
         # correct branch
         #
           spawn "git checkout #{ @branch.inspect }"
@@ -39,10 +53,9 @@ module Ro
         #
 
           trying "to commit" do
-            committed = false
-
-require 'pry'
-binding.pry
+            committed = spawn("git add --all . && git commit -m #{ msg.inspect } -- .")
+#require 'pry'
+#binding.pry
 =begin
             retried = false
             begin
@@ -54,9 +67,45 @@ binding.pry
               retry
             end
 =end
-
-            committed
           end
+
+
+          trying "to push" do
+            pushed = nil
+
+            unless spawn("git push")
+            # merge
+            #
+              unless spawn("git pull")
+                spawn("git checkout --ours -- .")
+                spawn("git add --all .")
+                spawn("git commit -F #{ dot_git }/MERGE_MSG")
+              else
+                raise 'wtf!?'
+              end
+
+              pushed = spawn("git push")
+            else
+              pushed = true
+            end
+
+            pushed
+          end
+
+=begin
+  git push
+
+    git pull
+
+      # publish
+      git checkout --ours -- .
+      git add --all .
+      git commit -F .git/MERGE_MSG
+      git push
+=end
+
+
+
         end
       end
     end
@@ -101,7 +150,7 @@ binding.pry
 
       status, stdout, stderr = systemu(command)
 
-      unless options[:raise] == false
+      if options[:raise] == true
         unless status == 0
           raise "command (#{ command }) failed with #{ status }"
         end
