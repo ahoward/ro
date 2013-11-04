@@ -58,7 +58,14 @@ module Ro
         # commit the work
         #
           trying "to commit" do
-            committed = spawn("git add --all . && git commit -m #{ msg.inspect } -- .")
+
+            committed = 
+              spawn("git add --all . && git commit -m #{ msg.inspect } -- .")
+
+            unless committed
+              spawn "git reset --hard"
+            end
+
 #require 'pry'
 #binding.pry
 =begin
@@ -154,6 +161,11 @@ module Ro
       options = Map.for(options)
 
       status, stdout, stderr = systemu(command)
+
+      Ro.log(:debug, "command: #{ command }")
+      Ro.log(:debug, "status: #{ status }")
+      Ro.log(:debug, "stdout:\n#{ stdout }")
+      Ro.log(:debug, "stderr:\n#{ stderr }")
 
       if options[:raise] == true
         unless status == 0
