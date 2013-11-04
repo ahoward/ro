@@ -57,7 +57,6 @@ module Ro
 
         # commit the work
         #
-
           trying "to commit" do
             committed = spawn("git add --all . && git commit -m #{ msg.inspect } -- .")
 #require 'pry'
