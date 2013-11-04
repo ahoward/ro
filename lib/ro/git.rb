@@ -47,7 +47,13 @@ module Ro
 
         # correct branch
         #
-          spawn "git checkout #{ @branch.inspect }"
+          spawn("git checkout #{ @branch.inspect }", :raise => true)
+
+        # return if nothing to do...
+        #
+          if `git status --porcelain`.strip.empty?
+            return true
+          end
 
         # commit the work
         #
