@@ -20,10 +20,11 @@
       {
         'map'               => [ 'map'               , ' >= 6.5.1' ] ,
         'fattr'             => [ 'fattr'             , ' >= 2.2.1' ] ,
-        'tilt'              => [ 'tilt'              , ' >= 1.4.1' ] ,
+        'tilt'              => [ 'tilt'              , ' >= 1.3.1' ] ,
         'pygments'          => [ 'pygments.rb'       , ' >= 0.5.0' ] ,
         'coerce'            => [ 'coerce'            , ' >= 0.0.4' ] ,
         'stringex'          => [ 'stringex'          , ' >= 2.1.0' ] ,
+        'systemu'           => [ 'systemu'           , ' >= 2.5.2' ] ,
       }
     end
 
@@ -73,22 +74,22 @@
 #
 
   module Ro
-    Fattr(:root){
-      Root.new(
-        case
-          when defined?(Rails.root)
-            root = Rails.root.to_s
-            File.join(root, 'public', 'ro')
+    def Ro.default_root
+      [ ENV['RO_ROOT'], "./public/ro", "./source/ro" ].compact.detect{|d| test(?d, d)} || "./ro"
+    end
 
-          when defined?(Middleman::Application)
-            root = Middleman::Application.server.root.to_s
-            File.join(root, 'source', 'ro')
+    def Ro.root=(root)
+      @root = Root.new(root.to_s)
+    end
 
-          else
-            ENV['RO_ROOT'] || "./ro"
-        end
-      )
-    }
+    def Ro.root(*args)
+      Ro.root = args.first unless args.empty?
+      @root ||= Root.new(Ro.default_root)
+    end
+
+    def Ro.git
+      root.git
+    end
 
     Fattr(:cache){
       Cache.new
@@ -255,6 +256,8 @@
     blankslate.rb
 
     root.rb
+    lock.rb
+    git.rb
 
     cache.rb
 

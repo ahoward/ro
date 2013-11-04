@@ -1,4 +1,59 @@
+
+
+- paginating collections
+  Source.all.page(2).per(10)
+
+- find by name/slug
+
+  Source.find(name)
+
+  source.save(message)
+
+  editing...
+
+
+
 todo:
+
+  - nodes can be edited
+    - assume git
+    - know from whence all data came
+      - @loaded[path] => key 
+    -
+      maybe just node.save!(message)
+
+        loop do
+
+          # commit
+          git add --all .
+          git commit -m message -- .
+
+          git reset --hard OR git checkout -f
+          retry
+
+        end
+
+
+
+        loop
+
+          git push
+
+            git pull
+
+              # publish
+              git checkout --ours -- .
+              git add --all .
+              git commit -F .git/MERGE_MSG
+              git push
+
+        end
+
+
+    - ./assets
+
+    - @attributes, @sources, @urls
+
 
   - ro::model
 

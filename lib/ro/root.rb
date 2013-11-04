@@ -26,5 +26,14 @@ module Ro
     def node_directories(&block)
       Dir.glob(File.join(root, '*/*/'), &block)
     end
+
+    def git
+      @git ||= Git.new(self)
+    end
+
+    def lock(&block)
+      @lock ||= Lock.new(File.join(self, '.lock'))
+      block ? @lock.lock(&block) : @lock
+    end
   end
 end

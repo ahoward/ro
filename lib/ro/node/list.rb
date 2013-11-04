@@ -18,6 +18,10 @@ module Ro
         block.call(self) if block
       end
 
+      def nodes
+        self
+      end
+
       def load(path)
         add( node = Node.new(path) )
       end
