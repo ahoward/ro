@@ -62,9 +62,11 @@ module Ro
             committed = 
               spawn("git add --all . && git commit -m #{ msg.inspect } -- .")
 
+=begin
             unless committed
               spawn "git reset --hard"
             end
+=end
 
 #require 'pry'
 #binding.pry
