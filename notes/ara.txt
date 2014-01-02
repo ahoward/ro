@@ -77,6 +77,26 @@ todo:
           'a.rb'
         )
 
+        schema {
+
+          attribute :first_name
+          attribute :last_name
+          
+          template 'bio.html.erb'
+
+        }
+
+          :attributes => {
+            :first_name => nil,
+          },
+
+          'templates' => {
+            'bio.html.erb'
+          },
+
+          assets
+        )
+
         def Post.find(*args)
         end
 

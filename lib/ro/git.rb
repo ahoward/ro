@@ -33,7 +33,7 @@ module Ro
         Dir.chdir(dir) do
         # .git
         #
-          git_root = `git rev-parse --show-cdup`.strip
+          git_root = `git rev-parse --git-dir`.strip
 
           if git_root.empty?
             git_root = '.'
