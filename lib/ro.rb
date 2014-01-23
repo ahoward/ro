@@ -99,7 +99,7 @@
       nil
     }
 
-    Fattr(:mount){
+    Fattr(:route){
       '/ro'
     }
 

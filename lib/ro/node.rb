@@ -5,6 +5,7 @@ module Ro
     fattr :name
     fattr :type
     fattr :loaded
+    fattr :fields
 
     def initialize(path)
       @path = Ro.realpath(path.to_s)
@@ -14,6 +15,7 @@ module Ro
       @loaded = false
       @loading = false
       @attributes = Map.new
+      @fields = Map.new
     end
 
     def id
@@ -86,7 +88,7 @@ module Ro
           raise ArgumentError.new("too many assets (#{ candidates.inspect }) matching #{ globs.inspect }")
       end
 
-      url = File.join(Ro.mount, path_info)
+      url = File.join(Ro.route, path_info)
 
       if options.empty?
         url
@@ -101,8 +103,8 @@ module Ro
       get(key)
     end
 
-    def mount(*args)
-      path_info = Ro.absolute_path_for(Ro.mount, relative_path)
+    def route(*args)
+      path_info = Ro.absolute_path_for(Ro.route, relative_path)
       [Ro.asset_host, path_info].compact.join('/')
     end
 
@@ -180,6 +182,11 @@ module Ro
       }
     end
 
+    def reload(&block)
+      @loaded = false
+      _load(&block)
+    end
+
     def _load(&block)
       unless @loaded
         if @loading
@@ -192,11 +199,6 @@ module Ro
       end
 
       block ? block.call : @loaded
-    end
-
-    def reload(&block)
-      @loaded = false
-      _load(&block)
     end
 
     def _load_from_cache_or_disk

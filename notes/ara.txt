@@ -1,6 +1,10 @@
 
 
-- paginating collections
+- nodes have fields
+  - fields know from whence them came
+
+- how to paginate collections
+
   Source.all.page(2).per(10)
 
 - find by name/slug

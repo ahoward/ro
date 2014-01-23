@@ -139,6 +139,30 @@ INSTALL
 gem install ro
 
 
+CONFIG
+------
+
+if you are using the url methods you'll need to make sure your application can
+route to the assets.  by default ro assumes that the urls it generates are
+routeable under '/ro' so it is up to you to make sure this works.
+
+for a rails app this might mean writing a 'RoController' or, more simply, just
+putting your ro data in ./public/ro.
+
+for a middleman app this might mean putting your ro data in ./source/ro.
+
+if you choose a non-standard approach you'll need to
+
+```
+
+  Ro.route = '/my-custom-route'
+
+
+```
+
+in all cases ro urls will be prefixed by the route, so be sure that this prefix
+is either automatically, or manually, exposed.
+
 
 DOCS
 ----

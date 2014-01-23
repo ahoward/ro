@@ -14,8 +14,10 @@ module Ro
         case ext.to_s.downcase
           when 'erb', 'eruby'
             content = Ro.erb(content, node)
+
           when 'yml'
             content = YAML.load(content)
+
           else
             tilt = Tilt[ext] || Tilt['txt']
 
