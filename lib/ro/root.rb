@@ -31,6 +31,10 @@ module Ro
       @git ||= Git.new(self)
     end
 
+    def transaction(*args, &block)
+      git.transaction(*args, &block)
+    end
+
     def lock(&block)
       @lock ||= Lock.new(File.join(self, '.lock'))
       block ? @lock.lock(&block) : @lock

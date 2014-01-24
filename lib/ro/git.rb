@@ -2,6 +2,7 @@ module Ro
   class Git
     attr_accessor :root
     attr_accessor :branch
+    attr_accessor :in_transaction
 
     def initialize(root, options = {})
       options = Map.for(options)
@@ -9,6 +10,45 @@ module Ro
       @root = root
       @branch = options[:branch] || 'master'
     end
+
+# TODO - needs to be a submodule?
+#
+    def transaction(*args, &block)
+      options = Map.options_for!(args)
+
+      user = options[:user] || ENV['USER'] || 'ro'
+
+      Thread.exclusive do
+        @root.lock do
+          Dir.chdir(@root) do
+            # .git
+            #
+              status, stdout, stderr = spawn("git rev-parse --git-dir", :raise => true, :capture => true)
+
+              git_root = stdout.to_s.strip
+
+              dot_git = File.expand_path(git_root)
+
+#p Dir.pwd
+#p :git_root => git_root
+#p :dot_git => dot_git
+
+              unless test(?d, dot_git)
+                raise Error.new("missing .git directory #{ dot_git }")
+              end
+
+            # calculate a branch name
+            #
+              time = Coerce.time(options[:time] || Time.now).utc.iso8601(2).gsub(/[^\w]/, '')
+              branch = "#{ user }-#{ time }-#{ rand.to_s.gsub(/^0./, '') }"
+
+              p branch
+          end
+        end
+      end
+    end
+
+
 
     def save(directory, options = {})
       if directory.is_a?(Node)
