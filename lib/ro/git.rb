@@ -2,7 +2,7 @@ module Ro
   class Git
     attr_accessor :root
     attr_accessor :branch
-    attr_accessor :in_transaction
+    attr_accessor :patching
 
     def initialize(root, options = {})
       options = Map.for(options)
@@ -11,17 +11,25 @@ module Ro
       @branch = options[:branch] || 'master'
     end
 
-# TODO - needs to be a submodule?
-#
-    def transaction(*args, &block)
+  # patch takes a block, allows abitrary edits (additions, modifications,
+  # deletions) to be performed by it, and then computes a single, atomic patch
+  # that is applied to the repo and pushed.  the patch is returned.  if the
+  # patch was not applied then patch.applied==false and it's up to client code
+  # to decide how to proceed, perhaps retrying or saving the patchfile for
+  # later manual application
+  #
+    def patch(*args, &block)
       options = Map.options_for!(args)
 
       user = options[:user] || ENV['USER'] || 'ro'
+      msg = options[:message] || "#{ user } edits on #{ File.basename(@root).inspect }"
+
+      patch = nil
 
       Thread.exclusive do
         @root.lock do
           Dir.chdir(@root) do
-            # .git
+            # ensure .git-ness
             #
               status, stdout, stderr = spawn("git rev-parse --git-dir", :raise => true, :capture => true)
 
@@ -29,22 +37,148 @@ module Ro
 
               dot_git = File.expand_path(git_root)
 
-#p Dir.pwd
-#p :git_root => git_root
-#p :dot_git => dot_git
-
               unless test(?d, dot_git)
                 raise Error.new("missing .git directory #{ dot_git }")
               end
 
-            # calculate a branch name
+            # calculate a tmp branch name
             #
               time = Coerce.time(options[:time] || Time.now).utc.iso8601(2).gsub(/[^\w]/, '')
               branch = "#{ user }-#{ time }-#{ rand.to_s.gsub(/^0./, '') }"
 
-              p branch
+            # allow block to edit, compute the patch, attempt to apply it
+            #
+              begin
+              # get pristine
+              #
+                spawn("git checkout -f master", :raise => true)
+                spawn("git fetch --all", :raise => true)
+                spawn("git reset --hard origin/master", :raise => true)
+
+              # pull recent changes
+              #
+                trying('to pull'){ spawn("git pull") }
+
+              # create a new temporary branch
+              #
+                spawn("git checkout -b #{ branch.inspect }", :raise => true)
+
+              # the block can perform arbitrary edits
+              #
+                block.call
+
+              # add all changes - additions, deletions, or modifications
+              #
+                spawn("git add . --all", :raise => true)
+
+              # commit if anything changed
+              #
+                changes_to_apply =
+                  spawn("git commit -am #{ msg.inspect }")
+
+                if changes_to_apply
+                # create the patch
+                #
+                  status, stdout, stderr =
+                    spawn("git format-patch master --stdout", :raise => true, :capture => true)
+
+                  patch = Patch.new(:data => stdout, :name => branch)
+
+                  unless stdout.to_s.strip.empty?
+                  # apply the patch
+                  #
+                    spawn("git checkout master", :raise => true)
+
+                    status, stdout, stderr =
+                      spawn("git am --signoff --3way", :capture => true, :stdin => patch.data)
+
+                    patch.applied = !!(status == 0)
+
+                  # commit the patch back to the repo
+                  #
+                    patch.committed =
+                      begin
+                        trying('to pull'){ spawn("git pull") }
+                        trying('to push'){ spawn("git push") }
+                        true
+                      rescue Object
+                        false
+                      end
+                  end
+                end
+              ensure
+              # get pristine
+              #
+                spawn("git checkout -f master", :raise => true)
+                spawn("git fetch --all", :raise => true)
+                spawn("git reset --hard origin/master", :raise => true)
+
+              # get changes
+              #
+                trying('to pull'){ spawn("git pull") }
+
+              # nuke the tmp branch
+              #
+                spawn("git branch -D #{ branch.inspect }")
+              end
           end
         end
+      end
+
+      patch
+    end
+
+  #
+    class Patch
+      fattr :data
+      fattr :name
+      fattr :applied
+      fattr :committed
+      fattr :status
+      fattr :stdout
+      fattr :stderr
+
+      def initialize(*args)
+        options = Map.options_for!(args)
+
+        self.class.fattrs.each do |key|
+          send(key, options.get(key)) if options.has?(key)
+        end
+
+        unless args.empty?
+          self.data = args.join
+        end
+      end
+
+      def save(path)
+        return false unless data
+        path = path.to_s
+        FileUtils.mkdir_p(File.dirname(path))
+        IO.binwrite(path, data)
+      end
+
+      %w( to_s to_str ).each do |method|
+        class_eval <<-__, __FILE__, __LINE__
+          def #{ method }
+            data
+          end
+        __
+      end
+
+      %w( filename pathname basename ).each do |method|
+        class_eval <<-__, __FILE__, __LINE__
+          def #{ method }
+            name
+          end
+        __
+      end
+
+      %w( success success? applied applied? ).each do |method|
+        class_eval <<-__, __FILE__, __LINE__
+          def #{ method }
+            status && status == 0
+          end
+        __
       end
     end
 
@@ -178,13 +312,13 @@ module Ro
 
       result =
         catch(:trying) do
-          n.times do
+          n.times do |i|
             done = block.call
             if done
               throw(:trying, done)
             else
               unless timeout == false
-                sleep(timeout || rand)
+                sleep( (i + 1) * (timeout || (1 + rand)) )
               end
             end
           end
@@ -202,7 +336,7 @@ module Ro
     def spawn(command, options = {})
       options = Map.for(options)
 
-      status, stdout, stderr = systemu(command)
+      status, stdout, stderr = systemu(command, :stdin => options[:stdin])
 
       Ro.log(:debug, "command: #{ command }")
       Ro.log(:debug, "status: #{ status }")

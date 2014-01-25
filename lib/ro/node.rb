@@ -81,7 +81,8 @@ module Ro
           path_info = path.gsub(/^#{ Regexp.escape(Ro.root) }/, '')
 
           if cache_buster
-            timestamp = File.stat(path).mtime.to_i
+            #options['_'] = Ro.md5(IO.binread(path))
+            timestamp = File.stat(path).mtime.utc.to_i
             options['_'] = timestamp
           end
         else
@@ -256,8 +257,9 @@ module Ro
 
         next if basename == 'attributes.yml'
 
-        value = Ro.render(path, node)
-        @attributes.set(key => value)
+        html = Ro.render(path, node)
+        html = Ro.expand_asset_urls(html, node)
+        @attributes.set(key => html)
       end
     end
 

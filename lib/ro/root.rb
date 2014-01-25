@@ -31,12 +31,21 @@ module Ro
       @git ||= Git.new(self)
     end
 
-    def transaction(*args, &block)
-      git.transaction(*args, &block)
+    def patch(*args, &block)
+      git.patch(*args, &block)
+    end
+
+    def dotdir
+      File.join(self, '.ro')
+    end
+
+    def lockpath
+      File.join(dotdir, 'lock')
     end
 
     def lock(&block)
-      @lock ||= Lock.new(File.join(self, '.lock'))
+      FileUtils.mkdir_p(File.dirname(lockpath))
+      @lock ||= Lock.new(lockpath)
       block ? @lock.lock(&block) : @lock
     end
   end

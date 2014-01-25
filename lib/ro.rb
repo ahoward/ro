@@ -25,6 +25,7 @@
         'coerce'            => [ 'coerce'            , ' >= 0.0.4' ] ,
         'stringex'          => [ 'stringex'          , ' >= 2.1.0' ] ,
         'systemu'           => [ 'systemu'           , ' >= 2.5.2' ] ,
+        'nokogiri'          => [ 'nokogiri'          , ' >= 1.6.1' ] , 
       }
     end
 
@@ -183,6 +184,49 @@
 
     def Ro.render_source(*args, &block)
       Template.render_source(*args, &block)
+    end
+
+    def Ro.expand_asset_urls(html, node)
+      begin
+        accurate_expand_asset_urls(html, node)
+      rescue Object
+        sloppy_expand_asset_urls(html, node)
+      end
+    end
+
+    def Ro.accurate_expand_asset_urls(html, node)
+      doc = Nokogiri::HTML(html)
+
+      doc.traverse do |element|
+        if element.respond_to?(:attributes)
+          element.attributes.each do |attr, attribute|
+            value = attribute.value
+            if value =~ %r{(?:./)?assets/(.+)$}
+              begin
+                base, ext = $1.split('.', 2)
+                url = node.url_for(base)
+                attribute.value = url
+              rescue Object
+                next
+              end
+            end
+          end
+        end
+      end
+
+      doc.xpath('//body').inner_html.strip
+    end
+
+    def Ro.sloppy_expand_asset_urls(html, node)
+      html.to_s.gsub(%r{['"]assets/([^'"]+)['"]}) do |match|
+        base, ext = $1.split('.', 2)
+
+        begin
+          node.url_for(base).inspect
+        rescue Object
+          match
+        end
+      end
     end
 
     def Ro.paths_for(*args)

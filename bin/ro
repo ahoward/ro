@@ -2,23 +2,15 @@
 
 Main {
 
-  option('--root', '-r'){
-    argument :required
-  }
+  argument 'root'
 
   def run
-    if argv.empty? and test(?d, Ro.root)
-      exec "#{ $0 } console"
-    else
-      help!
-    end
+    help!
   end
 
   mode(:console){
     def run
-      if params['root'].given? 
-        Ro.root = params['root'].value 
-      end
+      Ro.root = params['root'].value 
 
       basename = File.basename(Ro.root) 
 
