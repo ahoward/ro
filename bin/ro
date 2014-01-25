@@ -2,7 +2,9 @@
 
 Main {
 
-  argument 'root'
+  argument('root'){
+    optional
+  }
 
   def run
     help!
@@ -10,7 +12,15 @@ Main {
 
   mode(:console){
     def run
-      Ro.root = params['root'].value 
+      if params['root'].given?
+        Ro.root = params['root'].value 
+      else
+        if ENV['RO_ROOT']
+          Ro.root = ENV['RO_ROOT']
+        else
+          Ro.root = './ro'
+        end
+      end
 
       basename = File.basename(Ro.root) 
 
