@@ -84,7 +84,7 @@ task :gemspec do
   lib         = This.lib
   object      = This.object
   version     = This.version
-  files       = shiteless[Dir::glob("**/**")]
+  files       = shiteless[Dir::glob("**/**")].select{|path| test(?f, path)}
   executables = shiteless[Dir::glob("bin/*")].map{|exe| File.basename(exe)}
   #has_rdoc    = true #File.exist?('doc')
   test_files  = test(?e, "test/#{ lib }.rb") ? "test/#{ lib }.rb" : nil
