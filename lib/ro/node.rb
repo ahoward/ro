@@ -252,19 +252,23 @@ module Ro
     end
 
     def _load_attribute_files
-      glob = File.join(@path, '*')
+      glob = File.join(@path, '**/**')
       node = self
 
       Dir.glob(glob) do |path|
         next if test(?d, path)
 
         basename = File.basename(path)
-        key, ext = basename.split('.', 2)
-
         next if basename == 'attributes.yml'
+
+        relative_path = Ro.relative_path(path, :to => @path)
+        next if relative_path =~ /^assets\//
+
+        key = relative_path.split('.', 2).first.split('/')
 
         html = Ro.render(path, node)
         html = Ro.expand_asset_urls(html, node)
+
         @attributes.set(key => html)
       end
     end

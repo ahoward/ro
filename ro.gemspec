@@ -10,11 +10,9 @@ Gem::Specification::new do |spec|
   spec.license = "Same As Ruby's"
 
   spec.files =
-[":",
- ":w",
- "=p",
- "README.md",
+["README.md",
  "Rakefile",
+ "TODO.md",
  "bin",
  "bin/ro",
  "lib",
@@ -31,9 +29,12 @@ Gem::Specification::new do |spec|
  "lib/ro/cache.rb",
  "lib/ro/db",
  "lib/ro/db/collection",
+ "lib/ro/git.rb",
  "lib/ro/initializers",
  "lib/ro/initializers/env.rb",
  "lib/ro/initializers/tilt.rb",
+ "lib/ro/lock.rb",
+ "lib/ro/model.rb",
  "lib/ro/node",
  "lib/ro/node.rb",
  "lib/ro/node/list.rb",
@@ -42,25 +43,7 @@ Gem::Specification::new do |spec|
  "lib/ro/template.rb",
  "notes",
  "notes/ara.txt",
- "ro",
- "ro.gemspec",
- "ro/people",
- "ro/people/ara",
- "ro/people/ara/assets",
- "ro/people/ara/assets/ara-glacier.jpg",
- "ro/people/ara/assets/source",
- "ro/people/ara/assets/source/a.rb",
- "ro/people/ara/attributes.yml",
- "ro/people/ara/bio.md.erb",
- "ro/people/noah",
- "ro/people/noah/attributes.yml",
- "ro/posts",
- "ro/posts/hello-world",
- "ro/posts/hello-world/attributes.yml",
- "ro/posts/hello-world/body.md",
- "ro/posts/second-awesome-post",
- "ro/posts/second-awesome-post/attributes.yml",
- "ro/posts/second-awesome-post/body.md"]
+ "ro.gemspec"]
 
   spec.executables = ["ro"]
   
@@ -73,13 +56,17 @@ Gem::Specification::new do |spec|
   
     spec.add_dependency(*["fattr", " >= 2.2.1"])
   
-    spec.add_dependency(*["tilt", " >= 1.4.1"])
+    spec.add_dependency(*["tilt", " >= 1.3.1"])
   
     spec.add_dependency(*["pygments.rb", " >= 0.5.0"])
   
     spec.add_dependency(*["coerce", " >= 0.0.4"])
   
     spec.add_dependency(*["stringex", " >= 2.1.0"])
+  
+    spec.add_dependency(*["systemu", " >= 2.5.2"])
+  
+    spec.add_dependency(*["nokogiri", " >= 1.6.1"])
   
 
   spec.extensions.push(*[])
