@@ -63,11 +63,13 @@ module Ro
 
       path = File.join(@path.to_s, 'assets', path_info)
 
+      glob = path_info.gsub(/[_-]/, '[_-]')
+
       globs = 
         [
-          File.join(@path.to_s, 'assets', "#{ path_info }"),
-          File.join(@path.to_s, 'assets', "#{ path_info }*"),
-          File.join(@path.to_s, 'assets', "**/#{ path_info }")
+          File.join(@path.to_s, 'assets', "#{ glob }"),
+          File.join(@path.to_s, 'assets', "#{ glob }*"),
+          File.join(@path.to_s, 'assets', "**/#{ glob }")
         ]
 
       candidates = globs.map{|glob| Dir.glob(glob)}.flatten.compact.uniq
@@ -186,6 +188,10 @@ module Ro
     def reload(&block)
       @loaded = false
       _load(&block)
+    end
+
+    def loaded
+      attributes
     end
 
     def _load(&block)
