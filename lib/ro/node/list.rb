@@ -61,7 +61,7 @@ module Ro
               list.type = type
               list
             else
-              name = key.to_s
+              name = Slug.for(key.to_s)
               detect{|node| name == node.name}
             end
           else
@@ -189,8 +189,7 @@ module Ro
           super unless list
           list.empty? ? super : list
         else
-          name = Ro.slug_for(method)
-          node = self[name]
+          node = self[Slug.for(method, :join => '-')] || self[Slug.for(method, :join => '_')]
           node.nil? ? super : node
         end
       end

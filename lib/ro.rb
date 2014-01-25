@@ -150,14 +150,18 @@
 
     def Ro.slug_for(*args, &block)
       options = Map.options_for!(args)
-      options[:join] = '-'
+      unless options.has_key?(:join)
+        options[:join] = '-'
+      end
       args.push(options)
       Slug.for(*args, &block)
     end
 
     def Ro.name_for(*args, &block)
       options = Map.options_for!(args)
-      options[:join] = '_'
+      unless options.has_key?(:join)
+        options[:join] = '_'
+      end
       args.push(options)
       Slug.for(*args, &block)
     end
