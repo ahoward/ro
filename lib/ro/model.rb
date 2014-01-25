@@ -21,11 +21,19 @@ module Ro
     Fattr(:prefix){ File.join(root, collection) }
 
     def Model.nodes(*args, &block)
-      root.nodes(*args, &block)
+      root.nodes.send(collection)
     end
 
     def Model.all(*args, &block)
       nodes
+    end
+
+    def Model.first
+      all.first
+    end
+
+    def Model.last
+      all.last
     end
 
     def Model.find(*args, &block)
@@ -102,7 +110,7 @@ if __FILE__ == $0
   p ara.url_for(:ara_glacier)
 
   p Person.paginate(:per => 2, :page => 1)
-  p Person.model_name
+  p Person.name
 
   p Person.prefix
   p ara.id
