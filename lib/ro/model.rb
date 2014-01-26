@@ -25,7 +25,7 @@ module Ro
     end
 
     def Model.all(*args, &block)
-      nodes
+      models_for(nodes)
     end
 
     def Model.first
