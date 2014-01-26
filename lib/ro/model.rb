@@ -47,7 +47,7 @@ module Ro
     def Model.models_for(result)
       case result
         when Array
-          result.each{|attributes| new(attributes)}
+          Array(result).flatten.compact.map{|attributes| new(attributes)}
         else
           new(result)
       end

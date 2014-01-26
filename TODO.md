@@ -1,5 +1,7 @@
 todo:
 
+  - reconsider using active_model...
+
   - with ro, do we/should we need to expand assets?
     - posts
     -   body.md -> html -> expand_asset_urls?
