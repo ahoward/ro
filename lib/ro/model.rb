@@ -47,7 +47,7 @@ module Ro
     def Model.models_for(result)
       case result
         when Array
-          Array(result).flatten.compact.map{|attributes| new(attributes)}
+          Array(result).flatten.compact.map{|element| new(element)}
         else
           new(result)
       end
@@ -60,6 +60,12 @@ module Ro
       attributes = Map.options_for!(args)
 
       node = args.detect{|arg| arg.is_a?(Node)}
+      model = args.detect{|arg| arg.is_a?(Model)}
+
+      if node.nil? and not model.nil?
+        node = model.node
+      end
+
       if node
         @node = node
       else

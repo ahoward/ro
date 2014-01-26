@@ -1,5 +1,9 @@
 todo:
 
+  Model[id]
+  Model.select
+  Model.where
+
   - reconsider using active_model...
 
   - with ro, do we/should we need to expand assets?
