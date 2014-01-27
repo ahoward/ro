@@ -28,6 +28,14 @@ module Ro
       models_for(nodes)
     end
 
+    def Model.select(*args, &block)
+      all.select(*args, &block)
+    end
+
+    def Model.where(*args, &block)
+      all.select(*args, &block)
+    end
+
     def Model.first
       all.first
     end
