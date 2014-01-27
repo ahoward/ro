@@ -101,6 +101,14 @@ module Ro
       end
     end
 
+    def url_for?(*args, &block)
+      begin
+        url_for(*args, &block)
+      rescue
+        nil
+      end
+    end
+
     def source_for(*args)
       key = Ro.relative_path_for(:assets, :source, args).split('/')
       get(key)
