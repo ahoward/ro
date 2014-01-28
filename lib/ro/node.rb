@@ -54,6 +54,24 @@ module Ro
       File.join(relative_path, 'assets')
     end
 
+    def asset_dir
+      File.join(path, 'assets')
+    end
+
+    def assets
+      Dir.glob("#{ asset_dir }/**/**").select{|entry| test(?f, entry)}
+    end
+
+    def asset_names
+      assets.map do |asset|
+        asset.sub(asset_dir + "/", "")
+      end
+    end
+
+    def asset_urls
+      asset_names.map{|asset_name| url_for(asset_name)}
+    end
+
     def url_for(*args, &block)
       options = Map.options_for!(args)
 
