@@ -57,7 +57,7 @@ module Ro
 
               # pull recent changes
               #
-                trying('to pull'){ spawn("git pull") }
+                trying('to pull'){ spawn("git pull origin master") }
 
               # create a new temporary branch
               #
@@ -98,7 +98,7 @@ module Ro
                   #
                     patch.committed =
                       begin
-                        trying('to pull'){ spawn("git pull") }
+                        trying('to pull'){ spawn("git pull origin master") }
                         trying('to push'){ spawn("git push") }
                         true
                       rescue Object
