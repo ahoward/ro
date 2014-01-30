@@ -26,6 +26,7 @@
         'stringex'          => [ 'stringex'          , ' >= 2.1.0' ] ,
         'systemu'           => [ 'systemu'           , ' >= 2.5.2' ] ,
         'nokogiri'          => [ 'nokogiri'          , ' >= 1.6.1' ] , 
+        'main'              => [ 'main'              , ' >= 5.2.0' ] , 
       }
     end
 

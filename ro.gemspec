@@ -53,6 +53,8 @@ Gem::Specification::new do |spec|
   
     spec.add_dependency(*["nokogiri", " >= 1.6.1"])
   
+    spec.add_dependency(*["main", " >= 5.2.0"])
+  
 
   spec.extensions.push(*[])
 
