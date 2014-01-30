@@ -22,6 +22,10 @@ module Ro
       @name
     end
 
+    def slug
+      attributes[:slug] || id
+    end
+
     def identifier
       "#{ type }/#{ name }"
     end
