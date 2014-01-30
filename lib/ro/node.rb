@@ -58,12 +58,12 @@ module Ro
       File.join(path, 'assets')
     end
 
-    def assets
+    def asset_paths
       Dir.glob("#{ asset_dir }/**/**").select{|entry| test(?f, entry)}
     end
 
-    def asset_names
-      assets.map do |asset|
+    def assets
+      asset_paths.map do |asset|
         asset.sub(asset_dir + "/", "")
       end
     end
