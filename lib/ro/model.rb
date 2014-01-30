@@ -36,8 +36,18 @@ module Ro
       all.detect(*args, &block)
     end
 
+    def Model.count(*args, &block)
+      if args.empty? and block.nil?
+        all.size
+      else
+        where(*args, &block).size
+      end
+    end
+
     def Model.where(*args, &block)
-      all.select(*args, &block)
+      all.select do |model|
+        !!model.instance_eval(&block)
+      end
     end
 
     def Model.first
