@@ -93,6 +93,10 @@
       root.git
     end
 
+    def Ro.patch(*args, &block)
+      Git.patch(*args, &block)
+    end
+
     Fattr(:cache){
       Cache.new
     }
