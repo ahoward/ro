@@ -32,6 +32,10 @@ module Ro
       all.select(*args, &block)
     end
 
+    def Model.detect(*args, &block)
+      all.detect(*args, &block)
+    end
+
     def Model.where(*args, &block)
       all.select(*args, &block)
     end
