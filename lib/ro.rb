@@ -94,7 +94,7 @@
     end
 
     def Ro.patch(*args, &block)
-      Git.patch(*args, &block)
+      git.patch(*args, &block)
     end
 
     Fattr(:cache){
