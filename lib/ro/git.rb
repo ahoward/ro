@@ -99,7 +99,7 @@ module Ro
                     patch.committed =
                       begin
                         trying('to pull'){ spawn("git pull origin master") }
-                        trying('to push'){ spawn("git push") }
+                        trying('to push'){ spawn("git push origin master") }
                         true
                       rescue Object
                         false
@@ -261,7 +261,7 @@ module Ro
           trying "to push" do
             pushed = nil
 
-            unless spawn("git push")
+            unless spawn("git push origin master")
             # merge
             #
               unless spawn("git pull")
@@ -272,7 +272,7 @@ module Ro
                 raise 'wtf!?'
               end
 
-              pushed = spawn("git push")
+              pushed = spawn("git push origin master")
             else
               pushed = true
             end
