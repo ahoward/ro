@@ -259,7 +259,7 @@ module Ro
         _load_sources
         _load_assets
 
-        Ro.cache.write(cache_key, @attributes)
+        # Ro.cache.write(cache_key, @attributes)
 
         return :disk
       end
