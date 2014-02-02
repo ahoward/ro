@@ -51,7 +51,15 @@ module Ro
     end
 
     def identifier
-      "#{ type }/#{ name }"
+      "#{ _type }/#{ _id }"
+    end
+
+    def hash
+      identifier.hash
+    end
+
+    def ==(other)
+      attributes == other.attributes
     end
 
     def inspect
