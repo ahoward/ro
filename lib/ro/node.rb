@@ -2,14 +2,14 @@ module Ro
   class Node
     fattr :root
     fattr :path
-    fattr :name
     fattr :type
     fattr :loaded
     fattr :fields
 
     def initialize(path)
       @path = Ro.realpath(path.to_s)
-      @name = File.basename(@path)
+      @id   = File.basename(@path)
+      @slug = Slug.for(@id)
       @type = File.basename(File.dirname(@path))
       @root = Ro::Root.new(File.dirname(File.dirname(@path)))
       @loaded = false
@@ -19,11 +19,35 @@ module Ro
     end
 
     def id
-      @name
+      @id
+    end
+
+    def _id
+      @id
+    end
+
+    def type
+      attributes[:type] || @type
+    end
+
+    def _type
+      @type
+    end
+
+    def path
+      attributes[:path] || @path
+    end
+
+    def _path
+      @path
     end
 
     def slug
-      attributes[:slug] || id
+      attributes[:slug] || @slug
+    end
+
+    def _slug
+      @slug
     end
 
     def identifier

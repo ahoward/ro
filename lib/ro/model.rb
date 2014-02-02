@@ -62,6 +62,10 @@ module Ro
       models_for(nodes.find(*args, &block))
     end
 
+    def Model.[](key)
+      find(key)
+    end
+
     def Model.paginate(*args, &block)
       models_for(nodes.paginate(*args, &block))
     end

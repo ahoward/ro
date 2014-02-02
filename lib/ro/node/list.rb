@@ -57,12 +57,12 @@ module Ro
           when String, Symbol
             if @type.nil?
               type = key.to_s
-              list = select{|node| type == node.type}
+              list = select{|node| type == node._type}
               list.type = type
               list
             else
-              name = Slug.for(key.to_s)
-              detect{|node| name == node.name}
+              id = Slug.for(key.to_s)
+              detect{|node| id == node.id}
             end
           else
             super(*args, &block)
@@ -82,9 +82,9 @@ module Ro
             select{|node| node.instance_eval(&block)}
 
           when !args.empty?
-            names = args.flatten.compact.uniq.map{|arg| arg.to_s}
-            index = names.inject(Hash.new){|h,name| h.update(name => name)}
-            select{|node| index[node.name]}
+            ids = args.flatten.compact.uniq.map{|arg| Slug.for(arg.to_s)}
+            index = ids.inject(Hash.new){|h,id| h.update(id => id)}
+            select{|node| index[node.id]}
 
           else
             raise ArgumentError.new
@@ -99,8 +99,8 @@ module Ro
             detect{|node| node.instance_eval(&block)}
 
           when args.size == 1
-            name = args.first.to_s
-            detect{|node| node.name == name}
+            id = args.first.to_s
+            detect{|node| node.id == id}
 
           when args.size > 1
             where(*args, &block)
