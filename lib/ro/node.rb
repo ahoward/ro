@@ -256,6 +256,10 @@ module Ro
       attributes
     end
 
+    def load!(&block)
+      _load(&block)
+    end
+
     def _load(&block)
       unless @loaded
         if @loading
