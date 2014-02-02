@@ -203,6 +203,10 @@ module Ro
     def attributes
       _load{ @attributes }
     end
+
+    def attributes=(attributes)
+      @attributes = attributes
+    end
     
     def instance_eval(*args, &block)
       _load{ super }
