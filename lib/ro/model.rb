@@ -58,25 +58,53 @@ module Ro
       all.last
     end
 
-    def Model.find(*args, &block)
-      models_for(nodes.find(*args, &block))
+    def Model.find(id)
+      re = %r/#{ id.to_s.gsub(/[-_]/, '[-_]') }/i
+      all.detect{|model| model.id.to_s == id.to_s}
     end
 
-    def Model.[](key)
-      find(key)
+    def Model.[](id)
+      find(id)
     end
 
-    def Model.paginate(*args, &block)
-      models_for(nodes.paginate(*args, &block))
+    def Model.method_missing(method, *args, &block)
+      id = method
+      model = find(id)
+      return model if model
+      super
     end
 
     def Model.models_for(result)
       case result
         when Array
-          Array(result).flatten.compact.map{|element| new(element)}
+          List.for(Array(result).flatten.compact.map{|element| new(element)})
         else
           new(result)
       end
+    end
+
+    def Model.paginate(*args, &block)
+      all.paginate(*args, &block)
+    end
+
+    class List < ::Array
+      include Pagination
+
+      def List.for(*args, &block)
+        new(*args, &block)
+      end
+
+      def select(*args, &block)
+        List.for super
+      end
+
+      def detect(*args, &block)
+        super
+      end
+    end
+
+    def List(*args, &block)
+      List.new(*args, &block)
     end
 
   #
@@ -148,7 +176,7 @@ if __FILE__ == $0
   p ara.id
   p ara.first_name
 
-  require 'pry'
-  binding.pry
+require 'pry'
+binding.pry
 
 end

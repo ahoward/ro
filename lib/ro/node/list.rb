@@ -114,71 +114,7 @@ module Ro
         [root, type].compact.join('/')
       end
 
-      def paginate(*args)
-        options = Map.options_for!(args)
-
-        ensure_pagination_state!
-
-        page = Integer(args.shift || options[:page] || @page)
-        per = Integer(args.shift || options[:per] || options[:size] || @per)
-
-        @page = [page.abs, 1].max
-        @per = [per.abs, 1].max
-
-        offset = (@page - 1) * @per
-        length = @per 
-
-        replace(self.slice(offset, length))
-
-        self
-      end
-
-      def page(*args)
-        ensure_pagination_state!
-
-        if args.empty?
-          return @page
-        else
-          options = Map.options_for!(args)
-          page = args.shift || options[:page]
-          options[:page] = page
-          paginate(options)
-        end
-      end
-
-      alias_method(:current_page, :page)
-
-      def per(*args)
-        ensure_pagination_state!
-
-        if args.empty?
-          return @per
-        else
-          options = Map.options_for!(args)
-          per = args.shift || options[:per]
-          options[:per] = per
-          paginate(options)
-        end
-      end
-
-      def num_pages
-        (size.to_f / per).ceil
-      end
-
-      def total_pages
-        num_pages
-      end
-
-      def ensure_pagination_state!
-        unless defined?(@page)
-          @page = 1
-        end
-        unless defined?(@per)
-          @per = size
-        end
-        [@page, @per]
-      end
-
+      include Pagination
 
       def method_missing(method, *args, &block)
         Ro.log "Ro::List(#{ identifier })#method_missing(#{ method.inspect }, #{ args.inspect })"

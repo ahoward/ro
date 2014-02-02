@@ -311,6 +311,7 @@
     root.rb
     lock.rb
     git.rb
+    pagination.rb
 
     cache.rb
 
