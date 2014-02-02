@@ -99,13 +99,43 @@ module Ro
     end
 
     def assets
-      asset_paths.map do |asset|
-        asset.sub(asset_dir + "/", "")
+      asset_paths.map do |path|
+        name = path.sub(asset_dir + "/", "")
+        url = url_for(name)
+        Asset.new(name, :path => path, :url => url)
       end
     end
 
     def asset_urls
-      asset_names.map{|asset_name| url_for(asset_name)}
+      assets.map(&:url)
+    end
+
+    class Asset < ::String
+      fattr(:path)
+      fattr(:url)
+
+      def initialize(name, options = {})
+        super(name)
+      ensure
+        options = Map.for(options)
+
+        Asset.fattrs.each do |attr|
+          if options.has_key?(attr)
+            value = options[attr]
+            send(attr, value)
+          end
+        end
+      end
+
+      def name
+        self
+      end
+
+      IMAGE_RE = %r/[.](jpg|jpeg|png|gif|tif|tiff)$/i
+
+      def image?
+        !!(self =~ IMAGE_RE)
+      end
     end
 
     def url_for(*args, &block)
