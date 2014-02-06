@@ -3,7 +3,7 @@
 
 Gem::Specification::new do |spec|
   spec.name = "ro"
-  spec.version = "1.3.0"
+  spec.version = "1.3.2"
   spec.platform = Gem::Platform::RUBY
   spec.summary = "ro"
   spec.description = "description: ro kicks the ass"
@@ -24,6 +24,7 @@ Gem::Specification::new do |spec|
  "lib/ro/model.rb",
  "lib/ro/node.rb",
  "lib/ro/node/list.rb",
+ "lib/ro/pagination.rb",
  "lib/ro/root.rb",
  "lib/ro/slug.rb",
  "lib/ro/template.rb",

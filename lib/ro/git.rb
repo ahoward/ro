@@ -119,7 +119,9 @@ module Ro
 
               # nuke the tmp branch
               #
-                spawn("git branch -D #{ branch.inspect }")
+                if patch and patch.applied and patch.committed
+                  spawn("git branch -D #{ branch.inspect }")
+                end
               end
           end
         end
