@@ -23,7 +23,7 @@ module Ro
 
       user = options[:user] || ENV['USER'] || 'ro'
       msg = options[:message] || "#{ user } edits on #{ File.basename(@root).inspect }"
-      add = options[:add]
+      add = options.has_key?(:add) ? options[:add] : true
 
       patch = nil
 
@@ -68,7 +68,7 @@ module Ro
               #
                 block.call
 
-              # add all changes - additions, deletions, or modifications - if :add => true was specified
+              # add all changes - additions, deletions, or modifications - unless :add => false was specified
               #
                 if add
                   spawn("git add . --all", :raise => true)
@@ -77,7 +77,7 @@ module Ro
               # commit if anything changed
               #
                 changes_to_apply =
-                  spawn("git commit -am #{ msg.inspect }")
+                  spawn("git commit -m #{ msg.inspect }")
 
                 if changes_to_apply
                 # create the patch
