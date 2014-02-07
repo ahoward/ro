@@ -224,13 +224,11 @@ module Ro
         Dir.chdir(dir) do
         # .git
         #
-          git_root = `git rev-parse --git-dir`.strip
+          status, stdout, stderr = spawn("git rev-parse --git-dir", :raise => true, :capture => true)
 
-          if git_root.empty?
-            git_root = '.'
-          end
+          git_root = stdout.to_s.strip
 
-          dot_git = File.expand_path(File.join(git_root, '.git'))
+          dot_git = File.expand_path(git_root)
 
           unless test(?d, dot_git)
             raise Error.new("missing .git directory #{ dot_git }")
