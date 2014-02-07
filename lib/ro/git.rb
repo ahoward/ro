@@ -92,9 +92,16 @@ module Ro
                   #
                     spawn("git checkout master", :raise => true)
 
+                  #
+                    spawn("git rebase --abort")
+                    spawn("git am --abort")
+                    FileUtils.rm_rf("#{ dot_git }/rebase-apply")
+
+                  #
                     status, stdout, stderr =
                       spawn("git am --signoff --3way", :capture => true, :stdin => patch.data)
 
+                  #
                     patch.applied = !!(status == 0)
 
                   # commit the patch back to the repo
