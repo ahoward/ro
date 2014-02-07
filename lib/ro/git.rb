@@ -95,11 +95,13 @@ module Ro
                   #
                     spawn("git rebase --abort")
                     spawn("git am --abort")
-                    FileUtils.rm_rf("#{ dot_git }/rebase-apply")
+
+                    spawn("git am --abort")
+                    spawn("git rebase --abort")
 
                   #
                     status, stdout, stderr =
-                      spawn("git am --signoff --3way", :capture => true, :stdin => patch.data)
+                      spawn("git am --signoff --3way --ignore-space-change --ignore-whitespace", :capture => true, :stdin => patch.data)
 
                   #
                     patch.applied = !!(status == 0)
@@ -122,6 +124,9 @@ module Ro
                 spawn("git checkout -f master", :raise => true)
                 spawn("git fetch --all", :raise => true)
                 spawn("git reset --hard origin/master", :raise => true)
+
+                spawn("git am --abort")
+                spawn("git rebase --abort")
 
               # get changes
               #
