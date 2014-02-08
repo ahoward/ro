@@ -163,7 +163,7 @@ module Ro
           raise ArgumentError.new("no asset matching #{ globs.inspect }")
         else
           if candidates.size > 1
-            ::Kernel.warn("many assets in (#{ candidates.inspect }) R teh match 4 #{ globs.inspect }")
+            raise("too many assets in (#{ candidates.inspect }) R teh match 4 #{ globs.inspect }")
           end
 
           path = candidates.first
