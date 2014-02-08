@@ -161,9 +161,12 @@ module Ro
       case candidates.size
         when 0
           raise ArgumentError.new("no asset matching #{ globs.inspect }")
-        when 1
-          path = candidates.first
+        else
+          if candidates.size > 1
+            ::Kernel.warn("many assets in (#{ candidates.inspect }) R teh match 4 #{ globs.inspect }")
+          end
 
+          path = candidates.first
           path_info = path.gsub(/^#{ Regexp.escape(Ro.root) }/, '')
 
           if cache_buster
@@ -171,8 +174,6 @@ module Ro
             timestamp = File.stat(path).mtime.utc.to_i
             options['_'] = timestamp
           end
-        else
-          raise ArgumentError.new("too many assets (#{ candidates.inspect }) matching #{ globs.inspect }")
       end
 
       url = File.join(Ro.route, path_info)
