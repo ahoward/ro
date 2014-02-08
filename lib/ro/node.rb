@@ -162,10 +162,6 @@ module Ro
         when 0
           raise ArgumentError.new("no asset matching #{ globs.inspect }")
         else
-          if candidates.size > 1
-            raise("too many assets in (#{ candidates.inspect }) R teh match 4 #{ globs.inspect }")
-          end
-
           path = candidates.first
           path_info = path.gsub(/^#{ Regexp.escape(Ro.root) }/, '')
 
