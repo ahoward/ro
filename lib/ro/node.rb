@@ -156,7 +156,7 @@ module Ro
           File.join(@path.to_s, 'assets', "**/#{ glob }")
         ]
 
-      candidates = globs.map{|glob| Dir.glob(glob)}.flatten.compact.uniq
+      candidates = globs.map{|glob| Dir.glob(glob, ::File::FNM_CASEFOLD)}.flatten.compact.uniq
 
       case candidates.size
         when 0
