@@ -141,7 +141,7 @@ module Ro
     def url_for(*args, &block)
       options = Map.options_for!(args)
 
-      cache_buster = options.delete('_') != false
+      timestamp = options.delete('timestamp')
 
       path_info = Ro.relative_path_for(args)
 
@@ -165,7 +165,7 @@ module Ro
           path = candidates.first
           path_info = path.gsub(/^#{ Regexp.escape(Ro.root) }/, '')
 
-          if cache_buster
+          if timestamp
             #options['_'] = Ro.md5(IO.binread(path))
             timestamp = File.stat(path).mtime.utc.to_i
             options['_'] = timestamp
