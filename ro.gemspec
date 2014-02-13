@@ -6,7 +6,7 @@ Gem::Specification::new do |spec|
   spec.version = "1.4.2"
   spec.platform = Gem::Platform::RUBY
   spec.summary = "ro"
-  spec.description = "description: ro kicks the ass"
+  spec.description = "ro is library for managing your site's content in git, as god intended."
   spec.license = "Same As Ruby's"
 
   spec.files =
