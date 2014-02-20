@@ -101,13 +101,53 @@ module Ro
     def assets
       asset_paths.map do |path|
         name = path.sub(asset_dir + "/", "")
-        url = url_for(name)
+        path_info = path.gsub(/^#{ Regexp.escape(Ro.root) }/, '')
+        url = File.join(Ro.route, path_info)
         Asset.new(name, :path => path, :url => url)
       end
     end
 
     def asset_urls
       assets.map(&:url)
+    end
+
+    def asset_for(*args, &block)
+      options = Map.options_for!(args)
+
+      path_info = Ro.relative_path_for(args)
+
+      path = File.join(@path.to_s, 'assets', path_info)
+
+      glob = path_info.gsub(/[_-]/, '[_-]')
+
+      globs = 
+        [
+          File.join(@path.to_s, 'assets', "#{ glob }"),
+          File.join(@path.to_s, 'assets', "#{ glob }*"),
+          File.join(@path.to_s, 'assets', "**/#{ glob }")
+        ]
+
+      candidates = globs.map{|glob| Dir.glob(glob, ::File::FNM_CASEFOLD)}.flatten.compact.uniq
+
+      case candidates.size
+        when 0
+          raise ArgumentError.new("no asset matching #{ globs.inspect }")
+        else
+          path = candidates.first
+          name = path.sub(asset_dir + "/", "")
+          path_info = path.gsub(/^#{ Regexp.escape(Ro.root) }/, '')
+          url = File.join(Ro.route, path_info)
+      end
+
+      Asset.new(name, :path => path, :url => url)
+    end
+
+    def asset_for?(*args, &block)
+      begin
+        asset_for(*args, &block)
+      rescue
+        nil
+      end
     end
 
     class Asset < ::String
@@ -141,44 +181,27 @@ module Ro
     def url_for(*args, &block)
       options = Map.options_for!(args)
 
-      timestamp = options.delete('timestamp')
+      opts = Map.new
 
-      path_info = Ro.relative_path_for(args)
+      opts[:timestamp] = options.delete(:timestamp)
 
-      path = File.join(@path.to_s, 'assets', path_info)
+      args.push(options)
 
-      glob = path_info.gsub(/[_-]/, '[_-]')
+      asset = asset_for(*args, &block)
 
-      globs = 
-        [
-          File.join(@path.to_s, 'assets', "#{ glob }"),
-          File.join(@path.to_s, 'assets', "#{ glob }*"),
-          File.join(@path.to_s, 'assets', "**/#{ glob }")
-        ]
-
-      candidates = globs.map{|glob| Dir.glob(glob, ::File::FNM_CASEFOLD)}.flatten.compact.uniq
-
-      case candidates.size
-        when 0
-          raise ArgumentError.new("no asset matching #{ globs.inspect }")
+      if ts = opts.delete(:timestamp)
+        if ts == true
+          opts[:_] = File.stat(asset.path).mtime.utc.to_i
         else
-          path = candidates.first
-          path_info = path.gsub(/^#{ Regexp.escape(Ro.root) }/, '')
-
-          if timestamp
-            #options['_'] = Ro.md5(IO.binread(path))
-            timestamp = File.stat(path).mtime.utc.to_i
-            options['_'] = timestamp
-          end
+          opts[:_] = ts
+        end
       end
 
-      url = File.join(Ro.route, path_info)
-
-      if options.empty?
-        url
+      if opts.empty?
+        asset.url
       else
-        query_string = Ro.query_string_for(options)
-        "#{ url }?#{ query_string }"
+        query_string = Ro.query_string_for(opts)
+        "#{ asset.url }?#{ query_string }"
       end
     end
 

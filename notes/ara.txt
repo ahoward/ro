@@ -1,4 +1,6 @@
 
+-
+  node.asset_for(:name)
 
 - nodes have fields
   - fields know from whence them came
