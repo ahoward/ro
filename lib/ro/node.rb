@@ -124,7 +124,7 @@ module Ro
         [
           File.join(@path.to_s, 'assets', "#{ glob }"),
           File.join(@path.to_s, 'assets', "#{ glob }*"),
-          File.join(@path.to_s, 'assets', "**/#{ glob }")
+          File.join(@path.to_s, 'assets', "**/#{ glob }*")
         ]
 
       candidates = globs.map{|glob| Dir.glob(glob, ::File::FNM_CASEFOLD)}.flatten.compact.uniq
@@ -175,6 +175,16 @@ module Ro
 
       def image?
         !!(self =~ IMAGE_RE)
+      end
+
+      def extension
+        base, ext = basename.split('.', 2)
+        ext
+      end
+      alias_method(:ext, :extension)
+
+      def basename
+        File.basename(path.to_s)
       end
     end
 
