@@ -133,6 +133,10 @@ module Ro
       @node.attributes
     end
 
+    def persisted?
+      true
+    end
+
   #
     def prefix
       self.class.prefix
@@ -145,6 +149,10 @@ module Ro
   #
     def method_missing(method, *args, &block)
       node.send(method, *args, &block)
+    end
+
+    def respond_to?(method)
+      super || node.respond_to?(method)
     end
   end
 end
