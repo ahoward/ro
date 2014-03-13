@@ -10,7 +10,7 @@
 
 #
   module Ro
-    Version = '1.4.4' unless defined?(Version)
+    Version = '1.4.5' unless defined?(Version)
 
     def version
       Ro::Version

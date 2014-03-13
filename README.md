@@ -130,7 +130,7 @@ it features:
 ro is the *perfect* companion to a site built by a static site generator such
 as middleman (http://middlemanapp.com/).  especially a middleman site with a
 companion rails' application doing concurrent modifications of the site's
-content... ;-)
+content... (ref: http://dojo4.com/blog/static-is-the-new-black) ;-)
 
 
 INSTALL
