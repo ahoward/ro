@@ -10,7 +10,7 @@
 
 #
   module Ro
-    Version = '1.4.5' unless defined?(Version)
+    Version = '1.4.6' unless defined?(Version)
 
     def version
       Ro::Version
@@ -204,7 +204,7 @@
     end
 
     def Ro.accurate_expand_asset_urls(html, node)
-      doc = Nokogiri::HTML(html)
+      doc = Nokogiri::HTML.fragment(html)
 
       doc.traverse do |element|
         if element.respond_to?(:attributes)
@@ -223,7 +223,7 @@
         end
       end
 
-      doc.xpath('//body').inner_html.strip
+      doc.to_s.strip
     end
 
     def Ro.sloppy_expand_asset_urls(html, node)
