@@ -95,7 +95,7 @@ module Ro
     end
 
     def asset_paths
-      Dir.glob("#{ asset_dir }/**/**").select{|entry| test(?f, entry)}
+      Dir.glob("#{ asset_dir }/**/**").select{|entry| test(?f, entry)}.sort
     end
 
     def assets
@@ -127,13 +127,13 @@ module Ro
           File.join(@path.to_s, 'assets', "**/#{ glob }*")
         ]
 
-      candidates = globs.map{|glob| Dir.glob(glob, ::File::FNM_CASEFOLD)}.flatten.compact.uniq
+      candidates = globs.map{|glob| Dir.glob(glob, ::File::FNM_CASEFOLD)}.flatten.compact.uniq.sort
 
       case candidates.size
         when 0
           raise ArgumentError.new("no asset matching #{ globs.inspect }")
         else
-          path = candidates.first
+          path = candidates.last
           name = path.sub(asset_dir + "/", "")
           path_info = path.gsub(/^#{ Regexp.escape(Ro.root) }/, '')
           url = File.join(Ro.route, path_info)

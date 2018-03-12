@@ -151,7 +151,7 @@ module Ro
       node.send(method, *args, &block)
     end
 
-    def respond_to?(method)
+    def respond_to?(method, *args, &block)
       super || node.respond_to?(method)
     end
   end
