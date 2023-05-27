@@ -1,0 +1,27 @@
+x support for absolute urls
+x RO_URL=
+- better cli?
+- script
+- better / more specific errors for CLI ?
+- error boundary?
+- support for building
+- ro build
+- support for watching
+
+- functional *except*for Ro.cache
+- Kernel.ro === Ro.root('./ro', :url => '/ro')
+- Ro.root === Ro.root('./ro', :url => '/ro')
+- Ro.nodes === Ro.root('./ro', :url => '/ro').nodes
+
+
+- https://data.mtf-trek.com/ro/team/marci/api.json
+-  https://data.mtf-trek.com/ro/team/marci/api/data.json
+
+-  https://mtf-trek-data.com/ahoward/ro/team/marci/api/data.json
+- gh-pages
+- ./bin/ro build
+
+-  https://api.mtf-trek.com/ro/team/marci/index.json
+-  https://api.mtf-trek.com/ro/team/index.json
+
+- workflow to build... jecky hack?

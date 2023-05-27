@@ -18,9 +18,7 @@ module Ro
       @fields = Map.new
     end
 
-    def id
-      @id
-    end
+    attr_reader :id
 
     def _id
       @id
@@ -51,7 +49,7 @@ module Ro
     end
 
     def identifier
-      "#{ _type }/#{ _id }"
+      "#{_type}/#{_id}"
     end
 
     def hash
@@ -78,6 +76,10 @@ module Ro
       self
     end
 
+    def ro(*args, &block)
+      Ro::Root.new(*args, &block).nodes
+    end
+
     def get(*args)
       attributes.get(*args)
     end
@@ -86,7 +88,7 @@ module Ro
       attributes.get(*args)
     end
 
-    def asset_path(*args, &block)
+    def asset_path(*_args)
       File.join(relative_path, 'assets')
     end
 
@@ -95,23 +97,18 @@ module Ro
     end
 
     def asset_paths
-      Dir.glob("#{ asset_dir }/**/**").select{|entry| test(?f, entry)}.sort
+      Dir.glob("#{asset_dir}/**/**").select { |entry| test('f', entry) }.sort
     end
 
     def assets
-      asset_paths.map do |path|
-        name = path.sub(asset_dir + "/", "")
-        path_info = path.gsub(/^#{ Regexp.escape(Ro.root) }/, '')
-        url = File.join(Ro.route, path_info)
-        Asset.new(name, :path => path, :url => url)
-      end
+      asset_paths.map { |path| Asset.new(node, path) }
     end
 
     def asset_urls
       assets.map(&:url)
     end
 
-    def asset_for(*args, &block)
+    def asset_for(*args)
       options = Map.options_for!(args)
 
       path_info = Ro.relative_path_for(args)
@@ -120,107 +117,45 @@ module Ro
 
       glob = path_info.gsub(/[_-]/, '[_-]')
 
-      globs = 
+      globs =
         [
-          File.join(@path.to_s, 'assets', "#{ glob }"),
-          File.join(@path.to_s, 'assets', "#{ glob }*"),
-          File.join(@path.to_s, 'assets', "**/#{ glob }*")
+          File.join(@path.to_s, 'assets', "#{glob}"),
+          File.join(@path.to_s, 'assets', "#{glob}*"),
+          File.join(@path.to_s, 'assets', "**/#{glob}*")
         ]
 
-      candidates = globs.map{|glob| Dir.glob(glob, ::File::FNM_CASEFOLD)}.flatten.compact.uniq.sort
+      candidates = globs.map { |glob| Dir.glob(glob, ::File::FNM_CASEFOLD) }.flatten.compact.uniq.sort
 
       case candidates.size
-        when 0
-          raise ArgumentError.new("no asset matching #{ globs.inspect }")
-        else
-          path = candidates.last
-          name = path.sub(asset_dir + "/", "")
-          path_info = path.gsub(/^#{ Regexp.escape(Ro.root) }/, '')
-          url = File.join(Ro.route, path_info)
+      when 0
+        raise ArgumentError, "no asset matching #{globs.inspect}"
+      else
+        path = candidates.last
       end
 
-      Asset.new(name, :path => path, :url => url)
+      Asset.new(node, path)
     end
 
     def asset_for?(*args, &block)
-      begin
-        asset_for(*args, &block)
-      rescue
-        nil
-      end
+      asset_for(*args, &block)
+    rescue StandardError
+      nil
     end
 
-    class Asset < ::String
-      fattr(:path)
-      fattr(:url)
+    def url_for(relative_path, options = {})
+      path = File.expand_path(File.join(node.path, relative_path.to_s))
+      raise ArgumentError, "#{relative_path.inspect} -- DOES NOT EXIST" unless test('e', path)
 
-      def initialize(name, options = {})
-        super(name)
-      ensure
-        options = Map.for(options)
-
-        Asset.fattrs.each do |attr|
-          if options.has_key?(attr)
-            value = options[attr]
-            send(attr, value)
-          end
-        end
-      end
-
-      def name
-        self
-      end
-
-      IMAGE_RE = %r/[.](jpg|jpeg|png|gif|tif|tiff)$/i
-
-      def image?
-        !!(self =~ IMAGE_RE)
-      end
-
-      def extension
-        base, ext = basename.split('.', 2)
-        ext
-      end
-      alias_method(:ext, :extension)
-
-      def basename
-        File.basename(path.to_s)
-      end
+      Ro.url_for(node.relative_path, relative_path.to_s, options)
     end
 
-    def url_for(*args, &block)
-      options = Map.options_for!(args)
-
-      opts = Map.new
-
-      opts[:timestamp] = options.delete(:timestamp)
-
-      args.push(options)
-
-      asset = asset_for(*args, &block)
-
-      if ts = opts.delete(:timestamp)
-        if ts == true
-          opts[:_] = File.stat(asset.path).mtime.utc.to_i
-        else
-          opts[:_] = ts
-        end
-      end
-
-      if opts.empty?
-        asset.url
-      else
-        query_string = Ro.query_string_for(opts)
-        "#{ asset.url }?#{ query_string }"
-      end
+    def url(options = {})
+      Ro.url_for(node.relative_path, options)
     end
 
-    def url_for?(*args, &block)
-      begin
-        url_for(*args, &block)
-      rescue
-        nil
-      end
+    def relative_path
+      re = /^#{Regexp.escape(Ro.root)}/
+      @path.to_s.gsub(re, '')
     end
 
     def source_for(*args)
@@ -228,26 +163,14 @@ module Ro
       get(key)
     end
 
-    def route(*args)
-      path_info = Ro.absolute_path_for(Ro.route, relative_path)
-      [Ro.asset_host, path_info].compact.join('/')
-    end
-
-    def relative_path
-      re = /^#{ Regexp.escape(Ro.root) }/
-      @path.to_s.gsub(re, '')
-    end
-
     def method_missing(method, *args, &block)
       super if method.to_s == 'to_ary'
 
-      Ro.log "Ro::Node(#{ identifier })#method_missing(#{ method.inspect }, #{ args.inspect })"
+      Ro.log "Ro::Node(#{identifier})#method_missing(#{method.inspect}, #{args.inspect})"
 
       key = method.to_s
 
-      if @attributes.has_key?(key)
-        return @attributes[key]
-      end
+      return @attributes[key] if @attributes.has_key?(key)
 
       _load do
         return(
@@ -261,54 +184,63 @@ module Ro
     end
 
     def attributes
-      _load{ @attributes }
+      _load { @attributes }
     end
 
-    def attributes=(attributes)
-      @attributes = attributes
+    attr_writer :attributes
+
+    def as_json(*_args)
+      attributes.to_hash.merge(meta_attributes)
     end
-    
+
+    def meta_attributes
+      {
+        '_identifier' => identifier,
+        '_type' => _type,
+        '_id' => _id,
+        '_url' => url,
+        '_asset_urls' => asset_urls
+      }
+    end
+
     def instance_eval(*args, &block)
-      _load{ super }
+      _load { super }
     end
 
     def related(*args, &block)
-      _load{
+      _load do
         related = @attributes.get(:related) || Map.new
         nodes = List.new(root)
         list = root.nodes
-        which = Coerce.list_of_strings(args) 
+        which = Ro.list_of_strings(args)
 
         related.each do |relationship, value|
-          unless which.empty?
-            next unless which.include?(relationship.to_s)
-          end
+          next if !which.empty? && !which.include?(relationship.to_s)
 
           type, names =
             case value
-              when Hash
-                value.to_a.first
-              else
-                [relationship, value]
+            when Hash
+              value.to_a.first
+            else
+              [relationship, value]
             end
 
-          names = Coerce.list_of_strings(names)
+          names = Ro.list_of_strings(names)
 
           names.each do |name|
-            identifier = "#{ type }/#{ name }"
+            identifier = "#{type}/#{name}"
             node = list.index[identifier]
-            node._load{ nodes.add(node) }
+            node._load { nodes.add(node) }
           end
         end
 
-        case
-          when block.nil?
-            nodes
+        if block.nil?
+          nodes
 
-          when block
-            nodes.where(&block)
+        elsif block
+          nodes.where(&block)
         end
-      }
+      end
     end
 
     def reload(&block)
@@ -339,76 +271,168 @@ module Ro
     end
 
     def _load_from_cache_or_disk
+      # return :cache if _load_from_cache
+      return :disk if _load_from_disk
+
+      nil
+    end
+
+    # FIXME: - think about this... since mutual deps can exist....  maybe NO cache.  KISS
+    def _load_from_cache
       cache_key = _cache_key
 
-      cached = Ro.cache.read(cache_key)
+      cached = Ro.cache && Ro.cache.read(cache_key)
 
-      if cached
-        Ro.log "loading #{ identifier } from cache"
+      return unless cached
 
-        @attributes = Map.new.update(cached)
+      Ro.log "loading #{identifier} from cache"
 
-        return :cache
-      else
-        Ro.log "loading #{ identifier } from disk"
+      @attributes = Map.new.update(cached)
+    end
 
-        @attributes = Map.new
+    def _load_from_disk
+      cache_key = _cache_key
 
-        _load_attributes_yml
-        _load_attribute_files
-        _load_sources
-        _load_assets
+      Ro.log "loading #{identifier} from disk"
 
-        Ro.cache.write(cache_key, @attributes)
+      @attributes = Map.new
 
-        return :disk
-      end
+      _load_attributes_yml
+      _load_attribute_files
+      # FIXME
+      # _load_sources
+      # _load_assets
+
+      Ro.cache && Ro.cache.write(cache_key, @attributes)
     end
 
     def _load_attributes_yml
-      if test(?s, _attributes_yml)
-        buf = IO.binread(_attributes_yml)
-        data = YAML.load(buf)
-        data = data.is_a?(Hash) ? data : {'_' => data}
+      return unless test('s', _attributes_yml)
 
-        @attributes.update(data)
+      buf = IO.binread(_attributes_yml)
+      data = YAML.load(buf)
+      data = data.is_a?(Hash) ? data : { '_' => data }
 
-        %w( assets ).each do |key|
-          raise ArgumentError.new("attributes.yml may not contain the key '#{ key }'") if @attributes.has_key?(key)
-        end
+      @attributes.update(data)
 
-        @attributes
+      %w[assets].each do |key|
+        raise ArgumentError, "attributes.yml may not contain the key '#{key}'" if @attributes.has_key?(key)
       end
+
+      @attributes
     end
 
     def _load_attribute_files
       glob = File.join(@path, '**/**')
-      node = self
+
+      cd = CycleDector.new(self)
 
       Dir.glob(glob) do |path|
-        next if test(?d, path)
+        next if test('d', path)
 
         basename = File.basename(path)
         next if basename == 'attributes.yml'
 
-        relative_path = Ro.relative_path(path, :to => @path)
-        next if relative_path =~ /^assets\//
+        relative_path = Ro.relative_path(path, to: @path)
+        next if relative_path =~ %r{^assets/}
 
-        key = relative_path.split('.', 2).first.split('/')
+        # basename = File.basename(path)
+        # next if basename == 'index.json'
+        # FIXME
 
-        html = Ro.render(path, node)
-        html = Ro.expand_asset_urls(html, node)
+        path_info, ext = key = relative_path.split('.', 2)
 
-        @attributes.set(key => html)
+        key = path_info.split('/')
+
+        promise = cd.promise(key) do
+          html = Ro.render(path, node)
+          html = Ro.expand_asset_urls(html, node)
+          # @attributes.set(key => html)
+        end
+
+        @attributes.set(key => promise)
+
+        # html = Ro.render(path, node)
+        # html = Ro.expand_asset_urls(html, node)
+        # @attributes.set(key => html)
+      end
+
+      # cd.resolve
+    end
+
+    class CycleDector
+      attr_accessor :node, :promises, :keys, :key
+
+      def initialize(node)
+        @node = node
+        @promises = []
+        @keys = []
+        @key = []
+      end
+
+      def cd
+        self
+      end
+
+      def promise(key, &block)
+        promise = Promise.new(cd, key, &block)
+      ensure
+        keys.push(key)
+        promises.push(promise)
+      end
+
+      def resolve
+        promises.each { |promise| promise.resolve }
+      end
+
+      class Promise < BasicObject
+        def initialize(cd, key, &block)
+          @cd = cd
+          @key = key
+          @block = block
+          @resolved = nil
+        end
+
+        def is_a?(other)
+          other.instance_of?(Promise)
+        end
+
+        def resolve
+          return @resolved if @resolved
+
+          if @cd.key.include?(@key)
+            cycle = @cd.key + [@key]
+            Ro.error! "rendering #{@node.identifier} cycles on #{cycle.join ' -> '}"
+          end
+
+          @cd.key.push(@key)
+
+          begin
+            @resolved = @block.call.to_s
+          ensure
+            @cd.key.pop
+          end
+        end
+
+        def call
+          resolve
+        end
+
+        def to_s
+          call
+        end
+
+        def inspect
+          call
+        end
       end
     end
 
     def _load_sources
       glob = File.join(@path, 'assets/source/*')
-      node = self
 
       Dir.glob(glob) do |path|
-        next if test(?d, path)
+        next if test('d', path)
 
         basename = File.basename(path)
         key, ext = basename.split('.', 2)
@@ -416,30 +440,23 @@ module Ro
         next if basename == 'attributes.yml'
 
         value = Ro.render_source(path, node)
+
         @attributes.set([:assets, :source, basename] => value)
       end
     end
 
     def _load_assets
-      glob = File.join(@path, 'assets/**/**')
-      node = self
-
-      Dir.glob(glob) do |path|
-        next if test(?d, path)
-
-        relative_path = Ro.relative_path(path, :to => "#{ @path }/assets")
-
-        url = url_for(relative_path)
-        key = relative_path.split('/')
-
-        key.unshift('urls')
-
-        @attributes.set(key => url)
-      end
+      @attributes.update(asset_urls)
     end
 
-    def _binding
-      Kernel.binding
+    def asset_urls
+      {}.tap do |asset_urls|
+        assets.each do |asset|
+          key = asset.relative_path
+          value = asset.url
+          asset_urls[key] = value
+        end
+      end
     end
 
     def _cache_key
@@ -451,24 +468,20 @@ module Ro
         stat =
           begin
             File.stat(entry)
-          rescue
+          rescue StandardError
             next
           end
 
         timestamp = [stat.ctime, stat.mtime].max
-        relative_path = Ro.relative_path(entry, :to => @path)
-        entries.push([relative_path, timestamp.iso8601(2)]) 
+        relative_path = Ro.relative_path(entry, to: @path)
+        entries.push([relative_path, timestamp.iso8601(2)])
       end
 
-      fingerprint = entries.map{|pair| pair.join('@')}.join(', ')
+      fingerprint = entries.map { |pair| pair.join('@') }.join(', ')
 
       md5 = Ro.md5(fingerprint)
 
       [@path, md5]
-    end
-
-    def _load_from_cache
-      false
     end
 
     def _attributes_yml

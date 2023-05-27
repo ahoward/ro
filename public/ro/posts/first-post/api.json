@@ -1,0 +1,15 @@
+{
+  "title": "First Post2",
+  "hero": "assets/foo.jpg",
+  "image": "assets/foo/bar/baz.jpg",
+  "published_at": "2023-04-05T12:17-06:00",
+  "body": "<h1>First Post2</h1>\n\n<ul>\n<li>one</li>\n<li>two</li>\n<li>three</li>\n</ul>\n\n<hr/>\n\n<p><img src='/ro/posts/first-post/assets/foo.jpg' />\n<br /></p>\n\n<p><img src='/ro/posts/first-post/assets/foo/bar/baz.jpg' /></p>\n",
+  "_identifier": "posts/first-post",
+  "_type": "posts",
+  "_id": "first-post",
+  "_url": "/ro/posts/first-post",
+  "_asset_urls": {
+    "assets/foo.jpg": "/ro/posts/first-post/assets/foo.jpg",
+    "assets/foo/bar/baz.jpg": "/ro/posts/first-post/assets/foo/bar/baz.jpg"
+  }
+}

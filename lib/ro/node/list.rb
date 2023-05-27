@@ -23,7 +23,7 @@ module Ro
       end
 
       def load(path)
-        add( node = Node.new(path) )
+        add(node = Node.new(path))
       end
 
       def add(node)
@@ -49,20 +49,34 @@ module Ro
         
         related
       end
+ 
+      def [](arg, *args, &block)
 
-      def [](*args, &block)
-        key = args.first
-
-        case key
+        case arg
           when String, Symbol
+            path = [arg, args].flatten.compact.join('/')
+            paths = path.to_s.scan(%r`[^/]+`)
+
             if @type.nil?
-              type = key.to_s
+              type = paths.shift
               list = select{|node| type == node._type}
               list.type = type
-              list
+
+              if paths.empty?
+                list
+              else
+                list[*paths]
+              end
             else
-              id = Slug.for(key.to_s)
-              detect{|node| id == node.id}
+              id = paths.shift
+              id = Slug.for(id)
+              node = detect{|node| id == node.id}
+
+              if paths.empty?
+                node
+              else
+                node[*paths]
+              end
             end
           else
             super(*args, &block)

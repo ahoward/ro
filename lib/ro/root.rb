@@ -1,14 +1,23 @@
 module Ro
   class Root < ::String
-    def initialize(root)
-      super(Ro.realpath(root.to_s))
-    ensure
-      raise ArgumentError.new("root=#{ root.inspect }") if root.nil?
-      raise ArgumentError.new("root=#{ root.inspect }") unless test(?d, self)
+    attr_reader :opts, :url, :loader
+
+    def initialize(root = Ro.config.root, options = {})
+      @opts = Map.options_for(options)
+      @root = Ro.fullpath(root)
+      @url = Ro.normalize_url(opts[:url] || Ro.config.url)
+
+      super(@root.to_s)
+
+      Ro.error!("root=#{root.inspect} does not exist") unless test('d', self)
     end
 
     def root
       self
+    end
+
+    def load
+      loader.load
     end
 
     def nodes
@@ -20,33 +29,13 @@ module Ro
     end
 
     def directories(&block)
-      Dir.glob(File.join(root, '*/'), &block)
+      list = Dir.glob(File.join(root, '*/')).to_a.sort
+      block ? list.each(&block) : list
     end
 
     def node_directories(&block)
-      Dir.glob(File.join(root, '*/*/'), &block)
-    end
-
-    def git
-      @git ||= Git.new(self)
-    end
-
-    def patch(*args, &block)
-      git.patch(*args, &block)
-    end
-
-    def dotdir
-      File.join(self, '.ro')
-    end
-
-    def lockpath
-      File.join(dotdir, 'lock')
-    end
-
-    def lock(&block)
-      FileUtils.mkdir_p(File.dirname(lockpath))
-      @lock ||= Lock.new(lockpath)
-      block ? @lock.lock(&block) : @lock
+      list = Dir.glob(File.join(root, '*/*/')).to_a.sort
+      block ? list.each(&block) : list
     end
   end
 end

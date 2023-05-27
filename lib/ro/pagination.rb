@@ -10,7 +10,7 @@ module Ro
       per = [per.abs, 1].max
 
       offset = (page - 1) * per
-      length = per 
+      length = per
 
       slice = dup.slice(offset, length)
       slice.page = page
@@ -23,7 +23,7 @@ module Ro
       @page = page
     end
 
-    def page(*args)
+    def page(*_args)
       @page
     end
 

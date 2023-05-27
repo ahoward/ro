@@ -1,102 +1,68 @@
 #! /usr/bin/env ruby
-
-Main {
-
-  argument('root'){
-    optional
-  }
+Main do
+  option('root') { ENV['RO_ROOT'] }
 
   def run
     help!
   end
 
-  mode(:console){
+  mode(:build) do
     def run
-      if params['root'].given?
-        Ro.root = params['root'].value 
-      else
-        if ENV['RO_ROOT']
-          Ro.root = ENV['RO_ROOT']
-        else
-          Ro.root = './ro'
-        end
-      end
+      index = []
 
-      basename = File.basename(Ro.root) 
+      # FIXME: - this list should be sorted by default.....
+      ro.nodes.each do |node|
+        attributes = node.attributes
 
-      ARGV.clear
-      require 'irb'
+        # identifier = node.identifier
+        # position = attributes.has_key?(:position) ? attributes[:position] : 0
 
-      Kernel.module_eval do
-        def reload!
-          Object.send(:remove_const, :Ro)
-          load "#{ $libdir }/ro.rb" 
-          "#{ $libdir }/ro.rb" 
-        end
-      end
-
-      $HACK = IRB.method(:load_modules)
-
-      def IRB.load_modules
-        $HACK.call()
-
-        basename = File.basename(Ro.root)
-
-        IRB.conf[:PROMPT][:RO] = {
-          :PROMPT_I=>"Ro(./#{ basename }):%03n:%i> ",
-          :PROMPT_N=>"Ro(./#{ basename }):%03n:%i> ",
-          :PROMPT_S=>"Ro(./#{ basename }):%03n:%i%l ",
-          :PROMPT_C=>"Ro(./#{ basename }):%03n:%i* ",
-          :RETURN=>"=> %s\n"
+        meta = {
+          # :position => position
         }
+        index.push(meta)
 
-        IRB.conf[:PROMPT_MODE] = :RO
-        IRB.conf[:AUTO_INDENT] = true
-      end
-
-
-      ::IRB.start
-    end
-
-=begin
-    module Console
-      def reload!
-        Object.send(:remove_const, :Ro)
-        load "#{ $libdir }/ro.rb" 
-        "#{ $libdir }/ro.rb" 
+        json = JSON.pretty_generate(node.as_json)
+        path = node.path
+        index_json = File.join(path, 'index.json')
+        IO.binwrite(index_json, json)
+        puts index_json
       end
     end
-=end
+  end
 
-    class Console < Ro::BlankSlate
-      def initialize(nodes)
-        @nodes = nodes
-      end
-
-      def binding
-        Kernel.binding
-      end
-
-      def reload!
-        Object.send(:remove_const, :Ro)
-        load "#{ $libdir }/ro.rb" 
-        "#{ $libdir }/ro.rb" 
-      end
-
-      def method_missing(method, *args, &block)
-        @nodes.send(method, *args, &block)
-      end
+  mode(:console) do
+    def run
+      Ro.root = params['root'].value if params['root'].given?
+      require "#{$libdir}/ro/console.rb"
+      Ro::Console.start!
     end
-  }
+  end
 
-}
+  mode(:cat) do
+    argument('identifier')
+
+    def run
+      identifier = params['identifier'].value
+
+      result = ro[identifier]
+
+      result = if result.respond_to?(:as_json)
+                 result.as_json
+               else
+                 { identifier => result }
+               end
+
+      puts JSON.pretty_generate(result)
+    end
+  end
+end
 
 BEGIN {
   require 'main'
 
   $bindir = File.dirname(__FILE__)
-  $libdir = File.expand_path("#{ $bindir }/../lib/")
+  $libdir = File.expand_path("#{$bindir}/../lib/")
 
-  require "#{ $libdir }/ro.rb" 
+  require "#{$libdir}/ro.rb"
 }
-

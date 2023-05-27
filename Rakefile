@@ -1,8 +1,10 @@
-This.rubyforge_project = 'codeforpeople'
 This.author = "Ara T. Howard"
 This.email = "ara.t.howard@gmail.com"
 This.homepage = "https://github.com/ahoward/#{ This.lib }"
 
+task :license do
+  open('LICENSE', 'w'){|fd| fd.puts "Ruby"}
+end
 
 task :default do
   puts((Rake::Task.tasks.map{|task| task.name.gsub(/::/,':')} - ['default']).sort)
@@ -29,7 +31,7 @@ def run_tests!(which = nil)
 
   test_rbs.each_with_index do |test_rb, index|
     testno = index + 1
-    command = "#{ File.basename(This.ruby) } -I ./lib -I ./test/lib #{ test_rb }"
+    command = "#{ This.ruby } -w -I ./lib -I ./test/lib #{ test_rb }"
 
     puts
     say(div, :color => :cyan, :bold => true)
@@ -59,8 +61,8 @@ end
 
 task :gemspec do
   ignore_extensions = ['git', 'svn', 'tmp', /sw./, 'bak', 'gem']
-  ignore_directories = ['pkg', 'db']
-  ignore_files = ['test/log', 'test/db.yml', 'a.rb', 'b.rb'] + Dir['db/*'] + %w'db'
+  ignore_directories = ['pkg']
+  ignore_files = ['test/log']
 
   shiteless = 
     lambda do |list|
@@ -84,22 +86,13 @@ task :gemspec do
   lib         = This.lib
   object      = This.object
   version     = This.version
-  files       = shiteless[Dir::glob("**/**")].select{|path| test(?f, path)}
+  files       = shiteless[Dir::glob("**/**")]
   executables = shiteless[Dir::glob("bin/*")].map{|exe| File.basename(exe)}
   #has_rdoc    = true #File.exist?('doc')
-  test_files  = test(?e, "test/#{ lib }.rb") ? "test/#{ lib }.rb" : nil
+  test_files  = "test/#{ lib }.rb" if File.file?("test/#{ lib }.rb")
   summary     = object.respond_to?(:summary) ? object.summary : "summary: #{ lib } kicks the ass"
   description = object.respond_to?(:description) ? object.description : "description: #{ lib } kicks the ass"
-  license = object.respond_to?(:license) ? object.license : nil
-
-  if license.nil?
-    license =
-      begin
-        IO.binread('LICENSE')
-      rescue
-        "Same As Ruby's"
-      end
-  end
+  license     = object.respond_to?(:license) ? object.license : "Ruby"
 
   if This.extensions.nil?
     This.extensions = []
@@ -110,7 +103,6 @@ task :gemspec do
   end
   extensions = [extensions].flatten.compact
 
-# TODO
   if This.dependencies.nil?
     dependencies = []
   else
@@ -152,7 +144,6 @@ task :gemspec do
 
             spec.extensions.push(*<%= extensions.inspect %>)
 
-            spec.rubyforge_project = <%= This.rubyforge_project.inspect %>
             spec.author = <%= This.author.inspect %>
             spec.email = <%= This.email.inspect %>
             spec.homepage = <%= This.homepage.inspect %>
@@ -165,6 +156,106 @@ task :gemspec do
   gemspec = "#{ lib }.gemspec"
   open(gemspec, "w"){|fd| fd.puts(template)}
   This.gemspec = gemspec
+end
+
+task :dist_rb do
+  Dir.chdir(This.dir)
+
+  distdir = File.join(This.dir, 'dist')
+  Fu.mkdir_p(distdir)
+
+  bin = IO.binread('./bin/senv')
+
+  libs = '' 
+  Dir.glob('lib/**/**.rb').each do |lib|
+    libs << "### <lib src='#{ lib }'>\n\n"
+    libs << IO.binread(lib)
+    libs << "\n\n### </lib src='#{ lib }'>\n\n"
+  end
+
+  dist_rb = <<~____
+    #{ bin }
+
+    BEGIN {
+
+    #{ libs }
+     
+    }
+  ____
+
+  dist = "./dist/senv.rb"
+
+  Fu.mkdir_p(File.dirname(dist))
+  IO.binwrite(dist, dist_rb)
+  Fu.chmod(0755, dist)
+
+  system("#{ dist } help > /dev/null 2>&1")
+  abort("#{ dist } is borked") unless $?.exitstatus.zero?
+  STDOUT.puts(dist)
+end
+
+task :dist => [:dist_rb] do
+  Dir.chdir(This.dir)
+
+  version = This.version
+  name = This.name.downcase
+
+  platforms = %w[
+    linux-x86
+    linux-x86_64
+    osx
+  ]
+
+  Dir.glob("./dist/#{ name }-*").each do |entry|
+    Fu.rm_rf(entry)
+  end
+
+  spawn = proc do |cmd|
+    system(cmd) or abort("#{ cmd } #=> #{ $? }")
+  end
+
+  name = This.name.downcase
+  entrypoint = File.expand_path("./dist/#{ name }.sh")
+
+  platforms.each do |platform|
+    distdir = "./dist/#{ name }-#{ version }-#{ platform }"
+    Fu.mkdir_p(distdir)
+
+    libdir = File.join(distdir, 'lib')
+    Fu.mkdir_p(libdir)
+
+    appdir = File.join(libdir, 'app')
+    Fu.mkdir_p(appdir)
+
+    rubydir = File.join(libdir, 'ruby')
+    Fu.mkdir_p(rubydir)
+
+    Fu.cp('./dist/senv.rb', appdir)
+
+    Dir.chdir(rubydir) do
+      basename = "traveling-ruby-20141215-2.1.5-#{ platform }.tar.gz"
+      cmd = "curl -s -L -O --fail https://d6r77u77i8pq3.cloudfront.net/releases/#{ basename }"
+      spawn[cmd]
+      spawn["tar -xzf #{ basename }"]
+      Fu.rm(basename)
+    end
+
+    Dir.chdir(distdir) do
+      Fu.cp(entrypoint, name)
+    end
+  end
+
+  if STDOUT.tty?
+    system('tree -L 4 dist 2>/dev/null')
+  end
+
+  Dir.chdir './dist' do
+    platforms.each do |platform|
+      dist = "#{ name }-#{ version }-#{ platform }"
+      spawn["tar cvfz #{ dist }.tgz ./#{ dist } >/dev/null 2>&1"]
+      Fu.rm_rf(dist)
+    end
+  end
 end
 
 task :gem => [:clean, :gemspec] do
@@ -199,8 +290,8 @@ task :readme do
   end
 
   template = 
-    if test(?e, 'readme.erb')
-      Template{ IO.read('readme.erb') }
+    if test(?e, 'README.erb')
+      Template{ IO.read('README.erb') }
     else
       Template {
         <<-__
@@ -221,24 +312,16 @@ task :readme do
   open("README", "w"){|fd| fd.puts template}
 end
 
-
 task :clean do
   Dir[File.join(This.pkgdir, '**/**')].each{|entry| Fu.rm_rf(entry)}
 end
 
-
-task :release => [:clean, :gemspec, :gem] do
+task :release => [:dist, :gem] do
   gems = Dir[File.join(This.pkgdir, '*.gem')].flatten
   raise "which one? : #{ gems.inspect }" if gems.size > 1
   raise "no gems?" if gems.size < 1
 
   cmd = "gem push #{ This.gem }"
-  puts cmd
-  puts
-  system(cmd)
-  abort("cmd(#{ cmd }) failed with (#{ $?.inspect })") unless $?.exitstatus.zero?
-
-  cmd = "rubyforge login && rubyforge add_release #{ This.rubyforge_project } #{ This.lib } #{ This.version } #{ This.gem }"
   puts cmd
   puts
   system(cmd)
@@ -271,40 +354,48 @@ BEGIN {
   This.file = File.expand_path(__FILE__)
   This.dir = File.dirname(This.file)
   This.pkgdir = File.join(This.dir, 'pkg')
+  This.lib = File.basename(Dir.pwd).sub(/[-].*$/, '')
 
-# grok lib
+# load _lib
 #
-  lib = ENV['LIB']
-  unless lib
-    lib = File.basename(Dir.pwd).sub(/[-].*$/, '')
+  _lib = ["./lib/#{ This.lib }/_lib.rb", "./lib/#{ This.lib }.rb"].detect{|l| test(?s, l)}
+  unless _lib
+    abort "could not find a _lib in ./lib!?"
   end
-  This.lib = lib
+  This._lib = _lib
+  require This._lib
 
-# grok version
+# extract name from _lib
 #
-  version = ENV['VERSION']
-  unless version
-    require "./lib/#{ This.lib }"
-    This.name = lib.capitalize
-    This.object = eval(This.name)
-    version = This.object.send(:version)
+  lines = IO.binread(This._lib).split("\n")
+  re = %r`\A \s* (module|class) \s+ ([^\s]+) \s* \z`iomx
+  name = nil
+  lines.each do |line|
+    match = line.match(re)
+    if match
+      name = match.to_a.last
+      break
+    end
   end
+  unless name
+    abort "could not extract `name` from #{ This._lib }"
+  end
+  This.name = name
+
+# now, fully grok This 
+#
+  This.object = eval(This.name)
+
+  version = This.object.send(:version)
   This.version = version
 
-# see if dependencies are export by the module
-#
   if This.object.respond_to?(:dependencies)
     This.dependencies = This.object.dependencies
   end
 
-# we need to know the name of the lib an it's version
-#
-  abort('no lib') unless This.lib
-  abort('no version') unless This.version
-
 # discover full path to this ruby executable
 #
-  c = Config::CONFIG
+  c = RbConfig::CONFIG
   bindir = c["bindir"] || c['BINDIR']
   ruby_install_name = c['ruby_install_name'] || c['RUBY_INSTALL_NAME'] || 'ruby'
   ruby_ext = c['EXEEXT'] || ''
@@ -344,6 +435,34 @@ BEGIN {
     alias_method 'to_s', 'expand'
   end
   def Template(*args, &block) Template.new(*args, &block) end
+
+# os / platform support 
+#
+  module Platform
+    def Platform.windows?
+      (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM) != nil
+    end
+
+    def Platform.darwin?
+     (/darwin/ =~ RUBY_PLATFORM) != nil
+    end
+
+    def Platform.mac?
+      Platform.darwin?
+    end
+
+    def Platform.unix?
+      !Platform.windows?
+    end
+
+    def Platform.linux?
+      Platform.unix? and not Platform.darwin?
+    end
+
+    def Platform.jruby?
+      RUBY_ENGINE == 'jruby'
+    end
+  end
 
 # colored console output support
 #
