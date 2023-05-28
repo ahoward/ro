@@ -344,7 +344,7 @@ module Ro
 
         key = path_info.split('/')
 
-        promise = cd.promise(node, key) do
+        promise = cd.promise(key) do
           html = Ro.render(path, node)
           html = Ro.expand_asset_urls(html, node)
           # @attributes.set(key => html)
@@ -363,10 +363,10 @@ module Ro
     end
 
     class CycleDector
-      attr_accessor :node, :promises, :keys, :key
+      attr_accessor :context, :promises, :keys, :key
 
-      def initialize(node)
-        @node = node
+      def initialize(context)
+        @context = context
         @promises = []
         @keys = []
         @key = []
@@ -376,8 +376,8 @@ module Ro
         self
       end
 
-      def promise(node, key, &block)
-        promise = Promise.new(cd, node, key, &block)
+      def promise(key, &block)
+        promise = Promise.new(cd, key, &block)
       ensure
         keys.push(key)
         promises.push(promise)
@@ -393,9 +393,8 @@ module Ro
       end
 
       class Promise < BasicObject
-        def initialize(cd, node, key, &block)
+        def initialize(cd, key, &block)
           @cd = cd
-          @node = node
           @key = key
           @block = block
           @resolved = nil
@@ -415,7 +414,7 @@ module Ro
 
           if @cd.key.include?(@key)
             cycle = @cd.key + [@key]
-            ::Ro.error! "rendering #{@node.identifier} cycles on `#{cycle.join ' -> '}`"
+            ::Ro.error! "rendering #{@cd.context.identifier} cycles on `#{cycle.join ' -> '}`"
           end
 
           @cd.key.push(@key)
