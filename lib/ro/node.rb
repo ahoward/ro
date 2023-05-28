@@ -344,7 +344,7 @@ module Ro
 
         key = path_info.split('/')
 
-        promise = cd.promise(key) do
+        promise = cd.promise(node, key) do
           html = Ro.render(path, node)
           html = Ro.expand_asset_urls(html, node)
           # @attributes.set(key => html)
@@ -357,7 +357,9 @@ module Ro
         # @attributes.set(key => html)
       end
 
-      # cd.resolve
+      cd.resolve.each do |key, value|
+        @attributes.set(key => value)
+      end
     end
 
     class CycleDector
@@ -374,23 +376,34 @@ module Ro
         self
       end
 
-      def promise(key, &block)
-        promise = Promise.new(cd, key, &block)
+      def promise(node, key, &block)
+        promise = Promise.new(cd, node, key, &block)
       ensure
         keys.push(key)
         promises.push(promise)
       end
 
       def resolve
-        promises.each { |promise| promise.resolve }
+        Map.new.tap do |result|
+          keys.zip(promises).each do |key, promise|
+            value = promise.resolve
+            result.set(key => value)
+          end
+        end
       end
 
       class Promise < BasicObject
-        def initialize(cd, key, &block)
+        def initialize(cd, node, key, &block)
           @cd = cd
+          @node = node
           @key = key
           @block = block
           @resolved = nil
+        end
+
+        def method_missing(method, *args, &block)
+          super unless @resolved
+          @resolved.send(method, *args, &block)
         end
 
         def is_a?(other)
@@ -402,7 +415,7 @@ module Ro
 
           if @cd.key.include?(@key)
             cycle = @cd.key + [@key]
-            Ro.error! "rendering #{@node.identifier} cycles on #{cycle.join ' -> '}"
+            ::Ro.error! "rendering #{@node.identifier} cycles on `#{cycle.join ' -> '}`"
           end
 
           @cd.key.push(@key)
@@ -419,11 +432,11 @@ module Ro
         end
 
         def to_s
-          call
+          resolve
         end
 
         def inspect
-          call
+          resolve
         end
       end
     end

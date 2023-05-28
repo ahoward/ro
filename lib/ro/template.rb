@@ -53,8 +53,8 @@ module Ro
 
             Ro.error!("no rendering engine for path=#{path}, engine=#{engine}!") unless tilt
 
-            render_partials = proc do |*args|
-              p args: args
+            render_partials = proc do |*_args|
+              nil
             end
 
             tilt.new { content }.render(context, &render_partials)
