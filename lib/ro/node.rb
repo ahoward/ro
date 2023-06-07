@@ -1,24 +1,40 @@
 module Ro
   class Node
-    fattr :root
     fattr :path
+    fattr :options
+    fattr :id
+    fattr :slug
     fattr :type
-    fattr :loaded
+    fattr :root
     fattr :fields
+    fattr :loaded
+    fattr :loading
 
-    def initialize(path)
-      @path = Ro.realpath(path.to_s)
+    def initialize(path, options = {})
+      @path = Ro.realpath(path)
+      @options = Map.for(options)
+
       @id   = File.basename(@path)
       @slug = Slug.for(@id)
       @type = File.basename(File.dirname(@path))
-      @root = Ro::Root.new(File.dirname(File.dirname(@path)))
+
+      @root = options.fetch(:root) { Ro::Root.new(File.dirname(File.dirname(@path))) }
+
+      @fields = Map.new
+
       @loaded = false
       @loading = false
+
       @attributes = Map.new
-      @fields = Map.new
     end
 
-    attr_reader :id
+    def attributes
+      _load { @attributes }
+    end
+
+    def attributes=(attributes)
+      @attributes = Map.for(attributes)
+    end
 
     def _id
       @id
@@ -76,8 +92,8 @@ module Ro
       self
     end
 
-    def ro(*args, &block)
-      Ro::Root.new(*args, &block).nodes
+    def ro
+      root.nodes
     end
 
     def get(*args)
@@ -113,15 +129,15 @@ module Ro
 
       path_info = Ro.relative_path_for(args)
 
-      path = File.join(@path.to_s, 'assets', path_info)
+      path = File.join(@path, 'assets', path_info)
 
       glob = path_info.gsub(/[_-]/, '[_-]')
 
       globs =
         [
-          File.join(@path.to_s, 'assets', "#{glob}"),
-          File.join(@path.to_s, 'assets', "#{glob}*"),
-          File.join(@path.to_s, 'assets', "**/#{glob}*")
+          File.join(@path, 'assets', "#{glob}"),
+          File.join(@path, 'assets', "#{glob}*"),
+          File.join(@path, 'assets', "**/#{glob}*")
         ]
 
       candidates = globs.map { |glob| Dir.glob(glob, ::File::FNM_CASEFOLD) }.flatten.compact.uniq.sort
@@ -146,6 +162,8 @@ module Ro
       path = File.expand_path(File.join(node.path, relative_path.to_s))
       raise ArgumentError, "#{relative_path.inspect} -- DOES NOT EXIST" unless test('e', path)
 
+      # require 'pry'
+      # binding.pry
       Ro.url_for(node.relative_path, relative_path.to_s, options)
     end
 
@@ -154,22 +172,25 @@ module Ro
     end
 
     def relative_path
-      re = /^#{Regexp.escape(Ro.root)}/
-      @path.to_s.gsub(re, '')
+      # re = /^#{Regexp.escape(Ro.realpath(root))}/
+
+      # path.gsub(re, '').tap do |relative_path|
+      # Ro.error!("could not compute relative_path ") unless relative_path != path
+      # end
+      Ro.relative_path(path, from: root)
     end
 
-    def source_for(*args)
-      key = Ro.relative_path_for(:assets, :source, args).split('/')
+    def src_for(*args)
+      key = Ro.relative_path_for(:assets, :src, args).split('/')
       get(key)
     end
 
     def method_missing(method, *args, &block)
       super if method.to_s == 'to_ary'
 
-      Ro.log "Ro::Node(#{identifier})#method_missing(#{method.inspect}, #{args.inspect})"
+      # Ro.log "Ro::Node(#{identifier})#method_missing(#{method.inspect}, #{args.inspect})"
 
       key = method.to_s
-
       return @attributes[key] if @attributes.has_key?(key)
 
       _load do
@@ -183,23 +204,19 @@ module Ro
       end
     end
 
-    def attributes
-      _load { @attributes }
-    end
-
-    attr_writer :attributes
-
     def as_json(*_args)
       attributes.to_hash.merge(meta_attributes)
     end
 
     def meta_attributes
       {
-        '_identifier' => identifier,
-        '_type' => _type,
-        '_id' => _id,
-        '_url' => url,
-        '_asset_urls' => asset_urls
+        '_' => {
+          'identifier' => identifier,
+          'url' => url,
+          'type' => _type,
+          'id' => _id,
+          'asset_urls' => asset_urls
+        }
       }
     end
 
@@ -271,13 +288,12 @@ module Ro
     end
 
     def _load_from_cache_or_disk
-      # return :cache if _load_from_cache
+      return :cache if _load_from_cache
       return :disk if _load_from_disk
 
-      nil
+      Ro.error! 'wtf!'
     end
 
-    # FIXME: - think about this... since mutual deps can exist....  maybe NO cache.  KISS
     def _load_from_cache
       cache_key = _cache_key
 
@@ -299,9 +315,10 @@ module Ro
 
       _load_attributes_yml
       _load_attribute_files
-      # FIXME
-      # _load_sources
-      # _load_assets
+      # _load_srcs
+      _load_assets
+
+      @attributes.update(meta_attributes)
 
       Ro.cache && Ro.cache.write(cache_key, @attributes)
     end
@@ -334,27 +351,25 @@ module Ro
         next if basename == 'attributes.yml'
 
         relative_path = Ro.relative_path(path, to: @path)
-        next if relative_path =~ %r{^assets/}
-
-        # basename = File.basename(path)
-        # next if basename == 'index.json'
-        # FIXME
+        subdir = relative_path.split('/').first
+        next if %w[assets].include?(subdir)
 
         path_info, ext = key = relative_path.split('.', 2)
 
         key = path_info.split('/')
 
         promise = cd.promise(key) do
-          html = Ro.render(path, node)
-          html = Ro.expand_asset_urls(html, node)
+          object = Ro.render(path, node)
+          if object.is_a?(String)
+            html = object
+            html = Ro.expand_asset_urls(html, node)
+          else
+            object
+          end
           # @attributes.set(key => html)
         end
 
         @attributes.set(key => promise)
-
-        # html = Ro.render(path, node)
-        # html = Ro.expand_asset_urls(html, node)
-        # @attributes.set(key => html)
       end
 
       cd.resolve.each do |key, value|
@@ -362,103 +377,82 @@ module Ro
       end
     end
 
-    class CycleDector
-      attr_accessor :context, :promises, :keys, :key
+    #     def _load_src
+    #       glob = File.join(@path, 'assets/src/**/*')
+    #
+    #       Dir.glob(glob) do |path|
+    #         next if test('d', path)
+    #
+    #         basename = File.basename(path)
+    #         key, ext = basename.split('.', 2)
+    #
+    #         next if basename == 'attributes.yml'
+    #
+    #         value = Ro.render_src(path, node)
+    #
+    #         @attributes.set([:assets, :src, basename] => value)
+    #       end
+    #     end
+    #
+    #     def _load_assets
+    #       @attributes.update(asset_urls)
+    #     end
 
-      def initialize(context)
-        @context = context
-        @promises = []
-        @keys = []
-        @key = []
-      end
+    def _load_srcs
+      dir = File.join(@path, 'src')
 
-      def cd
-        self
-      end
-
-      def promise(key, &block)
-        promise = Promise.new(cd, key, &block)
-      ensure
-        keys.push(key)
-        promises.push(promise)
-      end
-
-      def resolve
-        Map.new.tap do |result|
-          keys.zip(promises).each do |key, promise|
-            value = promise.resolve
-            result.set(key => value)
-          end
-        end
-      end
-
-      class Promise < BasicObject
-        def initialize(cd, key, &block)
-          @cd = cd
-          @key = key
-          @block = block
-          @resolved = nil
-        end
-
-        def method_missing(method, *args, &block)
-          super unless @resolved
-          @resolved.send(method, *args, &block)
-        end
-
-        def is_a?(other)
-          other.instance_of?(Promise)
-        end
-
-        def resolve
-          return @resolved if @resolved
-
-          if @cd.key.include?(@key)
-            cycle = @cd.key + [@key]
-            ::Ro.error! "rendering #{@cd.context.identifier} cycles on `#{cycle.join ' -> '}`"
-          end
-
-          @cd.key.push(@key)
-
-          begin
-            @resolved = @block.call.to_s
-          ensure
-            @cd.key.pop
-          end
-        end
-
-        def call
-          resolve
-        end
-
-        def to_s
-          resolve
-        end
-
-        def inspect
-          resolve
-        end
-      end
-    end
-
-    def _load_sources
-      glob = File.join(@path, 'assets/source/*')
+      glob = File.join(dir, '**/*')
 
       Dir.glob(glob) do |path|
         next if test('d', path)
 
-        basename = File.basename(path)
-        key, ext = basename.split('.', 2)
+        relative_path = Ro.relative_path(path, from: dir)
+        key = [:src, relative_path.split('/')]
 
-        next if basename == 'attributes.yml'
+        # basename = File.basename(path)
+        # key, ext = basename.split('.', 2)
 
-        value = Ro.render_source(path, node)
+        # next if basename == 'attributes.yml'
 
-        @attributes.set([:assets, :source, basename] => value)
+        url = url_for(relative_path)
+        src = Ro.render_src(path, node)
+
+        @attributes.set(key => { url: url, src: src })
       end
     end
 
     def _load_assets
-      @attributes.update(asset_urls)
+      # asset_dir = File.join(@path, 'assets')
+      # glob = File.join(asset_dir, '**/*')
+
+      # Dir.glob(glob) do |path|
+      # next if test('d', path)
+      assets.each do |asset|
+        key = asset.relative_path.split('/')
+        # p key: key
+        # p url: asset.url
+        # p relative_path: asset.relative_path
+        # next
+        basename = key.last
+        subdir = key.size > 2 ? key[1] : nil
+        is_src = subdir == 'src'
+
+        # basename = File.basename(path)
+        # key, ext = basename.split('.', 2)
+        #
+        # next if basename == 'attributes.yml'
+
+        value = { url: asset.url }
+
+        if is_src
+          src = Ro.render_src(asset.path, node)
+          value[:src] = src
+        end
+
+        @attributes.set(key, value)
+
+        # @attributes.set([:assets, :src, basename] => value)
+      end
     end
 
     def asset_urls

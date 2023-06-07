@@ -53,11 +53,11 @@ module Ro
 
             Ro.error!("no rendering engine for path=#{path}, engine=#{engine}!") unless tilt
 
-            render_partials = proc do |*_args|
-              nil
+            yield_handler = proc do |*_args|
+              :noop
             end
 
-            tilt.new { content }.render(context, &render_partials)
+            tilt.new { content }.render(context, &yield_handler)
           end
       end
 
@@ -79,7 +79,7 @@ module Ro
       ::Kramdown::Document.new(content, opts).to_html
     end
 
-    def self.render_source(path, options = {})
+    def self.render_src(path, options = {})
       path = File.expand_path(path.to_s.strip)
       options = Map.for(options.is_a?(Hash) ? options : { context: options })
 
@@ -140,7 +140,7 @@ if $0 == __FILE__
 
     puts '<hr /><hr /><hr />'
 
-    html = Ro::Template.render_source(__FILE__)
+    html = Ro::Template.render_src(__FILE__)
     puts html
   end
 end

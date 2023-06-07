@@ -1,51 +1,76 @@
-require 'rouge'
+[./ro, ./ro/posts, ./ro/posts/first-post, ./ro/posts/first-post/body, ./ro/posts/first-post/widget, ./ro/posts/first-post/body, ./ro/posts/first-post/widget]
 
-class ::Rouge::Formatters::HTMLInline
-  INITIALIZE = instance_method(:initialize)
+class Path < ::String
+  def initialize(*args, &block)
+    @leaf = options[:leaf]
+  end
 
-  def initialize(opts)
-    theme = if opts.is_a?(Hash)
-              opts[:theme] || opts['theme']
-            elsif opts.is_a?(Symbol)
-              opts.to_s
-            else
-              opts
-            end
-
-    INITIALIZE.bind(self).call(theme)
+  def prefix
+    @leaf ? File.dirname(self) : self
   end
 end
 
-require 'kramdown'
-require 'kramdown-parser-gfm'
+def loading(name, options = {}, &block)
+  leaf = options[:leaf]
+  last = @loading.last
 
-theme = 'github' # 'github.dark'
+  prefix = last.prefix if last
 
-options = {
-  input: 'GFM',
-  syntax_highlighter: 'rouge',
-  syntax_highlighter_opts: { formatter: Rouge::Formatters::HTMLInline, theme: theme }
-}
+  path = [prefix, name].join('/')
 
-markdown = <<~____
-  ```ruby
-  @A = 42
-  ```
-____
+  if @loading.include?(path)
+    # BOOM
+  end
 
-def markdown2html(markdown, options = {})
-  theme = options[:theme] || options['theme'] || 'github'
+  @loading.add(path)
 
-  options = {
-    input: 'GFM',
-    syntax_highlighter: 'rouge',
-    syntax_highlighter_opts: { formatter: Rouge::Formatters::HTMLInline, theme: theme }
-  }
-
-  html = ::Kramdown::Document.new(markdown, options).to_html
+  promise = Promise.new(self, name, &block)
+  @loading.push promise
 end
 
-# html = Kramdown::Document.new(markdown, options).to_html
-html = markdown2html(markdown)
+./ro/ # root.relative_path(:from => Dir.pwd.to_s)
+  posts/ # collection_promise(name) 
+    first_post/ # node_promise(name) 
+      attributes/ # field_promise(name)
 
-puts html
+    node.load!()
+
+    def load!
+      if @root.lazy.loading?
+        _load
+      else
+        @root.nodes[type][id]
+      end
+    end
+^
+|
+|
+./ro/
+
+
+class Root
+  def nodes
+    @lazy.loading @root do
+      Collection.new(:root => self)
+    end
+  end
+
+  class Collection
+    def initialize
+      @type = :posts
+    end
+
+    def method_missing
+      if subcollection_exists?(name)
+        @lazy.load(name){ load_subcollection(name)}
+      end
+    end
+  end
+
+  def initialize
+    @lazy = Lazy.new
+  end
+
+  def collections
+  end
+end

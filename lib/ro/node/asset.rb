@@ -9,9 +9,8 @@ module Ro
       def initialize(node, path)
         @node = node
         @path = Ro.realpath(path)
-        @relative_path = Ro.path_for(@path.to_s.gsub(/^#{ Regexp.escape(@node.asset_dir) }/, 'assets'))
+        @relative_path = Ro.path_for(@path.to_s.gsub(/^#{Regexp.escape(@node.asset_dir)}/, 'assets'))
         @url = @node.url_for(@relative_path)
-        #p 'node.relative_path' => @node.relative_path, '@path' => @path, 'node.asset_dir' => @node.asset_dir, '@relative_path' => @relative_path
         super(@url)
       end
 
@@ -23,9 +22,9 @@ module Ro
         base, ext = basename.split('.', 2)
         ext
       end
-      alias_method(:ext, :extension)
+      alias ext extension
 
-      IMAGE_RE = %r/[.](jpg|jpeg|png|gif|tif|tiff|svg)$/i
+      IMAGE_RE = /[.](jpg|jpeg|png|gif|tif|tiff|svg)$/i
 
       def image?
         !!(basename =~ IMAGE_RE)
