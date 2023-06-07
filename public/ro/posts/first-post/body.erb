@@ -1,0 +1,31 @@
+# <%= title %>
+
+* one
+* two
+* three
+
+<hr/>
+
+<img src="assets/foo.jpg" />
+<br />
+
+<img src="assets/foo/bar/baz.jpg" />
+
+widget:
+1.
+<%= widget %>
+
+2.
+widget: <%= "\n" + widget.gsub(/\n/, ' ') %>
+
+3.
+<%== widget %>
+
+<%= ro.posts.first_post.title if false %>
+
+<%= yield 'posts/second-post' if false %>
+
+<% html = "\n<foobar/>" %>
+1. inline: <%= html %>
+2. newline:
+<%= html %>

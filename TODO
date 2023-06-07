@@ -1,11 +1,38 @@
 x support for absolute urls
 x RO_URL=
+
+- assets are promises too
+- root.nodes is not re-entrant, loading nodes, should never trigger loading nodes....
+- ensure loading from the root loads exactly one time
+- no caching, because simple
+
+- root.nodes is a promise
+
+- root.@nodes is a map of collections ?
+
+- root.collections
+
+- @nodes = List.new
+
+- ro.nodes.posts promises to promose('posts'){ load_list('posts') }
+
+
 - better cli?
-- script
+- ./lib/script
+- ro build
+- ro clean
+- ro watch (dir)
+- root.build!
+
+
+- ro/pages/home/index.html.erb
+- <% layout = ro.layouts.default %>
+- <%= layout.header %>
+- <%= layout.footer %>
+
 - better / more specific errors for CLI ?
 - error boundary?
 - support for building
-- ro build
 - support for watching
 
 - functional *except*for Ro.cache
@@ -21,7 +48,9 @@ x RO_URL=
 - gh-pages
 - ./bin/ro build
 
--  https://api.mtf-trek.com/ro/team/marci/index.json
--  https://api.mtf-trek.com/ro/team/index.json
+-  https://api.mtf-trek.com/ro/team/marci.json
+./script/build -> ./public/ro/team/marci.json
+
+-  https://api.mtf-trek.com/ro/team.json
 
 - workflow to build... jecky hack?

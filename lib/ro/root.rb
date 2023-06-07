@@ -1,27 +1,31 @@
 module Ro
   class Root < ::String
-    attr_reader :opts, :url, :loader
+    attr_reader :opts, :root, :url
+
+    def self.for(arg)
+      arg.is_a?(Root) ? arg : Root.new(arg)
+    end
 
     def initialize(root = Ro.config.root, options = {})
+      @root = Ro.realpath(root)
       @opts = Map.options_for(options)
-      @root = Ro.fullpath(root)
       @url = Ro.normalize_url(opts[:url] || Ro.config.url)
 
       super(@root.to_s)
+    ensure
+      exists!
+    end
 
-      Ro.error!("root=#{root.inspect} does not exist") unless test('d', self)
+    def exists!
+      Ro.error!("root=#{root.inspect} does not exist") unless test('d', root)
     end
 
     def root
       self
     end
 
-    def load
-      loader.load
-    end
-
     def nodes
-      Node::List.new(root) do |list|
+      Node::List.new(self) do |list|
         node_directories do |path|
           list.load(path)
         end
@@ -29,12 +33,14 @@ module Ro
     end
 
     def directories(&block)
-      list = Dir.glob(File.join(root, '*/')).to_a.sort
+      glob = File.join(self, '*/')
+      list = Dir.glob(glob).to_a.sort
       block ? list.each(&block) : list
     end
 
     def node_directories(&block)
-      list = Dir.glob(File.join(root, '*/*/')).to_a.sort
+      glob = File.join(self, '*/*/')
+      list = Dir.glob(glob).to_a.sort
       block ? list.each(&block) : list
     end
   end

@@ -202,6 +202,10 @@ module Ro
     Template.render(path, context: context)
   end
 
+  def self.render_src(path, context)
+    Template.render_src(path, context: context)
+  end
+
   # url expansion utils
   # |
   # v
@@ -292,12 +296,8 @@ module Ro
     absolute_path_for(arg, *args)
   end
 
-  def self.fullpath(path)
-    File.expand_path(path.to_s)
-  end
-
   def self.realpath(path)
-    Pathname.new(path.to_s).realpath
+    Pathname.new(path.to_s).realpath.to_s
   end
 
   def self.relative_path(path, *args)
@@ -324,6 +324,7 @@ module Ro
       pagination.rb
       cache.rb
       template.rb
+      cycle_detector.rb
       root.rb
       node.rb
       node/asset.rb
