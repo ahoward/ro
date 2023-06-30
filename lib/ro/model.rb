@@ -1,42 +1,40 @@
 begin
   require 'active_model'
   require 'active_support'
-  require 'active_support/core_ext/string/inflections.rb'
+  require 'active_support/core_ext/string/inflections'
 rescue LoadError => e
   abort "you need to add the 'active_model' and 'active_support' gems to use Ro::Model"
 end
 
 module Ro
   class Model
-  #
     extend ActiveModel::Naming
     extend ActiveModel::Translation
     include ActiveModel::Validations
     include ActiveModel::Conversion
 
-  #
-    Fattr(:collection){ default_collection_name }
-    Fattr(:default_collection_name){ self.name.to_s.split(/::/).last.underscore.pluralize } 
-    Fattr(:root){ Ro.root }
-    Fattr(:prefix){ File.join(root, collection) }
+    Fattr(:collection) { default_collection_name }
+    Fattr(:default_collection_name) { name.to_s.split(/::/).last.underscore.pluralize }
+    Fattr(:root) { Ro.root }
+    Fattr(:prefix) { File.join(root, collection) }
 
-    def Model.nodes(*args, &block)
+    def self.nodes(*_args)
       root.nodes.send(collection)
     end
 
-    def Model.all(*args, &block)
+    def self.all(*_args)
       models_for(nodes)
     end
 
-    def Model.select(*args, &block)
+    def self.select(*args, &block)
       all.select(*args, &block)
     end
 
-    def Model.detect(*args, &block)
+    def self.detect(*args, &block)
       all.detect(*args, &block)
     end
 
-    def Model.count(*args, &block)
+    def self.count(*args, &block)
       if args.empty? and block.nil?
         all.size
       else
@@ -44,53 +42,57 @@ module Ro
       end
     end
 
-    def Model.where(*args, &block)
+    def self.where(*_args, &block)
       all.select do |model|
         !!model.instance_eval(&block)
       end
     end
 
-    def Model.first
+    def self.first
       all.first
     end
 
-    def Model.last
+    def self.last
       all.last
     end
 
-    def Model.find(id)
-      re = %r/#{ id.to_s.gsub(/[-_]/, '[-_]') }/i
-      all.detect{|model| model.id.to_s == id.to_s}
+    def self.find(id)
+      # re = /#{id.to_s.gsub(\/[-_]\/, '[-_]')}/i
+      # all.detect { |model| model.id.to_s == id.to_s }
+      # re = /#{id.to_s.gsub(\/[-_]\/, '[-_]')}/i
+      slug = Slug.for(id)
+      all.detect { |model| Slug.for(model.id) == slug }
     end
 
-    def Model.[](id)
+    def self.[](id)
       find(id)
     end
 
-    def Model.method_missing(method, *args, &block)
+    def self.method_missing(method, *args, &block)
       id = method
       model = find(id)
       return model if model
+
       super
     end
 
-    def Model.models_for(result)
+    def self.models_for(result)
       case result
-        when Array
-          List.for(Array(result).flatten.compact.map{|element| new(element)})
-        else
-          new(result)
+      when Array
+        List.for(Array(result).flatten.compact.map { |element| new(element) })
+      else
+        new(result)
       end
     end
 
-    def Model.paginate(*args, &block)
+    def self.paginate(*args, &block)
       all.paginate(*args, &block)
     end
 
     class List < ::Array
       include Pagination
 
-      def List.for(*args, &block)
+      def self.for(*args, &block)
         new(*args, &block)
       end
 
@@ -107,18 +109,15 @@ module Ro
       List.new(*args, &block)
     end
 
-  #
     attr_accessor(:node)
 
-    def initialize(*args, &block)
+    def initialize(*args)
       attributes = Map.options_for!(args)
 
-      node = args.detect{|arg| arg.is_a?(Node)}
-      model = args.detect{|arg| arg.is_a?(Model)}
+      node = args.detect { |arg| arg.is_a?(Node) }
+      model = args.detect { |arg| arg.is_a?(Model) }
 
-      if node.nil? and not model.nil?
-        node = model.node
-      end
+      node = model.node if node.nil? and !model.nil?
 
       if node
         @node = node
@@ -137,7 +136,6 @@ module Ro
       true
     end
 
-  #
     def prefix
       self.class.prefix
     end
@@ -146,7 +144,6 @@ module Ro
       File.join(prefix, id)
     end
 
-  #
     def method_missing(method, *args, &block)
       node.send(method, *args, &block)
     end
@@ -157,17 +154,12 @@ module Ro
   end
 end
 
-
-
-
 if __FILE__ == $0
 
   ENV['RO_ROOT'] = '../sample_ro_data'
 
   class Person < Ro::Model
-
-    #field(:first_name, :type => :string)
-    
+    # field(:first_name, :type => :string)
   end
 
   p Person.collection
@@ -177,14 +169,11 @@ if __FILE__ == $0
 
   p ara.url_for(:ara_glacier)
 
-  p Person.paginate(:per => 2, :page => 1)
+  p Person.paginate(per: 2, page: 1)
   p Person.name
 
   p Person.prefix
   p ara.id
   p ara.first_name
-
-require 'pry'
-binding.pry
 
 end

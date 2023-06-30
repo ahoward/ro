@@ -4,7 +4,7 @@ Ro.load_dependencies!
 
 module Kernel
   def ro(*args, &block)
-    Ro.nodes(*args, &block)
+    Ro.collection(*args, &block)
   end
 end
 
@@ -12,12 +12,16 @@ module Ro
   # node utils
   # |
   # v
+  def self.collection(*args, &block)
+    root(*args, &block).collection
+  end
+
   def self.root(*args, &block)
     Ro::Root.new(*args, &block)
   end
 
-  def self.nodes(*args, &block)
-    root(*args, &block).nodes
+  def self.root=(root)
+    ENV['RO_ROOT'] = root.to_s
   end
 
   # config
@@ -72,13 +76,13 @@ module Ro
     options = Map.extract_options!(args)
     base = options[:base] || options[:url] || Ro.config.url
 
-    path = Ro.path_for(path, *args)
+    path = Path.for(path, *args)
 
     fragment = options.delete(:fragment)
     query = options.delete(:query) || options
 
     uri = URI.parse(base.to_s)
-    uri.path = Ro.absolute_path_for(uri.path, path)
+    uri.path = Path.absolute(uri.path, path)
     uri.path = '' if uri.path == '/'
 
     uri.query = Ro.query_string_for(query) unless query.empty?
@@ -111,7 +115,7 @@ module Ro
 
   def self.normalize_url(url)
     uri = URI.parse(url.to_s).normalize
-    uri.path = Ro.absolute_path_for(uri.path.to_s).to_s.gsub(%r{/+$}, '')
+    uri.path = Path.absolute(uri.path)
     uri.to_s
   end
 
@@ -119,7 +123,7 @@ module Ro
   # |
   # v
   def self.cache
-    @cache ||= Cache.new
+    Thread.current[:RO_CACHE] ||= Cache.new
   end
 
   def self.md5(string)
@@ -165,6 +169,7 @@ module Ro
 
   def self.error!(message, context = nil)
     error = Error.new(message, context)
+
     begin
       raise error
     rescue Error
@@ -270,44 +275,7 @@ module Ro
     end
   end
 
-  # path utils
-  # |
-  # v
-
-  def self.paths_for(*args)
-    args.flatten.compact.join('/').scan(%r{[^/]+})
-  end
-
-  def self.path_for(*args)
-    paths_for(*args).join('/')
-  end
-
-  def self.absolute_path_for(*args)
-    path = ('/' + paths_for(*args).join('/')).squeeze('/')
-    path unless path.empty?
-  end
-
-  def self.relative_path_for(*args)
-    path = absolute_path_for(*args).sub(%r{^/+}, '')
-    path unless path.empty?
-  end
-
-  def self.normalize_path(arg, *args)
-    absolute_path_for(arg, *args)
-  end
-
-  def self.realpath(path)
-    Pathname.new(path.to_s).realpath.to_s
-  end
-
-  def self.relative_path(path, *args)
-    options = Map.options_for!(args)
-    path = File.expand_path(String(path))
-    relative = File.expand_path(String(args.shift || options[:relative] || options[:to] || options[:from]))
-    Pathname.new(path).relative_path_from(Pathname.new(relative)).to_s
-  end
-
-  # coercison
+  # coercison utils
   # |
   # v
   def self.list_of_strings(*args)
@@ -320,15 +288,17 @@ module Ro
   def self.initialize!
     Ro.load %w[
       slug.rb
+      path.rb
       error.rb
-      pagination.rb
       cache.rb
       template.rb
+      pagination.rb
       cycle_detector.rb
       root.rb
       node.rb
-      node/asset.rb
-      node/list.rb
+      collection.rb
+      asset.rb
+      model.rb
     ]
 
     Ro.log! if Ro.config.log
