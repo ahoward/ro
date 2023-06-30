@@ -2,15 +2,26 @@ module Ro
   class Slug < ::String
     Join = '-'
 
-    def Slug.for(*args)
+    def self.for(arg, *args, &block)
+      return arg if arg.is_a?(Slug) && args.empty? && block.nil?
+
+      new(arg, *args, &block)
+    end
+
+    def initialize(*args)
       options = args.last.is_a?(Hash) ? args.pop : {}
-      join = (options[:join]||options['join']||Join).to_s
+
+      join = (options[:join] || options['join'] || Join).to_s
+
       string = args.flatten.compact.join(join)
-      words = string.to_s.scan(%r|[/\w]+|)
-      words.map!{|word| word.gsub %r|[_-]|, join}
-      words.map!{|word| word.gsub %r|[^/0-9a-zA-Z_-]|, ''}
-      words.delete_if{|word| word.nil? or word.strip.empty?}
-      new(words.join(join).downcase.gsub('/', (join * 2)))
+      words = string.to_s.scan(%r{[/\w]+})
+      words.map! { |word| word.gsub(/[_-]/, join) }
+      words.map! { |word| word.gsub %r{[^/0-9a-zA-Z_-]}, '' }
+      words.delete_if { |word| word.nil? or word.strip.empty? }
+
+      slug = words.join(join).downcase.gsub('/', (join * 2))
+
+      super(slug)
     end
   end
 end

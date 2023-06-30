@@ -1,47 +1,50 @@
 module Ro
-  class Root < ::String
-    attr_reader :opts, :root, :url
-
-    def self.for(arg)
-      arg.is_a?(Root) ? arg : Root.new(arg)
-    end
+  class Root < Path
+    attr_reader :url
 
     def initialize(root = Ro.config.root, options = {})
-      @root = Ro.realpath(root)
-      @opts = Map.options_for(options)
-      @url = Ro.normalize_url(opts[:url] || Ro.config.url)
+      @options = Map.for(options)
 
-      super(@root.to_s)
-    ensure
+      super(root)
+
+      @url = Ro.normalize_url(@options[:url] || Ro.config.url)
+
       exists!
     end
 
     def exists!
-      Ro.error!("root=#{root.inspect} does not exist") unless test('d', root)
+      Ro.error!("root=#{expand_path} is not as a directory") unless exist? && directory?
     end
 
-    def root
-      self
+    def collection
+      Collection.new(root: self)
     end
 
-    def nodes
-      Node::List.new(self) do |list|
-        node_directories do |path|
-          list.load(path)
-        end
-      end
-    end
-
-    def directories(&block)
-      glob = File.join(self, '*/')
-      list = Dir.glob(glob).to_a.sort
-      block ? list.each(&block) : list
-    end
-
-    def node_directories(&block)
-      glob = File.join(self, '*/*/')
-      list = Dir.glob(glob).to_a.sort
-      block ? list.each(&block) : list
-    end
+    #     # FIXME
+    #     def nodes
+    #       Node::List.new(self) do |list|
+    #         node_directories do |path|
+    #           list.load(path)
+    #         end
+    #       end
+    #     end
+    #
+    #     def directories(&block)
+    #       glob = File.join(self, '*/')
+    #       list = Dir.glob(glob).to_a.sort
+    #       block ? list.each(&block) : list
+    #     end
+    #
+    #     def node_directories(&block)
+    #       glob = File.join(self, '*/*/')
+    #
+    #       directories = Dir.glob(glob).to_a.select do |entry|
+    #         Path.for(entry).exist? && Path.for(entry, 'attributes.yml').exist?
+    #       end
+    #
+    #       directories.sort!
+    #
+    #       block ? directories.each(&block) : directories
+    #     end
   end
 end

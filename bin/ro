@@ -1,39 +1,53 @@
 #! /usr/bin/env ruby
 Main do
-  option('root') { ENV['RO_ROOT'] }
-
   def run
     help!
   end
 
   mode(:build) do
     def run
-      index = []
+      # require 'ak47'
+      # opts = { watch_dirs: Ro.root }
+      # Ak47() { build! }
+      build!
+    end
 
-      # FIXME: - this list should be sorted by default.....
-      ro.nodes.each do |node|
-        attributes = node.attributes
+    def build!
+      # puts "### building #{Ro.root}..."
+      indexen = {}
+      build_dir = './api'
 
-        # identifier = node.identifier
-        # position = attributes.has_key?(:position) ? attributes[:position] : 0
-
-        meta = {
-          # :position => position
-        }
-        index.push(meta)
+      ro.collection.each do |node|
+        type = node.type
+        id = node.id
 
         json = JSON.pretty_generate(node.as_json)
-        path = node.path
-        index_json = File.join(path, 'index.json')
-        IO.binwrite(index_json, json)
-        puts index_json
+
+        path = File.join(build_dir, type, id) + '.json'
+        binwrite(path, json)
+        puts path
+
+        indexen[type] ||= []
+        indexen[type].push(id)
       end
+
+      indexen.each do |type, collection|
+        path = File.join(build_dir, type) + '.json'
+        json = JSON.pretty_generate('type' => type, 'collection' => collection)
+        binwrite(path, json)
+        puts path
+      end
+    end
+
+    def binwrite(path, data)
+      FileUtils.mkdir_p(File.dirname(path))
+      IO.binwrite(path, data)
     end
   end
 
   mode(:console) do
     def run
-      Ro.root = params['root'].value if params['root'].given?
+      # Ro.root = params['root'].value if params['root'].given?
       require "#{$libdir}/ro/console.rb"
       Ro::Console.start!
     end
@@ -43,6 +57,8 @@ Main do
     argument('identifier')
 
     def run
+      set_root!
+
       identifier = params['identifier'].value
 
       result = ro[identifier]
@@ -55,6 +71,10 @@ Main do
 
       puts JSON.pretty_generate(result)
     end
+  end
+
+  def set_root!
+    Ro.root = params['root'].value if params['root'].given?
   end
 end
 
