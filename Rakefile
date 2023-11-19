@@ -1,6 +1,8 @@
 This.author = "Ara T. Howard"
 This.email = "ara.t.howard@gmail.com"
-This.homepage = "https://github.com/ahoward/#{ This.lib }"
+This.github = "ahoward"
+This.homepage = "https://github.com/#{ This.github }/#{ This.basename }"
+This.repo = "https://github.com/#{ This.github }/#{ This.basename }"
 
 task :license do
   open('LICENSE', 'w'){|fd| fd.puts "Ruby"}
@@ -71,11 +73,13 @@ task :gemspec do
         extension = File.basename(entry).split(%r/[.]/).last
         ignore_extensions.any?{|ext| ext === extension}
       end
+
       list.delete_if do |entry|
         next unless test(?d, entry)
         dirname = File.expand_path(entry)
         ignore_directories.any?{|dir| File.expand_path(dir) == dirname}
       end
+
       list.delete_if do |entry|
         next unless test(?f, entry)
         filename = File.expand_path(entry)
@@ -83,22 +87,20 @@ task :gemspec do
       end
     end
 
-  lib         = This.lib
+  name        = This.basename
   object      = This.object
   version     = This.version
   files       = shiteless[Dir::glob("**/**")]
   executables = shiteless[Dir::glob("bin/*")].map{|exe| File.basename(exe)}
-  #has_rdoc    = true #File.exist?('doc')
-  test_files  = "test/#{ lib }.rb" if File.file?("test/#{ lib }.rb")
-  summary     = object.respond_to?(:summary) ? object.summary : "summary: #{ lib } kicks the ass"
-  description = object.respond_to?(:description) ? object.description : "description: #{ lib } kicks the ass"
-  license     = object.respond_to?(:license) ? object.license : "Ruby"
+  summary     = Util.unindent(This.summary).strip
+  description = Util.unindent(This.description).strip
+  license     = This.license.strip
 
   if This.extensions.nil?
     This.extensions = []
     extensions = This.extensions
     %w( Makefile configure extconf.rb ).each do |ext|
-      extensions << ext if File.exists?(ext)
+      extensions << ext if File.exist?(ext)
     end
   end
   extensions = [extensions].flatten.compact
@@ -120,14 +122,14 @@ task :gemspec do
     else
       Template {
         <<-__
-          ## <%= lib %>.gemspec
+          ## <%= name %>.gemspec
           #
 
           Gem::Specification::new do |spec|
-            spec.name = <%= lib.inspect %>
+            spec.name = <%= name.inspect %>
             spec.version = <%= version.inspect %>
             spec.platform = Gem::Platform::RUBY
-            spec.summary = <%= lib.inspect %>
+            spec.summary = <%= summary.inspect %>
             spec.description = <%= description.inspect %>
             spec.license = <%= license.inspect %>
 
@@ -135,8 +137,6 @@ task :gemspec do
             spec.executables = <%= executables.inspect %>
             
             spec.require_path = "lib"
-
-            spec.test_files = <%= test_files.inspect %>
 
             <% dependencies.each do |lib_version| %>
               spec.add_dependency(*<%= Array(lib_version).flatten.inspect %>)
@@ -153,109 +153,9 @@ task :gemspec do
     end
 
   Fu.mkdir_p(This.pkgdir)
-  gemspec = "#{ lib }.gemspec"
+  gemspec = "#{ name }.gemspec"
   open(gemspec, "w"){|fd| fd.puts(template)}
   This.gemspec = gemspec
-end
-
-task :dist_rb do
-  Dir.chdir(This.dir)
-
-  distdir = File.join(This.dir, 'dist')
-  Fu.mkdir_p(distdir)
-
-  bin = IO.binread('./bin/senv')
-
-  libs = '' 
-  Dir.glob('lib/**/**.rb').each do |lib|
-    libs << "### <lib src='#{ lib }'>\n\n"
-    libs << IO.binread(lib)
-    libs << "\n\n### </lib src='#{ lib }'>\n\n"
-  end
-
-  dist_rb = <<~____
-    #{ bin }
-
-    BEGIN {
-
-    #{ libs }
-     
-    }
-  ____
-
-  dist = "./dist/senv.rb"
-
-  Fu.mkdir_p(File.dirname(dist))
-  IO.binwrite(dist, dist_rb)
-  Fu.chmod(0755, dist)
-
-  system("#{ dist } help > /dev/null 2>&1")
-  abort("#{ dist } is borked") unless $?.exitstatus.zero?
-  STDOUT.puts(dist)
-end
-
-task :dist => [:dist_rb] do
-  Dir.chdir(This.dir)
-
-  version = This.version
-  name = This.name.downcase
-
-  platforms = %w[
-    linux-x86
-    linux-x86_64
-    osx
-  ]
-
-  Dir.glob("./dist/#{ name }-*").each do |entry|
-    Fu.rm_rf(entry)
-  end
-
-  spawn = proc do |cmd|
-    system(cmd) or abort("#{ cmd } #=> #{ $? }")
-  end
-
-  name = This.name.downcase
-  entrypoint = File.expand_path("./dist/#{ name }.sh")
-
-  platforms.each do |platform|
-    distdir = "./dist/#{ name }-#{ version }-#{ platform }"
-    Fu.mkdir_p(distdir)
-
-    libdir = File.join(distdir, 'lib')
-    Fu.mkdir_p(libdir)
-
-    appdir = File.join(libdir, 'app')
-    Fu.mkdir_p(appdir)
-
-    rubydir = File.join(libdir, 'ruby')
-    Fu.mkdir_p(rubydir)
-
-    Fu.cp('./dist/senv.rb', appdir)
-
-    Dir.chdir(rubydir) do
-      basename = "traveling-ruby-20141215-2.1.5-#{ platform }.tar.gz"
-      cmd = "curl -s -L -O --fail https://d6r77u77i8pq3.cloudfront.net/releases/#{ basename }"
-      spawn[cmd]
-      spawn["tar -xzf #{ basename }"]
-      Fu.rm(basename)
-    end
-
-    Dir.chdir(distdir) do
-      Fu.cp(entrypoint, name)
-    end
-  end
-
-  if STDOUT.tty?
-    system('tree -L 4 dist 2>/dev/null')
-  end
-
-  Dir.chdir './dist' do
-    platforms.each do |platform|
-      dist = "#{ name }-#{ version }-#{ platform }"
-      spawn["tar cvfz #{ dist }.tgz ./#{ dist } >/dev/null 2>&1"]
-      Fu.rm_rf(dist)
-    end
-  end
 end
 
 task :gem => [:clean, :gemspec] do
@@ -269,6 +169,8 @@ task :gem => [:clean, :gemspec] do
   This.gem = File.join(This.pkgdir, File.basename(gem))
 end
 
+task :README => [:readme]
+
 task :readme do
   samples = ''
   prompt = '~ > '
@@ -276,21 +178,40 @@ task :readme do
   version = This.version
 
   Dir['sample*/*'].sort.each do |sample|
-    samples << "\n" << "  <========< #{ sample } >========>" << "\n\n"
+    link = "[#{ sample }](#{ This.repo }/blob/main/#{ sample })"
+    samples << "  #### <========< #{ link } >========>\n"
 
     cmd = "cat #{ sample }"
-    samples << Util.indent(prompt + cmd, 2) << "\n\n"
-    samples << Util.indent(`#{ cmd }`, 4) << "\n"
+    samples << "```sh\n"
+    samples << Util.indent(prompt + cmd, 2) << "\n"
+    samples << "```\n"
+    samples << "```ruby\n"
+    samples << Util.indent(IO.binread(sample), 4) << "\n"
+    samples << "```\n"
+
+    samples << "\n"
 
     cmd = "ruby #{ sample }"
-    samples << Util.indent(prompt + cmd, 2) << "\n\n"
+    samples << "```sh\n"
+    samples << Util.indent(prompt + cmd, 2) << "\n"
+    samples << "```\n"
 
     cmd = "ruby -e'STDOUT.sync=true; exec %(ruby -I ./lib #{ sample })'"
-    samples << Util.indent(`#{ cmd } 2>&1`, 4) << "\n"
+    oe = `#{ cmd } 2>&1`
+    samples << "```txt\n"
+    samples << Util.indent(oe, 4) << "\n"
+    samples << "```\n"
+
+    samples << "\n"
   end
 
+  This.samples = samples
+
   template = 
-    if test(?e, 'README.erb')
+    case
+    when test(?e, 'README.md.erb')
+      Template{ IO.read('README.md.erb') }
+    when test(?e, 'README.erb')
       Template{ IO.read('README.erb') }
     else
       Template {
@@ -309,7 +230,7 @@ task :readme do
       }
     end
 
-  open("README", "w"){|fd| fd.puts template}
+  IO.binwrite('README.md', template)
 end
 
 task :clean do
@@ -318,8 +239,8 @@ end
 
 task :release => [:dist, :gem] do
   gems = Dir[File.join(This.pkgdir, '*.gem')].flatten
-  raise "which one? : #{ gems.inspect }" if gems.size > 1
-  raise "no gems?" if gems.size < 1
+  abort "which one? : #{ gems.inspect }" if gems.size > 1
+  abort "no gems?" if gems.size < 1
 
   cmd = "gem push #{ This.gem }"
   puts cmd
@@ -343,29 +264,30 @@ BEGIN {
   require 'rbconfig'
   require 'pp'
 
-# fu shortcut
+# fu shortcut!
 #
   Fu = FileUtils
 
-# cache a bunch of stuff about this rakefile/environment
+# guess a bunch of stuff about this rakefile/environment based on the
 #
   This = OpenStruct.new
 
   This.file = File.expand_path(__FILE__)
   This.dir = File.dirname(This.file)
   This.pkgdir = File.join(This.dir, 'pkg')
-  This.lib = File.basename(Dir.pwd).sub(/[-].*$/, '')
+  This.basename = File.basename(This.dir)
 
-# load _lib
+# load actual shit _lib
 #
-  _lib = ["./lib/#{ This.lib }/_lib.rb", "./lib/#{ This.lib }.rb"].detect{|l| test(?s, l)}
-  unless _lib
-    abort "could not find a _lib in ./lib!?"
-  end
+  _libpath = ["./lib/#{ This.basename }/_lib.rb", "./lib/#{ This.basename }.rb"]
+  _lib = _libpath.detect{|l| test(?s, l)}
+
+  abort "could not find a _lib in ./lib/ via #{ _libpath.join(':') }" unless _lib
+
   This._lib = _lib
   require This._lib
 
-# extract name from _lib
+# extract the name from the _lib
 #
   lines = IO.binread(This._lib).split("\n")
   re = %r`\A \s* (module|class) \s+ ([^\s]+) \s* \z`iomx
@@ -381,17 +303,16 @@ BEGIN {
     abort "could not extract `name` from #{ This._lib }"
   end
   This.name = name
+  This.basename = This.name.downcase
 
 # now, fully grok This 
 #
-  This.object = eval(This.name)
-
-  version = This.object.send(:version)
-  This.version = version
-
-  if This.object.respond_to?(:dependencies)
-    This.dependencies = This.object.dependencies
-  end
+  This.object       = eval(This.name)
+  This.version      = This.object.version
+  This.dependencies = This.object.dependencies
+  This.summary      = This.object.summary
+  This.description  = This.respond_to?(:description) ? This.description : This.summary
+  This.license      = This.respond_to?(:license) ? This.license : IO.binread('LICENSE').strip
 
 # discover full path to this ruby executable
 #
@@ -402,7 +323,7 @@ BEGIN {
   ruby = File.join(bindir, (ruby_install_name + ruby_ext))
   This.ruby = ruby
 
-# some utils
+# some utils, alwayze teh utils...
 #
   module Util
     def indent(s, n = 2)
@@ -417,7 +338,8 @@ BEGIN {
       next if line =~ %r/^\s*$/
       indent = line[%r/^\s*/] and break
     end
-    indent ? s.gsub(%r/^#{ indent }/, "") : s
+    unindented = indent ? s.gsub(%r/^#{ indent }/, "") : s
+    unindented.strip
   end
     extend self
   end
@@ -425,12 +347,21 @@ BEGIN {
 # template support
 #
   class Template
+    def Template.indent(string, n = 2)
+      string = string.to_s
+      n = n.to_i
+      padding = (42 - 10).chr * n
+      initial = %r/^#{ Regexp.escape(padding) }/
+      #require 'debug'
+      #binding.break
+      Util.indent(string, n).sub(initial, '')
+    end
     def initialize(&block)
       @block = block
       @template = block.call.to_s
     end
     def expand(b=nil)
-      ERB.new(Util.unindent(@template)).result((b||@block).binding)
+      ERB.new(Util.unindent(@template), trim_mode: '%<>-').result((b||@block).binding)
     end
     alias_method 'to_s', 'expand'
   end

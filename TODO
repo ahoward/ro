@@ -1,3 +1,112 @@
+
+
+- simply collections
+
+
+
+- support promise based api and fast build
+- @attributes madness
+
+- README.md
+  - mcms
+  - edit content using gh at the ui
+  - content renders directly input public
+  - workflow
+
+- workflow
+  - runs 1x/day
+
+
+- simple js lib for content is included in public/ro.js
+  - ro.collections()
+  - ro.collections('posts')
+  - ro.collections('posts')()
+  - ro.collections('posts')('first-post')
+
+
+interface
+
+- arrayfields?
+- map
+- main?
+
+- git-lfs
+    public/ro/*/*/assets/**
+
+ro.collections -> all collections
+
+dir.glob(**).map Collection.new(root, name)
+
+ro.collections['posts'] do |collection|
+end
+
+ro.collections.get('posts').get('first-post') -> that node
+ro.collections['posts']['first-post'] -> that node
+ro.collections.posts.first-post -> that node
+
+console : def ro; ro.collections; end
+
+# enumerable mixin for to_a, etc
+# to_hash
+#each
+
+
+- no dependencies
+
+- what does build do?
+  - ./public/ro -> ./public/api
+    - ./public/api/index.html
+      - list of collections
+        - {'posts' => {'count' => 42, 'first' => 'posts/first-post', 'last' => 'posts/last-post' }
+        - {'snippets' => {'count' => 42, 'first' => 'posts/first-post', 'last' => 'posts/last-post' }
+      ./public/api/posts/first-posts/attributes.yml
+      /ro/posts/index/attributes.yml <- error!
+
+    - sorts for collection
+      - published_at
+      - draft: true
+      - hidden: true
+      - name
+
+    ro.yml
+    root:
+      ./ro
+    build:
+      directory = ./api
+      page:
+        size: 10
+
+    api/index.html
+    api/posts/index.html
+    api/posts/index/0.html
+    api/posts/index/1.html
+    api/posts/first-posts/index.html
+    /ro/posts/first-posts/assets.png
+
+  - ro/api
+    - is reserved
+  - builds items
+    - ro/api/posts/first-post/index.json
+  - builds index in pages?
+    - ro/api/posts/index.json
+    - ro/api/posts/index/0.json
+    - ro/api/posts/index/1.json
+
+x path.join
+
+- remove all support for erb?
+- tear out cycle detection?
+
+- bin/ro
+
+- remove caching
+- missing src attr in assets?
+- remove the dep on main
+- where does build go.... ? into 
+- fix ro model?
+- refactor utils
+
+
 x support for absolute urls
 x RO_URL=
 
@@ -7,13 +116,9 @@ x RO_URL=
 - no caching, because simple
 
 - root.nodes is a promise
-
 - root.@nodes is a map of collections ?
-
 - root.collections
-
 - @nodes = List.new
-
 - ro.nodes.posts promises to promose('posts'){ load_list('posts') }
 
 

@@ -5,17 +5,23 @@ Gem::Specification::new do |spec|
   spec.name = "ro"
   spec.version = "2.0.0"
   spec.platform = Gem::Platform::RUBY
-  spec.summary = "ro"
-  spec.description = "description: ro kicks the ass"
+  spec.summary = "summary"
+  spec.description = "summary"
   spec.license = "Ruby"
 
   spec.files =
-["README.md",
+["Gemfile",
+ "Gemfile.lock",
+ "LICENSE",
+ "README.md",
  "Rakefile",
  "TODO",
  "TODO.md",
- "a.rb",
- "bak.gemspec",
+ "api",
+ "api/posts",
+ "api/posts.json",
+ "api/posts/first-post.json",
+ "api/posts/second-post.json",
  "bin",
  "bin/ro",
  "lib",
@@ -23,53 +29,72 @@ Gem::Specification::new do |spec|
  "lib/ro.rb",
  "lib/ro/_lib.rb",
  "lib/ro/asset.rb",
- "lib/ro/blankslate.rb",
  "lib/ro/cache.rb",
- "lib/ro/git.rb",
- "lib/ro/initializers",
- "lib/ro/initializers/env.rb",
- "lib/ro/initializers/tilt.rb",
- "lib/ro/lock.rb",
+ "lib/ro/collection.rb",
+ "lib/ro/console.rb",
+ "lib/ro/cycle_detector.rb",
+ "lib/ro/error.rb",
  "lib/ro/model.rb",
- "lib/ro/node",
  "lib/ro/node.rb",
- "lib/ro/node/list.rb",
  "lib/ro/pagination.rb",
+ "lib/ro/path.rb",
  "lib/ro/root.rb",
+ "lib/ro/script.rb",
  "lib/ro/slug.rb",
+ "lib/ro/template",
  "lib/ro/template.rb",
+ "lib/ro/template/rouge_formatter.rb",
  "notes",
  "notes/ara.txt",
+ "public",
+ "public/ro",
+ "public/ro/posts",
+ "public/ro/posts.json",
+ "public/ro/posts/first-post",
+ "public/ro/posts/first-post.json",
+ "public/ro/posts/first-post/assets",
+ "public/ro/posts/first-post/assets/foo",
+ "public/ro/posts/first-post/assets/foo.jpg",
+ "public/ro/posts/first-post/assets/foo/bar",
+ "public/ro/posts/first-post/assets/foo/bar/baz.jpg",
+ "public/ro/posts/first-post/assets/image",
+ "public/ro/posts/first-post/assets/src",
+ "public/ro/posts/first-post/assets/src/foo",
+ "public/ro/posts/first-post/assets/src/foo/bar.rb",
+ "public/ro/posts/first-post/attributes.yml",
+ "public/ro/posts/first-post/body.md",
+ "public/ro/posts/first-post/widget.erb",
+ "public/ro/posts/second-post",
+ "public/ro/posts/second-post.json",
+ "public/ro/posts/second-post/assets",
+ "public/ro/posts/second-post/assets/foo",
+ "public/ro/posts/second-post/assets/foo.jpg",
+ "public/ro/posts/second-post/assets/foo/bar",
+ "public/ro/posts/second-post/assets/foo/bar/baz.jpg",
+ "public/ro/posts/second-post/assets/image",
+ "public/ro/posts/second-post/assets/src",
+ "public/ro/posts/second-post/assets/src/foo",
+ "public/ro/posts/second-post/assets/src/foo/bar.rb",
+ "public/ro/posts/second-post/attributes.yml",
+ "public/ro/posts/second-post/body.erb",
+ "public/ro/posts/second-post/widget.erb",
  "ro",
  "ro.gemspec",
- "ro/posts",
- "ro/posts/foo-bar",
- "ro/posts/foo-bar/assets",
- "ro/posts/foo-bar/attributes.yml",
- "ro/posts/foo-bar/body.erb"]
+ "src",
+ "todo.rb"]
 
   spec.executables = ["ro"]
   
   spec.require_path = "lib"
 
-  spec.test_files = nil
-
   
     spec.add_dependency(*["map", "~> 6.6", ">= 6.6.0"])
   
-    spec.add_dependency(*["fattr", "~> 2.4", " >= 2.4.0"])
+    spec.add_dependency(*["kramdown", "~> 2.4", " >= 2.4.0"])
   
-    spec.add_dependency(*["tilt", "~> 2.1", " >= 2.1.0"])
+    spec.add_dependency(*["kramdown-parser-gfm", "~> 1.1", " >= 1.1.0"])
   
-    spec.add_dependency(*["pygments.rb", "~> 2.3", " >= 2.3.1"])
-  
-    spec.add_dependency(*["coerce", "~> 0.0", " >= 0.0.8"])
-  
-    spec.add_dependency(*["stringex", "~> 2.8", " >= 2.8.5"])
-  
-    spec.add_dependency(*["systemu", "~> 2.6", " >= 2.6.5"])
-  
-    spec.add_dependency(*["nokogiri", "~> 1.14", " >= 1.14.2"])
+    spec.add_dependency(*["rouge", "~> 4.1", " >= 4.1.1"])
   
     spec.add_dependency(*["main", "~> 6.3", " >= 6.3.0"])
   

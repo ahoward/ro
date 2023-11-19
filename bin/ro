@@ -1,88 +1,120 @@
 #! /usr/bin/env ruby
-Main do
+# Encoding: utf-8
+
+Ro.script do
   def run
-    help!
+    # p Ro.root.collections.get('posts')
+    # p Ro.root.collections.to_a
+    # p Ro.root.collections.count
+    #p Ro.root.collections.posts
+    p Ro.root.collections.to_a
+    p Ro.root.collections.count
   end
 
-  mode(:build) do
-    def run
-      # require 'ak47'
-      # opts = { watch_dirs: Ro.root }
-      # Ak47() { build! }
-      build!
+=begin
+
+# meta description of all collections
+
+./index.json
+
+collections : { name: posts, count: 2, first: ./, last:, index:, first_page:, last_page:}
+
+./posts/index.json
+
+./posts/index/0.json    next + prev
+./posts/index/1.json
+
+
+=end
+
+  run(:build) do
+    build = Map.new
+    dir = Ro.config.build_directory
+
+    say("# Ro.build[#{ Ro.root }] -> #{ dir }", color: :magenta)
+
+    FileUtils.rm_rf(dir)
+    FileUtils.mkdir_p(dir)
+
+    Ro.root.collections.each do |collection|
+      nodes = collection.to_a.sort
     end
 
-    def build!
-      # puts "### building #{Ro.root}..."
-      indexen = {}
-      build_dir = './api'
 
-      ro.collection.each do |node|
-        type = node.type
-        id = node.id
-
-        json = JSON.pretty_generate(node.as_json)
-
-        path = File.join(build_dir, type, id) + '.json'
-        binwrite(path, json)
-        puts path
-
-        indexen[type] ||= []
-        indexen[type].push(id)
-      end
-
-      indexen.each do |type, collection|
-        path = File.join(build_dir, type) + '.json'
-        json = JSON.pretty_generate('type' => type, 'collection' => collection)
-        binwrite(path, json)
-        puts path
-      end
-    end
-
-    def binwrite(path, data)
+=begin
+    indexen = {}
+    build_dir = Ro.root.expand_path.join('api').expand_path
+    binwrite = proc do |path, data|
       FileUtils.mkdir_p(File.dirname(path))
       IO.binwrite(path, data)
     end
-  end
 
-  mode(:console) do
-    def run
-      # Ro.root = params['root'].value if params['root'].given?
-      require "#{$libdir}/ro/console.rb"
-      Ro::Console.start!
+    ro.collection.each do |node|
+      type = node.type
+      id = node.id
+
+      json = JSON.pretty_generate(node.as_json)
+
+      path = File.join(build_dir, type, id) + '.json'
+      # binwrite[path, json]
+      puts path
+
+      indexen[type] ||= []
+      indexen[type].push(id)
     end
-  end
 
-  mode(:cat) do
-    argument('identifier')
-
-    def run
-      set_root!
-
-      identifier = params['identifier'].value
-
-      result = ro[identifier]
-
-      result = if result.respond_to?(:as_json)
-                 result.as_json
-               else
-                 { identifier => result }
-               end
-
-      puts JSON.pretty_generate(result)
+    indexen.each do |type, collection|
+      path = File.join(build_dir, type) + '.json'
+      json = JSON.pretty_generate('type' => type, 'collection' => collection)
+      # binwrite[path, json]
+      puts path
     end
+=end
   end
 
-  def set_root!
-    Ro.root = params['root'].value if params['root'].given?
+  run(:console) do
+    require "#{$libdir}/ro/console.rb"
+    Ro::Console.start!
+  end
+
+  run(:cat) do
+    configure!
+
+    path = @argv.shift || abort('no path')
+
+    path = Ro::Path.for(path)
+
+    result = Ro.root.collection
+
+    path.parts.last(2).each do |key|
+      result = result[key]
+    end
+
+    pod =
+      if result.respond_to?(:attributes)
+        result.attributes
+      else
+        {}.tap do |hash|
+          result.each do |node|
+            hash[node.identifier] = node.attributes
+          end
+        end
+      end
+
+    puts JSON.pretty_generate(pod)
+  end
+
+  def configure!
+    return unless @options.has_key?(:root)
+
+    Ro.root = @options[:root]
   end
 end
 
 BEGIN {
-  require 'main'
-
   $bindir = File.dirname(__FILE__)
   $libdir = File.expand_path("#{$bindir}/../lib/")
 
-  require "#{$libdir}/ro.rb"
+  require "#{$libdir}/ro"
+  require "#{$libdir}/ro/script.rb"
 }
