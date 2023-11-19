@@ -2,127 +2,155 @@ require 'pathname'
 
 module Ro
   class Path < ::String
-    def self.components_for(*args)
-      path = args.flatten.compact.join('/').strip
-      absolute = path.start_with?('/')
-      paths = path.scan(%r{[^/]+})
-      absolute ? ['/'] + paths : paths
-    end
+    @@DEFAULT_IMAGE_PATTERN = /[.](webp|jpg|jpeg|png|gif|tif|tiff|svg)$/i
 
-    def self.normalized_string(*args)
-      components_for(*args).join('/').squeeze('/')
-    end
+    class << Path
+      def for(arg, *args, **kws, &block)
+        return arg if arg.is_a?(Path) && args.empty? && kws.empty? && block.nil?
 
-    def self.normalize(...)
-      new(...)
-    end
+        new(arg, *args, **kws, &block)
+      end
 
-    def self.absolute(...)
-      new(...).absolute!
-    end
+      def clean(arg, *args)
+        Pathname.new([arg, *args].join('/')).cleanpath.to_s
+      end
 
-    def self.relative(...)
-      new(...).relative!
-    end
+      def expand(arg, *args)
+        new(Pathname.new(clean(arg, *args).expand_path))
+      end
 
-    def self.for(arg, *args, **kws, &block)
-      return arg if arg.is_a?(Path) && args.empty? && kws.empty? && block.nil?
+      def absolute(...)
+        new(...).absolute
+      end
 
-      new(arg, *args, **kws, &block)
+      def absolute?(arg, *args)
+        Path.for(arg, *args).absolute?
+      end
+
+      def relative(...)
+        new(...).relative
+      end
+
+      def relative?(arg, *args)
+        Path.for(arg, *args).relative?
+      end
+
+      def image_patterns
+        [@@DEFAULT_IMAGE_PATTERN]
+      end
     end
 
     def initialize(arg, *args)
-      super Path.normalized_string(arg, *args)
-    end
-
-    def absolute!
-      relative!
-      replace('/' + self)
-      self
-    end
-
-    def relative!
-      gsub! %r{^/+}, ''
-      self
-    end
-
-    def key
-      Path.components_for(self)
-    end
-
-    def parts
-      key
-    end
-
-    def pathname
-      Pathname.new(self)
-    end
-
-    def name
-      pathname
+      super Path.clean(arg, *args)
     end
 
     def pn
-      pathname
+      Pathname.new(self)
     end
 
-    public_pathname_methods = Pathname.instance_methods(false)
-    all_string_methods = String.instance_methods
-    real_string_methods = all_string_methods.select { |method| method.to_s !~ /(^object_id$)|(^_)/ }
-
-    safe_to_define = public_pathname_methods - real_string_methods
-    safe_to_redefine = real_string_methods
-
-    safe_to_define.each do |method|
-      # p define: method
+    {
+      'exist?' => 'exist?',
+      'file?' => 'file?',
+      'directory?' => 'directory?',
+      'absolute?' => 'directory?',
+      'relative?' => 'relative?',
+      'expand' => 'expand_path',
+      'clean' => 'cleanpath'
+    }.each do |src, dst|
       class_eval <<-____, __FILE__, __LINE__ + 1
-        def self.#{method}(arg, *args, &block)
-          Path.for(arg).public_send('#{method}', *args, &block)
-        end
-      ____
-
-      class_eval <<-____, __FILE__, __LINE__ + 1
-        def #{method}(...)
-          result = pathname.public_send('#{method}', ...)
-
-          if result.is_a?(Pathname)
-            Path.new(result.to_s)
-          else
-            result
-          end
+        def #{src}(...)
+          result = pn.#{dst}(...)
+          result.is_a?(Pathname) ? Path.for(result) : result
         end
       ____
     end
 
-    safe_to_redefine.each do |method|
-      # p redefine: method
-      class_eval <<-____, __FILE__, __LINE__ + 1
-        def #{method}(...)
-          result = super(...)
+    def image?
+      self.class.image_patterns.any? { |pattern| file? && pattern === basename }
+    end
 
-          if result.is_a?(String)
-            Path.new(result.to_s)
-          else
-            result
-          end
-        end
-      ____
+    def absolute
+      Path.new('/' + self)
+    end
+
+    def relative
+      Path.new(absolute.gsub(%r{^/+}, ''))
+    end
+
+    def parts
+      parts = scan(%r{[^/]+})
+
+      if absolute?
+        head, *tail = parts
+        head = ["/#{head}"]
+        head + tail
+      else
+        parts
+      end
+    end
+
+    def key
+      parts
     end
 
     def relative_to(other)
-      relative_path_from(Path.for(other))
+      a = Pathname.new(self).expand_path
+      b = Pathname.new(other).expand_path
+      Path.for(a.relative_path_from(b))
     end
 
-    def self.method_missing(method, ...)
-      super unless pathname.respond_to?(method)
+    def relative_from(...)
+      relative_to(...)
+    end
 
-      result = pathname.public_send(method, ...)
+    def relative_to!(other)
+      a = Pathname.new(self).realpath
+      b = Pathname.new(other).realpath
+      Path.for(a.relative_path_from(b))
+    end
 
-      if result.is_a?(Pathname)
-        Path.new(result.to_s)
-      else
-        result
+    def glob(arg = '**/**', *args, **kws, &block)
+      glob = Path.for(self, arg, *args, **kws)
+
+      [].tap do |accum|
+        Dir.glob(glob) do |entry|
+          path = Path.new(entry)
+          accum.push(block ? block.call(path) : path)
+        end
       end
     end
+
+    def select(&block)
+      glob.select(&block)
+    end
+
+    def detect(&block)
+      glob.detect(&block)
+    end
+
+    def parent
+      Path.for(File.dirname(self))
+    end
+    alias dirname parent
+
+    def basename
+      Path.for(File.basename(self))
+    end
+
+    def base
+      base, ext = basename.split('.', 2)
+      base
+    end
+
+    def extension
+      base, ext = basename.split('.', 2)
+      ext
+    end
+    alias ext extension
+
+    def join(arg, *args)
+      Path.for(self, Path.clean(arg, *args))
+    end
+
   end
 end

@@ -2,37 +2,30 @@ PATH
   remote: .
   specs:
     ro (2.0.0)
-      coerce (~> 0.0, >= 0.0.8)
-      fattr (~> 2.4, >= 2.4.0)
+      kramdown (~> 2.4, >= 2.4.0)
+      kramdown-parser-gfm (~> 1.1, >= 1.1.0)
       main (~> 6.3, >= 6.3.0)
       map (~> 6.6, >= 6.6.0)
-      nokogiri (~> 1.14, >= 1.14.2)
-      pygments.rb (~> 2.3, >= 2.3.1)
-      stringex (~> 2.8, >= 2.8.5)
-      systemu (~> 2.6, >= 2.6.5)
-      tilt (~> 2.1, >= 2.1.0)
+      rouge (~> 4.1, >= 4.1.1)
 
 GEM
   remote: https://rubygems.org/
   specs:
     arrayfields (4.9.2)
     chronic (0.10.2)
-    coerce (0.0.8)
-      chronic (>= 0.6.2)
     fattr (2.4.0)
+    kramdown (2.4.0)
+      rexml
+    kramdown-parser-gfm (1.1.0)
+      kramdown (~> 2.0)
     main (6.3.0)
       arrayfields (~> 4.9, >= 4.9.2)
       chronic (~> 0.10, >= 0.10.2)
       fattr (~> 2.4, >= 2.4.0)
       map (~> 6.6, >= 6.6.0)
     map (6.6.0)
-    nokogiri (1.14.2-arm64-darwin)
-      racc (~> 1.4)
-    pygments.rb (2.3.1)
-    racc (1.6.2)
-    stringex (2.8.5)
-    systemu (2.6.5)
-    tilt (2.1.0)
+    rexml (3.2.6)
+    rouge (4.1.1)
 
 PLATFORMS
   arm64-darwin-21
@@ -41,4 +34,4 @@ DEPENDENCIES
   ro!
 
 BUNDLED WITH
-   2.4.10
+   2.4.20

@@ -21,7 +21,7 @@ module Ro
       def IRB.load_modules
         $GIANT_FUCKING_HACK.call
 
-        prompt = "ro[./#{Ro.relative_path(Ro.root, from: Dir.pwd)}]"
+        prompt = "ro[./#{Ro.root.relative_to(Dir.pwd)}]"
 
         IRB.conf[:PROMPT][:RO] = {
           PROMPT_I: "#{prompt}:%03n:%i> ",

@@ -1,77 +1,62 @@
 module Ro
   class Node
-    def self.load(*args, **kws, &block)
-      new(*args, **kws, &block)
+    class << Node
+      def for(arg, *args, **kws, &block)
+        return arg if arg.is_a?(Node) && args.empty? && kws.empty? && block.nil?
+
+        new(arg, *args, **kws, &block)
+      end
     end
 
-    attr_reader :root, :collection, :path, :id, :slug, :type, :attributes
+    attr_reader :path, :root, :type, :name, :attributes
 
-    def initialize(path, root: Ro.config.root, collection: nil)
-      @path = Path.for(path).expand_path
-      @id   = @path.basename
-      @slug = Slug.for(@id)
+    def initialize(path, options = {})
+      @path = Ro.path_for(path)
+
+      @root = options.fetch(:root) { Root.for(@path.dirname.dirname) }
+
       @type = @path.dirname.basename
+      @name = @path.basename
 
-      @root = Root.for(root)
-      @collection = collection || Collection.new(root: @root, type: @type, id: @id)
+      @attributes = Map.new
 
       load!
     end
 
-    def _type
-      @type
-    end
-
-    def _id
-      @id
-    end
-
-    def _path
-      @path
-    end
-
-    def _slug
-      @slug
-    end
-
     def identifier
-      File.join(@type, @id)
+      File.join(type, name)
     end
 
-    def inspect
-      identifier
+    def inspect(...)
+      attributes.inspect(...)
     end
 
     def to_s
       inspect
     end
 
-    def node
-      self
-    end
-
     def get(*args)
-      @attributes.get(*args)
+      attributes.get(*args)
     end
 
     def [](*args)
-      @attributes.get(*args)
+      attributes.get(*args)
     end
 
-    def asset_path(*_args)
-      File.join(relative_path, 'assets')
+    def relative_path
+      path.relative_to(root)
     end
 
     def asset_dir
-      File.join(path, 'assets')
+      path.join('assets')
     end
 
     def asset_paths
-      Dir.glob("#{asset_dir}/**/**").select { |entry| test('f', entry) }.sort
+      asset_dir.select { |entry| entry.file? }.sort
     end
 
     def assets
-      asset_paths.map { |path| Asset.new(node, path) }
+      asset_paths.map { |path| Asset.for(path, node: self) }
     end
 
     def asset_urls
@@ -83,15 +68,15 @@ module Ro
 
       path_info = Path.relative(args)
 
-      path = File.join(@path, 'assets', path_info)
+      path = @path.join('assets', path_info)
 
       glob = path_info.gsub(/[_-]/, '[_-]')
 
       globs =
         [
-          File.join(@path, 'assets', "#{glob}"),
-          File.join(@path, 'assets', "#{glob}*"),
-          File.join(@path, 'assets', "**/#{glob}*")
+          @path.call('assets', "#{glob}"),
+          @path.call('assets', "#{glob}*"),
+          @path.call('assets', "**/#{glob}*")
         ]
 
       candidates = globs.map { |glob| Dir.glob(glob, ::File::FNM_CASEFOLD) }.flatten.compact.uniq.sort
@@ -103,7 +88,7 @@ module Ro
         path = candidates.last
       end
 
-      Asset.new(node, path)
+      Asset.for(path, node: self)
     end
 
     def asset_for?(*args, &block)
@@ -115,19 +100,15 @@ module Ro
     def url_for(relative_path, options = {})
       raise ArgumentError, relative_path if Path.absolute?(relative_path)
 
-      path = File.expand_path(File.join(node.path, relative_path.to_s))
+      fullpath = Path.for(path, relative_path).expand
 
-      raise ArgumentError, "#{relative_path.inspect} -- DOES NOT EXIST" unless test('e', path)
+      raise ArgumentError, "#{relative_path.inspect} -- DOES NOT EXIST" unless fullpath.exist?
 
-      Ro.url_for(node.relative_path, relative_path.to_s, options)
+      Ro.url_for(self.relative_path, relative_path.to_s, options)
     end
 
     def url(options = {})
-      Ro.url_for(node.relative_path, options)
-    end
-
-    def relative_path
-      @path.expand_path.relative_to(@root.expand_path)
+      Ro.url_for(relative_path, options)
     end
 
     def src_for(*args)
@@ -136,33 +117,17 @@ module Ro
     end
 
     def method_missing(method, *args, &block)
-      super if method.to_s == 'to_ary'
-
       key = method.to_s
-      data = Map.for(as_json)
 
-      (
-        if data.has_key?(key)
-          data[key]
-        else
-          super
-        end
-      )
+      if @attributes.has_key?(key)
+        @attributes[key]
+      else
+        super
+      end
     end
 
-    def as_json(*_args)
-      attributes.to_hash.merge(meta_attributes)
-    end
-
-    def meta_attributes
-      {
-        '_' => {
-          'type' => _type,
-          'id' => _id,
-          'identifier' => identifier,
-          'url' => url,
-        }
-      }
+    def as_json(...)
+      attributes.to_hash.as_json(...)
     end
 
     def load!
@@ -171,36 +136,34 @@ module Ro
       _load_attributes_yml
       _load_attribute_files
       _load_assets
-
-      @attributes.update(meta_attributes)
-    end
-
-    def _load_attributes_yml
-      attributes_yml = File.join(@path, 'attributes.yml')
-
-      cd = CycleDector.new(self)
-
-      buf = IO.binread(attributes_yml)
-      data = YAML.load(buf)
-      data = data.is_a?(Hash) ? data : { '_' => data }
-
-      @attributes.update(data)
-
-      %w[assets].each do |key|
-        raise ArgumentError, "attributes.yml may not contain the key '#{key}'" if @attributes.has_key?(key)
-      end
+      _load_meta_attributes
 
       @attributes
     end
 
-    def _load_attribute_files
-      glob = File.join(@path, '**/**')
-      cd = CycleDector.new(self)
+    def _load_attributes_yml
+      attributes_yml = @path.join('attributes.yml')
 
-      Dir.glob(glob) do |path|
+      return unless test('e', attributes_yml)
+
+      buf = IO.binread(attributes_yml)
+
+      YAML.load(buf).tap do |data|
+        hash = data.is_a?(Hash) ? data : { '_' => data }
+
+        @attributes.update(hash)
+
+        %w[assets].each do |key|
+          Ro.error!("attributes.yml may not contain the key #{key.inspect}") if @attributes.has_key?(key)
+        end
+      end
+    end
+
+    def _load_attribute_files
+      @path.glob do |path|
         next if test('d', path)
 
-        basename = File.basename(path)
+        basename = path.basename
         next if basename == 'attributes.yml'
 
         relative_path = Path.for(path).relative_to(@path)
@@ -208,41 +171,57 @@ module Ro
         next if %w[assets].include?(subdir)
 
         path_info, ext = key = relative_path.split('.', 2)
-
         key = path_info.split('/')
 
-        promise = cd.promise(key) do
-          object = Ro.render(path, node)
+        value = Ro.render(path, self)
 
-          if object.is_a?(String)
-            html = object
-            html = Ro.expand_asset_urls(html, node)
-          else
-            object
-          end
-          # @attributes.set(key => html)
+        if value.is_a?(Ro::Template::HTML)
+          html = value
+          node = self
+          value = Ro.expand_asset_urls(html, node)
         end
 
-        @attributes.set(key => promise)
-      end
-
-      cd.resolve.each do |key, value|
         @attributes.set(key => value)
       end
     end
 
     def _load_assets
-      @attributes.set(assets: asset_attributes)
+      {}.tap do |hash|
+        assets.each do |asset|
+          key = asset.name
+          value = { url: asset.url, path: asset.path.expand, src: asset.src }
+          hash[key] = value
+        end
+
+        @attributes.set(assets: hash)
+      end
     end
 
-    def asset_attributes
-      {}.tap do |attributes|
-        assets.each do |asset|
-          key = asset.path.relative_to(asset_dir)
-          value = { url: asset.url, src: asset.src }
-          attributes.update(key => value)
-        end
+    def _load_meta_attributes
+      {}.tap do |meta|
+        meta.update(
+          type: type,
+          name: name,
+          identifier: identifier
+        )
+
+        @attributes.set(_: meta)
       end
+    end
+
+    def binding
+      super
+    end
+
+    def <=>(other)
+      sort_key <=> other.sort_key
+    end
+
+    def sort_key
+      position = (attributes[:position] ? Float(attributes[:position]) : 0.0)
+      published_at = (attributes[:published_at] ? Time.parse(attributes[:published_at].to_s) : Time.at(0))
+      created_at = (attributes[:created_at] ? Time.parse(attributes[:created_at].to_s) : Time.at(0))
+      [position, published_at, created_at, name]
     end
   end
 end

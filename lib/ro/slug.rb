@@ -1,17 +1,18 @@
 module Ro
   class Slug < ::String
-    Join = '-'
+    @@JOIN = '-'
 
-    def self.for(arg, *args, &block)
-      return arg if arg.is_a?(Slug) && args.empty? && block.nil?
-
-      new(arg, *args, &block)
+    class << Slug
+      def for(arg, *args, &block)
+        return arg if arg.is_a?(Slug) && args.empty? && block.nil?
+        new(arg, *args, &block)
+      end
     end
 
     def initialize(*args)
       options = args.last.is_a?(Hash) ? args.pop : {}
 
-      join = (options[:join] || options['join'] || Join).to_s
+      join = (options[:join] || options['join'] || @@JOIN).to_s
 
       string = args.flatten.compact.join(join)
       words = string.to_s.scan(%r{[/\w]+})

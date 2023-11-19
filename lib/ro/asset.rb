@@ -1,29 +1,33 @@
 module Ro
   class Asset < ::String
-    attr_reader :node, :path, :relative_path, :url
+    class << Asset
+      def for(arg, *args, **kws, &block)
+        return arg if arg.is_a?(Path) && args.empty? && kws.empty? && block.nil?
 
-    def initialize(node, path)
-      @node = node
-      @path = Path.for(path)
+        new(arg, *args, **kws, &block)
+      end
+    end
+
+    attr_reader :path, :node, :relative_path, :name, :url
+
+    def initialize(arg, *args)
+      options = args.last.is_a?(Hash) ? args.pop : {}
+
+      @path = Path.for(arg, *args)
+
+      @node = options.fetch(:node) { Node.for(@path.split('/assets/').first) }
+
       @relative_path = @path.relative_to(@node.path)
+
+      @name = @relative_path
+
       @url = @node.url_for(@relative_path)
-      super(@url)
-    end
 
-    def basename
-      File.basename(path)
+      super(@path)
     end
-
-    def extension
-      base, ext = basename.split('.', 2)
-      ext
-    end
-    alias ext extension
-
-    IMAGE_RE = /[.](jpg|jpeg|png|gif|tif|tiff|svg)$/i
 
     def image?
-      !!(basename =~ IMAGE_RE)
+      @path.image?
     end
 
     def src

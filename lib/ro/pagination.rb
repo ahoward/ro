@@ -8,7 +8,7 @@ module Ro
 
       page = [page.abs, 1].max
       per = [per.abs, 1].max
-
+d
       offset = (page - 1) * per
       length = per
 
@@ -24,11 +24,12 @@ module Ro
     end
 
     def page(*_args)
+      paginate unless @page
       @page
     end
 
     def current_page
-      @page
+      page
     end
 
     def per=(per)
@@ -36,6 +37,7 @@ module Ro
     end
 
     def per
+      paginate unless @per
       @per
     end
 
@@ -44,6 +46,7 @@ module Ro
     end
 
     def num_pages
+      paginate unless @num_pages
       @num_pages
     end
 

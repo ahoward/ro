@@ -1,10 +1,14 @@
 module Ro
   class Template
+    require 'erb'
     require 'rouge'
     require 'kramdown'
     require 'kramdown-parser-gfm'
 
-    require_relative 'template/rouge_formatter'
+    require_relative 'template/rouge_formatter.rb'
+
+    class HTML < ::String
+    end
 
     def self.render(*args, &block)
       render_file(*args, &block)
@@ -15,7 +19,7 @@ module Ro
       options = Map.for(options.is_a?(Hash) ? options : { context: options })
 
       content = IO.binread(path).force_encoding('utf-8')
-      engines = File.basename(path).split('.')[1..-1].reverse
+      engines = File.basename(path).split('.')[1..-1]
       context = options[:context]
 
       render_string(content, path: path, engines: engines, context: context)
@@ -23,13 +27,9 @@ module Ro
 
     def self.render_string(content, options = {})
       content = String(content).force_encoding('utf-8')
-
       options = Map.for(options.is_a?(Hash) ? options : { context: options })
-
-      engines = Array(options.fetch(:engines) { ['erb'] }).flatten.compact
-
+      engines = Array(options.fetch(:engines) { ['md'] }).flatten.compact
       path = options.fetch(:path) { '(string)' }
-
       context = options[:context]
 
       loop do
@@ -39,29 +39,30 @@ module Ro
 
         content =
           case engine
-          when 'yml'
-            YAML.load(content)
-
-          when 'json'
-            JSON.parse(content)
-
-          when 'md', 'markdown'
-            render_markdown(content)
-
-          else
-            tilt = Tilt[engine]
-
-            Ro.error!("no rendering engine for path=#{path}, engine=#{engine}!") unless tilt
-
-            yield_handler = proc do |*_args|
-              :noop
-            end
-
-            tilt.new { content }.render(context, &yield_handler)
+            when 'erb'
+              render_erb(content, context:)
+            when 'md', 'markdown'
+              render_markdown(content)
+            when 'yml'
+              YAML.load(content)
+            when 'json'
+              JSON.parse(content)
+            else
+              Ro.error!("no engine found for engine=#{ engine.inspect } engines=#{ engines.inspect }")
           end
       end
 
       content
+    end
+
+    def self.render_erb(content, options = {})
+      content = String(content).force_encoding('utf-8')
+      options = Map.for(options.is_a?(Hash) ? options : { context: options })
+      context = options[:context]
+
+      binding = context ? context.instance_eval{ binding } : ::Kernel.binding
+
+      HTML.new(ERB.new(content, trim_mode: '%<>').result(binding))
     end
 
     def self.render_markdown(content, options = {})
@@ -72,11 +73,10 @@ module Ro
 
       opts = {
         input: 'GFM',
-        syntax_highlighter: 'rouge',
         syntax_highlighter_opts: { formatter: RougeFormatter, theme: theme }
       }
 
-      ::Kramdown::Document.new(content, opts).to_html
+      HTML.new(::Kramdown::Document.new(content, opts).to_html)
     end
 
     def self.render_src(path, options = {})
@@ -88,59 +88,15 @@ module Ro
       context = options[:context]
 
       theme = options.fetch(:theme) { 'github' }
+      formatter = RougeFormatter.new(theme: theme)
 
       language = engines.shift
-      formatter = RougeFormatter.new(theme)
 
       lexer = Rouge::Lexer.find(language) || Ro.error!('no lexer found for ')
 
       content = render_string(content, path: path, engines: engines, context: context) if engines.size.nonzero?
 
-      formatter.format(lexer.lex(content))
+      HTML.new(formatter.format(lexer.lex(content)))
     end
-  end
-end
-
-if $0 == __FILE__
-  require_relative '../ro'
-
-  if ARGV[0]
-    path = ARGV[0]
-    html = Ro::Template.render(path)
-    puts html
-  else
-    context = Class.new do
-      def initialize
-        @date = Date.today
-      end
-
-      attr_reader :date
-    end.new
-
-    string = <<~____
-      <%= date %>
-      ---
-
-      - a
-      - b
-      - c
-
-      ```ruby
-      class C
-        @ANSWER = 42
-      end
-
-      a = 42
-      b = 42.0
-      ```
-    ____
-
-    html = Ro::Template.render_string(string, engines: %w[erb md], context: context)
-    puts html
-
-    puts '<hr /><hr /><hr />'
-
-    html = Ro::Template.render_src(__FILE__)
-    puts html
   end
 end

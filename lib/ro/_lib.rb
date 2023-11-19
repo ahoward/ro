@@ -6,22 +6,25 @@ module Ro
       VERSION
     end
 
+    def summary
+      <<-____
+      summary
+      ____
+    end
+
     def libs
       %w[
-        fileutils pathname yaml json digest/md5 logger erb cgi rexml
+        fileutils pathname yaml json digest/md5 logger erb cgi rexml time
       ]
     end
 
     def dependencies
       {
         'map' => ['map', '~> 6.6', '>= 6.6.0'],
-        'fattr' => ['fattr', '~> 2.4', ' >= 2.4.0'],
-        'tilt' => ['tilt', '~> 2.1', ' >= 2.1.0'],
         'kramdown' => ['kramdown', '~> 2.4', ' >= 2.4.0'],
         'kramdown-parser-gfm' => ['kramdown-parser-gfm', '~> 1.1', ' >= 1.1.0'],
         'rouge' => ['rouge', '~> 4.1', ' >= 4.1.1'],
         'main' => ['main', '~> 6.3', ' >= 6.3.0'],
-        'ak47' => ['ak47', '~> 0.2', ' >= 0.2.5']
       }
     end
 
