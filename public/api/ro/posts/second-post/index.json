@@ -5,6 +5,15 @@
     "image": "assets/foo/bar/baz.jpg",
     "published_at": "2024-04-05T12:17-06:00",
     "body": "title\n\n* a\n* b\n* c",
+    "index": {
+      "api": "{\"_identifier\"=>\"posts/second-post\", \"_type\"=>\"posts\", \"_id\"=>\"second-post\", \"_url\"=>\"/ro/posts/second-post\", \"_asset_urls\"=>{}}",
+      "_identifier": "posts/second-post",
+      "_type": "posts",
+      "_id": "second-post",
+      "_url": "/ro/Users/ahoward/gh/ahoward/ro/public/ro/posts/second-post",
+      "_asset_urls": {
+      }
+    },
     "widget": "the widget <foobar/>",
     "assets": {
       "assets/foo.jpg": {
