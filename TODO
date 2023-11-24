@@ -1,57 +1,45 @@
 
+# build 
+  - ./index.json
+  - collections : { name: posts, count: 2, index:, first: ./, last:, index: first_page:, last_page:}
+  - ./posts/index.json
+  - ./posts/index/0.json
+  -   next + prev
+  - ./posts/index/1.json
+  - /posts/first-post/index.json
+  -   next + prev
+  - ./posts/index/0.json    next + prev
+  - ./posts/index/1.json
 
-- simply collections
+# gh-pages data site
 
+# git-lfs
+  - ro/*/*/assets/**
+  - public/ro/*/*/assets/**
+  - public/assets/**
 
+# workflow
+  - on commit
+  - periodic
 
-- support promise based api and fast build
-- @attributes madness
+# js lib for data
+  - simple js lib for content is included in public/ro.js
+    - ro.collections()
+    - ro.collections('posts')
+    - ro.collections('posts')()
+    - ro.collections('posts')('first-post')
 
-- README.md
-  - mcms
-  - edit content using gh at the ui
-  - content renders directly input public
-  - workflow
-
-- workflow
-  - runs 1x/day
-
-
-- simple js lib for content is included in public/ro.js
-  - ro.collections()
-  - ro.collections('posts')
-  - ro.collections('posts')()
-  - ro.collections('posts')('first-post')
-
-
-interface
-
-- arrayfields?
-- map
-- main?
-
-- git-lfs
-    public/ro/*/*/assets/**
-
-ro.collections -> all collections
-
-dir.glob(**).map Collection.new(root, name)
-
-ro.collections['posts'] do |collection|
-end
-
-ro.collections.get('posts').get('first-post') -> that node
-ro.collections['posts']['first-post'] -> that node
-ro.collections.posts.first-post -> that node
-
-console : def ro; ro.collections; end
-
-# enumerable mixin for to_a, etc
-# to_hash
-#each
-
-
-- no dependencies
+# README
+- low depency, KISS headless CMS
+- freely hosted via gh-pages
+- http + https (og) 
+- GH editor
+- scriptable
+- versions content
+- 100% flexible content modeling
+- sample 
+- sample project
+  - drawohara.io
 
 - what does build do?
   - ./public/ro -> ./public/api

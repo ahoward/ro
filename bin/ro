@@ -1,80 +1,148 @@
 #! /usr/bin/env ruby
-# Encoding: utf-8
-
 Ro.script do
   def run
-    # p Ro.root.collections.get('posts')
-    # p Ro.root.collections.to_a
-    # p Ro.root.collections.count
-    #p Ro.root.collections.posts
-    p Ro.root.collections.to_a
-    p Ro.root.collections.count
-  end
-
-=begin
-
-# meta description of all collections
-
-./index.json
-
-collections : { name: posts, count: 2, first: ./, last:, index:, first_page:, last_page:}
-
-./posts/index.json
-
-./posts/index/0.json    next + prev
-./posts/index/1.json
-
-
-=end
-
-  run(:build) do
-    build = Map.new
-    dir = Ro.config.build_directory
-
-    say("# Ro.build[#{ Ro.root }] -> #{ dir }", color: :magenta)
-
-    FileUtils.rm_rf(dir)
-    FileUtils.mkdir_p(dir)
-
-    Ro.root.collections.each do |collection|
-      nodes = collection.to_a.sort
-    end
-
-
-=begin
-    indexen = {}
-    build_dir = Ro.root.expand_path.join('api').expand_path
-    binwrite = proc do |path, data|
-      FileUtils.mkdir_p(File.dirname(path))
-      IO.binwrite(path, data)
-    end
-
-    ro.collection.each do |node|
-      type = node.type
-      id = node.id
-
-      json = JSON.pretty_generate(node.as_json)
-
-      path = File.join(build_dir, type, id) + '.json'
-      # binwrite[path, json]
-      puts path
-
-      indexen[type] ||= []
-      indexen[type].push(id)
-    end
-
-    indexen.each do |type, collection|
-      path = File.join(build_dir, type) + '.json'
-      json = JSON.pretty_generate('type' => type, 'collection' => collection)
-      # binwrite[path, json]
-      puts path
-    end
-=end
+    console!
   end
 
   run(:console) do
-    require "#{$libdir}/ro/console.rb"
-    Ro::Console.start!
+    console!
+  end
+
+  #
+  # meta description of all collections
+  #
+  # ./index.json
+  # collections : { name: posts, count: 2, index:, first: ./, last:, index: first_page:, last_page:}
+  #
+  # ./posts/index.json
+  # collection : { name: posts, count: 2, index:, first: ./, last:, index: first_page:, last_page:}
+  # ./posts/index/0.json
+  #   next + prev
+  # ./posts/index/1.json
+  # /posts/first-post/index.json
+  #   next + prev
+  #
+  # ./posts/index/0.json    next + prev
+  # ./posts/index/1.json
+  #
+  #
+
+  run(:build) do
+    directory = Ro.config.build_directory
+    page_size = Ro.config.page_size
+
+    say = proc do |msg, color|
+      say("# Ro.build: #{msg}", color:)
+    end
+
+    say["#{Ro.root} -> #{directory}", :magenta]
+
+    build = {}
+    started_at = Time.now.to_f
+
+    Ro.root.collections.each do |collection|
+      name = collection.name
+      sorted = collection.to_a.sort
+
+      path = "#{collection.name}/index.json" # eg. posts/index.json
+      data = { data: sorted.map(&:to_hash) }
+      build[path] = data
+
+      count = sorted.size
+      last = count - 1
+
+      page_count = (count / page_size.to_f).ceil
+      page = Map.new({
+        size: page_size,
+        count: page_count,
+        first: 0,
+        last: page_count - 1,
+        index: 0,
+        data: [],
+      })
+
+      sorted.each_with_index do |node, index|
+      # enhance with links to next/prev
+      #
+        rel = {this: node.url, prev: nil, next: nil}
+        if((index - 1) >= 0)
+          rel[:prev] = sorted[index - 1].url
+        end
+        if((index + 1) <= last)
+          rel[:next] = sorted[index + 1].url
+        end
+        node.attributes.set(:_meta, :rel, rel)
+
+      # node data
+      #
+        path = "#{collection.name}/#{node.name}/index.json" # eg. posts/first-post/index.json
+        data = { data: node.to_hash }
+        build[path] = data
+
+      # page data
+      #
+        page[:data].push(node)
+        should_generate_page = ((page[:data].size == page[:size]) || (index == last))
+        next unless should_generate_page
+
+        path = "#{collection.name}/index/#{page[:index]}.json" # eg. posts/index/0.json
+        page_data = page[:data].map(&:to_hash)
+        page_meta = {
+          :curr => page[:index],
+          :prev => ((page[:index] - 1) >= page[:first] ? (page[:index] - 1) : nil),
+          :next => ((page[:index] + 1) <= page[:last] ? (page[:index] + 1) : nil),
+        }
+        data = { data: page_data, page: page_meta }
+        build[path] = data
+
+        page[:data].clear
+        page[:index] += 1
+      end
+    end
+
+    # pp build
+
+    FileUtils.rm_rf(directory)
+    FileUtils.mkdir_p(directory)
+
+    build.each do |subpath, data|
+      path = Ro::Path.for(directory, subpath)
+      say["#{path}", :cyan]
+      path.binwrite(JSON.pretty_generate(data))
+    end
+
+    finished_at = Time.now.to_f
+    elapsed = (finished_at - started_at).round(2)
+
+    say["#{Ro.root} -> #{directory} in #{elapsed}s", :green]
+
+    #     indexen = {}
+    #     build_dir = Ro.root.expand_path.join('api').expand_path
+    #     binwrite = proc do |path, data|
+    #       FileUtils.mkdir_p(File.dirname(path))
+    #       IO.binwrite(path, data)
+    #     end
+    #
+    #     ro.collection.each do |node|
+    #       type = node.type
+    #       id = node.id
+    #
+    #       json = JSON.pretty_generate(node.as_json)
+    #
+    #       path = File.join(build_dir, type, id) + '.json'
+    #       # binwrite[path, json]
+    #       puts path
+    #
+    #       indexen[type] ||= []
+    #       indexen[type].push(id)
+    #     end
+    #
+    #     indexen.each do |type, collection|
+    #       path = File.join(build_dir, type) + '.json'
+    #       json = JSON.pretty_generate('type' => type, 'collection' => collection)
+    #       # binwrite[path, json]
+    #       puts path
+    #     end
   end
 
   run(:cat) do
@@ -105,9 +173,16 @@ collections : { name: posts, count: 2, first: ./, last:, index:, first_page:, la
   end
 
   def configure!
-    return unless @options.has_key?(:root)
+    root = @options[:root] || ENV['RO_ROOT']
+    return unless root
 
-    Ro.root = @options[:root]
+    Ro.root = root
+  end
+
+  def console!
+    configure!
+    require "#{$libdir}/ro/console.rb"
+    Ro::Console.start!
   end
 end
 
