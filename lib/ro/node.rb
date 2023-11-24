@@ -126,8 +126,8 @@ module Ro
       end
     end
 
-    def as_json(...)
-      attributes.to_hash.as_json(...)
+    def to_hash
+      attributes.to_hash
     end
 
     def load!
@@ -189,7 +189,7 @@ module Ro
       {}.tap do |hash|
         assets.each do |asset|
           key = asset.name
-          value = { url: asset.url, path: asset.path.expand, src: asset.src }
+          value = { url: asset.url, path: asset.path, src: asset.src }
           hash[key] = value
         end
 
@@ -200,12 +200,13 @@ module Ro
     def _load_meta_attributes
       {}.tap do |meta|
         meta.update(
+          url: url,
           type: type,
           name: name,
           identifier: identifier
         )
 
-        @attributes.set(_: meta)
+        @attributes.set(_meta: meta)
       end
     end
 
@@ -219,8 +220,8 @@ module Ro
 
     def sort_key
       position = (attributes[:position] ? Float(attributes[:position]) : 0.0)
-      published_at = (attributes[:published_at] ? Time.parse(attributes[:published_at].to_s) : Time.at(0))
-      created_at = (attributes[:created_at] ? Time.parse(attributes[:created_at].to_s) : Time.at(0))
+      published_at = (attributes[:published_at] ? Time.parse(attributes[:published_at].to_s) : Time.at(0)).utc.iso8601
+      created_at = (attributes[:created_at] ? Time.parse(attributes[:created_at].to_s) : Time.at(0)).utc.iso8601
       [position, published_at, created_at, name]
     end
   end

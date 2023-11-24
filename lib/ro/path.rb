@@ -152,5 +152,9 @@ module Ro
       Path.for(self, Path.clean(arg, *args))
     end
 
+    def binwrite(data)
+      FileUtils.mkdir_p(dirname)
+      IO.binwrite(self, data)
+    end
   end
 end
