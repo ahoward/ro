@@ -319,7 +319,7 @@ protected
     @opts.set(:port, port)
 
   #
-    watch = Ro.cast(:bool, @options[:watch] || @options[:w] || true)
+    watch = Ro.cast(:bool, @options[:watch] || @options[:w])
     @opts.set(:watch, watch)
   end
 end
