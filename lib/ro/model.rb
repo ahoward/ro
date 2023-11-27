@@ -18,6 +18,14 @@ module Ro
     include ActiveModel::Conversion
 
     class << Model
+      def root
+        @root ||= Ro.root
+      end
+
+      def root=(root)
+        @root = Ro::Root.for(root)
+      end
+
       def default_collection_name
         name.to_s.split(/::/).last.underscore.pluralize
       end
@@ -79,14 +87,6 @@ module Ro
         find(id)
       end
 
-      def method_missing(method, *args, &block)
-        id = method
-        model = find(id)
-        return model if model
-
-        super
-      end
-
       def models_for(result)
         case result
         when Array
@@ -133,13 +133,7 @@ module Ro
 
       node = model.node if node.nil? and !model.nil?
 
-      if node
-        @node = node
-      else
-        path = File.join(prefix, ':new')
-        node = Node.new(path)
-        @node = node
-      end
+      @node = node
     end
 
     def attributes
@@ -150,12 +144,12 @@ module Ro
       true
     end
 
-    def prefix
-      self.class.prefix
-    end
-
     def method_missing(method, *args, &block)
-      node.send(method, *args, &block)
+      begin
+        node.send(method, *args, &block)
+      rescue
+        super
+      end
     end
 
     def respond_to?(method, *args, &block)

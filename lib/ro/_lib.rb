@@ -7,8 +7,16 @@ module Ro
     end
 
     def summary
-      <<-____
-        a radically tiny headless cms
+      <<~____
+        the worlds tiniest, bestest, most minmialist headless CMS - powered by GitHub
+      ____
+    end
+
+    def description
+      <<~____
+        ro is a minimalist toolkit for managing heterogeneous collections of rich web
+        content on github, and providing both programatic and api access to it with zero
+        heavy lifting
       ____
     end
 
@@ -33,7 +41,7 @@ module Ro
           ['rouge', '~> 4.1', ' >= 4.1.1'],
 
         'ak47' =>
-          ['ak47', '~> 0.2'],
+          ['ak47', '~> 0.2']
       }
     end
 

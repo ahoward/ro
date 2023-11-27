@@ -212,17 +212,24 @@ protected
     say("ro.build: #{Ro.root} -> #{directory} in #{elapsed}s", color: :green)
   end
 
+  def watch(directory, &block)
+    require 'ak47'
+
+    def File.exists?(...) # monkey patch for Ak47 ;-/
+      File.exist?(...)
+    end
+
+    Ak47(watch_dirs: directory) {
+      block.call
+    }
+  end
+
   def serve!
     setup!
 
-    unless Ro.config.build_directory.sibling?(Ro.config.root)
-      say("Ro.config.build_directory must be a sibling of Ro.config.root to serve correctly", color: :red)
-      say("Ro.config.build_directory = #{ Ro.config.build_directory }", color: :red)
-      say("Ro.config.root = #{ Ro.config.root }", color: :red)
-      exit(42)
-    end
+    serve_check!
 
-    Ro.config.set(:url, ro_url)
+    Ro.config.set(:url, server_ro_url)
 
     build!
 
@@ -236,13 +243,13 @@ protected
     sleep
   end
 
-  def ro_url
-    port = @opts.fetch(:port)
-    root = Ro.config.root
-    build_directory = Ro.config.build_directory
-    document_root = build_directory.dirname
-    path_info = root.relative_to(document_root)
-    Ro.normalize_url("http://localhost:#{ port }/#{ path_info }")
+  def serve_check!
+    unless Ro.config.build_directory.sibling?(Ro.config.root)
+      say("Ro.config.build_directory must be a sibling of Ro.config.root to serve correctly", color: :red)
+      say("Ro.config.build_directory = #{ Ro.config.build_directory }", color: :red)
+      say("Ro.config.root = #{ Ro.config.root }", color: :red)
+      exit(42)
+    end
   end
 
   def server_url
@@ -250,6 +257,15 @@ protected
     build_directory = Ro.config.build_directory
     document_root = build_directory.dirname
     path_info = build_directory.relative_to(document_root)
+    Ro.normalize_url("http://localhost:#{ port }/#{ path_info }")
+  end
+
+  def server_ro_url
+    port = @opts.fetch(:port)
+    root = Ro.config.root
+    build_directory = Ro.config.build_directory
+    document_root = build_directory.dirname
+    path_info = root.relative_to(document_root)
     Ro.normalize_url("http://localhost:#{ port }/#{ path_info }")
   end
 
@@ -282,19 +298,7 @@ protected
     Thread.new do
       Thread.current.abort_on_exception = true
       system "RO_URL=#{ Ro.config.url } RO_ROOT=#{ Ro.config.root } ro build --watch"
-    end 
-  end
-
-  def watch(directory, &block)
-    require 'ak47'
-
-    def File.exists?(...) # monkey patch for Ak47 ;-/
-      File.exist?(...)
     end
-
-    Ak47(watch_dirs: directory) {
-      block.call
-    }
   end
 
   def setup!
