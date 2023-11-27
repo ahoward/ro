@@ -38,9 +38,9 @@ jobs:
         with:
           bundler-cache: true
       - name: Ro Build
-      - run: |
-          env
-          RO_URL=/ro ro build
+        - run: |
+            env
+            RO_URL=/ro ro build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
