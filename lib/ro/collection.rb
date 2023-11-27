@@ -10,13 +10,24 @@ module Ro
       end
     end
 
-    attr_reader :path, :name, :child
+    attr_reader :path, :root, :type, :name, :child
 
     def initialize(path, options = {}, &block)
       @path = Path.for(path)
-      @name = Ro.name_for(@path)
+      @root = options.fetch(:root) { Root.for(@path.dirname) }
+      @type = Slug.for(@path.basename)
+      @name = @type
+
       child(options[:child] || self.class.child, &block)
       raise ArgumentError, 'no child' unless @child
+    end
+
+    def id
+      name
+    end
+
+    def identifier
+      File.join(@root.name, name)
     end
 
     def child(ctor = nil, &block)
@@ -27,7 +38,7 @@ module Ro
 
     def child_for(child)
       if @child.respond_to?(:call)
-        @child.call(child)
+        @child.call(child, collection: self)
       elsif @child.respond_to?(:new)
         @child.new(child)
       else
@@ -57,6 +68,10 @@ module Ro
 
     def subdirectory_for(name)
       subdirectories.detect { |subdirectory| Ro.name_for(subdirectory) == Ro.name_for(name) }
+    end
+    
+    def has?(name)
+      !!subdirectory_for(name)
     end
 
     def get(name)

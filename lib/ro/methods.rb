@@ -30,7 +30,9 @@ module Ro
         url: proc { |value| Ro.normalize_url(value) },
         array: proc { |value| String(value).scan(/[^,:]+/) },
         bool: proc { |value| String(value) !~ /^\s*(f|false|off|no|0){0,1}\s*$/ },
-        path: proc { |value| Ro.path_for(value) }
+        path: proc { |value| Ro.path_for(value) },
+        path_or_nil: proc { |value| String(value).empty? ? nil : Ro.path_for(value) },
+        root: proc { |value| Ro::Root.new(value) },
       }
     end
 
@@ -138,8 +140,12 @@ module Ro
     # name utils
     # |
     # v
-    def name_for(name)
-      Slug.for(File.basename(name.to_s))
+    def name_for(path)
+      Slug.for(File.basename(path.to_s))
+    end
+
+    def type_for(path)
+      Slug.for(File.basename(File.dirname(path.to_s)))
     end
 
     def slug_for(*args, &block)

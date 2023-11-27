@@ -48,6 +48,10 @@ module Ro
       Pathname.new(self)
     end
 
+    def klass
+      self.class
+    end
+
     {
       'exist?' => 'exist?',
       'file?' => 'file?',
@@ -60,7 +64,7 @@ module Ro
       class_eval <<-____, __FILE__, __LINE__ + 1
         def #{src}(...)
           result = pn.#{dst}(...)
-          result.is_a?(Pathname) ? Path.for(result) : result
+          result.is_a?(Pathname) ? klass.for(result) : result
         end
       ____
     end
@@ -155,6 +159,28 @@ module Ro
     def binwrite(data)
       FileUtils.mkdir_p(dirname)
       IO.binwrite(self, data)
+    end
+
+    def sibling?(other)
+      expand.dirname == Path.for(other).expand.dirname
+    end
+
+    def child?(other)
+      require 'debug'
+      binding.break
+      parent = expand
+      child = Path.for(other).expand
+      (parent.size < child.size && child.start_with?(parent))
+    end
+
+    def parent?(other)
+      child = expand
+      parent = Path.for(other).expand
+      (parent.size < child.size && child.start_with?(parent))
+    end
+
+    def name
+      Ro.name_for(self)
     end
   end
 end

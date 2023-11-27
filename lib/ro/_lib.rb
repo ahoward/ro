@@ -8,7 +8,7 @@ module Ro
 
     def summary
       <<-____
-      summary
+        a radically tiny headless cms
       ____
     end
 
@@ -20,11 +20,20 @@ module Ro
 
     def dependencies
       {
-        'map' => ['map', '~> 6.6', '>= 6.6.0'],
-        'kramdown' => ['kramdown', '~> 2.4', ' >= 2.4.0'],
-        'kramdown-parser-gfm' => ['kramdown-parser-gfm', '~> 1.1', ' >= 1.1.0'],
-        'rouge' => ['rouge', '~> 4.1', ' >= 4.1.1'],
-        'main' => ['main', '~> 6.3', ' >= 6.3.0'],
+        'map' =>
+          ['map', '~> 6.6', '>= 6.6.0'],
+
+        'kramdown' =>
+          ['kramdown', '~> 2.4', ' >= 2.4.0'],
+
+        'kramdown-parser-gfm' =>
+          ['kramdown-parser-gfm', '~> 1.1', ' >= 1.1.0'],
+
+        'rouge' =>
+          ['rouge', '~> 4.1', ' >= 4.1.1'],
+
+        'ak47' =>
+          ['ak47', '~> 0.2'],
       }
     end
 

@@ -1,5 +1,5 @@
-title: First Post2
+title: First Post
 hero: assets/foo.jpg
 image: assets/foo/bar/baz.jpg
 published_at: 2023-04-05T12:17-06:00
-
+foo: bar

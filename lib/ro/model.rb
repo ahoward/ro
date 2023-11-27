@@ -6,9 +6,7 @@ rescue LoadError => e
   abort "you need to add the 'active_model' and 'active_support' gems to use Ro::Model"
 end
 
-unless defined?(Ro)
-  require_relative '../ro.rb'
-end
+require_relative '../ro' unless defined?(Ro)
 
 module Ro
   class Model
@@ -24,24 +22,18 @@ module Ro
         name.to_s.split(/::/).last.underscore.pluralize
       end
 
-      def collection(collection = nil)
-        if collection
-          @collection = collection
-        end
+      def collection_name(collection_name = nil)
+        @collection_name = collection_name.to_s if collection_name
 
-        @collection || default_collection_name
+        @collection_name || default_collection_name
       end
 
-      def root
-        Ro.root
-      end
-
-      def prefix
-        File.join(root, collection)
+      def collection
+        root.collections[collection_name]
       end
 
       def nodes
-        root.nodes.send(collection)
+        collection.to_a
       end
 
       def all
@@ -160,10 +152,6 @@ module Ro
 
     def prefix
       self.class.prefix
-    end
-
-    def directory
-      File.join(prefix, id)
     end
 
     def method_missing(method, *args, &block)

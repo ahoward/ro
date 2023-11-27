@@ -8,23 +8,28 @@ module Ro
       end
     end
 
-    attr_reader :path, :root, :type, :name, :attributes
+    attr_reader :path, :root, :collection, :type, :name, :attributes
 
     def initialize(path, options = {})
       @path = Ro.path_for(path)
+      @name = Ro.name_for(@path)
 
       @root = options.fetch(:root) { Root.for(@path.dirname.dirname) }
+      @collection = options.fetch(:collection) { @root.collections[@path.dirname.basename] }
 
-      @type = @path.dirname.basename
-      @name = @path.basename
+      @type = @collection.type
 
       @attributes = Map.new
 
       load!
     end
 
+    def id
+      name
+    end
+
     def identifier
-      File.join(type, name)
+      File.join(@collection.name, name)
     end
 
     def inspect(...)
@@ -101,14 +106,9 @@ module Ro
       raise ArgumentError, relative_path if Path.absolute?(relative_path)
 
       fullpath = Path.for(path, relative_path).expand
-
       raise ArgumentError, "#{relative_path.inspect} -- DOES NOT EXIST" unless fullpath.exist?
 
-      Ro.url_for(self.relative_path, relative_path.to_s, options)
-    end
-
-    def url(options = {})
-      Ro.url_for(relative_path, options)
+      Ro.url_for(self.relative_path, relative_path, options)
     end
 
     def src_for(*args)
@@ -189,7 +189,7 @@ module Ro
       {}.tap do |hash|
         assets.each do |asset|
           key = asset.name
-          value = { url: asset.url, path: asset.path, src: asset.src }
+          value = { url: asset.url, path: asset.path.relative_to(@root), src: asset.src }
           hash[key] = value
         end
 
@@ -200,14 +200,21 @@ module Ro
     def _load_meta_attributes
       {}.tap do |meta|
         meta.update(
-          url: url,
-          type: type,
-          name: name,
-          identifier: identifier
+          identifier: identifier,
+          url: Ro.config.url,
+          urls: urls
         )
 
         @attributes.set(_meta: meta)
       end
+    end
+
+    def files
+      path.glob('**/**').select { |entry| entry.file? }.sort
+    end
+
+    def urls
+      files.map { |file| url_for(file.relative_to(@path)) }.sort
     end
 
     def binding

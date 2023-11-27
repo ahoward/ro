@@ -1,6 +1,8 @@
 #! /usr/bin/env ruby
+# encoding: utf-8
+
 Ro.script do
-  def run
+  run do
     console!
   end
 
@@ -8,70 +10,120 @@ Ro.script do
     console!
   end
 
-  #
-  # meta description of all collections
-  #
-  # ./index.json
-  # collections : { name: posts, count: 2, index:, first: ./, last:, index: first_page:, last_page:}
-  #
-  # ./posts/index.json
-  # collection : { name: posts, count: 2, index:, first: ./, last:, index: first_page:, last_page:}
-  # ./posts/index/0.json
-  #   next + prev
-  # ./posts/index/1.json
-  # /posts/first-post/index.json
-  #   next + prev
-  #
-  # ./posts/index/0.json    next + prev
-  # ./posts/index/1.json
-  #
-  #
-
   run(:build) do
+    setup!
+
+    if @opts.fetch(:watch)
+      watch(Ro.config.root){ build! }
+    else
+      build!
+    end
+  end
+
+  run(:serve) do
+    serve!
+  end
+
+protected
+  def console!
+    setup!
+
+    require 'irb'
+
+    $GIANT_FUCKING_HACK = IRB.method(:load_modules)
+
+    Kernel.module_eval do
+      def ro
+        Ro.root
+      end
+    end
+
+    def IRB.load_modules
+      $GIANT_FUCKING_HACK.call
+
+      prompt = "ro[./#{Ro.root.relative_to(Dir.pwd)}]"
+
+      IRB.conf[:PROMPT][:RO] = {
+        PROMPT_I: "#{prompt}:%03n:%i> ",
+        PROMPT_N: "#{prompt}:%03n:%i> ",
+        PROMPT_S: "#{prompt}:%03n:%i%l ",
+        PROMPT_C: "#{prompt}:%03n:%i* ",
+        RETURN: "=> %s\n"
+      }
+
+      IRB.conf[:PROMPT_MODE] = :RO
+      IRB.conf[:AUTO_INDENT] = true
+    end
+
+    ::IRB.start
+  end
+
+  def build!
+  # setup
+  #
+    setup!
+
+  # state
+  #
     directory = Ro.config.build_directory
     page_size = Ro.config.page_size
 
-    say = proc do |msg, color|
-      say("# Ro.build: #{msg}", color:)
+    build = {}
+
+    started_at = Time.now.to_f
+    finished_at = nil
+    elapsed = nil
+
+    collections = Ro.root.collections.sort_by(&:name)
+    nodes = []
+    _meta = { url: server_url }
+
+    say("ro.build: #{Ro.root} -> #{directory}", color: :magenta)
+
+  # prev/next rel link helper
+  #
+    link = proc do |node, list, index|
+      rel = {curr: node.identifier, prev: nil, next: nil}
+      if((index - 1) >= 0)
+        rel[:prev] = list[index - 1].identifier
+      end
+      if((index + 1) <= (list.size - 1))
+        rel[:next] = list[index + 1].identifier
+      end
+      node.attributes.set(:_meta, :rel, rel)
     end
 
-    say["#{Ro.root} -> #{directory}", :magenta]
+  # page factory
+  #
+    page_for = proc do |count|
+      Map.new({
+        count: count,
+        size: page_size,
+        index: 0,
+        first: 0,
+        last: count - 1,
+        data: [],
+      })
+    end
 
-    build = {}
-    started_at = Time.now.to_f
-
-    Ro.root.collections.each do |collection|
+  # for all node collections...
+  #
+    collections.each do |collection|
       name = collection.name
       sorted = collection.to_a.sort
 
-      path = "#{collection.name}/index.json" # eg. posts/index.json
-      data = { data: sorted.map(&:to_hash) }
-      build[path] = data
-
       count = sorted.size
       last = count - 1
-
-      page_count = (count / page_size.to_f).ceil
-      page = Map.new({
-        size: page_size,
-        count: page_count,
-        first: 0,
-        last: page_count - 1,
-        index: 0,
-        data: [],
-      })
+      page = page_for[(count / page_size.to_f).ceil]
 
       sorted.each_with_index do |node, index|
+      # track all nodes
+      #
+        nodes << node
+
       # enhance with links to next/prev
       #
-        rel = {this: node.url, prev: nil, next: nil}
-        if((index - 1) >= 0)
-          rel[:prev] = sorted[index - 1].url
-        end
-        if((index + 1) <= last)
-          rel[:next] = sorted[index + 1].url
-        end
-        node.attributes.set(:_meta, :rel, rel)
+        link[node, sorted, index]
 
       # node data
       #
@@ -85,110 +137,199 @@ Ro.script do
         should_generate_page = ((page[:data].size == page[:size]) || (index == last))
         next unless should_generate_page
 
-        path = "#{collection.name}/index/#{page[:index]}.json" # eg. posts/index/0.json
+        path = "#{collection.name}/index/#{page[:index]}.json" # eg. posts/index/$page.json
         page_data = page[:data].map(&:to_hash)
         page_meta = {
           :curr => page[:index],
           :prev => ((page[:index] - 1) >= page[:first] ? (page[:index] - 1) : nil),
           :next => ((page[:index] + 1) <= page[:last] ? (page[:index] + 1) : nil),
         }
-        data = { data: page_data, page: page_meta }
+        data = { data: page_data, _meta: _meta.merge(page: page_meta) }
         build[path] = data
 
         page[:data].clear
         page[:index] += 1
       end
+
+      path = "#{collection.name}/index.json" # eg. posts/index.json
+      data = { data: sorted.map(&:to_hash) }
+      build[path] = data
     end
 
-    # pp build
+  # for all nodes... 
+  #
+    count = nodes.size
+    last = count - 1
+    page = page_for[(count / page_size.to_f).ceil]
 
+    nodes.each_with_index do |node, index|
+      # enhance with links to next/prev
+      #
+        link[node, nodes, index]
+
+      # page data
+      #
+        page[:data].push(node)
+        should_generate_page = ((page[:data].size == page[:size]) || (index == last))
+        next unless should_generate_page
+
+        path = "index/#{page[:index]}.json" # eg. index/$page.json
+        page_data = page[:data].map(&:to_hash)
+        page_meta = {
+          :curr => page[:index],
+          :prev => ((page[:index] - 1) >= page[:first] ? (page[:index] - 1) : nil),
+          :next => ((page[:index] + 1) <= page[:last] ? (page[:index] + 1) : nil),
+        }
+        data = { data: page_data, _meta: _meta.merge(page: page_meta) }
+        build[path] = data
+
+        page[:data].clear
+        page[:index] += 1
+    end
+
+  # index.json
+  #
+    data = nodes.map(&:to_hash)
+    types = collections.map(&:type)
+    build['index.json'] = {data:, _meta: _meta.merge(types:)}
+
+  # now output the build
+  #
     FileUtils.rm_rf(directory)
     FileUtils.mkdir_p(directory)
 
     build.each do |subpath, data|
       path = Ro::Path.for(directory, subpath)
-      say["#{path}", :cyan]
+      say("ro.build: #{path}", color: :cyan)
       path.binwrite(JSON.pretty_generate(data))
     end
 
+  # show stats
+  #
     finished_at = Time.now.to_f
     elapsed = (finished_at - started_at).round(2)
 
-    say["#{Ro.root} -> #{directory} in #{elapsed}s", :green]
-
-    #     indexen = {}
-    #     build_dir = Ro.root.expand_path.join('api').expand_path
-    #     binwrite = proc do |path, data|
-    #       FileUtils.mkdir_p(File.dirname(path))
-    #       IO.binwrite(path, data)
-    #     end
-    #
-    #     ro.collection.each do |node|
-    #       type = node.type
-    #       id = node.id
-    #
-    #       json = JSON.pretty_generate(node.as_json)
-    #
-    #       path = File.join(build_dir, type, id) + '.json'
-    #       # binwrite[path, json]
-    #       puts path
-    #
-    #       indexen[type] ||= []
-    #       indexen[type].push(id)
-    #     end
-    #
-    #     indexen.each do |type, collection|
-    #       path = File.join(build_dir, type) + '.json'
-    #       json = JSON.pretty_generate('type' => type, 'collection' => collection)
-    #       # binwrite[path, json]
-    #       puts path
-    #     end
+    say("ro.build: #{Ro.root} -> #{directory} in #{elapsed}s", color: :green)
   end
 
-  run(:cat) do
-    configure!
+  def serve!
+    setup!
 
-    path = @argv.shift || abort('no path')
-
-    path = Ro::Path.for(path)
-
-    result = Ro.root.collection
-
-    path.parts.last(2).each do |key|
-      result = result[key]
+    unless Ro.config.build_directory.sibling?(Ro.config.root)
+      say("Ro.config.build_directory must be a sibling of Ro.config.root to serve correctly", color: :red)
+      say("Ro.config.build_directory = #{ Ro.config.build_directory }", color: :red)
+      say("Ro.config.root = #{ Ro.config.root }", color: :red)
+      exit(42)
     end
 
-    pod =
-      if result.respond_to?(:attributes)
-        result.attributes
-      else
-        {}.tap do |hash|
-          result.each do |node|
-            hash[node.identifier] = node.attributes
-          end
-        end
-      end
+    Ro.config.set(:url, ro_url)
 
-    puts JSON.pretty_generate(pod)
+    build!
+
+    threads = [watcher!, server!]
+
+    trap('INT'){ 
+      threads.each{|thread| thread.kill rescue nil}
+      exit
+    }
+
+    sleep
   end
 
-  def configure!
-    root = @options[:root] || ENV['RO_ROOT']
-    return unless root
-
-    Ro.root = root
+  def ro_url
+    port = @opts.fetch(:port)
+    root = Ro.config.root
+    build_directory = Ro.config.build_directory
+    document_root = build_directory.dirname
+    path_info = root.relative_to(document_root)
+    Ro.normalize_url("http://localhost:#{ port }/#{ path_info }")
   end
 
-  def console!
-    configure!
-    require "#{$libdir}/ro/console.rb"
-    Ro::Console.start!
+  def server_url
+    port = @opts.fetch(:port)
+    build_directory = Ro.config.build_directory
+    document_root = build_directory.dirname
+    path_info = build_directory.relative_to(document_root)
+    Ro.normalize_url("http://localhost:#{ port }/#{ path_info }")
+  end
+
+  def server!
+    require 'webrick'
+
+    port = @opts.fetch(:port)
+    build_directory = Ro.config.build_directory
+    document_root = build_directory.dirname
+
+    index_url = File.join(server_url, 'index.json') 
+
+    say("ro.server: @ #{ index_url }", color: :magenta)
+
+    Thread.new do
+      Thread.current.abort_on_exception = true
+
+      server = WEBrick::HTTPServer.new(
+        :DocumentRoot => document_root,
+        :Port => port,
+      )
+
+      ::Kernel.at_exit{ server.shutdown }
+      
+      server.start
+    end
+  end
+
+  def watcher!
+    Thread.new do
+      Thread.current.abort_on_exception = true
+      system "RO_URL=#{ Ro.config.url } RO_ROOT=#{ Ro.config.root } ro build --watch"
+    end 
+  end
+
+  def watch(directory, &block)
+    require 'ak47'
+
+    def File.exists?(...) # monkey patch for Ak47 ;-/
+      File.exist?(...)
+    end
+
+    Ak47(watch_dirs: directory) {
+      block.call
+    }
+  end
+
+  def setup!
+  #
+    return if defined?(@opts)
+
+  #
+    @opts = Map.new
+
+  #
+    root = @options[:root]
+    if root
+      Ro.root = root
+    end
+
+  #
+    port = Ro.cast(:int, (@options[:port] || @options[:p] || ENV['PORT'] || Ro.config.port))
+    @opts.set(:port, port)
+
+  #
+    watch = Ro.cast(:bool, @options[:watch] || @options[:w] || true)
+    @opts.set(:watch, watch)
   end
 end
 
 BEGIN {
-  $bindir = File.dirname(__FILE__)
-  $libdir = File.expand_path("#{$bindir}/../lib/")
+  $stdout.sync = true
+  $stderr.sync = true
+
+  $script = File.expand_path(__FILE__)
+  $bindir = File.dirname($script)
+  $root = File.dirname($bindir)
+  $libdir = File.join($root, 'lib')
+
+  Dir.chdir($root)
 
   require "#{$libdir}/ro"
   require "#{$libdir}/ro/script.rb"
