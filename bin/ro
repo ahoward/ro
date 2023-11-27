@@ -1,6 +1,4 @@
 #! /usr/bin/env ruby
-# encoding: utf-8
-
 Ro.script do
   run do
     console!
@@ -14,7 +12,7 @@ Ro.script do
     setup!
 
     if @opts.fetch(:watch)
-      watch(Ro.config.root){ build! }
+      watch(Ro.config.root) { build! }
     else
       build!
     end
@@ -24,7 +22,8 @@ Ro.script do
     serve!
   end
 
-protected
+  protected
+
   def console!
     setup!
 
@@ -59,12 +58,13 @@ protected
   end
 
   def build!
-  # setup
-  #
+    # setup
+    #
     setup!
 
-  # state
-  #
+    # state
+    #
+    root = Ro.config.root
     directory = Ro.config.build_directory
     page_size = Ro.config.page_size
 
@@ -76,38 +76,36 @@ protected
 
     collections = Ro.root.collections.sort_by(&:name)
     nodes = []
-    _meta = { url: server_url }
+
+    url = Ro.config.url
+    _meta = { url: }
 
     say("ro.build: #{Ro.root} -> #{directory}", color: :magenta)
 
-  # prev/next rel link helper
-  #
+    # prev/next rel link helper
+    #
     link = proc do |node, list, index|
-      rel = {curr: node.identifier, prev: nil, next: nil}
-      if((index - 1) >= 0)
-        rel[:prev] = list[index - 1].identifier
-      end
-      if((index + 1) <= (list.size - 1))
-        rel[:next] = list[index + 1].identifier
-      end
+      rel = { curr: node.identifier, prev: nil, next: nil }
+      rel[:prev] = list[index - 1].identifier if (index - 1) >= 0
+      rel[:next] = list[index + 1].identifier if (index + 1) <= (list.size - 1)
       node.attributes.set(:_meta, :rel, rel)
     end
 
-  # page factory
-  #
+    # page factory
+    #
     page_for = proc do |count|
       Map.new({
-        count: count,
-        size: page_size,
-        index: 0,
-        first: 0,
-        last: count - 1,
-        data: [],
-      })
+                count:,
+                size: page_size,
+                index: 0,
+                first: 0,
+                last: count - 1,
+                data: []
+              })
     end
 
-  # for all node collections...
-  #
+    # for all node collections...
+    #
     collections.each do |collection|
       name = collection.name
       sorted = collection.to_a.sort
@@ -117,22 +115,22 @@ protected
       page = page_for[(count / page_size.to_f).ceil]
 
       sorted.each_with_index do |node, index|
-      # track all nodes
-      #
+        # track all nodes
+        #
         nodes << node
 
-      # enhance with links to next/prev
-      #
+        # enhance with links to next/prev
+        #
         link[node, sorted, index]
 
-      # node data
-      #
+        # node data
+        #
         path = "#{collection.name}/#{node.name}/index.json" # eg. posts/first-post/index.json
         data = { data: node.to_hash }
         build[path] = data
 
-      # page data
-      #
+        # page data
+        #
         page[:data].push(node)
         should_generate_page = ((page[:data].size == page[:size]) || (index == last))
         next unless should_generate_page
@@ -140,9 +138,9 @@ protected
         path = "#{collection.name}/index/#{page[:index]}.json" # eg. posts/index/$page.json
         page_data = page[:data].map(&:to_hash)
         page_meta = {
-          :curr => page[:index],
-          :prev => ((page[:index] - 1) >= page[:first] ? (page[:index] - 1) : nil),
-          :next => ((page[:index] + 1) <= page[:last] ? (page[:index] + 1) : nil),
+          curr: page[:index],
+          prev: ((page[:index] - 1) >= page[:first] ? (page[:index] - 1) : nil),
+          next: ((page[:index] + 1) <= page[:last] ? (page[:index] + 1) : nil)
         }
         data = { data: page_data, _meta: _meta.merge(page: page_meta) }
         build[path] = data
@@ -156,8 +154,8 @@ protected
       build[path] = data
     end
 
-  # for all nodes... 
-  #
+    # for all nodes...
+    #
     count = nodes.size
     last = count - 1
     page = page_for[(count / page_size.to_f).ceil]
@@ -165,38 +163,38 @@ protected
     nodes.each_with_index do |node, index|
       # enhance with links to next/prev
       #
-        link[node, nodes, index]
+      link[node, nodes, index]
 
       # page data
       #
-        page[:data].push(node)
-        should_generate_page = ((page[:data].size == page[:size]) || (index == last))
-        next unless should_generate_page
+      page[:data].push(node)
+      should_generate_page = ((page[:data].size == page[:size]) || (index == last))
+      next unless should_generate_page
 
-        path = "index/#{page[:index]}.json" # eg. index/$page.json
-        page_data = page[:data].map(&:to_hash)
-        page_meta = {
-          :curr => page[:index],
-          :prev => ((page[:index] - 1) >= page[:first] ? (page[:index] - 1) : nil),
-          :next => ((page[:index] + 1) <= page[:last] ? (page[:index] + 1) : nil),
-        }
-        data = { data: page_data, _meta: _meta.merge(page: page_meta) }
-        build[path] = data
+      path = "index/#{page[:index]}.json" # eg. index/$page.json
+      page_data = page[:data].map(&:to_hash)
+      page_meta = {
+        curr: page[:index],
+        prev: ((page[:index] - 1) >= page[:first] ? (page[:index] - 1) : nil),
+        next: ((page[:index] + 1) <= page[:last] ? (page[:index] + 1) : nil)
+      }
+      data = { data: page_data, _meta: _meta.merge(page: page_meta) }
+      build[path] = data
 
-        page[:data].clear
-        page[:index] += 1
+      page[:data].clear
+      page[:index] += 1
     end
 
-  # index.json
-  #
+    # index.json
+    #
     data = nodes.map(&:to_hash)
     types = collections.map(&:type)
-    build['index.json'] = {data:, _meta: _meta.merge(types:)}
+    build['index.json'] = { data:, _meta: _meta.merge(types:) }
 
-  # now output the build
-  #
+    # now output the build
+    #
     FileUtils.rm_rf(directory)
-    FileUtils.mkdir_p(directory)
+    FileUtils.cp_r(root, directory)
 
     build.each do |subpath, data|
       path = Ro::Path.for(directory, subpath)
@@ -204,8 +202,8 @@ protected
       path.binwrite(JSON.pretty_generate(data))
     end
 
-  # show stats
-  #
+    # show stats
+    #
     finished_at = Time.now.to_f
     elapsed = (finished_at - started_at).round(2)
 
@@ -219,9 +217,9 @@ protected
       File.exist?(...)
     end
 
-    Ak47(watch_dirs: directory) {
+    Ak47(watch_dirs: directory) do
       block.call
-    }
+    end
   end
 
   def serve!
@@ -235,21 +233,25 @@ protected
 
     threads = [watcher!, server!]
 
-    trap('INT'){ 
-      threads.each{|thread| thread.kill rescue nil}
+    trap('INT') do
+      threads.each do |thread|
+        thread.kill
+      rescue StandardError
+        nil
+      end
       exit
-    }
+    end
 
     sleep
   end
 
   def serve_check!
-    unless Ro.config.build_directory.sibling?(Ro.config.root)
-      say("Ro.config.build_directory must be a sibling of Ro.config.root to serve correctly", color: :red)
-      say("Ro.config.build_directory = #{ Ro.config.build_directory }", color: :red)
-      say("Ro.config.root = #{ Ro.config.root }", color: :red)
-      exit(42)
-    end
+    return if Ro.config.build_directory.sibling?(Ro.config.root)
+
+    say('Ro.config.build_directory must be a sibling of Ro.config.root to serve correctly', color: :red)
+    say("Ro.config.build_directory = #{Ro.config.build_directory}", color: :red)
+    say("Ro.config.root = #{Ro.config.root}", color: :red)
+    exit(42)
   end
 
   def server_url
@@ -257,7 +259,7 @@ protected
     build_directory = Ro.config.build_directory
     document_root = build_directory.dirname
     path_info = build_directory.relative_to(document_root)
-    Ro.normalize_url("http://localhost:#{ port }/#{ path_info }")
+    Ro.normalize_url("http://localhost:#{port}/#{path_info}")
   end
 
   def server_ro_url
@@ -266,7 +268,7 @@ protected
     build_directory = Ro.config.build_directory
     document_root = build_directory.dirname
     path_info = root.relative_to(document_root)
-    Ro.normalize_url("http://localhost:#{ port }/#{ path_info }")
+    Ro.normalize_url("http://localhost:#{port}/#{path_info}")
   end
 
   def server!
@@ -276,20 +278,20 @@ protected
     build_directory = Ro.config.build_directory
     document_root = build_directory.dirname
 
-    index_url = File.join(server_url, 'index.json') 
+    index_url = File.join(server_url, 'index.json')
 
-    say("ro.server: @ #{ index_url }", color: :magenta)
+    say("ro.server: @ #{index_url}", color: :magenta)
 
     Thread.new do
       Thread.current.abort_on_exception = true
 
       server = WEBrick::HTTPServer.new(
-        :DocumentRoot => document_root,
-        :Port => port,
+        DocumentRoot: document_root,
+        Port: port
       )
 
-      ::Kernel.at_exit{ server.shutdown }
-      
+      ::Kernel.at_exit { server.shutdown }
+
       server.start
     end
   end
@@ -297,28 +299,21 @@ protected
   def watcher!
     Thread.new do
       Thread.current.abort_on_exception = true
-      system "RO_URL=#{ Ro.config.url } RO_ROOT=#{ Ro.config.root } ro build --watch"
+      system "RO_URL=#{Ro.config.url} RO_ROOT=#{Ro.config.root} ro build --watch"
     end
   end
 
   def setup!
-  #
     return if defined?(@opts)
 
-  #
     @opts = Map.new
 
-  #
     root = @options[:root]
-    if root
-      Ro.root = root
-    end
+    Ro.root = root if root
 
-  #
     port = Ro.cast(:int, (@options[:port] || @options[:p] || ENV['PORT'] || Ro.config.port))
     @opts.set(:port, port)
 
-  #
     watch = Ro.cast(:bool, @options[:watch] || @options[:w])
     @opts.set(:watch, watch)
   end
