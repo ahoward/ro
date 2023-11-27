@@ -34,11 +34,10 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v3
         id: gh-pages
-      - name: Setup Ruby
+      - name: Ro Build
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
-      - name: Ro Build
         run: |
           RO_URL=${{ steps.gh-pages.outputs.base_url }} ./bin/ro build
       - name: Upload artifact
