@@ -32,9 +32,10 @@ GEM
 
 PLATFORMS
   arm64-darwin-21
+  x86_64-linux
 
 DEPENDENCIES
   ro!
 
 BUNDLED WITH
-   2.4.20
+   2.4.22
