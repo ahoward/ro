@@ -36,12 +36,15 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.2.2
           bundler-cache: true
+      - name: Ro Build
+      - run: |
+          env
+          RO_URL=/ro ro build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          path: './public/'
+          path: "./public/"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
