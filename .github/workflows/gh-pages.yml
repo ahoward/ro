@@ -33,14 +33,15 @@ jobs:
         uses: actions/checkout@v3
       - name: Setup Pages
         uses: actions/configure-pages@v3
+        run: |
+            env
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
       - name: Ro Build
         run: |
-            env
-            RO_URL=/ro ro build
+            RO_URL=/ro RO_ROOT=./public/ro RO_BUILD_DIRECTORY=./public/api ./bin/ro build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
