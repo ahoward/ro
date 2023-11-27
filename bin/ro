@@ -78,6 +78,7 @@ Ro.script do
     nodes = []
 
     url = Ro.config.url
+
     _meta = { url: }
 
     say("ro.build: #{Ro.root} -> #{directory}", color: :magenta)
@@ -196,9 +197,16 @@ Ro.script do
     FileUtils.rm_rf(directory)
     FileUtils.cp_r(root, directory)
 
+    Ro::Path.for(directory).glob('**/**') do |entry|
+      next unless test('f', entry)
+
+      say("ro.build: #{entry}", color: :blue)
+    end
+
     build.each do |subpath, data|
       path = Ro::Path.for(directory, subpath)
       say("ro.build: #{path}", color: :cyan)
+      Ro.error! "#{path} would be clobbered" if path.exist?
       path.binwrite(JSON.pretty_generate(data))
     end
 
@@ -225,9 +233,7 @@ Ro.script do
   def serve!
     setup!
 
-    serve_check!
-
-    Ro.config.set(:url, server_ro_url)
+    Ro.config.set(:url, server_url)
 
     build!
 
@@ -245,29 +251,11 @@ Ro.script do
     sleep
   end
 
-  def serve_check!
-    return if Ro.config.build_directory.sibling?(Ro.config.root)
-
-    say('Ro.config.build_directory must be a sibling of Ro.config.root to serve correctly', color: :red)
-    say("Ro.config.build_directory = #{Ro.config.build_directory}", color: :red)
-    say("Ro.config.root = #{Ro.config.root}", color: :red)
-    exit(42)
-  end
-
   def server_url
     port = @opts.fetch(:port)
     build_directory = Ro.config.build_directory
     document_root = build_directory.dirname
     path_info = build_directory.relative_to(document_root)
-    Ro.normalize_url("http://localhost:#{port}/#{path_info}")
-  end
-
-  def server_ro_url
-    port = @opts.fetch(:port)
-    root = Ro.config.root
-    build_directory = Ro.config.build_directory
-    document_root = build_directory.dirname
-    path_info = root.relative_to(document_root)
     Ro.normalize_url("http://localhost:#{port}/#{path_info}")
   end
 
