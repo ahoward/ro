@@ -1,6 +1,6 @@
 ## NAME
 
-ro - a read only data plane for yer web app
+ro - a read only data plane for yer web appz
 
 ## TL;DR
 
@@ -11,7 +11,7 @@ ro - a read only data plane for yer web app
 - headless CMS that shit to your apps via the power of github pages + github workflows
   - you get a built in, free, http, https enabled (if you know you know (facebook og tags ;-/)) service to consume your content in any static or dynamic site builder
 - huge images? just use git-lfs and git ;-)
-- lots more docs coming soon...
+- *lots more docs coming soon...*
 
 an example fs layout.
 
