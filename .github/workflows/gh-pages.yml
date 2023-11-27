@@ -38,7 +38,7 @@ jobs:
         with:
           bundler-cache: true
       - name: Ro Build
-        - run: |
+        run: |
             env
             RO_URL=/ro ro build
       - name: Upload artifact
