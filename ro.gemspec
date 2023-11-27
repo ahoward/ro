@@ -5,8 +5,8 @@ Gem::Specification::new do |spec|
   spec.name = "ro"
   spec.version = "2.0.0"
   spec.platform = Gem::Platform::RUBY
-  spec.summary = "summary"
-  spec.description = "summary"
+  spec.summary = "the worlds tiniest, bestest, most minmialist headless CMS - powered by GitHub"
+  spec.description = "the worlds tiniest, bestest, most minmialist headless CMS - powered by GitHub"
   spec.license = "Ruby"
 
   spec.files =
@@ -17,23 +17,17 @@ Gem::Specification::new do |spec|
  "Rakefile",
  "TODO",
  "TODO.md",
- "api",
- "api/posts",
- "api/posts.json",
- "api/posts/first-post.json",
- "api/posts/second-post.json",
  "bin",
  "bin/ro",
+ "docs",
  "lib",
  "lib/ro",
  "lib/ro.rb",
  "lib/ro/_lib.rb",
  "lib/ro/asset.rb",
- "lib/ro/cache.rb",
  "lib/ro/collection.rb",
- "lib/ro/console.rb",
- "lib/ro/cycle_detector.rb",
  "lib/ro/error.rb",
+ "lib/ro/methods.rb",
  "lib/ro/model.rb",
  "lib/ro/node.rb",
  "lib/ro/pagination.rb",
@@ -44,14 +38,22 @@ Gem::Specification::new do |spec|
  "lib/ro/template",
  "lib/ro/template.rb",
  "lib/ro/template/rouge_formatter.rb",
- "notes",
- "notes/ara.txt",
  "public",
+ "public/api",
+ "public/api/index",
+ "public/api/index.json",
+ "public/api/index/0.json",
+ "public/api/posts",
+ "public/api/posts/first-post",
+ "public/api/posts/first-post/index.json",
+ "public/api/posts/index",
+ "public/api/posts/index.json",
+ "public/api/posts/index/0.json",
+ "public/api/posts/second-post",
+ "public/api/posts/second-post/index.json",
  "public/ro",
  "public/ro/posts",
- "public/ro/posts.json",
  "public/ro/posts/first-post",
- "public/ro/posts/first-post.json",
  "public/ro/posts/first-post/assets",
  "public/ro/posts/first-post/assets/foo",
  "public/ro/posts/first-post/assets/foo.jpg",
@@ -63,9 +65,9 @@ Gem::Specification::new do |spec|
  "public/ro/posts/first-post/assets/src/foo/bar.rb",
  "public/ro/posts/first-post/attributes.yml",
  "public/ro/posts/first-post/body.md",
+ "public/ro/posts/first-post/foo.erb.md",
  "public/ro/posts/first-post/widget.erb",
  "public/ro/posts/second-post",
- "public/ro/posts/second-post.json",
  "public/ro/posts/second-post/assets",
  "public/ro/posts/second-post/assets/foo",
  "public/ro/posts/second-post/assets/foo.jpg",
@@ -78,7 +80,6 @@ Gem::Specification::new do |spec|
  "public/ro/posts/second-post/attributes.yml",
  "public/ro/posts/second-post/body.erb",
  "public/ro/posts/second-post/widget.erb",
- "ro",
  "ro.gemspec",
  "src",
  "todo.rb"]
@@ -96,7 +97,7 @@ Gem::Specification::new do |spec|
   
     spec.add_dependency(*["rouge", "~> 4.1", " >= 4.1.1"])
   
-    spec.add_dependency(*["main", "~> 6.3", " >= 6.3.0"])
+    spec.add_dependency(*["ak47", "~> 0.2"])
   
 
   spec.extensions.push(*[])

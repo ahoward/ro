@@ -2,30 +2,33 @@ PATH
   remote: .
   specs:
     ro (2.0.0)
+      ak47 (~> 0.2)
       kramdown (~> 2.4, >= 2.4.0)
       kramdown-parser-gfm (~> 1.1, >= 1.1.0)
-      main (~> 6.3, >= 6.3.0)
       map (~> 6.6, >= 6.6.0)
       rouge (~> 4.1, >= 4.1.1)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    arrayfields (4.9.2)
-    chronic (0.10.2)
-    fattr (2.4.0)
+    ak47 (0.2.5)
+      guard (~> 0.10.0)
+      shell_tools (~> 0.1.0)
+      smart_colored
+    ffi (1.16.3)
+    guard (0.10.0)
+      ffi (>= 0.5.0)
+      thor (~> 0.14.6)
     kramdown (2.4.0)
       rexml
     kramdown-parser-gfm (1.1.0)
       kramdown (~> 2.0)
-    main (6.3.0)
-      arrayfields (~> 4.9, >= 4.9.2)
-      chronic (~> 0.10, >= 0.10.2)
-      fattr (~> 2.4, >= 2.4.0)
-      map (~> 6.6, >= 6.6.0)
     map (6.6.0)
     rexml (3.2.6)
     rouge (4.1.1)
+    shell_tools (0.1.2)
+    smart_colored (1.1.1)
+    thor (0.14.6)
 
 PLATFORMS
   arm64-darwin-21

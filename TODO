@@ -1,17 +1,5 @@
 
-# build 
-  - ./index.json
-  - collections : { name: posts, count: 2, index:, first: ./, last:, index: first_page:, last_page:}
-  - ./posts/index.json
-  - ./posts/index/0.json
-  -   next + prev
-  - ./posts/index/1.json
-  - /posts/first-post/index.json
-  -   next + prev
-  - ./posts/index/0.json    next + prev
-  - ./posts/index/1.json
-
-# gh-pages data site
+# gh-pages builds w/ruby
 
 # git-lfs
   - ro/*/*/assets/**
