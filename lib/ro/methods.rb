@@ -50,7 +50,7 @@ module Ro
       query = options.delete(:query) || options
 
       uri = URI.parse(base.to_s)
-      uri.path = absolute_path_for(uri.path, path)
+      uri.path = Path.for(uri.path, path).absolute
       uri.path = '' if uri.path == '/'
 
       uri.query = query_string_for(query) unless query.empty?
@@ -83,7 +83,7 @@ module Ro
 
     def normalize_url(url)
       uri = URI.parse(url.to_s).normalize
-      uri.path = absolute_path_for(uri.path)
+      uri.path = Path.for(uri.path).absolute
       uri.to_s
     end
 
