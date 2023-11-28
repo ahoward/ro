@@ -22,7 +22,7 @@ module Ro
 
     def libs
       %w[
-        fileutils pathname yaml json digest/md5 logger erb cgi rexml time
+        fileutils pathname yaml json logger erb cgi rexml time
       ]
     end
 

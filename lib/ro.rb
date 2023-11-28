@@ -34,20 +34,20 @@ module Ro
                 page_size: ENV['RO_PAGE_SIZE'],
                 log: ENV['RO_LOG'],
                 debug: ENV['RO_DEBUG'],
-                port: ENV['RO_PORT'],
+                port: ENV['RO_PORT']
               })
     end
 
     def default
       Map.for({
-                #url: '/ro',
+                # url: '/ro',
                 root: './public/ro',
                 build_directory: './public/api',
                 url: '/api',
                 page_size: '10',
                 log: nil,
                 debug: nil,
-                port: '4242',
+                port: '4242'
               })
     end
 
@@ -74,13 +74,13 @@ module Ro
         cast(:int, Ro.env.port || Ro.default.port)
 
       @config ||= Map.for({
-                            url:,
                             root:,
                             build_directory:,
+                            url:,
                             page_size:,
                             log:,
                             debug:,
-                            port:,
+                            port:
                           })
     end
 

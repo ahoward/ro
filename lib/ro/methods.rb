@@ -32,7 +32,7 @@ module Ro
         bool: proc { |value| String(value) !~ /^\s*(f|false|off|no|0){0,1}\s*$/ },
         path: proc { |value| Ro.path_for(value) },
         path_or_nil: proc { |value| String(value).empty? ? nil : Ro.path_for(value) },
-        root: proc { |value| Ro::Root.new(value) },
+        root: proc { |value| Ro::Root.new(value) }
       }
     end
 
@@ -87,13 +87,6 @@ module Ro
       uri.to_s
     end
 
-    # misc utils
-    # |
-    # v
-    def md5(string)
-      Digest::MD5.hexdigest(string)
-    end
-
     # log utils
     # |
     # v
@@ -137,11 +130,15 @@ module Ro
       end
     end
 
-    # name utils
+    # name-ish utils
     # |
     # v
     def name_for(path)
       Slug.for(File.basename(path.to_s))
+    end
+
+    def path_for(arg, *args)
+      Path.for(arg, *args)
     end
 
     def type_for(path)
@@ -163,25 +160,11 @@ module Ro
     end
 
     def render(path, context)
-      Template.render(path, context: context)
+      Template.render(path, context:)
     end
 
     def render_src(path, context)
-      Template.render_src(path, context: context)
-    end
-
-    # url expansion utils
-    # |
-    # v
-
-    # path utils
-    #
-    def path_for(arg, *args)
-      Path.for(arg, *args)
-    end
-
-    def absolute_path_for(arg, *args)
-      Path.absolute(arg, *args)
+      Template.render_src(path, context:)
     end
   end
 end

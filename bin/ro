@@ -22,7 +22,7 @@ Ro.script do
     serve!
   end
 
-  protected
+protected
 
   def console!
     setup!
@@ -48,6 +48,7 @@ Ro.script do
         PROMPT_S: "#{prompt}:%03n:%i%l ",
         PROMPT_C: "#{prompt}:%03n:%i* ",
         RETURN: "=> %s\n"
+
       }
 
       IRB.conf[:PROMPT_MODE] = :RO
@@ -78,7 +79,6 @@ Ro.script do
     nodes = []
 
     url = Ro.config.url
-
     _meta = { url: }
 
     say("ro.build: #{Ro.root} -> #{directory}", color: :magenta)
@@ -195,11 +195,10 @@ Ro.script do
     # now output the build
     #
     FileUtils.rm_rf(directory)
-    FileUtils.cp_r(root, directory)
 
+    FileUtils.cp_r(root, directory)
     Ro::Path.for(directory).glob('**/**') do |entry|
       next unless test('f', entry)
-
       say("ro.build: #{entry}", color: :blue)
     end
 
@@ -251,14 +250,6 @@ Ro.script do
     sleep
   end
 
-  def server_url
-    port = @opts.fetch(:port)
-    build_directory = Ro.config.build_directory
-    document_root = build_directory.dirname
-    path_info = build_directory.relative_to(document_root)
-    Ro.normalize_url("http://localhost:#{port}/#{path_info}")
-  end
-
   def server!
     require 'webrick'
 
@@ -282,6 +273,14 @@ Ro.script do
 
       server.start
     end
+  end
+
+  def server_url
+    port = @opts.fetch(:port)
+    build_directory = Ro.config.build_directory
+    document_root = build_directory.dirname
+    path_info = build_directory.relative_to(document_root)
+    Ro.normalize_url("http://localhost:#{port}/#{path_info}")
   end
 
   def watcher!
