@@ -1,19 +1,36 @@
 #! /usr/bin/env ruby
+# encoding: utf-8
+
 Ro.script do
   help <<~____
-
     NAME
       ro
 
     TL;DR;
-      ~> ro console
+      # boot a console
+      #
+        ~> ro console
 
-      ~> ro build
+      # build a static API
+      #
+        ~> ro build
 
-      ~> ro build --watch
+      # keep building a static API on change
+      #
+        ~> ro build --watch
 
-      ~> ro server
+      # run a local http server that re-builds the API on change
+      #
+        ~> ro server
 
+    ENVs
+      # the location of your ro data
+      #
+        export RO_ROOT=...
+
+      # the url, under which, your ro data will ultimately be found under, including any sub path_info
+      #
+        export RO_URL=...
   ____
 
   run do
