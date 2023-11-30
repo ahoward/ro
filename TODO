@@ -1,5 +1,19 @@
 # git-lfs
 
+- EXPORT CMS=./ro-test
+- gh repo clone ahoward/ro $CMS
+- cd $CMS && rm -rf .git/
+- git init
+- git add * .*
+- git commit -m "import"
+- git branch -M main
+- git remote add origin https://github.com/ahoward/ro-test.git
+- git push -u origin main
+
+ git lfs track "public/ro/*/*/assets/**"
+
+
+
 # workflow
 - on commit
 - periodic
