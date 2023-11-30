@@ -1,17 +1,30 @@
 #! /usr/bin/env ruby
 Ro.script do
+  help <<~____
+
+    NAME
+      ro
+
+    SYNOPSIS
+      # start a console
+      ~> ro console
+
+  ____
+
   run do
-    console!
+    help!
   end
 
   run(:console) do
+    setup!
+
     console!
   end
 
   run(:build) do
     setup!
 
-    if @opts.fetch(:watch)
+    if opts.fetch(:watch)
       watch(Ro.config.root) { build! }
     else
       build!
@@ -25,57 +38,15 @@ Ro.script do
   protected
 
   def console!
-    setup!
+    require "#{$libdir}/ro/script/console.rb"
 
-    require 'irb'
-
-    $GIANT_FUCKING_HACK = IRB.method(:load_modules)
-
-    Kernel.module_eval do
-      def ro
-        Ro.root
-      end
-    end
-
-    def IRB.load_modules
-      $GIANT_FUCKING_HACK.call
-
-      prompt = "ro[./#{Ro.root.relative_to(Dir.pwd)}]"
-
-      IRB.conf[:PROMPT][:RO] = {
-        PROMPT_I: "#{prompt}:%03n:%i> ",
-        PROMPT_N: "#{prompt}:%03n:%i> ",
-        PROMPT_S: "#{prompt}:%03n:%i%l ",
-        PROMPT_C: "#{prompt}:%03n:%i* ",
-        RETURN: "=> %s\n"
-
-      }
-
-      IRB.conf[:PROMPT_MODE] = :RO
-      IRB.conf[:AUTO_INDENT] = true
-    end
-
-    ::IRB.start
+    Ro::Script::Console.run!(script: self)
   end
 
   def build!
-    setup!
-
     require "#{$libdir}/ro/script/builder.rb"
 
     Ro::Script::Builder.run!(script: self)
-  end
-
-  def watch(directory, &block)
-    require 'ak47'
-
-    def File.exists?(...) # monkey patch for Ak47 ;-/
-      File.exist?(...)
-    end
-
-    Ak47(watch_dirs: directory) do
-      block.call
-    end
   end
 
   def serve!
@@ -102,7 +73,7 @@ Ro.script do
   def server!
     require 'webrick'
 
-    port = @opts.fetch(:port)
+    port = opts.fetch(:port)
     build_directory = Ro.config.build_directory
     document_root = build_directory.dirname
 
@@ -125,11 +96,23 @@ Ro.script do
   end
 
   def server_url
-    port = @opts.fetch(:port)
+    port = opts.fetch(:port)
     build_directory = Ro.config.build_directory
     document_root = build_directory.dirname
     path_info = build_directory.relative_to(document_root)
     Ro.normalize_url("http://localhost:#{port}/#{path_info}")
+  end
+
+  def watch(directory, &block)
+    require 'ak47'
+
+    def File.exists?(...) # monkey patch for Ak47 ;-/
+      File.exist?(...)
+    end
+
+    Ak47(watch_dirs: directory) do
+      block.call
+    end
   end
 
   def watcher!
@@ -140,18 +123,18 @@ Ro.script do
   end
 
   def setup!
-    return if defined?(@opts)
-
-    @opts = Map.new
-
     root = @options[:root]
     Ro.root = root if root
 
     port = Ro.cast(:int, (@options[:port] || @options[:p] || ENV['PORT'] || Ro.config.port))
-    @opts.set(:port, port)
+    opts.set(:port, port)
 
     watch = Ro.cast(:bool, @options[:watch] || @options[:w])
-    @opts.set(:watch, watch)
+    opts.set(:watch, watch)
+  end
+
+  def opts
+    @opts ||= Map.new
   end
 end
 

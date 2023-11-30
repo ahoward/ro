@@ -6,8 +6,6 @@ module Ro
       end
     end
 
-    attr_reader :script
-
     def initialize(script:)
       @script = script
     end
@@ -116,19 +114,19 @@ module Ro
 
       # now output the build
       #
-      script.say("ro.build: #{@root} -> #{@directory}", color: :magenta)
+      @script.say("ro.build: #{@root} -> #{@directory}", color: :magenta)
       FileUtils.rm_rf(@directory)
 
       FileUtils.cp_r(@root, @directory)
       Ro::Path.for(@directory).glob('**/**') do |entry|
         next unless test('f', entry)
 
-        script.say("ro.build: #{entry}", color: :blue)
+        @script.say("ro.build: #{entry}", color: :blue)
       end
 
       @build.each do |subpath, data|
         path = Ro::Path.for(@directory, subpath)
-        script.say("ro.build: #{path}", color: :yellow)
+        @script.say("ro.build: #{path}", color: :yellow)
         Ro.error! "#{path} would be clobbered" if path.exist?
         path.binwrite(JSON.pretty_generate(data))
       end
@@ -138,7 +136,7 @@ module Ro
       @finished_at = Time.now.to_f
       @elapsed = (@finished_at - @started_at).round(2)
 
-      script.say("ro.build: #{@root} -> #{@directory} in #{@elapsed}s", color: :green)
+      @script.say("ro.build: #{@root} -> #{@directory} in #{@elapsed}s", color: :green)
     end
 
     def global_meta
