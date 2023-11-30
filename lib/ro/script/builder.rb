@@ -12,55 +12,6 @@ module Ro
       @script = script
     end
 
-    def global_meta
-      { url: @url }
-    end
-
-    def meta_for(meta)
-      global_meta.merge(meta)
-    end
-
-    def rel_for(list, index)
-      { curr: list[index].identifier, prev: nil, next: nil }.tap do |rel|
-        rel[:prev] = list[index - 1].identifier if (index - 1) >= 0
-        rel[:next] = list[index + 1].identifier if (index + 1) <= (list.size - 1)
-      end
-    end
-
-    def paginator_for(count, size)
-      {
-        count:,
-        size:,
-        first: 0,
-        last: count - 1,
-        index: 0,
-        data: []
-      }
-    end
-
-    def page_for(paginator)
-      paginator.except(:data).merge(
-        {
-          curr: paginator[:index],
-          prev: ((paginator[:index] - 1) >= paginator[:first] ? (paginator[:index] - 1) : nil),
-          next: ((paginator[:index] + 1) <= paginator[:last] ? (paginator[:index] + 1) : nil)
-        }
-      )
-    end
-
-    def data_for(value)
-      {}.tap do |hash|
-        case value
-        when Array
-          value.each { |node| hash.update(data_for(node)) }
-        when Ro::Node
-          hash[value.identifier] = value.to_hash
-        else
-          raise ArgumentError, "#{value.class}(#{value.inspect})"
-        end
-      end
-    end
-
     def run!
       @url = Ro.config.url
       @root = Ro.config.root
@@ -188,6 +139,55 @@ module Ro
       @elapsed = (@finished_at - @started_at).round(2)
 
       script.say("ro.build: #{@root} -> #{@directory} in #{@elapsed}s", color: :green)
+    end
+
+    def global_meta
+      { url: @url }
+    end
+
+    def meta_for(meta)
+      global_meta.merge(meta)
+    end
+
+    def rel_for(list, index)
+      { curr: list[index].identifier, prev: nil, next: nil }.tap do |rel|
+        rel[:prev] = list[index - 1].identifier if (index - 1) >= 0
+        rel[:next] = list[index + 1].identifier if (index + 1) <= (list.size - 1)
+      end
+    end
+
+    def paginator_for(count, size)
+      {
+        count:,
+        size:,
+        first: 0,
+        last: count - 1,
+        index: 0,
+        data: []
+      }
+    end
+
+    def page_for(paginator)
+      paginator.except(:data).merge(
+        {
+          curr: paginator[:index],
+          prev: ((paginator[:index] - 1) >= paginator[:first] ? (paginator[:index] - 1) : nil),
+          next: ((paginator[:index] + 1) <= paginator[:last] ? (paginator[:index] + 1) : nil)
+        }
+      )
+    end
+
+    def data_for(value)
+      {}.tap do |hash|
+        case value
+        when Array
+          value.each { |node| hash.update(data_for(node)) }
+        when Ro::Node
+          hash[value.identifier] = value.to_hash
+        else
+          raise ArgumentError, "#{value.class}(#{value.inspect})"
+        end
+      end
     end
   end
 end
