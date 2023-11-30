@@ -270,8 +270,10 @@ module Ro
     def _load_meta_attributes
       {}.tap do |meta|
         meta.update(
-          identifier:,
           url: Ro.config.url,
+          type:,
+          id:,
+          identifier:,
           urls:
         )
 

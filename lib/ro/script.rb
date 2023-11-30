@@ -4,7 +4,7 @@ module Ro
   end
 
   class Script
-    attr_accessor :cls, :env, :argv, :options, :stdout, :stdin, :stderr, :help
+    attr_accessor :cls, :env, :argv, :options, :mode, :stdout, :stdin, :stderr, :help
 
     def run!(env = ENV, argv = ARGV)
       initialize!(env, argv)

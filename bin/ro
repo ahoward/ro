@@ -22,7 +22,7 @@ Ro.script do
     serve!
   end
 
-protected
+  protected
 
   def console!
     setup!
@@ -59,162 +59,11 @@ protected
   end
 
   def build!
-    # setup
-    #
     setup!
 
-    # state
-    #
-    root = Ro.config.root
-    directory = Ro.config.build_directory
-    page_size = Ro.config.page_size
+    require "#{$libdir}/ro/script/builder.rb"
 
-    build = {}
-
-    started_at = Time.now.to_f
-    finished_at = nil
-    elapsed = nil
-
-    collections = Ro.root.collections.sort_by(&:name)
-    nodes = []
-
-    url = Ro.config.url
-    _meta = { url: }
-
-    say("ro.build: #{Ro.root} -> #{directory}", color: :magenta)
-
-    # prev/next rel link helper
-    #
-    link = proc do |node, list, index|
-      rel = { curr: node.identifier, prev: nil, next: nil }
-      rel[:prev] = list[index - 1].identifier if (index - 1) >= 0
-      rel[:next] = list[index + 1].identifier if (index + 1) <= (list.size - 1)
-      node.attributes.set(:_meta, :rel, rel)
-    end
-
-    # page factory
-    #
-    page_for = proc do |count|
-      Map.new({
-                count:,
-                size: page_size,
-                index: 0,
-                first: 0,
-                last: count - 1,
-                data: []
-              })
-    end
-
-    # for all node collections...
-    #
-    collections.each do |collection|
-      name = collection.name
-      sorted = collection.to_a.sort
-
-      count = sorted.size
-      last = count - 1
-      page = page_for[(count / page_size.to_f).ceil]
-
-      sorted.each_with_index do |node, index|
-        # track all nodes
-        #
-        nodes << node
-
-        # enhance with links to next/prev
-        #
-        link[node, sorted, index]
-
-        # node data
-        #
-        path = "#{collection.name}/#{node.name}/index.json" # eg. posts/first-post/index.json
-        data = { data: node.to_hash }
-        build[path] = data
-
-        # page data
-        #
-        page[:data].push(node)
-        should_generate_page = ((page[:data].size == page[:size]) || (index == last))
-        next unless should_generate_page
-
-        path = "#{collection.name}/index/#{page[:index]}.json" # eg. posts/index/$page.json
-        page_data = page[:data].map(&:to_hash)
-        page_meta = {
-          curr: page[:index],
-          prev: ((page[:index] - 1) >= page[:first] ? (page[:index] - 1) : nil),
-          next: ((page[:index] + 1) <= page[:last] ? (page[:index] + 1) : nil)
-        }
-        data = { data: page_data, _meta: _meta.merge(page: page_meta) }
-        build[path] = data
-
-        page[:data].clear
-        page[:index] += 1
-      end
-
-      path = "#{collection.name}/index.json" # eg. posts/index.json
-      data = { data: sorted.map(&:to_hash) }
-      build[path] = data
-    end
-
-    # for all nodes...
-    #
-    count = nodes.size
-    last = count - 1
-    page = page_for[(count / page_size.to_f).ceil]
-
-    nodes.each_with_index do |node, index|
-      # enhance with links to next/prev
-      #
-      link[node, nodes, index]
-
-      # page data
-      #
-      page[:data].push(node)
-      should_generate_page = ((page[:data].size == page[:size]) || (index == last))
-      next unless should_generate_page
-
-      path = "index/#{page[:index]}.json" # eg. index/$page.json
-      page_data = page[:data].map(&:to_hash)
-      page_meta = {
-        curr: page[:index],
-        prev: ((page[:index] - 1) >= page[:first] ? (page[:index] - 1) : nil),
-        next: ((page[:index] + 1) <= page[:last] ? (page[:index] + 1) : nil)
-      }
-      data = { data: page_data, _meta: _meta.merge(page: page_meta) }
-      build[path] = data
-
-      page[:data].clear
-      page[:index] += 1
-    end
-
-    # index.json
-    #
-    data = nodes.map(&:to_hash)
-    types = collections.map(&:type)
-    build['index.json'] = { data:, _meta: _meta.merge(types:) }
-
-    # now output the build
-    #
-    FileUtils.rm_rf(directory)
-
-    FileUtils.cp_r(root, directory)
-    Ro::Path.for(directory).glob('**/**') do |entry|
-      next unless test('f', entry)
-      say("ro.build: #{entry}", color: :blue)
-    end
-
-    build.each do |subpath, data|
-      path = Ro::Path.for(directory, subpath)
-      say("ro.build: #{path}", color: :cyan)
-      Ro.error! "#{path} would be clobbered" if path.exist?
-      path.binwrite(JSON.pretty_generate(data))
-    end
-
-    # show stats
-    #
-    finished_at = Time.now.to_f
-    elapsed = (finished_at - started_at).round(2)
-
-    say("ro.build: #{Ro.root} -> #{directory} in #{elapsed}s", color: :green)
+    Ro::Script::Builder.run!(script: self)
   end
 
   def watch(directory, &block)
