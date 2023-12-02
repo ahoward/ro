@@ -114,8 +114,6 @@ BEGIN {
   $root = File.dirname($bindir)
   $libdir = File.join($root, 'lib')
 
-  Dir.chdir($root)
-
   require "#{$libdir}/ro"
   require "#{$libdir}/ro/script.rb"
 }
