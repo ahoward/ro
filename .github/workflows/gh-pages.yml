@@ -52,13 +52,12 @@ jobs:
         with:
           bundler-cache: true
       - run: |
-            echo ${{ steps.gh-pages.outputs.base_url }}/api/index.json
-            export RO_URL=${{ steps.gh-pages.outputs.base_url }}/api
+            export RO_URL=${{ steps.gh-pages.outputs.base_url }}
             bundle exec ./bin/ro build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          path: "./public/"
+          path: "./ro/public"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2

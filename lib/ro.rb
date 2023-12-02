@@ -28,6 +28,7 @@ module Ro
     # v
     def env
       Map.for({
+                dir: ENV['RO_DIR'],
                 root: ENV['RO_ROOT'],
                 build_directory: ENV['RO_BUILD_DIRECTORY'],
                 url: ENV['RO_URL'],
@@ -41,9 +42,10 @@ module Ro
     def default
       Map.for({
                 # url: '/ro',
-                root: './public/ro',
-                build_directory: './public/api',
-                url: '/api',
+                dir: './ro',
+                root: './ro/data',
+                build_directory: './ro/public',
+                url: '/',
                 page_size: '10',
                 log: nil,
                 debug: nil,
@@ -52,6 +54,9 @@ module Ro
     end
 
     def config
+      dir =
+        cast(:path, Ro.env.dir || Ro.default.dir)
+
       root =
         cast(:root, Ro.env.root || Ro.default.root)
 

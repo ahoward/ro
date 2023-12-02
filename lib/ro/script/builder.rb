@@ -112,6 +112,14 @@ module Ro
       path = 'index.json'
       @build[path] = { data:, _meta: }
 
+      # index.html
+      #
+      path = 'index.html'
+      redirect = <<~____
+        <script>window.location = window.location.href.split('/api/')[0] + '/api/index.json'</script>
+      ____
+      @build[path] = redirect 
+
       # now output the build
       #
       @script.say("ro.build: #{@root} -> #{@directory}", color: :magenta)
@@ -128,7 +136,12 @@ module Ro
         path = Ro::Path.for(@directory, subpath)
         @script.say("ro.build: #{path}", color: :yellow)
         Ro.error! "#{path} would be clobbered" if path.exist?
-        path.binwrite(JSON.pretty_generate(data))
+
+        if data.is_a?(String)
+          path.binwrite(data)
+        else
+          path.binwrite(JSON.pretty_generate(data))
+        end
       end
 
       # show stats
