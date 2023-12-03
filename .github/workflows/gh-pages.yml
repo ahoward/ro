@@ -52,7 +52,7 @@ jobs:
         with:
           bundler-cache: true
       - run: |
-            export RO_URL=${{ steps.gh-pages.outputs.base_url }}
+            export RO_URL=${{ steps.gh-pages.outputs.base_url }}/ro
             bundle exec ./bin/ro build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2

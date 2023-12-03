@@ -44,7 +44,7 @@ module Ro
                 dir: './ro',
                 root: nil,
                 build_directory: nil,
-                url: "/",
+                url: "/ro",
                 page_size: "10",
                 log: nil,
                 debug: nil,
@@ -60,7 +60,7 @@ module Ro
         cast(:root, Ro.env.root || Ro.default.root || dir.join('/data'))
 
       build_directory =
-        cast(:path, Ro.env.build_directory || Ro.default.build_directory || dir.join("/public"))
+        cast(:path, Ro.env.build_directory || Ro.default.build_directory || dir.join("/public/ro"))
 
       url =
         cast(:url, (Ro.env.url || Ro.default.url))

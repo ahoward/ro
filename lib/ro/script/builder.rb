@@ -112,14 +112,6 @@ module Ro
       path = 'index.json'
       @build[path] = { data:, _meta: }
 
-      # index.html
-      #
-      path = 'index.html'
-      redirect = <<~____
-        <script>window.location = window.location.href.split('/api/')[0] + '/api/index.json'</script>
-      ____
-      @build[path] = redirect 
-
       # now output the build
       #
       @script.say("ro.build: #{@root} -> #{@directory}", color: :magenta)
