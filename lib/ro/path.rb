@@ -166,8 +166,6 @@ module Ro
     end
 
     def child?(other)
-      require 'debug'
-      binding.break
       parent = expand
       child = Path.for(other).expand
       (parent.size < child.size && child.start_with?(parent))

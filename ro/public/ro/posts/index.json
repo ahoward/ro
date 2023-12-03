@@ -6,38 +6,38 @@
       "image": "assets/foo/bar/baz.jpg",
       "published_at": "2023-04-05T12:17-06:00",
       "foo": "<ul>\n  <li>a</li>\n  <li>b</li>\n</ul>",
-      "body": "<div class='language-ruby highlighter-rouge'><code class='code' style='white-space:pre;'><div class='code-line code-line-1'>&nbsp;&nbsp;<span style='color: #cf222e'>class</span>&nbsp;&nbsp;<span style='color: #953800'>C</span>\n</div><div class='code-line code-line-2'>&nbsp;&nbsp;&nbsp;&nbsp;<span style='color: #0550ae'>@a</span>&nbsp;<span style='color: #0550ae'>=</span>&nbsp;<span style='color: #0550ae'>42</span>\n</div><div class='code-line code-line-3'>&nbsp;&nbsp;<span style='color: #cf222e'>end</span>\n</div></code></div>\n\n<ul>\n  <li>one</li>\n  <li>two</li>\n  <li>three</li>\n</ul>\n\n<hr/>\n\n<p><img src='/posts/first-post/assets/foo.jpg'/><br/>\n<br/></p>\n\n<p><img src='/posts/first-post/assets/foo/bar/baz.jpg'/></p>",
-      "widget": "the widget <foobar/>\n2023-12-02 15:51:54 -0700",
+      "body": "<div class='language-ruby highlighter-rouge'><code class='code' style='white-space:pre;'><div class='code-line code-line-1'>&nbsp;&nbsp;<span style='color: #cf222e'>class</span>&nbsp;&nbsp;<span style='color: #953800'>C</span>\n</div><div class='code-line code-line-2'>&nbsp;&nbsp;&nbsp;&nbsp;<span style='color: #0550ae'>@a</span>&nbsp;<span style='color: #0550ae'>=</span>&nbsp;<span style='color: #0550ae'>42</span>\n</div><div class='code-line code-line-3'>&nbsp;&nbsp;<span style='color: #cf222e'>end</span>\n</div></code></div>\n\n<ul>\n  <li>one</li>\n  <li>two</li>\n  <li>three</li>\n</ul>\n\n<hr/>\n\n<p><img src='/ro/posts/first-post/assets/foo.jpg'/><br/>\n<br/></p>\n\n<p><img src='/ro/posts/first-post/assets/foo/bar/baz.jpg'/></p>",
+      "widget": "the widget <foobar/>\n2023-12-03 10:11:10 -0700",
       "assets": {
         "assets/foo.jpg": {
-          "url": "/posts/first-post/assets/foo.jpg",
+          "url": "/ro/posts/first-post/assets/foo.jpg",
           "path": "posts/first-post/assets/foo.jpg",
           "src": null
         },
         "assets/foo/bar/baz.jpg": {
-          "url": "/posts/first-post/assets/foo/bar/baz.jpg",
+          "url": "/ro/posts/first-post/assets/foo/bar/baz.jpg",
           "path": "posts/first-post/assets/foo/bar/baz.jpg",
           "src": null
         },
         "assets/src/foo/bar.rb": {
-          "url": "/posts/first-post/assets/src/foo/bar.rb",
+          "url": "/ro/posts/first-post/assets/src/foo/bar.rb",
           "path": "posts/first-post/assets/src/foo/bar.rb",
           "src": "<code class='code' style='white-space:pre;'><div class='code-line code-line-1'><span style=\"color: #cf222e\">class</span>&nbsp;<span style=\"color: #953800\">C</span>\n</div><div class='code-line code-line-2'>&nbsp;&nbsp;<span style=\"color: #953800\">A</span>&nbsp;<span style=\"color: #0550ae\">=</span>&nbsp;<span style=\"color: #0550ae\">42</span>\n</div><div class='code-line code-line-3'><span style=\"color: #cf222e\">end</span>\n</div></code>"
         }
       },
       "_meta": {
-        "url": "/",
+        "url": "/ro",
         "type": "posts",
         "id": "first-post",
         "identifier": "posts/first-post",
         "urls": [
-          "/posts/first-post/assets/foo.jpg",
-          "/posts/first-post/assets/foo/bar/baz.jpg",
-          "/posts/first-post/assets/src/foo/bar.rb",
-          "/posts/first-post/attributes.yml",
-          "/posts/first-post/body.md",
-          "/posts/first-post/foo.erb.md",
-          "/posts/first-post/widget.erb"
+          "/ro/posts/first-post/assets/foo.jpg",
+          "/ro/posts/first-post/assets/foo/bar/baz.jpg",
+          "/ro/posts/first-post/assets/src/foo/bar.rb",
+          "/ro/posts/first-post/attributes.yml",
+          "/ro/posts/first-post/body.md",
+          "/ro/posts/first-post/foo.erb.md",
+          "/ro/posts/first-post/widget.erb"
         ],
         "rel": {
           "curr": "posts/first-post",
@@ -55,33 +55,33 @@
       "widget": "the widget <foobar/>\nthe widget <foobar/>\nthe widget <foobar/>",
       "assets": {
         "assets/foo.jpg": {
-          "url": "/posts/second-post/assets/foo.jpg",
+          "url": "/ro/posts/second-post/assets/foo.jpg",
           "path": "posts/second-post/assets/foo.jpg",
           "src": null
         },
         "assets/foo/bar/baz.jpg": {
-          "url": "/posts/second-post/assets/foo/bar/baz.jpg",
+          "url": "/ro/posts/second-post/assets/foo/bar/baz.jpg",
           "path": "posts/second-post/assets/foo/bar/baz.jpg",
           "src": null
         },
         "assets/src/foo/bar.rb": {
-          "url": "/posts/second-post/assets/src/foo/bar.rb",
+          "url": "/ro/posts/second-post/assets/src/foo/bar.rb",
           "path": "posts/second-post/assets/src/foo/bar.rb",
           "src": "<code class='code' style='white-space:pre;'><div class='code-line code-line-1'><span style=\"color: #cf222e\">class</span>&nbsp;<span style=\"color: #953800\">C</span>\n</div><div class='code-line code-line-2'>&nbsp;&nbsp;<span style=\"color: #953800\">A</span>&nbsp;<span style=\"color: #0550ae\">=</span>&nbsp;<span style=\"color: #0550ae\">42</span>\n</div><div class='code-line code-line-3'><span style=\"color: #cf222e\">end</span>\n</div></code>"
         }
       },
       "_meta": {
-        "url": "/",
+        "url": "/ro",
         "type": "posts",
         "id": "second-post",
         "identifier": "posts/second-post",
         "urls": [
-          "/posts/second-post/assets/foo.jpg",
-          "/posts/second-post/assets/foo/bar/baz.jpg",
-          "/posts/second-post/assets/src/foo/bar.rb",
-          "/posts/second-post/attributes.yml",
-          "/posts/second-post/body.erb",
-          "/posts/second-post/widget.erb"
+          "/ro/posts/second-post/assets/foo.jpg",
+          "/ro/posts/second-post/assets/foo/bar/baz.jpg",
+          "/ro/posts/second-post/assets/src/foo/bar.rb",
+          "/ro/posts/second-post/attributes.yml",
+          "/ro/posts/second-post/body.erb",
+          "/ro/posts/second-post/widget.erb"
         ],
         "rel": {
           "curr": "posts/second-post",
@@ -92,9 +92,7 @@
     }
   },
   "_meta": {
-    "url": "/",
-    "types": [
-      "posts"
-    ]
+    "url": "/ro",
+    "type": "posts"
   }
 }

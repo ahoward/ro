@@ -112,12 +112,21 @@ module Ro
       path = 'index.json'
       @build[path] = { data:, _meta: }
 
+      # index.html convenience
+      #
+      redirect = <<~____
+        <script> window.location = "#{ @url }/index.json" </script>
+      ____
+      @build['index.html'] = redirect
+
       # now output the build
       #
       @script.say("ro.build: #{@root} -> #{@directory}", color: :magenta)
-      FileUtils.rm_rf(@directory)
 
+      FileUtils.rm_rf(@directory)
+      FileUtils.mkdir_p(File.dirname(@directory))
       FileUtils.cp_r(@root, @directory)
+
       Ro::Path.for(@directory).glob('**/**') do |entry|
         next unless test('f', entry)
 

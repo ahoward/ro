@@ -1,8 +1,8 @@
 ## NAME
 
-ro = 'read only'
+ro
 
-## DESCRIPTIOn
+## DESCRIPTION
 
 ## TL;DR
 
