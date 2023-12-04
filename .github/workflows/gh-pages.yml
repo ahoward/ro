@@ -53,6 +53,7 @@ jobs:
           bundler-cache: true
       - run: |
             export RO_URL=${{ steps.gh-pages.outputs.base_url }}/ro
+            export RO_PAGE_SIZE=2
             bundle exec ./bin/ro build
             tree ./ro/public
       - name: Upload artifact

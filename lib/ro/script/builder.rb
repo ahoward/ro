@@ -37,7 +37,6 @@ module Ro
         paginator = paginator_for(page_count, @page_size)
 
         nodes.each_with_index do |node, index|
-          #
           @nodes << node
           id = node.id
 
@@ -49,7 +48,7 @@ module Ro
           # node data
           #
           data = data_for(node)
-          _meta = meta_for(type: type, id: id)
+          _meta = meta_for(type:, id:)
           path = "#{type}/#{id}/index.json"
           @build[path] = { data:, _meta: }
 
@@ -61,7 +60,7 @@ module Ro
 
           page = page_for(paginator)
           data = data_for(paginator[:data])
-          _meta = meta_for(type: type, page:)
+          _meta = meta_for(type:, page:)
           path = "#{type}/index/#{page[:index]}.json" # eg. posts/index/$page.json
           @build[path] = { data:, _meta: }
 
@@ -70,7 +69,7 @@ module Ro
         end
 
         data = data_for(nodes)
-        _meta = meta_for(type: type)
+        _meta = meta_for(type:)
         path = "#{type}/index.json" # eg. posts/index.json
         @build[path] = { data:, _meta: }
       end
@@ -218,10 +217,10 @@ module Ro
       now = Time.now.utc
 
       hidden = Ro.cast(:bool, node.attributes.fetch(:hidden) { false })
-      published_at = Ro.cast(:time, node.attributes.fetch(:published_at) { now })
       published = Ro.cast(:bool, node.attributes.fetch(:published) { true })
+      published_at = Ro.cast(:time, node.attributes.fetch(:published_at) { now.iso8601 })
 
-      (!hidden && (published_at <= now) && published)
+      ((not hidden) && (published) && (published_at <= now))
     end
   end
 end

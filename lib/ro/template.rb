@@ -76,7 +76,13 @@ module Ro
         syntax_highlighter_opts: { formatter: RougeFormatter, theme: theme }
       }
 
-      HTML.new(::Kramdown::Document.new(content, opts).to_html)
+      HTML.new(
+        <<~_____
+          <div class="ro markdown">
+            #{ ::Kramdown::Document.new(content, opts).to_html }
+          </div>
+        _____
+      )
     end
 
     def self.render_src(path, options = {})
@@ -96,7 +102,13 @@ module Ro
 
       content = render_string(content, path: path, engines: engines, context: context) if engines.size.nonzero?
 
-      HTML.new(formatter.format(lexer.lex(content)))
+      HTML.new(
+        <<~_____
+          <div class="ro markdown src">
+            #{ formatter.format(lexer.lex(content)) }
+          </div>
+        _____
+      )
     end
   end
 end

@@ -1,12 +1,12 @@
+* one
+* two
+* three
+
 ```ruby
   class  C
     @a = 42
   end
 ```
-
-* one
-* two
-* three
 
 <hr/>
 
