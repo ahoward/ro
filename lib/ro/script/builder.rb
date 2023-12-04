@@ -29,28 +29,28 @@ module Ro
       @collections.each do |collection|
         type = collection.type
         name = collection.name
-        sorted = collection.to_a.sort
+        nodes = nodes_for(collection)
 
-        count = sorted.size
+        count = nodes.size
         last = count - 1
         page_count = (count / @page_size.to_f).ceil
         paginator = paginator_for(page_count, @page_size)
 
-        sorted.each_with_index do |node, index|
-          # track all nodes
+        nodes.each_with_index do |node, index|
           #
           @nodes << node
+          id = node.id
 
           # enhance with links to next/prev
           #
-          rel = rel_for(sorted, index)
+          rel = rel_for(nodes, index)
           node.attributes[:_meta][:rel] = rel
 
           # node data
           #
           data = data_for(node)
-          _meta = meta_for(type: collection.type, id: node.id)
-          path = "#{collection.type}/#{node.id}/index.json"
+          _meta = meta_for(type: type, id: id)
+          path = "#{type}/#{id}/index.json"
           @build[path] = { data:, _meta: }
 
           # paginate data
@@ -61,17 +61,17 @@ module Ro
 
           page = page_for(paginator)
           data = data_for(paginator[:data])
-          _meta = meta_for(type: collection.type, page:)
-          path = "#{collection.type}/index/#{page[:index]}.json" # eg. posts/index/$page.json
+          _meta = meta_for(type: type, page:)
+          path = "#{type}/index/#{page[:index]}.json" # eg. posts/index/$page.json
           @build[path] = { data:, _meta: }
 
           paginator[:data].clear
           paginator[:index] += 1
         end
 
-        data = data_for(sorted)
-        _meta = meta_for(type: collection.type)
-        path = "#{collection.type}/index.json" # eg. posts/index.json
+        data = data_for(nodes)
+        _meta = meta_for(type: type)
+        path = "#{type}/index.json" # eg. posts/index.json
         @build[path] = { data:, _meta: }
       end
 
@@ -115,7 +115,7 @@ module Ro
       # index.html convenience
       #
       redirect = <<~____
-        <script> window.location = "#{ @url }/index.json" </script>
+        <script> window.location = "#{@url}/index.json" </script>
       ____
       @build['index.html'] = redirect
 
@@ -200,6 +200,28 @@ module Ro
           raise ArgumentError, "#{value.class}(#{value.inspect})"
         end
       end
+    end
+
+    def nodes_for(list)
+      filtered_nodes_for(sorted_nodes_for(list))
+    end
+
+    def sorted_nodes_for(list)
+      list.to_a.sort
+    end
+
+    def filtered_nodes_for(list)
+      list.select { |node| select_node?(node) }
+    end
+
+    def select_node?(node)
+      now = Time.now.utc
+
+      hidden = Ro.cast(:bool, node.attributes.fetch(:hidden) { false })
+      published_at = Ro.cast(:time, node.attributes.fetch(:published_at) { now })
+      published = Ro.cast(:bool, node.attributes.fetch(:published) { true })
+
+      (!hidden && (published_at <= now) && published)
     end
   end
 end

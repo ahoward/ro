@@ -7,7 +7,7 @@
       "published_at": "2023-04-05T12:17-06:00",
       "foo": "<ul>\n  <li>a</li>\n  <li>b</li>\n</ul>",
       "body": "<div class='language-ruby highlighter-rouge'><code class='code' style='white-space:pre;'><div class='code-line code-line-1'>&nbsp;&nbsp;<span style='color: #cf222e'>class</span>&nbsp;&nbsp;<span style='color: #953800'>C</span>\n</div><div class='code-line code-line-2'>&nbsp;&nbsp;&nbsp;&nbsp;<span style='color: #0550ae'>@a</span>&nbsp;<span style='color: #0550ae'>=</span>&nbsp;<span style='color: #0550ae'>42</span>\n</div><div class='code-line code-line-3'>&nbsp;&nbsp;<span style='color: #cf222e'>end</span>\n</div></code></div>\n\n<ul>\n  <li>one</li>\n  <li>two</li>\n  <li>three</li>\n</ul>\n\n<hr/>\n\n<p><img src='/ro/posts/first-post/assets/foo.jpg'/><br/>\n<br/></p>\n\n<p><img src='/ro/posts/first-post/assets/foo/bar/baz.jpg'/></p>",
-      "widget": "the widget <foobar/>\n2023-12-03 10:11:10 -0700",
+      "widget": "the widget <foobar/>\n2023-12-03 19:00:44 -0700",
       "assets": {
         "assets/foo.jpg": {
           "url": "/ro/posts/first-post/assets/foo.jpg",
@@ -42,7 +42,7 @@
         "rel": {
           "curr": "posts/first-post",
           "prev": null,
-          "next": "posts/second-post"
+          "next": null
         }
       }
     }

@@ -89,8 +89,6 @@ module Ro
 
       @type = @collection.type
 
-      @attributes = Map.new
-
       load!
     end
 
@@ -204,8 +202,8 @@ module Ro
       @attributes = Map.new
 
       _load_attributes_yml
-      _load_attribute_files
-      _load_assets
+      _load_file_attributes
+      _load_asset_attributes
       _load_meta_attributes
 
       @attributes
@@ -219,17 +217,17 @@ module Ro
       buf = IO.binread(attributes_yml)
 
       YAML.load(buf).tap do |data|
-        hash = data.is_a?(Hash) ? data : { '_' => data }
+        attrs = Map.for(data.is_a?(Hash) ? data : { '_' => data })
 
-        @attributes.update(hash)
-
-        %w[assets].each do |key|
-          Ro.error!("attributes.yml may not contain the key #{key.inspect}") if @attributes.has_key?(key)
+        %w[assets _meta].each do |key|
+          Ro.error!("attributes.yml may not contain the key #{key.inspect}") if attrs.has_key?(key)
         end
+
+        @attributes.update(attrs)
       end
     end
 
-    def _load_attribute_files
+    def _load_file_attributes
       @path.glob do |path|
         next if test('d', path)
 
@@ -255,7 +253,7 @@ module Ro
       end
     end
 
-    def _load_assets
+    def _load_asset_attributes
       {}.tap do |hash|
         assets.each do |asset|
           key = asset.name
@@ -268,8 +266,8 @@ module Ro
     end
 
     def _load_meta_attributes
-      {}.tap do |meta|
-        meta.update(
+      {}.tap do |hash|
+        hash.update(
           url: Ro.config.url,
           type:,
           id:,
@@ -277,7 +275,7 @@ module Ro
           urls:
         )
 
-        @attributes.set(_meta: meta)
+        @attributes.set(_meta: hash)
       end
     end
 

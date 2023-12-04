@@ -32,7 +32,9 @@ module Ro
         bool: proc { |value| String(value) !~ /^\s*(f|false|off|no|0){0,1}\s*$/ },
         path: proc { |value| Ro.path_for(value) },
         path_or_nil: proc { |value| String(value).empty? ? nil : Ro.path_for(value) },
-        root: proc { |value| Ro::Root.new(value) }
+        root: proc { |value| Ro::Root.new(value) },
+        time: proc { |value| Time.parse(value.to_s) },
+        date: proc { |value| Date.parse(value.to_s) },
       }
     end
 
