@@ -88,7 +88,9 @@ and serving it automatically
 
 static headless CMS
 
-https://ahoward.github.io/ro/ro/posts/first-post/index.json
+```sh
+~> open https://ahoward.github.io/ro/ro/index.json
+```
 
 via GitHub Actions and GitHub Pages.
 
