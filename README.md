@@ -86,7 +86,7 @@ to be compiled into a static headless CMS API
 
 and serving it automatically
 
-static headless CMS
+[static headless CMS](https://ahoward.github.io/ro/ro/index.json)
 
 ```sh
 ~> open https://ahoward.github.io/ro/ro/index.json
