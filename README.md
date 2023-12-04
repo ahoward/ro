@@ -84,7 +84,11 @@ to be compiled into a static headless CMS API
 # ro.build: ro/data -> ro/public/ro in 0.07s
 ```
 
-and serving it automatically
+and [serving it automatically via a GitHub Action that deploys via GitHub Pages](https://github.com/ahoward/ro/blob/main/.github/workflows/gh-pages.yml)
+
+```sh
+~> open https://github.com/ahoward/ro/blob/main/.github/workflows/gh-pages.yml 
+```
 
 [static headless CMS](https://ahoward.github.io/ro/ro/index.json)
 
