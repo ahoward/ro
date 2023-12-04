@@ -4,10 +4,10 @@ ro (read only)
 
 ## DESCRIPTION
 
-ro is a tiny tool for managing *tidy* bundles of self-referiential web content in a super sane directory layout
+ro is a tiny tool for managing _tidy_ bundles of self-referiential web content in a super sane directory layout
 
 ```sh
-  ~> tree ro/data
+~> tree ro/data
 
 # ro/data
 # └── posts
@@ -51,7 +51,6 @@ ro is a tiny tool for managing *tidy* bundles of self-referiential web content i
 
 to be compiled into a static headless CMS API
 
-
 ```sh
 ~> ro build
 
@@ -85,16 +84,15 @@ to be compiled into a static headless CMS API
 # ro.build: ro/data -> ro/public/ro in 0.07s
 ```
 
+and serving it automatically
 
-and serving it automatically as a static headless CMS
+static headless CMS
 
+https://ahoward.github.io/ro/ro/posts/first-post/index.json
 
 via GitHub Actions and GitHub Pages.
 
-
 # WIP...
-
-
 
 ## TL;DR
 
