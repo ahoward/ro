@@ -128,6 +128,7 @@ task :gemspec do
           Gem::Specification::new do |spec|
             spec.name = <%= name.inspect %>
             spec.version = <%= version.inspect %>
+            spec.required_ruby_version = '>= 3.0'
             spec.platform = Gem::Platform::RUBY
             spec.summary = <%= summary.inspect %>
             spec.description = <%= description.inspect %>

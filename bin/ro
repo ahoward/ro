@@ -38,6 +38,10 @@ Ro.script do
   end
 
   run(:console) do
+    if argv.size > 0
+      @options[:root] ||= argv.first
+    end
+
     setup!
 
     console!

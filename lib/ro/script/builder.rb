@@ -13,7 +13,7 @@ module Ro
     def run!
       @url = Ro.config.url
       @root = Ro.config.root
-      @directory = Ro.config.build_directory
+      @directory = Ro.config.build
       @page_size = Ro.config.page_size
       @collections = Ro.root.collections.sort_by(&:name)
 

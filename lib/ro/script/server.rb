@@ -32,9 +32,9 @@ module Ro
     end
 
     def server_url
-      build_directory = Ro.config.build_directory
-      document_root = build_directory.dirname
-      path_info = build_directory.relative_to(document_root)
+      build = Ro.config.build
+      document_root = build.dirname
+      path_info = build.relative_to(document_root)
       Ro.normalize_url("http://localhost:#{@port}/#{path_info}")
     end
 
@@ -52,8 +52,8 @@ module Ro
     def server!
       require 'webrick'
 
-      build_directory = Ro.config.build_directory
-      document_root = build_directory.dirname
+      build = Ro.config.build
+      document_root = build.dirname
 
       index_url = File.join(server_url, 'index.json')
 

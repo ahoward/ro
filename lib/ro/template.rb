@@ -39,6 +39,8 @@ module Ro
 
         content =
           case engine
+            when 'txt', 'text'
+              content
             when 'erb'
               render_erb(content, context:)
             when 'md', 'markdown'
@@ -47,6 +49,8 @@ module Ro
               YAML.load(content)
             when 'json'
               JSON.parse(content)
+            when 'rb'
+              eval(content)
             else
               Ro.error!("no engine found for engine=#{ engine.inspect } engines=#{ engines.inspect }")
           end

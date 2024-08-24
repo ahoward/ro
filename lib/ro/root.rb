@@ -1,35 +1,79 @@
 module Ro
   class Root < Path
-    class << Root
-      def for(arg, *args, **kws, &block)
-        return arg if arg.is_a?(Root) && args.empty? && kws.empty? && block.nil?
-
-        new(arg, *args, **kws, &block)
-      end
-
-      def collections_for(root)
-        root = Root.for(root)
-
-        Collection.new(root) do |nodes_path, collection:|
-          Collection.new(nodes_path) do |node_path, collection:|
-            Node.new(node_path, root: root, collection: collection)
-          end
-        end
-      end
+    def initialize(...)
+      super
+    ensure
+      Ro.error!("missing or invalid root=#{ self }!") unless directory?
     end
 
-    def collections
-      @collections ||= Root.collections_for(self)
+    def identifier
+      self
+    end
+
+    def collections(&block)
+      accum = []
+
+      subdirectories.each do |subdirectory|
+        collection = collection_for(subdirectory)
+        block ? block.call(subdirectory) : accum.push(subdirectory)
+      end
+
+      block ? self : accum
+    end
+
+    def collection_for(subdirectory)
+      Collection.new(subdirectory)
+    end
+
+    def paths_for(name)
+      [
+        subdirectory_for(name),
+        subdirectory_for(Slug.for(name, :join => '-')),
+        subdirectory_for(Slug.for(name, :join => '_')),
+      ]
+    end
+
+    def get(name)
+      name = name.to_s
+
+      if name.index('/')
+        collection_name, node_name = name.split('/', 2)
+        collection = get(collection_name)
+
+        if collection
+          node = collection.get(node_name)
+          return node
+        else
+          return nil
+        end
+      end
+
+      paths_for(name).each do |path|
+        next unless path.directory?
+        return collection_for(path)
+      end
+
+      nil
+    end
+
+    def [](name)
+      get(name)
+    end
+
+    def method_missing(name, *args, **kws, &block)
+      get(name) || super
     end
 
     def nodes(&block)
-      [].tap do |accum|
-        collections.each do |collection|
-          collection.each do |node|
-            accum.push(block ? block.call(node) : node)
-          end
+      accum = []
+      
+      collections.each do |collection|
+        collection.nodes do |node|
+          block ? block.call(node) : accum.push(node)
         end
       end
+
+      block ? self : accum
     end
   end
 end

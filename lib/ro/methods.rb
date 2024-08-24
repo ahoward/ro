@@ -1,6 +1,6 @@
 module Ro
   class << Ro
-    # cast
+    # cast methods
     # |
     # v
     def cast(which, arg, *args)
@@ -30,23 +30,22 @@ module Ro
         url: proc { |value| Ro.normalize_url(value) },
         array: proc { |value| String(value).scan(/[^,:]+/) },
         bool: proc { |value| String(value) !~ /^\s*(f|false|off|no|0){0,1}\s*$/ },
-        path: proc { |value| Ro.path_for(value) },
-        path_or_nil: proc { |value| String(value).empty? ? nil : Ro.path_for(value) },
-        root: proc { |value| Ro::Root.new(value) },
+        path: proc { |value| Path.for(value) },
+        path_or_nil: proc { |value| String(value).empty? ? nil : Path.for(value) },
+        root: proc { |value| Root.for(value) },
         time: proc { |value| Time.parse(value.to_s) },
         date: proc { |value| Date.parse(value.to_s) },
       }
     end
 
-    # url utils
+    # url methods
     # |
     # v
-
     def url_for(path, *args)
       options = Map.extract_options!(args)
       base = options[:base] || options[:url] || Ro.config.url
 
-      path = path_for(path, *args)
+      path = Path.for(path, *args)
 
       fragment = options.delete(:fragment)
       query = options.delete(:query) || options
@@ -89,7 +88,7 @@ module Ro
       uri.to_s
     end
 
-    # log utils
+    # log methods
     # |
     # v
     attr_accessor :logger
@@ -132,41 +131,23 @@ module Ro
       end
     end
 
-    # name-ish utils
-    # |
-    # v
-    def name_for(path)
-      Slug.for(File.basename(path.to_s))
-    end
-
-    def path_for(arg, *args)
-      Path.for(arg, *args)
-    end
-
-    def type_for(path)
-      Slug.for(File.basename(File.dirname(path.to_s)))
-    end
-
-    def slug_for(*args, &block)
-      options = Map.options_for!(args)
-      options[:join] = '-' unless options.has_key?(:join)
-      args.push(options)
-      Slug.for(*args, &block)
-    end
-
-    # template utils
+    # template methods
     # |
     # v
     def template(method = :tap, *args, &block)
       Template.send(method, *args, &(block || proc {}))
     end
 
-    def render(path, context)
+    def render(path, context = nil)
       Template.render(path, context:)
     end
 
-    def render_src(path, context)
+    def render_src(path, context = nil)
       Template.render_src(path, context:)
     end
+
+    # asset expansion utils
+    # |
+    # v
   end
 end

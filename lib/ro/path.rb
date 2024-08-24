@@ -2,15 +2,9 @@ require 'pathname'
 
 module Ro
   class Path < ::String
-    @@DEFAULT_IMAGE_PATTERN = /[.](webp|jpg|jpeg|png|gif|tif|tiff|svg)$/i
+    include Klass
 
     class << Path
-      def for(arg, *args, **kws, &block)
-        return arg if arg.is_a?(Path) && args.empty? && kws.empty? && block.nil?
-
-        new(arg, *args, **kws, &block)
-      end
-
       def clean(arg, *args)
         Pathname.new([arg, *args].join('/')).cleanpath.to_s
       end
@@ -34,10 +28,6 @@ module Ro
       def relative?(arg, *args)
         Path.for(arg, *args).relative?
       end
-
-      def image_patterns
-        [@@DEFAULT_IMAGE_PATTERN]
-      end
     end
 
     def initialize(arg, *args)
@@ -53,24 +43,23 @@ module Ro
     end
 
     {
-      'exist?' => 'exist?',
-      'file?' => 'file?',
+      'exist?'     => 'exist?',
+      'file?'      => 'file?',
       'directory?' => 'directory?',
-      'absolute?' => 'directory?',
-      'relative?' => 'relative?',
-      'expand' => 'expand_path',
-      'clean' => 'cleanpath'
-    }.each do |src, dst|
+      'absolute?'  => 'directory?',
+      'relative?'  => 'relative?',
+      'expand'     => 'expand_path',
+      'clean'      => 'cleanpath'
+    }.each do |path_method, pathname_method|
       class_eval <<-____, __FILE__, __LINE__ + 1
-        def #{src}(...)
-          result = pn.#{dst}(...)
+
+        def #{ path_method }(...)
+          result = pn.#{ pathname_method }(...)
+
           result.is_a?(Pathname) ? klass.for(result) : result
         end
-      ____
-    end
 
-    def image?
-      self.class.image_patterns.any? { |pattern| file? && pattern === basename }
+      ____
     end
 
     def absolute
@@ -110,18 +99,35 @@ module Ro
     def relative_to!(other)
       a = Pathname.new(self).realpath
       b = Pathname.new(other).realpath
+
       Path.for(a.relative_path_from(b))
     end
 
     def glob(arg = '**/**', *args, **kws, &block)
       glob = Path.for(self, arg, *args, **kws)
 
-      [].tap do |accum|
-        Dir.glob(glob) do |entry|
-          path = Path.new(entry)
-          accum.push(block ? block.call(path) : path)
-        end
+      accum = []
+
+      Dir.glob(glob) do |entry|
+        path = Path.new(entry)
+        block ? block.call(path) : accum.push(path)
       end
+
+      accum
+    end
+
+    def files(arg = '**/**', *args, **kws, &block)
+      glob = Path.for(self, arg, *args, **kws)
+
+      accum = []
+
+      Dir.glob(glob) do |entry|
+        next unless test(?f, entry)
+        path = Path.new(entry)
+        block ? block.call(path) : accum.push(path)
+      end
+
+      accum
     end
 
     def select(&block)
@@ -140,6 +146,7 @@ module Ro
     def basename
       Path.for(File.basename(self))
     end
+    alias name basename
 
     def base
       base, ext = basename.split('.', 2)
@@ -177,8 +184,35 @@ module Ro
       (parent.size < child.size && child.start_with?(parent))
     end
 
-    def name
-      Ro.name_for(self)
+    def file?
+      test(?f, self)
     end
+
+    def directory?
+      test(?d, self)
+    end
+
+    def subdirectories(&block)
+      accum = []
+
+      glob('*') do |entry|
+        next unless entry.directory?
+        block ? block.call(entry) : accum.push(entry)
+      end
+
+      block ? self : accum
+    end
+    alias subdirs subdirectories 
+
+    def subdirectory_for(subdirectory)
+      join(Path.relative(subdirectory))
+    end
+    alias subdir_for subdirectory_for
+
+    def subdirectory?(subdirectory)
+      subdirectory = join(Path.relative(subdirectory))
+      subdirectory.exist?
+    end
+    alias subdir? subdirectory?
   end
 end

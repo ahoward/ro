@@ -1,5 +1,5 @@
 module Ro
-  VERSION = '2.0.0' unless defined?(VERSION)
+  VERSION = '4.2.0' unless defined?(VERSION)
 
   class << self
     def version
@@ -8,12 +8,14 @@ module Ro
 
     def summary
       <<~____
-        the worlds tiniest, bestest, most minmialist headless CMS - powered by GitHub
+        keep *all* your content in github, as god intended.
       ____
     end
 
     def description
       <<~____
+        the worlds tiniest, bestest, most minmialist headless cms - powered by github
+
         ro is a minimalist toolkit for managing heterogeneous collections of rich web
         content on github, and providing both programatic and api access to it with zero
         heavy lifting
@@ -44,7 +46,7 @@ module Ro
           ['ak47', '~> 0.2'],
 
         'webrick' =>
-          ['webrick', '~> 1.8.1']
+          ['webrick', '~> 1.8.1'],
       }
     end
 

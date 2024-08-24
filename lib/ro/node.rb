@@ -1,12 +1,8 @@
 module Ro
   class Node
+    include Klass
+
     class << Node
-      def for(arg, *args, **kws, &block)
-        return arg if arg.is_a?(Node) && args.empty? && kws.empty? && block.nil?
-
-        new(arg, *args, **kws, &block)
-      end
-
       @@EXPAND_ASSET_URL_STRATEGIES = %i[accurate_expand_asset_urls sloppy_expand_asset_urls]
 
       def expand_asset_urls(html, node)
@@ -20,7 +16,7 @@ module Ro
           Ro.log(e)
         end
 
-        Ro.error! "could not expand assets via #{@@EXPAND_ASSET_URL_STRATEGIES.join(', ')}"
+        Ro.error! "could not expand assets via #{@@EXPAND_ASSET_URL_STRATEGIES.join(' | ')}"
       end
 
       def accurate_expand_asset_urls(html, node)
@@ -78,34 +74,121 @@ module Ro
       end
     end
 
-    attr_reader :path, :root, :collection, :type, :name, :attributes
+    attr_reader :path, :root
 
-    def initialize(path, options = {})
-      @path = Ro.path_for(path)
-      @name = Ro.name_for(@path)
+    def initialize(path)
+      @path = Path.for(path)
+      @root = Root.for(@path.parent.parent)
+      @attributes = :lazyload
+    end
 
-      @root = options.fetch(:root) { Root.for(@path.dirname.dirname) }
-      @collection = options.fetch(:collection) { @root.collections[@path.dirname.basename] }
-
-      @type = @collection.type
-
-      load!
+    def name
+      @path.name
     end
 
     def id
       name
     end
 
+    def type
+      @path.parent.name
+    end
+
     def identifier
-      File.join(@collection.name, name)
+      File.join(type, id)
     end
 
-    def inspect(...)
-      attributes.inspect(...)
+    def inspect
+      identifier
     end
 
-    def to_s
-      inspect
+    def attributes
+      load_attributes
+      @attributes
+    end
+
+    def load_attributes
+      load_attributes! if @attributes == :lazyload
+    end
+
+    def load_attributes!
+      @attributes = Map.new
+
+      _load_base_attributes
+      _load_file_attributes
+      _load_asset_attributes
+      _load_meta_attributes
+
+      @attributes
+    end
+
+    def _load_base_attributes
+      disallowed = %w[assets _meta]
+
+      @path.glob("attributes.{yml,yaml,json}") do |file|
+        attrs = _load_file(file)
+
+        disallowed.each do |key|
+          Ro.error!("#{ file } must not contain the key #{key.inspect}") if attrs.has_key?(key)
+        end
+
+        @attributes.update(attrs)
+      end
+    end
+
+    def _load_file_attributes
+      ignored = %w[attributes]
+
+      @path.files do |path|
+        next if ignored.include?(path.base)
+
+        relative_path = Path.for(path).relative_to(@path)
+        subdir = relative_path.split('/').first
+        next if %w[assets].include?(subdir)
+
+        path_info, ext = key = relative_path.split('.', 2)
+        key = path_info.split('/')
+
+        value = Ro.render(path, self)
+
+        if value.is_a?(Ro::Template::HTML)
+          html = value
+          node = self
+          value = Node.expand_asset_urls(html, node)
+        end
+
+        @attributes.set(key => value)
+      end
+    end
+
+    def _load_asset_attributes
+      {}.tap do |hash|
+        assets.each do |asset|
+          key = asset.name
+          value = { url: asset.url, path: asset.path.relative_to(@root), src: asset.src }
+          hash[key] = value
+        end
+
+        @attributes.set(assets: hash)
+      end
+    end
+
+    def _load_meta_attributes
+      {}.tap do |hash|
+        hash.update(
+          identifier:,
+          type:,
+          id:,
+          urls:
+        )
+
+        @attributes.set(_meta: hash)
+      end
+    end
+
+    def _load_file(file)
+      data = Ro.render(file)
+      _mapify(data)
     end
 
     def get(*args)
@@ -187,8 +270,8 @@ module Ro
     def method_missing(method, *args, &block)
       key = method.to_s
 
-      if @attributes.has_key?(key)
-        @attributes[key]
+      if attributes.has_key?(key)
+        attributes[key]
       else
         super
       end
@@ -198,85 +281,26 @@ module Ro
       attributes.to_hash
     end
 
-    def load!
-      @attributes = Map.new
-
-      _load_attributes_yml
-      _load_file_attributes
-      _load_asset_attributes
-      _load_meta_attributes
-
-      @attributes
+    def to_s(...)
+      to_json(...)
     end
 
-    def _load_attributes_yml
-      attributes_yml = @path.join('attributes.yml')
-
-      return unless test('e', attributes_yml)
-
-      buf = IO.binread(attributes_yml)
-
-      YAML.load(buf).tap do |data|
-        attrs = Map.for(data.is_a?(Hash) ? data : { '_' => data })
-
-        %w[assets _meta].each do |key|
-          Ro.error!("attributes.yml may not contain the key #{key.inspect}") if attrs.has_key?(key)
-        end
-
-        @attributes.update(attrs)
-      end
+    def to_json(...)
+      JSON.pretty_generate(to_hash, ...)
     end
 
-    def _load_file_attributes
-      @path.glob do |path|
-        next if test('d', path)
-
-        basename = path.basename
-        next if basename == 'attributes.yml'
-
-        relative_path = Path.for(path).relative_to(@path)
-        subdir = relative_path.split('/').first
-        next if %w[assets].include?(subdir)
-
-        path_info, ext = key = relative_path.split('.', 2)
-        key = path_info.split('/')
-
-        value = Ro.render(path, self)
-
-        if value.is_a?(Ro::Template::HTML)
-          html = value
-          node = self
-          value = Node.expand_asset_urls(html, node)
-        end
-
-        @attributes.set(key => value)
-      end
+    def as_json(...)
+      to_hash.as_json(...)
     end
 
-    def _load_asset_attributes
-      {}.tap do |hash|
-        assets.each do |asset|
-          key = asset.name
-          value = { url: asset.url, path: asset.path.relative_to(@root), src: asset.src }
-          hash[key] = value
-        end
-
-        @attributes.set(assets: hash)
-      end
+    def to_yaml(...)
+      to_hash.to_yaml(...)
     end
 
-    def _load_meta_attributes
-      {}.tap do |hash|
-        hash.update(
-          url: Ro.config.url,
-          type:,
-          id:,
-          identifier:,
-          urls:
-        )
+    def _mapify(data)
+      converted = 'this_recursively_converts_nested_hashes_into_maps'
 
-        @attributes.set(_meta: hash)
-      end
+      Map.for(converted => data)[converted]
     end
 
     def files
@@ -287,15 +311,15 @@ module Ro
       files.map { |file| url_for(file.relative_to(@path)) }.sort
     end
 
-    def binding
-      super
-    end
-
     def <=>(other)
       sort_key <=> other.sort_key
     end
 
     def sort_key
+      default_sort_key
+    end
+
+    def default_sort_key
       position = (attributes[:position] ? Float(attributes[:position]) : 0.0)
       published_at = (attributes[:published_at] ? Time.parse(attributes[:published_at].to_s) : Time.at(0)).utc.iso8601
       created_at = (attributes[:created_at] ? Time.parse(attributes[:created_at].to_s) : Time.at(0)).utc.iso8601

@@ -1,11 +1,11 @@
 module Ro
   class Asset < ::String
-    class << Asset
-      def for(arg, *args, **kws, &block)
-        return arg if arg.is_a?(Path) && args.empty? && kws.empty? && block.nil?
+    include Klass
 
-        new(arg, *args, **kws, &block)
-      end
+    DEFAULT_IMAGE_PATTERN = /[.](webp|jpg|jpeg|png|gif|tif|tiff|svg)$/i
+
+    def Asset.image_patterns
+      @image_patterns ||= [DEFAULT_IMAGE_PATTERN]
     end
 
     attr_reader :path, :node, :relative_path, :name, :url
@@ -26,8 +26,12 @@ module Ro
       super(@path)
     end
 
+    def image_patterns
+      klass.image_patterns
+    end
+
     def image?
-      @path.image?
+      @path.file? && image_patterns.any? { |pattern| pattern === @path.basename }
     end
 
     def src

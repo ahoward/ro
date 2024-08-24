@@ -4,7 +4,7 @@ Ro.load_dependencies!
 
 module Ro
   class << Ro
-    # node stuff
+    # top-level 
     # |
     # v
     def root
@@ -12,7 +12,7 @@ module Ro
     end
 
     def root=(root)
-      Ro.config.set(:root, Root.new(root))
+      Ro.config.set(:root, Root.for(root))
     end
 
     def collection
@@ -28,9 +28,8 @@ module Ro
     # v
     def env
       Map.for({
-                dir: ENV['RO_DIR'],
                 root: ENV['RO_ROOT'],
-                build_directory: ENV['RO_BUILD_DIRECTORY'],
+                build: ENV['RO_BUILD'],
                 url: ENV['RO_URL'],
                 page_size: ENV['RO_PAGE_SIZE'],
                 log: ENV['RO_LOG'],
@@ -41,32 +40,28 @@ module Ro
 
     def default
       Map.for({
-                dir: './ro',
-                root: nil,
-                build_directory: nil,
+                root: './public/ro',
+                build: './public/api/ro',
                 url: "/ro",
-                page_size: "10",
+                page_size: 100,
                 log: nil,
                 debug: nil,
-                port: "4242",
+                port: 4242,
               })
     end
 
     def config
-      dir =
-        cast(:path, Ro.env.dir || Ro.default.dir)
-
       root =
-        cast(:root, Ro.env.root || Ro.default.root || dir.join('/data'))
+        cast(:root, (Ro.env.root || Ro.default.root))
 
-      build_directory =
-        cast(:path, Ro.env.build_directory || Ro.default.build_directory || dir.join("/public/ro"))
+      build =
+        cast(:path, (Ro.env.build || Ro.default.build))
 
       url =
         cast(:url, (Ro.env.url || Ro.default.url))
 
       page_size =
-        cast(:int, Ro.env.page_size || Ro.default.page_size)
+        cast(:int, (Ro.env.page_size || Ro.default.page_size))
 
       log =
         cast(:bool, (Ro.env.log || Ro.default.log))
@@ -75,11 +70,11 @@ module Ro
         cast(:bool, (Ro.env.debug || Ro.default.debug))
 
       port =
-        cast(:int, Ro.env.port || Ro.default.port)
+        cast(:int, (Ro.env.port || Ro.default.port))
 
       @config ||= Map.for({
                             root:,
-                            build_directory:,
+                            build:,
                             url:,
                             page_size:,
                             log:,
@@ -88,12 +83,13 @@ module Ro
                           })
     end
 
-    # init
+    # ro init
     # |
     # v
     def initialize!
       Ro.load %w[
         error.rb
+        klass.rb
         slug.rb
         path.rb
         template.rb
@@ -116,4 +112,4 @@ module Ro
   end
 end
 
-Ro.tap { |ro| ro.initialize! }
+Ro.initialize!
