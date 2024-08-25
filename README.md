@@ -14,7 +14,7 @@ fuck wordpress.
 
 `ro` is the world's tiniest, simplest, zero-config, and most bestest headless CMS.
 
-it keeps your content in an on disk bundle that will make sense to an 11 year
+it keeps your content in an on disk bundle that will make sense to an 11-year-old
 
 it depends on nothing but GitHub itself for the storage, management, and
 delivery of rich web content and assets.
@@ -51,7 +51,7 @@ For example, given:
 ```
 
 To learn more, clone this repo, `bundle install`, and fire up a console to
-check play with this idea:
+play with this idea:
 
 eg: [given this node](https://github.com/ahoward/ro/tree/main/ro/data/posts/first-post)
 
@@ -83,7 +83,7 @@ allowing assets/ to be stored and rendered relative to their parent content.
 
 Of course, you have all the power of `git` so other methods of managing the
 content are available, programtic, locally in vs-code, etc.  You have lots of
-simply options, none of which require drivers or databases, and all of which
+simple options, none of which require drivers or databases, and all of which
 provide perfect history over your valuable web content and assets.
 
 A word on managing assets, if you plan to have many large images, you probably
