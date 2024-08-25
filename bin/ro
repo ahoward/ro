@@ -235,7 +235,7 @@ Ro.script do
           <em>
           <ul>
             <li>
-              this is a demo of a /ro site along a /ro api
+              this is a demo of a /ro site with a /ro json api
             </li>
             <li>
               if you can't figure how to use the api from your favorite
