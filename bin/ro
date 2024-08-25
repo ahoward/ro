@@ -221,6 +221,7 @@ Ro.script do
 
   def directory_index!
     document_root = Ro::Path.for(argv[0] || './public')
+
     files = document_root.files.sort
     hrefs = files.map{|file| file.relative_to(document_root).relative}
     anchors = hrefs.map{|href| "<a href='./#{ href }' target='_blank'>./#{ href }</a>"}

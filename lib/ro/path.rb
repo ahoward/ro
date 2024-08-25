@@ -214,5 +214,13 @@ module Ro
       subdirectory.exist?
     end
     alias subdir? subdirectory?
+
+    def sort_key
+      [dirname.to_s, basename.to_s]
+    end
+
+    def <=>(other)
+      sort_key <=> other.sort_key
+    end
   end
 end

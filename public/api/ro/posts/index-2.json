@@ -45,6 +45,15 @@
   "_meta": {
     "url": "/ro",
     "type": "posts",
-    "id": "third_post"
+    "page": {
+      "count": 2,
+      "size": 2,
+      "first": 0,
+      "last": 1,
+      "index": 1,
+      "curr": 1,
+      "prev": 0,
+      "next": null
+    }
   }
 }

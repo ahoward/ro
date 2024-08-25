@@ -61,7 +61,8 @@ module Ro
           page = page_for(paginator)
           data = data_for(paginator[:data])
           _meta = meta_for(type:, page:)
-          path = "#{type}/index/#{page[:index]}.json" # eg. posts/index/$page.json
+          pageno = page[:index] + 1
+          path = "#{type}/index-#{pageno}.json" # eg. posts/page-$pageno.json
           @build[path] = { data:, _meta: }
 
           paginator[:data].clear
@@ -96,7 +97,8 @@ module Ro
         data = data_for(paginator[:data])
         _meta = meta_for(types:, page:)
 
-        path = "index/#{page[:index]}.json" # eg. index/$page.json
+        pageno = page[:index] + 1
+        path = "index-#{pageno}.json" # eg. page-$pageno.json
         @build[path] = { data:, _meta: }
 
         paginator[:data].clear
@@ -110,13 +112,6 @@ module Ro
       _meta = meta_for(types:)
       path = 'index.json'
       @build[path] = { data:, _meta: }
-
-      # index.html convenience
-      #
-      #redirect = <<~____
-      #  <script> window.location = "#{@url}/index.json" </script>
-      #____
-      #@build['index.html'] = redirect
 
       # now output the build
       #
