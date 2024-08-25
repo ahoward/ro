@@ -3,6 +3,7 @@
     <strong><%= rel %></strong>
     <br> <br>
     <hr> <hr>
+
     <ul>
       <% 
         entries.each do |entry|
@@ -13,8 +14,14 @@
       </li>
       <% end %>
     </ul>
+
     <br> <br>
     <hr> <hr>
-    <a href="../">&lt;&dash</a>
+
+    <% if rel != '/' %>
+      <a href="../">&lt;&mdash;&mdash;</a>
+    <% else %>
+      <a href="./">&lt;&mdash;&mdash;</a>
+    <% end %>
   </body>
 </html>
