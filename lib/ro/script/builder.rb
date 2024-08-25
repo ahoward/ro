@@ -124,7 +124,7 @@ module Ro
 
       FileUtils.rm_rf(@directory)
       FileUtils.mkdir_p(File.dirname(@directory))
-      FileUtils.cp_r(@root, @directory)
+      #FileUtils.cp_r(@root, @directory)
 
       Ro::Path.for(@directory).glob('**/**') do |entry|
         next unless test('f', entry)

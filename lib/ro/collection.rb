@@ -34,8 +34,8 @@ module Ro
       Node.new(path)
     end
 
-    def subdirectories
-      @path.subdirectories
+    def subdirectories(...)
+      @path.subdirectories(...)
     end
 
     def subdirectory_for(name)
@@ -54,13 +54,15 @@ module Ro
       block ? self : accum
     end
 
-    def to_array
-      each
+    def to_array(...)
+      each(...)
     end
 
     alias to_a to_array
 
     alias all to_array
+
+    alias nodes to_array
 
     def first(*args)
       if args.size.zero?

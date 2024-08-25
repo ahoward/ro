@@ -1,11 +1,5 @@
 module Ro
   class Root < Path
-    def initialize(...)
-      super
-    ensure
-      Ro.error!("missing or invalid root=#{ self }!") unless directory?
-    end
-
     def identifier
       self
     end
@@ -13,9 +7,9 @@ module Ro
     def collections(&block)
       accum = []
 
-      subdirectories.each do |subdirectory|
+      subdirectories do |subdirectory|
         collection = collection_for(subdirectory)
-        block ? block.call(subdirectory) : accum.push(subdirectory)
+        block ? block.call(collection) : accum.push(collection)
       end
 
       block ? self : accum

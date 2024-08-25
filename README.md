@@ -51,7 +51,7 @@ eg: [given this node](https://github.com/ahoward/ro/tree/main/ro/data/posts/firs
 ```ruby
     ~> ro console
 
-    ro[./ro/data]:001:0> ro.collections.posts.first_post.title
+    ro[./ro/data]:001:0> ro.posts.first_post.title
     => "First Post"
 
     ro[./ro/data]:002:0> ro.collections.posts.first_post.assets.first.url
@@ -92,34 +92,17 @@ content as json, you simply need to run
 ```sh
     ~>  ro build
 
-    # ro.build: ro/data -> ro/public/ro
-    # ro.build: ro/public/ro/posts/first-post/assets/foo/bar/baz.jpg
-    # ro.build: ro/public/ro/posts/first-post/assets/foo.jpg
-    # ro.build: ro/public/ro/posts/first-post/assets/src/foo/bar.rb
-    # ro.build: ro/public/ro/posts/first-post/attributes.yml
-    # ro.build: ro/public/ro/posts/first-post/blurb.erb.md
-    # ro.build: ro/public/ro/posts/first-post/body.md
-    # ro.build: ro/public/ro/posts/second-post/assets/foo/bar/baz.jpg
-    # ro.build: ro/public/ro/posts/second-post/assets/foo.jpg
-    # ro.build: ro/public/ro/posts/second-post/assets/src/foo/bar.rb
-    # ro.build: ro/public/ro/posts/second-post/attributes.yml
-    # ro.build: ro/public/ro/posts/second-post/blurb.erb.md
-    # ro.build: ro/public/ro/posts/second-post/body.md
-    # ro.build: ro/public/ro/posts/third-post/assets/foo/bar/baz.jpg
-    # ro.build: ro/public/ro/posts/third-post/assets/foo.jpg
-    # ro.build: ro/public/ro/posts/third-post/assets/src/foo/bar.rb
-    # ro.build: ro/public/ro/posts/third-post/attributes.yml
-    # ro.build: ro/public/ro/posts/third-post/blurb.erb.md
-    # ro.build: ro/public/ro/posts/third-post/body.md
-    # ro.build: ro/public/ro/posts/first-post/index.json
-    # ro.build: ro/public/ro/posts/second-post/index.json
-    # ro.build: ro/public/ro/posts/third-post/index.json
-    # ro.build: ro/public/ro/posts/index/0.json
-    # ro.build: ro/public/ro/posts/index.json
-    # ro.build: ro/public/ro/index/0.json
-    # ro.build: ro/public/ro/index.json
-    # ro.build: ro/public/ro/index.html
-    # ro.build: ro/data -> ro/public/ro in 0.08s
+		ro.build: public/ro -> public/api/ro
+		ro.build: public/api/ro/posts/first_post/index.json
+		ro.build: public/api/ro/posts/second_post/index.json
+		ro.build: public/api/ro/posts/third_post/index.json
+		ro.build: public/api/ro/posts/index/0.json
+		ro.build: public/api/ro/posts/index.json
+		ro.build: public/api/ro/index/0.json
+		ro.build: public/api/ro/index.json
+		ro.build: public/api/ro/index.html
+		ro.build: public/ro -> public/api/ro in 0.08s
+
 ```
 
 During the build, assets are expanded to be the full URL of the final

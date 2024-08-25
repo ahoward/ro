@@ -146,8 +146,83 @@ module Ro
       Template.render_src(path, context:)
     end
 
-    # asset expansion utils
+    # asset expansion methods 
     # |
     # v
+    @@EXPAND_ASSET_URL_STRATEGIES = %i[
+      accurate_expand_asset_urls sloppy_expand_asset_urls
+    ]
+
+    def expand_asset_url_strategies
+      @expand_asset_url_strategies ||= @@EXPAND_ASSET_URL_STRATEGIES.dup
+    end
+
+    def expand_asset_urls(html, node)
+      last = expand_asset_url_strategies.size - 1
+
+      expand_asset_url_strategies.each_with_index do |strategy, i|
+        return send(strategy, html, node)
+      rescue Object => e
+        raise if i == last
+
+        Ro.log(e)
+      end
+
+      Ro.error! "could not expand assets via #{expand_asset_url_strategies.join(' | ')}"
+    end
+
+    def accurate_expand_asset_urls(html, node)
+      doc = REXML::Document.new('<__ro__>' + html + '</__ro__>')
+
+      doc.each_recursive do |element|
+        next unless element.respond_to?(:attributes)
+
+        src = {}
+        element.attributes.each do |key, value|
+          src[key] = value
+        end
+
+        dst = expand_asset_values(src, node)
+
+        dst.each do |k, v|
+          element.attributes[k] = v
+        end
+      end
+
+      doc.to_s.tap do |xml|
+        xml.sub!(/^\s*<.?__ro__>\s*/, '')
+        xml.sub!(/\s*<.?__ro__>\s*$/, '')
+        xml.strip!
+      end
+    end
+
+    def sloppy_expand_asset_urls(html, node)
+      html.to_s.gsub(%r{\s*=\s*['"](?:[.]/)?assets/[^'"\s]+['"]}) do |match|
+        path = match[%r{assets/[^'"\s]+}]
+        url = node.url_for(path)
+        "='#{url}'"
+      end
+    end
+
+    def expand_asset_values(hash, node)
+      src = Map.for(hash)
+      dst = Map.new
+
+      re = %r{\A(?:[.]/)?(assets/[^\s]+)\s*\z}
+
+      src.depth_first_each do |key, value|
+        next unless value.is_a?(String)
+
+        if (match = re.match(value.strip))
+          path = match[1].strip
+          url = node.url_for(path)
+          value = url
+        end
+
+        dst.set(key, value)
+      end
+
+      dst.to_hash
+    end
   end
 end

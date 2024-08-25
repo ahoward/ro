@@ -4,33 +4,80 @@
 Ro.script do
   help <<~____
     NAME
+    ----
       ro
+      
+    SYNOPSIS
+    --------
+      * boot an interactive r.e.p.l. over yer ro data
+      * build a json api for your ro data
+      * run a local dev server for your ro data
 
     TL;DR;
-      # boot a console
+    ------
+      # boot a console for the ro a ./public/ro (the default)
       #
         ~> ro console
 
-      # build a static API
+      # build a static API into ./public/api/ro (the default)
       #
         ~> ro build
 
-      # keep building a static API on change
+      # keep building that static a.p.i when any file changes
       #
-        ~> ro build --watch
+        ~> ro watch
 
-      # run a local http server that re-builds the API on change
+      # run a local http server that re-builds that static a.p.i on change
       #
         ~> ro server
 
-    ENVs
-      # the location of your ro data
+      # show defaults
       #
-        export RO_ROOT=...
+        ~> ro defaults
 
-      # the url, under which, your ro data will ultimately be found under, including any sub path_info
+      # show env
       #
-        export RO_URL=...
+        ~> ro env
+
+      # show config
+      #
+        ~> ro config
+
+    ENV
+    ---
+      - all sub commands can be affect by the following env vars
+      - 12 factor ftw
+
+      - RO_ROOT
+        - the root directory of your ro data
+      - RO_BUILD
+        - the build directory for your ro data api
+      - RO_URL
+        - the url prefix where your ro data will be found on the interwebs
+        - you may use a relative or absolute url
+        - please make sure this will resolve
+      - RO_PAGE_SIZE
+        - the built a.p.i.'s page size
+      - RO_LOG
+        - log on, or log off
+      - RO_DEBUG
+        - debug or no debug
+      - RO_PORT
+        - le port to to serve on
+
+      ARGV
+      ----
+        - for *all* sub commands
+        - you may also specifiy RO_ROOT as the 1'st argument
+        - you may also specifiy RO_BUILD as the 2'nd argument
+        - you may specify env vars in argv as 'RO_XXX=YYY' pairs, for example:
+          ~ `ro console RO_ROOT=./public/ro`
+            - or
+          ~ `ro console ro_root=./public/ro`
+
+      API
+        - the a.p.i is trivially simple, examine the output.
+        - if you can't figure out how to use it your probably should not.
   ____
 
   run do
@@ -38,10 +85,6 @@ Ro.script do
   end
 
   run(:console) do
-    if argv.size > 0
-      @options[:root] ||= argv.first
-    end
-
     setup!
 
     console!
@@ -50,17 +93,76 @@ Ro.script do
   run(:build) do
     setup!
 
-    if opts.fetch(:watch)
-      watch(Ro.config.root) { build! }
-    else
-      build!
-    end
+    build!
+  end
+
+  run(:watch) do
+    setup!
+
+    watch!
   end
 
   run(:server) do
     setup!
 
     server!
+  end
+
+  run(:defaults) do
+    setup!
+
+    defaults!
+  end
+
+  run(:env) do
+    setup!
+
+    env!
+  end
+
+  run(:config) do
+    setup!
+
+    config!
+  end
+
+  def setup!
+    setup_env!
+
+    parse_argv!
+
+    validate!
+  end
+
+  def parse_argv!
+    if argv.size > 0
+      ro_root = argv[0]
+      ENV['RO_ROOT'] = ro_root
+    end
+
+    if argv.size > 1
+      ro_build = argv[1]
+      ENV['RO_BUILD'] = ro_build 
+    end
+  end
+
+  def setup_env!
+    argv.dup.each_with_index do |arg, i|
+      key, val = arg.split('=', 2)
+
+      if key && val 
+        ENV[key.upcase] = val
+
+        argv.delete_at(i)
+      end
+    end
+
+    ENV['RO_PORT'] ||= ENV['PORT']
+  end
+
+  def validate!
+    abort("Ro.root = #{ Ro.config.root.expand } is not a directory") unless test(?d, Ro.config.root)
+    abort("Ro.root = #{ Ro.config.root.expand } is empty") unless test(?s, Ro.config.root)
   end
 
   def console!
@@ -81,19 +183,8 @@ Ro.script do
     Ro::Script::Server.run!(script: self)
   end
 
-  def setup!
-    root = @options[:root]
-    Ro.root = root if root
-
-    port = Ro.cast(:int, (@options[:port] || @options[:p] || ENV['PORT'] || Ro.config.port))
-    opts.set(:port, port)
-
-    watch = Ro.cast(:bool, @options[:watch] || @options[:w])
-    opts.set(:watch, watch)
-  end
-
-  def opts
-    @opts ||= Map.new
+  def watch!
+    watch(Ro.config.root) { build! }
   end
 
   def watch(directory, &block)
@@ -106,6 +197,22 @@ Ro.script do
     Ak47(watch_dirs: directory) do
       block.call
     end
+  end
+
+  def show(hash)
+    puts JSON.parse(hash.to_json).to_yaml
+  end
+
+  def defaults!
+    show Ro.defaults
+  end
+
+  def env!
+    show Ro.env
+  end
+
+  def config!
+    show Ro.config
   end
 end
 
