@@ -4,13 +4,16 @@
 
 # SYNOPSIS
 
-The K.I.S.S, tiny, headless C.M.S your O.C.D. mother told you to use.
+keep all your content in git as god intended.  even images.
 
 # TL;DR;
 
-`ro` is the world's tiniest, simplest, zero-config, and headless CMS. It
-depends on nothing but GitHub itself for the storage, management, and delivery
-of rich web content and assets.
+`ro` is the world's tiniest, simplest, zero-config, and most bestest headless CMS.
+
+it keeps your content in an on disk bundle that will make sense to an 11 year
+
+it depends on nothing but GitHub itself for the storage, management, and
+delivery of rich web content and assets.
 
 ## Storage
 
