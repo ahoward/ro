@@ -263,7 +263,9 @@ Ro.script do
       </html>
     ____
 
-    puts html
+    index_html = document_root.join('index.html')
+    index.html.binwrite(html)
+    puts index_html
   end
 end
 
