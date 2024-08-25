@@ -113,9 +113,9 @@ module Ro
 
       # index.html convenience
       #
-      redirect = <<~____
-        <script> window.location = "#{@url}/index.json" </script>
-      ____
+      #redirect = <<~____
+      #  <script> window.location = "#{@url}/index.json" </script>
+      #____
       #@build['index.html'] = redirect
 
       # now output the build
