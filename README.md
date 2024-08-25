@@ -4,7 +4,11 @@
 
 # SYNOPSIS
 
-keep all your content in git as god intended.  even images.
+keep all your content in git as god intended.
+
+even images.
+
+fuck wordpress.
 
 # TL;DR;
 

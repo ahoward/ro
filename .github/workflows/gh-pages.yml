@@ -55,11 +55,11 @@ jobs:
             export RO_URL=${{ steps.gh-pages.outputs.base_url }}/ro
             export RO_PAGE_SIZE=2
             bundle exec ./bin/ro build
-            tree ./ro/public
+            tree ./public/ro/api
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          path: "./ro/public"
+          path: "./public"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2

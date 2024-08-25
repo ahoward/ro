@@ -54,10 +54,6 @@ module Ro
       get(name)
     end
 
-    def method_missing(name, *args, **kws, &block)
-      get(name) || super
-    end
-
     def nodes(&block)
       accum = []
       
@@ -68,6 +64,10 @@ module Ro
       end
 
       block ? self : accum
+    end
+
+    def method_missing(name, *args, **kws, &block)
+      get(name) || super
     end
   end
 end

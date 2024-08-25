@@ -1,5 +1,5 @@
 module Ro
-  class << Ro
+	module Methods
     # cast methods
     # |
     # v
@@ -24,17 +24,17 @@ module Ro
 
     def casts
       {
-        string: proc { |value| String(value) },
-        int: proc { |value| Integer(value.to_s) },
-        string_or_nil: proc { |value| String(value).empty? ? nil : String(value) },
-        url: proc { |value| Ro.normalize_url(value) },
-        array: proc { |value| String(value).scan(/[^,:]+/) },
-        bool: proc { |value| String(value) !~ /^\s*(f|false|off|no|0){0,1}\s*$/ },
-        path: proc { |value| Path.for(value) },
-        path_or_nil: proc { |value| String(value).empty? ? nil : Path.for(value) },
-        root: proc { |value| Root.for(value) },
-        time: proc { |value| Time.parse(value.to_s) },
-        date: proc { |value| Date.parse(value.to_s) },
+        :string        => proc { |value| String(value) },
+        :int           => proc { |value| Integer(value.to_s) },
+        :string_or_nil => proc { |value| String(value).empty? ? nil : String(value) },
+        :url           => proc { |value| Ro.normalize_url(value) },
+        :array         => proc { |value| String(value).scan(/[^,:]+/) },
+        :bool          => proc { |value| String(value) !~ /^\s*(f|false|off|no|0){0,1}\s*$/ },
+        :path          => proc { |value| Path.for(value) },
+        :path_or_nil   => proc { |value| String(value).empty? ? nil : Path.for(value) },
+        :root          => proc { |value| Root.for(value) },
+        :time          => proc { |value| Time.parse(value.to_s) },
+        :date          => proc { |value| Date.parse(value.to_s) },
       }
     end
 
@@ -149,12 +149,12 @@ module Ro
     # asset expansion methods 
     # |
     # v
-    @@EXPAND_ASSET_URL_STRATEGIES = %i[
+    EXPAND_ASSET_URL_STRATEGIES = %i[
       accurate_expand_asset_urls sloppy_expand_asset_urls
     ]
 
     def expand_asset_url_strategies
-      @expand_asset_url_strategies ||= @@EXPAND_ASSET_URL_STRATEGIES.dup
+      @expand_asset_url_strategies ||= EXPAND_ASSET_URL_STRATEGIES.dup
     end
 
     def expand_asset_urls(html, node)
@@ -225,4 +225,6 @@ module Ro
       dst.to_hash
     end
   end
+
+  extend Methods
 end

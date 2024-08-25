@@ -251,6 +251,7 @@ module Ro
       position = (attributes[:position] ? Float(attributes[:position]) : 0.0)
       published_at = (attributes[:published_at] ? Time.parse(attributes[:published_at].to_s) : Time.at(0)).utc.iso8601
       created_at = (attributes[:created_at] ? Time.parse(attributes[:created_at].to_s) : Time.at(0)).utc.iso8601
+
       [position, published_at, created_at, name]
     end
   end
