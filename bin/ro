@@ -279,6 +279,30 @@ Ro.script do
 
     index[document_root]
   end
+
+  def directory_index!
+    document_root = Ro::Path.for(argv[0] || './public')
+    files = document_root.files.sort
+    hrefs = files.map{|file| file.relative_to(document_root).relative}
+    anchors = hrefs.map{|href| "<a href='./#{ href }' target='_blank'>./#{ href }</a>"}
+    lis = anchors.map{|anchor| "<li>#{ anchor }</li>"}
+
+    html = <<-____
+      <html>
+        <body>
+          <br><br>
+          <strong>tl;dr;</strong>
+          <br><br>
+          <hr><hr>
+          <ul>
+            #{ lis.join("\n") }
+          </ul>
+        </body>
+      </html>
+    ____
+
+    puts html
+  end
 end
 
 BEGIN {
