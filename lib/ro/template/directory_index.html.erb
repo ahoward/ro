@@ -1,0 +1,20 @@
+<html>
+  <body>
+    <strong><%= rel %></strong>
+    <br> <br>
+    <hr> <hr>
+    <ul>
+      <% 
+        entries.each do |entry|
+          href = entry
+      %>
+      <li>
+        <a href="./<%= href %>"><%= href %></a>
+      </li>
+      <% end %>
+    </ul>
+    <br> <br>
+    <hr> <hr>
+    <a href="../">&lt;&dash</a>
+  </body>
+</html>

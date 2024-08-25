@@ -126,6 +126,10 @@ Ro.script do
     config!
   end
 
+  run(:directory_index) do
+    directory_index!
+  end
+
   def setup!
     setup_env!
 
@@ -213,6 +217,67 @@ Ro.script do
 
   def config!
     show Ro.config
+  end
+
+  def directory_index! # FIXME - extract this as sub-command as per builder, etc...
+  #
+    document_root = Ro::Path.for(argv[0] || './public')
+    template = File.join(Ro.libdir, 'template/directory_index.html.erb')
+
+  #
+    data_for = ->(dir) do
+      items = dir.glob('*')
+      rel = dir.relative_to(document_root).absolute
+
+      data =
+        Map.new(
+          :rel => rel,
+          :directories => [],
+          :files => [],
+          :back => '../',
+        )
+
+      items.each do |item|
+        if test(?d, item)
+          data.directories.push(item.basename)
+        else
+          data.files.push(item.basename)
+        end
+      end
+
+      [data.directories, data.files].each{|list| list.sort!}
+
+      data[:entries] = (
+        data.directories + data.files
+      )
+
+      data[:size] = (
+        data.entries.size
+      )
+
+      data
+    end
+
+  #
+    index = ->(dir) do
+      data = data_for[dir]
+      next if data.size == 0
+
+      html = Ro::Template.render_file(template, :context => data)
+
+      index_html = dir.join('index.html')
+      IO.binwrite(index_html, html)
+
+      puts index_html
+    end
+
+  #
+    document_root.glob do |entry|
+      next unless test(?d, entry)
+      index[entry]
+    end
+
+    index[document_root]
   end
 end
 

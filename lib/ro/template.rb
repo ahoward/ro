@@ -39,7 +39,7 @@ module Ro
 
         content =
           case engine
-            when 'txt', 'text'
+            when 'txt', 'text', 'html'
               content
             when 'erb'
               render_erb(content, context:)
@@ -64,9 +64,18 @@ module Ro
       options = Map.for(options.is_a?(Hash) ? options : { context: options })
       context = options[:context]
 
-      binding = context ? context.instance_eval{ binding } : ::Kernel.binding
+      erb = ERB.new(content, trim_mode: '%<>')
 
-      HTML.new(ERB.new(content, trim_mode: '%<>').result(binding))
+      html =
+        if context.respond_to?(:to_hash)
+          hash = context.to_hash
+          erb.result_with_hash(hash)
+        else
+          binding = context ? context.instance_eval{ binding } : ::Kernel.binding
+          erb.result(binding)
+        end
+
+      HTML.new(html)
     end
 
     def self.render_markdown(content, options = {})
