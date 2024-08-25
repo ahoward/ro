@@ -264,7 +264,8 @@ Ro.script do
     ____
 
     index_html = document_root.join('index.html')
-    index.html.binwrite(html)
+
+    index_html.binwrite(html)
     puts index_html
   end
 end
