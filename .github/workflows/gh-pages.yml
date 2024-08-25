@@ -54,7 +54,9 @@ jobs:
       - run: |
             export RO_URL=${{ steps.gh-pages.outputs.base_url }}/ro
             export RO_PAGE_SIZE=2
+            export RO_BUILD=./public/api/ro/
             bundle exec ./bin/ro build
+            tree $RO_BUILD 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
