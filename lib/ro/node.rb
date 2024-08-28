@@ -30,6 +30,10 @@ module Ro
       identifier
     end
 
+    def collection
+      @root.collection_for(type)
+    end
+
     def attributes
       load_attributes
       @attributes
@@ -43,9 +47,9 @@ module Ro
       @attributes = Map.new
 
       _load_base_attributes
-      _load_file_attributes
       _load_asset_attributes
       _load_meta_attributes
+      _load_file_attributes
 
       @attributes
     end
@@ -54,38 +58,13 @@ module Ro
       disallowed = %w[assets _meta]
 
       @path.glob("attributes.{yml,yaml,json}") do |file|
-        attrs = _load_file(file)
+        attrs = _render(file)
 
         disallowed.each do |key|
           Ro.error!("#{ file } must not contain the key #{key.inspect}") if attrs.has_key?(key)
         end
 
         @attributes.update(attrs)
-      end
-    end
-
-    def _load_file_attributes
-      ignored = %w[attributes]
-
-      @path.files do |path|
-        next if ignored.include?(path.base)
-
-        relative_path = Path.for(path).relative_to(@path)
-        subdir = relative_path.split('/').first
-        next if %w[assets].include?(subdir)
-
-        path_info, ext = key = relative_path.split('.', 2)
-        key = path_info.split('/')
-
-        value = Ro.render(path, self)
-
-        if value.is_a?(Ro::Template::HTML)
-          html = value
-          node = self
-          value = Ro.expand_asset_urls(html, node)
-        end
-
-        @attributes.set(key => value)
       end
     end
 
@@ -114,9 +93,57 @@ module Ro
       end
     end
 
-    def _load_file(file)
-      data = Ro.render(file)
-      _mapify(data)
+    def _load_file_attributes
+      files = @path.files
+
+      keys = []
+
+      ignored = %w[
+        attributes.yml
+        attributes.yaml
+        attributes.json
+        ./assets/**/**
+      ].map do |glob|
+        @path.glob(glob).select(&:file?)
+      end.flatten
+
+      files.each do |file|
+        next if ignored.include?(file)
+
+        path_info, ext = key = relative_path.split('.', 2)
+        key = path_info.split('/')
+        keys.push(key)
+
+        value = Promise.new{ _render(file) }
+
+        @attributes.set(key => value)
+      end
+
+      keys.each do |key|
+        loader = @attributes.get(key)
+        value = loader._value
+        @attributes.set(key => value)
+      end
+
+      files
+    end
+
+    def _render(file)
+      value = Ro.render(file, _render_context)
+
+      if value.is_a?(Ro::Template::HTML)
+        html = value
+        value = Ro.expand_asset_urls(html, self)
+      end
+
+      value
+    end
+
+    def _render_context
+      to_hash.tap do |context|
+        context[:ro] ||= root
+        context[:collection] ||= collection
+      end
     end
 
     def get(*args)

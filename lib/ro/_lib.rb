@@ -6,9 +6,13 @@ module Ro
       VERSION
     end
 
+    def repo
+      'https://github.com/ahoward/ro'
+    end
+
     def summary
       <<~____
-        keep *all* your content in github, as god intended.
+        all your content in github, as god intended
       ____
     end
 
@@ -24,7 +28,7 @@ module Ro
 
     def libs
       %w[
-        fileutils pathname yaml json logger erb cgi rexml time date
+        fileutils pathname yaml json logger erb cgi rexml time date thread
       ]
     end
 

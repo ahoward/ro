@@ -1,5 +1,5 @@
 # Simple workflow for deploying static content to GitHub Pages
-name: Deploy ro Content to GitHub Pages
+name: deploy ro content, api, and site to gh-pages
 
 on:
   # Runs on pushes targeting the default branch
@@ -15,21 +15,21 @@ permissions:
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
 jobs:
-  # Single deploy job since we're just deploying
+  # single deploy job since we're just deploying
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: checkout
         # NOTE: this enables git-lfs and caching
         # - https://github.com/actions/checkout/issues/834
         # - https://github.com/nschloe/action-cached-lfs-checkout
@@ -38,10 +38,10 @@ jobs:
         #uses: actions/checkout@v4
         #with:
         #   lfs: true
-      - name: Setup Pages
+      - name: setup gh-pages
         uses: actions/configure-pages@v3
         id: gh-pages
-      - name: Ro Build 
+      - name: ro build
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
@@ -49,12 +49,12 @@ jobs:
             export RO_URL=${{ steps.gh-pages.outputs.base_url }}/ro
             export RO_PAGE_SIZE=2
             bundle exec ./bin/ro build ./public/ro ./public/api/ro
-            bundle exec ro directory_index public
+            bundle exec ro site public
             tree ./public
-      - name: Upload artifact
+      - name: upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
           path: "./public"
-      - name: Deploy to GitHub Pages
+      - name: deploy gh-pages
         id: deployment
         uses: actions/deploy-pages@v2

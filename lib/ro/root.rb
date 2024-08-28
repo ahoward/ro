@@ -5,7 +5,7 @@ module Ro
     end
 
     def collections(&block)
-      accum = []
+      accum = Collection::List.for(self) 
 
       subdirectories do |subdirectory|
         collection = collection_for(subdirectory)
