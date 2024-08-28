@@ -85,25 +85,25 @@ Ro.script do
   end
 
   run(:console) do
-    setup!
+    setup!(:root)
 
     console!
   end
 
   run(:build) do
-    setup!
+    setup!(:root, :build)
 
     build!
   end
 
   run(:watch) do
-    setup!
+    setup!(:root, :build)
 
     watch!
   end
 
   run(:server) do
-    setup!
+    setup!(:root, :build)
 
     server!
   end
@@ -126,27 +126,37 @@ Ro.script do
     config!
   end
 
-  run(:directory_index) do
-    directory_index!
+  run(:site) do
+    site!
   end
 
-  def setup!
+  def setup!(*which)
     setup_env!
 
-    parse_argv!
+    parse_argv!(*which)
 
     validate!
+
+    if which.include?(:ro)
+      @ro = Ro.root
+    end
   end
 
-  def parse_argv!
-    if argv.size > 0
-      ro_root = argv[0]
-      ENV['RO_ROOT'] = ro_root
+  attr_reader :ro
+
+  def parse_argv!(*which)
+    if which.include?(:root)
+      if argv.size > 0
+        ro_root = argv.shift
+        ENV['RO_ROOT'] = ro_root
+      end
     end
 
-    if argv.size > 1
-      ro_build = argv[1]
-      ENV['RO_BUILD'] = ro_build 
+    if which.include?(:build)
+      if argv.size > 0
+        ro_build = argv.shift
+        ENV['RO_BUILD'] = ro_build 
+      end
     end
   end
 
@@ -219,7 +229,7 @@ Ro.script do
     show Ro.config
   end
 
-  def directory_index!
+  def site!
     document_root = Ro::Path.for(argv[0] || './public')
 
     files = document_root.files.sort
@@ -234,25 +244,7 @@ Ro.script do
           <strong>tl;dr;</strong>
           <br><br>
           <em>
-          <ul>
-            <li>
-              this is a demo of a /ro site with a /ro json api
-            </li>
-            <li>
-              if you can't figure how to use the api from your favorite
-                client, you are in the wrong place
-            </li>
-            <li>
-              note: the reason for the /ro/ro in some urls is an artifact of
-              the way gh-pages hosts websites -
-              https://$user.github.io/$repo/... ergo
-              https://ahoward.github.io/ro/ro/ is the location for all /ro
-              data
-            </li>
-            <li>
-              see <a href="https://github.com/ahoward/ro/">https://github.com/ahoward/ro/</a> for moar deets
-            </li>
-          </ul>
+            see <a href="#{ Ro.repo }">#{ Ro.repo }</a> for moar deets
           </em>
           <br><br>
           <hr><hr>
@@ -264,7 +256,6 @@ Ro.script do
     ____
 
     index_html = document_root.join('index.html')
-
     index_html.binwrite(html)
     puts index_html
   end

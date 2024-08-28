@@ -115,6 +115,7 @@ module Ro
 
       accum
     end
+    alias ls glob
 
     def files(arg = '**/**', *args, **kws, &block)
       glob = Path.for(self, arg, *args, **kws)

@@ -38,6 +38,14 @@ module Ro
       }
     end
 
+    def mapify(pod)
+      Map.for(:pod => pod)[:pod]
+    end
+
+    def pod(object)
+      JSON.parse(object.to_json)
+    end
+
     # url methods
     # |
     # v

@@ -3,7 +3,7 @@
     "posts/first_post": {
       "title": "First Post",
       "author": "people/alice",
-      "blurb": "<div class='ro markdown'>\n  <ul>\n  <li>a</li>\n  <li>b</li>\n  <li>c</li>\n</ul>\n\n<p>generated_at: 2024-08-25T22:02:19Z</p>\n\n</div>",
+      "blurb": "<div class='ro markdown'>\n  <ul>\n  <li>a</li>\n  <li>b</li>\n  <li>c</li>\n</ul>\n\n<p>generated_at: 2024-08-26T00:01:04Z</p>\n\n</div>",
       "body": "<div class='ro markdown'>\n  <ul>\n  <li>one</li>\n  <li>two</li>\n  <li>three</li>\n</ul>\n\n<div class='language-ruby highlighter-rouge'><code class='code' style='white-space:pre;'><div class='code-line code-line-1'>&nbsp;&nbsp;<span style='color: #cf222e'>class</span>&nbsp;&nbsp;<span style='color: #953800'>C</span>\n</div><div class='code-line code-line-2'>&nbsp;&nbsp;&nbsp;&nbsp;<span style='color: #0550ae'>@a</span>&nbsp;<span style='color: #0550ae'>=</span>&nbsp;<span style='color: #0550ae'>42</span>\n</div><div class='code-line code-line-3'>&nbsp;&nbsp;<span style='color: #cf222e'>end</span>\n</div></code></div>\n\n<hr/>\n\n<p><img src='/ro/posts/first_post/assets/foo.jpg'/><br/>\n<br/></p>\n\n<p><img src='/ro/posts/first_post/assets/foo/bar/baz.jpg'/></p>\n\n</div>",
       "testing": "43\n\n42\n",
       "assets": {
@@ -46,7 +46,7 @@
     "posts/second_post": {
       "title": "First Post",
       "author": "people/alice",
-      "blurb": "<div class='ro markdown'>\n  <ul>\n  <li>a</li>\n  <li>b</li>\n  <li>c</li>\n</ul>\n\n<p>generated_at: 2024-08-25T22:02:19Z</p>\n\n</div>",
+      "blurb": "<div class='ro markdown'>\n  <ul>\n  <li>a</li>\n  <li>b</li>\n  <li>c</li>\n</ul>\n\n<p>generated_at: 2024-08-26T00:01:04Z</p>\n\n</div>",
       "body": "<div class='ro markdown'>\n  <ul>\n  <li>one</li>\n  <li>two</li>\n  <li>three</li>\n</ul>\n\n<div class='language-ruby highlighter-rouge'><code class='code' style='white-space:pre;'><div class='code-line code-line-1'>&nbsp;&nbsp;<span style='color: #cf222e'>class</span>&nbsp;&nbsp;<span style='color: #953800'>C</span>\n</div><div class='code-line code-line-2'>&nbsp;&nbsp;&nbsp;&nbsp;<span style='color: #0550ae'>@a</span>&nbsp;<span style='color: #0550ae'>=</span>&nbsp;<span style='color: #0550ae'>42</span>\n</div><div class='code-line code-line-3'>&nbsp;&nbsp;<span style='color: #cf222e'>end</span>\n</div></code></div>\n\n<hr/>\n\n<p><img src='/ro/posts/second_post/assets/foo.jpg'/><br/>\n<br/></p>\n\n<p><img src='/ro/posts/second_post/assets/foo/bar/baz.jpg'/></p>\n\n</div>",
       "assets": {
         "assets/foo.jpg": {
@@ -83,6 +83,47 @@
           "next": "posts/third_post"
         }
       }
+    },
+    "posts/third_post": {
+      "title": "First Post",
+      "author": "people/alice",
+      "blurb": "<div class='ro markdown'>\n  <ul>\n  <li>a</li>\n  <li>b</li>\n  <li>c</li>\n</ul>\n\n<p>generated_at: 2024-08-26T00:01:04Z</p>\n\n</div>",
+      "body": "<div class='ro markdown'>\n  <ul>\n  <li>one</li>\n  <li>two</li>\n  <li>three</li>\n</ul>\n\n<div class='language-ruby highlighter-rouge'><code class='code' style='white-space:pre;'><div class='code-line code-line-1'>&nbsp;&nbsp;<span style='color: #cf222e'>class</span>&nbsp;&nbsp;<span style='color: #953800'>C</span>\n</div><div class='code-line code-line-2'>&nbsp;&nbsp;&nbsp;&nbsp;<span style='color: #0550ae'>@a</span>&nbsp;<span style='color: #0550ae'>=</span>&nbsp;<span style='color: #0550ae'>42</span>\n</div><div class='code-line code-line-3'>&nbsp;&nbsp;<span style='color: #cf222e'>end</span>\n</div></code></div>\n\n<hr/>\n\n<p><img src='/ro/posts/third_post/assets/foo.jpg'/><br/>\n<br/></p>\n\n<p><img src='/ro/posts/third_post/assets/foo/bar/baz.jpg'/></p>\n\n</div>",
+      "assets": {
+        "assets/foo.jpg": {
+          "url": "/ro/posts/third_post/assets/foo.jpg",
+          "path": "posts/third_post/assets/foo.jpg",
+          "src": null
+        },
+        "assets/foo/bar/baz.jpg": {
+          "url": "/ro/posts/third_post/assets/foo/bar/baz.jpg",
+          "path": "posts/third_post/assets/foo/bar/baz.jpg",
+          "src": null
+        },
+        "assets/src/foo/bar.rb": {
+          "url": "/ro/posts/third_post/assets/src/foo/bar.rb",
+          "path": "posts/third_post/assets/src/foo/bar.rb",
+          "src": "<div class=\"ro markdown src\">\n  <code class='code' style='white-space:pre;'><div class='code-line code-line-1'><span style=\"color: #cf222e\">class</span>&nbsp;<span style=\"color: #953800\">C</span>\n</div><div class='code-line code-line-2'>&nbsp;&nbsp;<span style=\"color: #953800\">A</span>&nbsp;<span style=\"color: #0550ae\">=</span>&nbsp;<span style=\"color: #0550ae\">42</span>\n</div><div class='code-line code-line-3'><span style=\"color: #cf222e\">end</span>\n</div></code>\n</div>\n"
+        }
+      },
+      "_meta": {
+        "identifier": "posts/third_post",
+        "type": "posts",
+        "id": "third_post",
+        "urls": [
+          "/ro/posts/third_post/assets/foo.jpg",
+          "/ro/posts/third_post/assets/foo/bar/baz.jpg",
+          "/ro/posts/third_post/assets/src/foo/bar.rb",
+          "/ro/posts/third_post/attributes.yml",
+          "/ro/posts/third_post/blurb.erb.md",
+          "/ro/posts/third_post/body.md"
+        ],
+        "rel": {
+          "curr": "posts/third_post",
+          "prev": "posts/second_post",
+          "next": null
+        }
+      }
     }
   },
   "_meta": {
@@ -91,14 +132,14 @@
       "posts"
     ],
     "page": {
-      "count": 2,
-      "size": 2,
+      "count": 1,
+      "size": 42,
       "first": 0,
-      "last": 1,
+      "last": 0,
       "index": 0,
       "curr": 0,
       "prev": null,
-      "next": 1
+      "next": null
     }
   }
 }

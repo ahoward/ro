@@ -46,9 +46,13 @@ module Ro
             when 'md', 'markdown'
               render_markdown(content)
             when 'yml'
-              YAML.load(content)
+              data = YAML.load(content)
+              pod = Ro.pod(data)
+              Ro.mapify(data)
             when 'json'
-              JSON.parse(content)
+              data = JSON.parse(content)
+              pod = Ro.pod(data)
+              Ro.mapify(data)
             when 'rb'
               eval(content)
             else
@@ -82,7 +86,7 @@ module Ro
       content = String(content).force_encoding('utf-8')
       options = Map.for(options.is_a?(Hash) ? options : { context: options })
 
-      theme = options.fetch(:theme) { 'github' }
+      theme = options.fetch(:theme) { Ro.config.md_theme }
 
       opts = {
         input: 'GFM',
@@ -106,7 +110,7 @@ module Ro
       engines = File.basename(path).split('.')[1..-1].reverse
       context = options[:context]
 
-      theme = options.fetch(:theme) { 'github' }
+      theme = options.fetch(:theme) { Ro.config.md_theme }
       formatter = RougeFormatter.new(theme: theme)
 
       language = engines.shift

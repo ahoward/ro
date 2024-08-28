@@ -35,6 +35,7 @@ module Ro
         :log       => ENV['RO_LOG'],
         :debug     => ENV['RO_DEBUG'],
         :port      => ENV['RO_PORT'],
+        :md_theme  => ENV['RO_MD_THEME'],
       })
     end
 
@@ -47,6 +48,7 @@ module Ro
         :log       => nil,
         :debug     => nil,
         :port      => 4242,
+        :md_theme  => 'github',
       })
     end
 
@@ -72,6 +74,9 @@ module Ro
       port =
         cast(:int, (Ro.env.port || Ro.defaults.port))
 
+      md_theme =
+        cast(:string, (Ro.env.md_theme || Ro.defaults.md_theme))
+
       Map.for({
         root:,
         build:,
@@ -79,7 +84,8 @@ module Ro
         page_size:,
         log:,
         debug:,
-        port:
+        port:,
+        md_theme:,
       })
     end
 
@@ -89,6 +95,7 @@ module Ro
     def initialize!
       Ro.load %w[
         error.rb
+        promise.rb
         klass.rb
         slug.rb
         path.rb
@@ -96,6 +103,7 @@ module Ro
         methods.rb
         root.rb
         collection.rb
+        collection/list.rb
         node.rb
         asset.rb
       ]
