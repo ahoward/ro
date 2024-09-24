@@ -15,8 +15,8 @@ module Ro
       Ro.config.set(:root, Root.for(root))
     end
 
-    def collection
-      root.collection
+    def collections
+      root.collections
     end
 
     def nodes

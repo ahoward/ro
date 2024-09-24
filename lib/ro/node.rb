@@ -107,9 +107,16 @@ module Ro
       @path.files.each do |file|
         next if ignored.include?(file)
 
-        path_info, ext = key = relative_path.split('.', 2)
+        rel = file.relative_to(@path)
 
-        key = path_info.split('/')
+        key = rel.parts
+        basename = key.pop
+        base = basename.split('.', 2).first
+        key.push(base)
+
+        if @attributes.has?(key)
+          raise Error.new("#{ @path } clobbers #{ key.inspect }!")
+        end
 
         value = _render(file)
 

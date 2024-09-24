@@ -46,7 +46,7 @@ module Ro
       'exist?'     => 'exist?',
       'file?'      => 'file?',
       'directory?' => 'directory?',
-      'absolute?'  => 'directory?',
+      'absolute?'  => 'absolute?',
       'relative?'  => 'relative?',
       'expand'     => 'expand_path',
       'clean'      => 'cleanpath'
@@ -71,12 +71,10 @@ module Ro
     end
 
     def parts
-      parts = scan(%r{[^/]+})
+      parts = scan(%r`[^/]+`)
 
       if absolute?
-        head, *tail = parts
-        head = ["/#{head}"]
-        head + tail
+        %w[ / ] + parts
       else
         parts
       end
