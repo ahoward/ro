@@ -1,8 +1,20 @@
-# NAME
+NAME
+====
 
 `ro`
 
-# SYNOPSIS
+INSTALL
+=======
+
+as a gem
+
+```sh
+  ~> gem install ro
+```
+
+
+SYNOPSIS
+========
 
 keep all your content in git as god intended.
 
@@ -144,3 +156,23 @@ You can view sample output from this Action, deployed to GH Pages here: https://
 #### WRITE-ME // #TODO
 
 - note on http vs https
+
+SAMPLES
+=======
+  #### <========< [samples/a.rb](https://github.com/ahoward/ro/blob/main/samples/a.rb) >========>
+```sh
+  ~ > cat samples/a.rb
+```
+```ruby
+    require 'ro'
+    
+    p 42
+```
+
+```sh
+  ~ > ruby samples/a.rb
+```
+```txt
+    42
+```
+

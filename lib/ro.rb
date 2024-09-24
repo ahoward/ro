@@ -95,7 +95,6 @@ module Ro
     def initialize!
       Ro.load %w[
         error.rb
-        promise.rb
         klass.rb
         slug.rb
         path.rb

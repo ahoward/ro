@@ -55,9 +55,16 @@ module Ro
     end
 
     def _load_base_attributes
-      disallowed = %w[assets _meta]
+      disallowed =
+        %w[
+          assets
+          _meta
+        ]
 
-      @path.glob("attributes.{yml,yaml,json}") do |file|
+      glob =
+        "attributes.{yml,yaml,json}"
+
+      @path.glob(glob) do |file|
         attrs = _render(file)
 
         disallowed.each do |key|
@@ -67,6 +74,7 @@ module Ro
         @attributes.update(attrs)
       end
     end
+
 
     def _load_asset_attributes
       {}.tap do |hash|
@@ -94,38 +102,33 @@ module Ro
     end
 
     def _load_file_attributes
-      files = @path.files
+      ignored = _ignored_files
 
-      keys = []
-
-      ignored = %w[
-        attributes.yml
-        attributes.yaml
-        attributes.json
-        ./assets/**/**
-      ].map do |glob|
-        @path.glob(glob).select(&:file?)
-      end.flatten
-
-      files.each do |file|
+      @path.files.each do |file|
         next if ignored.include?(file)
 
         path_info, ext = key = relative_path.split('.', 2)
+
         key = path_info.split('/')
-        keys.push(key)
 
-        value = Promise.new{ _render(file) }
+        value = _render(file)
 
         @attributes.set(key => value)
       end
+    end
 
-      keys.each do |key|
-        loader = @attributes.get(key)
-        value = loader._value
-        @attributes.set(key => value)
-      end
+    def _ignored_files
+      ignored_files =
+        %w[
+          attributes.yml
+          attributes.yaml
+          attributes.json
+          ./assets/**/**
+        ].map do |glob|
+          @path.glob(glob).select(&:file?)
+        end
 
-      files
+      ignored_files.flatten
     end
 
     def _render(file)

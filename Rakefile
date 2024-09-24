@@ -178,7 +178,7 @@ task :readme do
   lib = This.lib
   version = This.version
 
-  Dir['sample*/*'].sort.each do |sample|
+  Dir['sample*/**/**.rb'].sort.each do |sample|
     link = "[#{ sample }](#{ This.repo }/blob/main/#{ sample })"
     samples << "  #### <========< #{ link } >========>\n"
 
