@@ -27,66 +27,72 @@ module Ro
     # |
     # v
     def env
-      Map.for({
-        :root      => ENV['RO_ROOT'],
-        :build     => ENV['RO_BUILD'],
-        :url       => ENV['RO_URL'],
-        :page_size => ENV['RO_PAGE_SIZE'],
-        :log       => ENV['RO_LOG'],
-        :debug     => ENV['RO_DEBUG'],
-        :port      => ENV['RO_PORT'],
-        :md_theme  => ENV['RO_MD_THEME'],
-      })
+      @env ||= (
+        Map.for({
+          :root      => ENV['RO_ROOT'],
+          :build     => ENV['RO_BUILD'],
+          :url       => ENV['RO_URL'],
+          :page_size => ENV['RO_PAGE_SIZE'],
+          :log       => ENV['RO_LOG'],
+          :debug     => ENV['RO_DEBUG'],
+          :port      => ENV['RO_PORT'],
+          :md_theme  => ENV['RO_MD_THEME'],
+        })
+      )
     end
 
     def defaults
-      Map.for({
-        :root      => './public/ro',
-        :build     => './public/api/ro',
-        :url       => "/ro",
-        :page_size => 42,
-        :log       => nil,
-        :debug     => nil,
-        :port      => 4242,
-        :md_theme  => 'github',
-      })
+      @defaults ||= (
+        Map.for({
+          :root      => './public/ro',
+          :build     => './public/api/ro',
+          :url       => "/ro",
+          :page_size => 42,
+          :log       => nil,
+          :debug     => nil,
+          :port      => 4242,
+          :md_theme  => 'github',
+        })
+      )
     end
 
     def config
-      root =
-        cast(:root, (Ro.env.root || Ro.defaults.root))
+      @config ||= (
+        root =
+          cast(:root, (Ro.env.root || Ro.defaults.root))
 
-      build =
-        cast(:path, (Ro.env.build || Ro.defaults.build))
+        build =
+          cast(:path, (Ro.env.build || Ro.defaults.build))
 
-      url =
-        cast(:url, (Ro.env.url || Ro.defaults.url))
+        url =
+          cast(:url, (Ro.env.url || Ro.defaults.url))
 
-      page_size =
-        cast(:int, (Ro.env.page_size || Ro.defaults.page_size))
+        page_size =
+          cast(:int, (Ro.env.page_size || Ro.defaults.page_size))
 
-      log =
-        cast(:bool, (Ro.env.log || Ro.defaults.log))
+        log =
+          cast(:bool, (Ro.env.log || Ro.defaults.log))
 
-      debug =
-        cast(:bool, (Ro.env.debug || Ro.defaults.debug))
+        debug =
+          cast(:bool, (Ro.env.debug || Ro.defaults.debug))
 
-      port =
-        cast(:int, (Ro.env.port || Ro.defaults.port))
+        port =
+          cast(:int, (Ro.env.port || Ro.defaults.port))
 
-      md_theme =
-        cast(:string, (Ro.env.md_theme || Ro.defaults.md_theme))
+        md_theme =
+          cast(:string, (Ro.env.md_theme || Ro.defaults.md_theme))
 
-      Map.for({
-        root:,
-        build:,
-        url:,
-        page_size:,
-        log:,
-        debug:,
-        port:,
-        md_theme:,
-      })
+        Map.for({
+          root:,
+          build:,
+          url:,
+          page_size:,
+          log:,
+          debug:,
+          port:,
+          md_theme:,
+        })
+      )
     end
 
     # ro init
