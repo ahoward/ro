@@ -12,7 +12,7 @@ module Ro
     end
 
     def root=(root)
-      Ro.config.set(:root, Root.for(root))
+      Ro.config.root = root
     end
 
     def collections
@@ -27,72 +27,33 @@ module Ro
     # |
     # v
     def env
-      @env ||= (
-        Map.for({
-          :root      => ENV['RO_ROOT'],
-          :build     => ENV['RO_BUILD'],
-          :url       => ENV['RO_URL'],
-          :page_size => ENV['RO_PAGE_SIZE'],
-          :log       => ENV['RO_LOG'],
-          :debug     => ENV['RO_DEBUG'],
-          :port      => ENV['RO_PORT'],
-          :md_theme  => ENV['RO_MD_THEME'],
-        })
-      )
+      Map.for({
+        :root      => ENV['RO_ROOT'],
+        :build     => ENV['RO_BUILD'],
+        :url       => ENV['RO_URL'],
+        :page_size => ENV['RO_PAGE_SIZE'],
+        :log       => ENV['RO_LOG'],
+        :debug     => ENV['RO_DEBUG'],
+        :port      => ENV['RO_PORT'],
+        :md_theme  => ENV['RO_MD_THEME'],
+      })
     end
 
     def defaults
-      @defaults ||= (
-        Map.for({
-          :root      => './public/ro',
-          :build     => './public/api/ro',
-          :url       => "/ro",
-          :page_size => 42,
-          :log       => nil,
-          :debug     => nil,
-          :port      => 4242,
-          :md_theme  => 'github',
-        })
-      )
+      Map.for({
+        :root      => './public/ro',
+        :build     => './public/api/ro',
+        :url       => "/ro",
+        :page_size => 42,
+        :log       => nil,
+        :debug     => nil,
+        :port      => 4242,
+        :md_theme  => 'github',
+      })
     end
 
     def config
-      @config ||= (
-        root =
-          cast(:root, (Ro.env.root || Ro.defaults.root))
-
-        build =
-          cast(:path, (Ro.env.build || Ro.defaults.build))
-
-        url =
-          cast(:url, (Ro.env.url || Ro.defaults.url))
-
-        page_size =
-          cast(:int, (Ro.env.page_size || Ro.defaults.page_size))
-
-        log =
-          cast(:bool, (Ro.env.log || Ro.defaults.log))
-
-        debug =
-          cast(:bool, (Ro.env.debug || Ro.defaults.debug))
-
-        port =
-          cast(:int, (Ro.env.port || Ro.defaults.port))
-
-        md_theme =
-          cast(:string, (Ro.env.md_theme || Ro.defaults.md_theme))
-
-        Map.for({
-          root:,
-          build:,
-          url:,
-          page_size:,
-          log:,
-          debug:,
-          port:,
-          md_theme:,
-        })
-      )
+      @config ||= Config.new
     end
 
     # ro init
@@ -106,6 +67,7 @@ module Ro
         path.rb
         template.rb
         methods.rb
+        config.rb
         root.rb
         collection.rb
         collection/list.rb

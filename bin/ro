@@ -147,15 +147,13 @@ Ro.script do
   def parse_argv!(*which)
     if which.include?(:root)
       if argv.size > 0
-        ro_root = argv.shift
-        ENV['RO_ROOT'] = ro_root
+        Ro.config.root = argv.shift
       end
     end
 
     if which.include?(:build)
       if argv.size > 0
-        ro_build = argv.shift
-        ENV['RO_BUILD'] = ro_build 
+        Ro.config.build = argv.shift
       end
     end
   end
@@ -171,7 +169,9 @@ Ro.script do
       end
     end
 
-    ENV['RO_PORT'] ||= ENV['PORT']
+    if ENV['PORT']
+      Ro.config.port = ENV['PORT']
+    end
   end
 
   def validate!

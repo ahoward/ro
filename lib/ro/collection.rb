@@ -54,6 +54,57 @@ module Ro
       block ? self : accum
     end
 
+    def load(&block)
+      n = 8
+      q = Queue.new # FIXME
+      o = Queue.new # FIXME
+
+      producer =
+        Thread.new do
+          Thread.current.abort_on_exception = true
+
+          subdirectories do |subdirectory|
+            q.push(subdirectory)
+          end
+        end
+
+      loaders =
+        n.times.map do
+          Thread.new do
+            Thread.current.abort_on_exception = true
+
+            loop do
+              subdirectory = q.pop
+
+              begin
+                node = node_for(subdirectory)
+                o.push(node)
+              rescue => e
+                o.push(e) # FIXME
+                nil # FIXME
+              end
+            end
+          end
+        end
+
+        accum = []
+
+        consumer =
+          Thread.new do
+            Thread.current.abort_on_exception = true
+              loop do
+                node = o.pop
+                block ? block.call(node) : accum.push(node)
+              end
+          end
+
+        producer.join
+        loaders.map{|loader| loader.join}
+        consumer.join
+
+        block ? self : accum
+    end
+
     def to_array(...)
       each(...)
     end
