@@ -221,5 +221,9 @@ module Ro
     def <=>(other)
       sort_key <=> other.sort_key
     end
+
+    def stat
+      File.stat(self)
+    end
   end
 end

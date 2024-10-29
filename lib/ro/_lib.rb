@@ -1,5 +1,5 @@
 module Ro
-  VERSION = '4.2.0' unless defined?(VERSION)
+  VERSION = '4.2.1' unless defined?(VERSION)
 
   class << self
     def version
@@ -51,6 +51,9 @@ module Ro
 
         'webrick' =>
           ['webrick', '~> 1.8.1'],
+
+        'image_size' =>
+          ['image_size', '~> 3.4'],
       }
     end
 

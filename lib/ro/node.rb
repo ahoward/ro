@@ -47,9 +47,9 @@ module Ro
       @attributes = Map.new
 
       _load_base_attributes
+      _load_file_attributes
       _load_asset_attributes
       _load_meta_attributes
-      _load_file_attributes
 
       @attributes
     end
@@ -80,7 +80,12 @@ module Ro
       {}.tap do |hash|
         assets.each do |asset|
           key = asset.name
-          value = { url: asset.url, path: asset.path.relative_to(@root), src: asset.src }
+          url = asset.url
+          path = asset.path.relative_to(@root)
+          src = asset.src
+          img = asset.img
+          size = asset.size
+          value = { url:, path:, size:, img:, src: }
           hash[key] = value
         end
 
@@ -94,7 +99,9 @@ module Ro
           identifier:,
           type:,
           id:,
-          urls:
+          urls:,
+          created_at:,
+          updated_at:,
         )
 
         @attributes.set(_meta: hash)
@@ -250,6 +257,10 @@ module Ro
       to_json(...)
     end
 
+    def to_str(...)
+      to_json(...)
+    end
+
     def to_json(...)
       JSON.pretty_generate(to_hash, ...)
     end
@@ -290,6 +301,14 @@ module Ro
       created_at = (attributes[:created_at] ? Time.parse(attributes[:created_at].to_s) : Time.at(0)).utc.iso8601
 
       [position, published_at, created_at, name]
+    end
+
+    def created_at
+      files.map{|file| File.stat(file).ctime}.min
+    end
+
+    def updated_at
+      files.map{|file| File.stat(file).mtime}.max
     end
   end
 end
