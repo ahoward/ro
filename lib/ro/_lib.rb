@@ -28,7 +28,7 @@ module Ro
 
     def libs
       %w[
-        fileutils pathname yaml json logger erb cgi time date thread securerandom rexml
+        fileutils pathname yaml json logger erb cgi time date thread securerandom
       ]
     end
 
@@ -54,6 +54,9 @@ module Ro
 
         'image_size' =>
           ['image_size', '~> 3.4'],
+
+        'nokogiri' =>
+          ['nokogiri', '~> 1'],
       }
     end
 

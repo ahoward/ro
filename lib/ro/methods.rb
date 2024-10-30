@@ -1,5 +1,5 @@
 module Ro
-	module Methods
+  module Methods
     # cast methods
     # |
     # v
@@ -67,6 +67,17 @@ module Ro
       uri.fragment = fragment if fragment
 
       uri.to_s
+    end
+
+    def cdn_url_for(path, *args)
+      options = Map.extract_options!(args)
+      base = options.delete(:base) || options.delete(:url) || Ro.config.cdn_url
+
+      options[:base] = base
+
+      args.push(options)
+
+      url_for(path, *args)
     end
 
     def query_string_for(hash, options = {})
@@ -139,6 +150,14 @@ module Ro
       end
     end
 
+    def emsg(e)
+      if e.is_a?(Exception)
+        "#{ e.message } (#{ e.class.name })\n#{ Array(e.backtrace).join(10.chr) }"
+      else
+        e.to_s
+      end
+    end
+
     # template methods
     # |
     # v
@@ -157,11 +176,9 @@ module Ro
     # asset expansion methods 
     # |
     # v
-    #EXPAND_ASSET_URL_STRATEGIES = %i[
-    #  accurate_expand_asset_urls sloppy_expand_asset_urls
-    #]
     EXPAND_ASSET_URL_STRATEGIES = %i[
       accurate_expand_asset_urls
+      sloppy_expand_asset_urls
     ]
 
     def expand_asset_url_strategies
@@ -169,105 +186,73 @@ module Ro
     end
 
     def expand_asset_urls(html, node)
-      last = expand_asset_url_strategies.size - 1
+      strategies = expand_asset_url_strategies
+      error = nil
 
-      expand_asset_url_strategies.each_with_index do |strategy, i|
+      strategies.each do |strategy|
         return send(strategy, html, node)
       rescue Object => e
-        raise if i == last
-
-        Ro.log(e)
+        error = e
+        Ro.log(:error, emsg(error))
+        Ro.log(:error, "failed to expand assets via #{ strategy }")
       end
 
-      Ro.error! "could not expand assets via #{expand_asset_url_strategies.join(' | ')}"
-    end
-
-    class Raw < ::BasicObject
-      def initialize(value)
-        @value = value.to_s.freeze
-      end
+      raise error
     end
 
     def accurate_expand_asset_urls(html, node)
-      doc = REXML::Document.new('<__ro__>' + html + '</__ro__>')
+      doc = Nokogiri::HTML.fragment(html)
 
-      to_replace = {}
+      doc.traverse do |element|
+        if element.respond_to?(:attributes)
+          element.attributes.each do |attr, attribute|
+            value = attribute.value
+            if value =~ %r{(?:./)?assets/(.+)$}
+              path = value
 
-      doc.each_recursive do |element|
-        next unless element.respond_to?(:attributes)
-
-        src = {}
-        element.attributes.each do |key, value|
-          src[key] = value
-        end
-
-        dst = expand_asset_values(src, node)
-
-        dst.each do |key, value|
-          #k = "#{ key }"
-          #v = REXML::Attribute.new(k, "#{ value }")
-          #v = REXML::Text.new("#{ value }", false, nil, false)
-
-          k, v = key, value # FIXME - fucking REXML escape hell ;-/
-
-          if element.attributes[k] != v
-            marker = "____ro____#{ Ro.uuid }____"
-            element.attributes[k] = marker
-            to_replace[marker] = v
+              if node.path_for(path).exist?
+                url = expanded_url_for(node, path)
+                attribute.value = url
+              else
+                Ro.error!("invalid asset=`#{ path }` in node=`#{ node.path }`")
+              end
+            end
           end
         end
       end
 
-      html =
-        doc.to_s.tap do |xml|
-          xml.sub!(/^\s*<.?__ro__>\s*/, '')
-          xml.sub!(/\s*<.?__ro__>\s*$/, '')
-          xml.strip!
-        end
-
-      to_replace.each do |marker, value|
-        html.gsub!(marker, value)
-      end
-
-      html
+      doc.to_s.strip
     end
 
     def sloppy_expand_asset_urls(html, node)
-      html.to_s.gsub(%r`\s*=\s*['"](?:[.]/)?assets/[^'"\s]+['"]`) do |match|
+      re = %r`\s*=\s*['"](?:[.]/)?(assets/[^'"\s]+)['"]`
+
+      html.gsub(re) do |match|
         path = match[%r`assets/[^'"\s]+`]
-        url = node.url_for(path)
-        "='#{url}'"
+
+        if node.path_for(path).exist?
+          url = expanded_url_for(node, path)
+          "='#{url}'"
+        else
+          Ro.error!("invalid asset=`#{ path }` in node=`#{ node.path }`")
+          #match
+        end
       end
     end
 
-    def expand_asset_values(hash, node)
-      src = Map.for(hash)
-      dst = Map.new
+    def expanded_url_for(node, path)
+      query =
+        {}
 
-      re = %r{\A(?:[.]/)?(assets/[^\s]+)\s*\z}
+      if is_image?(path)
+        image_path = node.path_for(path)
 
-      src.depth_first_each do |key, value|
-        next unless value.is_a?(String)
-
-        if (match = re.match(value.strip))
-          path = match[1].strip
-          query = {}
-
-          if Ro.is_image?(path)
-            image_path = node.path_for(path)
-            if image_path.exist?
-              query = Ro.image_info(image_path)
-            end
-          end
-
-          url = node.url_for(path, query:)
-          value = url
+        if image_path.exist?
+          query = image_info(image_path)
         end
-
-        dst.set(key, value)
       end
 
-      dst.to_hash
+      node.cdn_url_for(path, query:)
     end
 
     DEFAULT_IMAGE_EXTENSIONS = %w[
@@ -278,21 +263,23 @@ module Ro
       /[.](#{ DEFAULT_IMAGE_EXTENSIONS.join('|') })$/i
     ]
 
-    def Ro.image_patterns
+    def image_patterns
       @image_patterns ||= DEFAULT_IMAGE_PATTERNS.dup
     end
 
-    def Ro.image_pattern
+    def image_pattern
       Regexp.union(Ro.image_patterns)
     end
 
-    def Ro.is_image?(path)
+    def is_image?(path)
       !!(path.to_s =~ Ro.image_pattern)
     end
 
     def image_info(path)
       is = ImageSize.path(path)
+
       format, width, height = is.format.to_s, is.width, is.height
+
       {format:, width:, height:}
     end
 

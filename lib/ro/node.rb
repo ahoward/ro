@@ -227,12 +227,11 @@ module Ro
       nil
     end
 
+    def cdn_url_for(relative_path, options = {})
+      Ro.cdn_url_for(self.relative_path, relative_path, options)
+    end
+
     def url_for(relative_path, options = {})
-      raise ArgumentError, relative_path if Path.absolute?(relative_path)
-
-      fullpath = Path.for(path, relative_path).expand
-      raise ArgumentError, "#{relative_path.inspect} -- DOES NOT EXIST" unless fullpath.exist?
-
       Ro.url_for(self.relative_path, relative_path, options)
     end
 
