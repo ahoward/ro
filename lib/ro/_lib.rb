@@ -28,7 +28,7 @@ module Ro
 
     def libs
       %w[
-        fileutils pathname yaml json logger erb cgi rexml time date thread
+        fileutils pathname yaml json logger erb cgi time date thread securerandom rexml
       ]
     end
 

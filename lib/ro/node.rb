@@ -85,7 +85,9 @@ module Ro
           src = asset.src
           img = asset.img
           size = asset.size
+
           value = { url:, path:, size:, img:, src: }
+
           hash[key] = value
         end
 
@@ -232,6 +234,10 @@ module Ro
       raise ArgumentError, "#{relative_path.inspect} -- DOES NOT EXIST" unless fullpath.exist?
 
       Ro.url_for(self.relative_path, relative_path, options)
+    end
+
+    def path_for(...)
+      @path.join(...)
     end
 
     def src_for(*args)

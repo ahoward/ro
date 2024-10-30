@@ -157,8 +157,11 @@ module Ro
     # asset expansion methods 
     # |
     # v
+    #EXPAND_ASSET_URL_STRATEGIES = %i[
+    #  accurate_expand_asset_urls sloppy_expand_asset_urls
+    #]
     EXPAND_ASSET_URL_STRATEGIES = %i[
-      accurate_expand_asset_urls sloppy_expand_asset_urls
+      accurate_expand_asset_urls
     ]
 
     def expand_asset_url_strategies
@@ -179,8 +182,16 @@ module Ro
       Ro.error! "could not expand assets via #{expand_asset_url_strategies.join(' | ')}"
     end
 
+    class Raw < ::BasicObject
+      def initialize(value)
+        @value = value.to_s.freeze
+      end
+    end
+
     def accurate_expand_asset_urls(html, node)
       doc = REXML::Document.new('<__ro__>' + html + '</__ro__>')
+
+      to_replace = {}
 
       doc.each_recursive do |element|
         next unless element.respond_to?(:attributes)
@@ -192,21 +203,38 @@ module Ro
 
         dst = expand_asset_values(src, node)
 
-        dst.each do |k, v|
-          element.attributes[k] = v
+        dst.each do |key, value|
+          #k = "#{ key }"
+          #v = REXML::Attribute.new(k, "#{ value }")
+          #v = REXML::Text.new("#{ value }", false, nil, false)
+
+          k, v = key, value # FIXME - fucking REXML escape hell ;-/
+
+          if element.attributes[k] != v
+            marker = "____ro____#{ Ro.uuid }____"
+            element.attributes[k] = marker
+            to_replace[marker] = v
+          end
         end
       end
 
-      doc.to_s.tap do |xml|
-        xml.sub!(/^\s*<.?__ro__>\s*/, '')
-        xml.sub!(/\s*<.?__ro__>\s*$/, '')
-        xml.strip!
+      html =
+        doc.to_s.tap do |xml|
+          xml.sub!(/^\s*<.?__ro__>\s*/, '')
+          xml.sub!(/\s*<.?__ro__>\s*$/, '')
+          xml.strip!
+        end
+
+      to_replace.each do |marker, value|
+        html.gsub!(marker, value)
       end
+
+      html
     end
 
     def sloppy_expand_asset_urls(html, node)
-      html.to_s.gsub(%r{\s*=\s*['"](?:[.]/)?assets/[^'"\s]+['"]}) do |match|
-        path = match[%r{assets/[^'"\s]+}]
+      html.to_s.gsub(%r`\s*=\s*['"](?:[.]/)?assets/[^'"\s]+['"]`) do |match|
+        path = match[%r`assets/[^'"\s]+`]
         url = node.url_for(path)
         "='#{url}'"
       end
@@ -223,7 +251,16 @@ module Ro
 
         if (match = re.match(value.strip))
           path = match[1].strip
-          url = node.url_for(path)
+          query = {}
+
+          if Ro.is_image?(path)
+            image_path = node.path_for(path)
+            if image_path.exist?
+              query = Ro.image_info(image_path)
+            end
+          end
+
+          url = node.url_for(path, query:)
           value = url
         end
 
@@ -231,6 +268,36 @@ module Ro
       end
 
       dst.to_hash
+    end
+
+    DEFAULT_IMAGE_EXTENSIONS = %w[
+      webp jpg jpeg png gif tif tiff svg
+    ]
+
+    DEFAULT_IMAGE_PATTERNS = [
+      /[.](#{ DEFAULT_IMAGE_EXTENSIONS.join('|') })$/i
+    ]
+
+    def Ro.image_patterns
+      @image_patterns ||= DEFAULT_IMAGE_PATTERNS.dup
+    end
+
+    def Ro.image_pattern
+      Regexp.union(Ro.image_patterns)
+    end
+
+    def Ro.is_image?(path)
+      !!(path.to_s =~ Ro.image_pattern)
+    end
+
+    def image_info(path)
+      is = ImageSize.path(path)
+      format, width, height = is.format.to_s, is.width, is.height
+      {format:, width:, height:}
+    end
+
+    def uuid
+      SecureRandom.uuid_v7.to_s
     end
   end
 

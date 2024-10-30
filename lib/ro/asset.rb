@@ -2,14 +2,6 @@ module Ro
   class Asset < ::String
     include Klass
 
-    DEFAULT_IMAGE_PATTERNS = [
-      /[.](webp|jpg|jpeg|png|gif|tif|tiff|svg)$/i
-    ]
-
-    def Asset.image_patterns
-      @image_patterns ||= DEFAULT_IMAGE_PATTERNS.dup
-    end
-
     attr_reader :path, :node, :relative_path, :name, :url
 
     def initialize(arg, *args)
@@ -29,16 +21,14 @@ module Ro
     end
 
     def is_img?
-      @path.file? && Asset.image_patterns.any? { |pattern| pattern === @path.basename }
+      @path.file? && Ro.is_image?(@path.basename)
     end
 
     alias is_img is_img?
 
     def img
       return unless is_img?
-      is = ImageSize.path(ro.nodes.first.assets.first)
-      format, width, height = is.format, is.width, is.height
-      Map.for(format:, width:, height:)
+      Ro.image_info(path.to_s)
     end
 
     def is_src?
