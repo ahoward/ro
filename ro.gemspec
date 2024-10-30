@@ -7,7 +7,7 @@ Gem::Specification::new do |spec|
   spec.required_ruby_version = '>= 3.0'
   spec.platform = Gem::Platform::RUBY
   spec.summary = "all your content in github, as god intended"
-  spec.description = "all your content in github, as god intended"
+  spec.description = "the worlds tiniest, bestest, most minmialist headless cms - powered by github\n\nro is a minimalist toolkit for managing heterogeneous collections of rich web\ncontent on github, and providing both programatic and api access to it with zero\nheavy lifting"
   spec.license = "Ruby"
 
   spec.files =
@@ -60,6 +60,8 @@ Gem::Specification::new do |spec|
  "public/api/ro/posts/third_post",
  "public/api/ro/posts/third_post/index.json",
  "public/ro",
+ "public/ro/people",
+ "public/ro/people/ara-t-howard",
  "public/ro/posts",
  "public/ro/posts/first_post",
  "public/ro/posts/first_post/assets",
@@ -98,7 +100,9 @@ Gem::Specification::new do |spec|
  "public/ro/posts/third_post/attributes.yml",
  "public/ro/posts/third_post/blurb.erb.md",
  "public/ro/posts/third_post/body.md",
- "ro.gemspec"]
+ "ro.gemspec",
+ "scripts",
+ "scripts/speedtest.rb"]
 
   spec.executables = ["ro"]
   
@@ -117,7 +121,9 @@ Gem::Specification::new do |spec|
   
     spec.add_dependency(*["webrick", "~> 1.8.1"])
   
-    spec.add_dependency(*["image_size", "~> 3.0"])
+    spec.add_dependency(*["image_size", "~> 3.4"])
+  
+    spec.add_dependency(*["nokogiri", "~> 1"])
   
 
   spec.extensions.push(*[])

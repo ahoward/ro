@@ -312,8 +312,8 @@ BEGIN {
   This.version      = This.object.version
   This.dependencies = This.object.dependencies
   This.summary      = This.object.summary
-  This.description  = This.respond_to?(:description) ? This.description : This.summary
-  This.license      = This.respond_to?(:license) ? This.license : IO.binread('LICENSE').strip
+  This.description  = This.object.respond_to?(:description) ? This.object.description : This.summary
+  This.license      = This.object.respond_to?(:license) ? This.object.license : IO.binread('LICENSE').strip
 
 # discover full path to this ruby executable
 #
