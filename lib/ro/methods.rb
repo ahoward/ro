@@ -51,7 +51,16 @@ module Ro
     # v
     def url_for(path, *args)
       options = Map.extract_options!(args)
-      base = options.delete(:base) || options.delete(:url) || Ro.config.url
+
+      base = (options.delete(:base) || options.delete(:url))
+
+      base ||= (
+        if Ro.is_image?(path)
+          Ro.config.image_url
+        else
+          Ro.config.url
+        end
+      )
 
       path = Path.for(path, *args)
 

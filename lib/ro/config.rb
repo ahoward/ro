@@ -11,6 +11,9 @@ module Ro
         :url =>
           (Ro.env.url || Ro.defaults.url),
 
+        :img_url =>
+          (Ro.env.img_url || Ro.defaults.img_url),
+
         :page_size =>
           (Ro.env.page_size || Ro.defaults.page_size),
 
@@ -48,6 +51,7 @@ module Ro
       :root      => :root,
       :build     => :path,
       :url       => :url,
+      :img_url   => :url,
       :page_size => :int,
       :log       => :bool,
       :debug     => :bool,
