@@ -118,5 +118,5 @@ END {
     ara.t.howard@gmail.com
   ____
 
-  puts Text.render(text)
+  puts Ro::Text.render(text)
 }
