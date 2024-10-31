@@ -68,17 +68,6 @@ module Ro
       uri.to_s
     end
 
-    def cdn_url_for(path, *args)
-      options = Map.extract_options!(args)
-      base = options.delete(:base) || options.delete(:url) || Ro.config.cdn_url
-
-      options[:base] = base
-
-      args.push(options)
-
-      url_for(path, *args)
-    end
-
     def query_string_for(hash, options = {})
       options = Map.for(options)
       escape = options.has_key?(:escape) ? options[:escape] : true
@@ -242,6 +231,7 @@ module Ro
       node.url_for(path)
     end
 
+  #
     DEFAULT_IMAGE_EXTENSIONS = %w[
       webp jpg jpeg png gif tif tiff svg
     ]
