@@ -65,6 +65,7 @@ module Ro
         klass.rb
         slug.rb
         path.rb
+        text.rb
         template.rb
         methods.rb
         config.rb

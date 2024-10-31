@@ -10,11 +10,11 @@ module Ro
     class HTML < ::String
     end
 
-    def self.render(*args, &block)
+    def Template.render(*args, &block)
       render_file(*args, &block)
     end
 
-    def self.render_file(path, options = {})
+    def Template.render_file(path, options = {})
       path = File.expand_path(path.to_s.strip)
       options = Map.for(options.is_a?(Hash) ? options : { context: options })
 
@@ -25,7 +25,7 @@ module Ro
       render_string(content, path: path, engines: engines, context: context)
     end
 
-    def self.render_string(content, options = {})
+    def Template.render_string(content, options = {})
       content = String(content).force_encoding('utf-8')
       options = Map.for(options.is_a?(Hash) ? options : { context: options })
       engines = Array(options.fetch(:engines) { ['md'] }).flatten.compact
@@ -39,22 +39,20 @@ module Ro
 
         content =
           case engine
-            when 'txt', 'text', 'html'
-              content
+            when 'html'
+              render_html(content)
+            when 'txt', 'text'
+              render_text(content)
             when 'erb'
               render_erb(content, context:)
             when 'md', 'markdown'
               render_markdown(content)
             when 'yml'
-              data = YAML.load(content)
-              pod = Ro.pod(data)
-              Ro.mapify(data)
+              render_yaml(content)
             when 'json'
-              data = JSON.parse(content)
-              pod = Ro.pod(data)
-              Ro.mapify(data)
+              render_json(content)
             when 'rb'
-              eval(content)
+              render_ruby(content)
             else
               Ro.error!("no engine found for engine=#{ engine.inspect } engines=#{ engines.inspect }")
           end
@@ -63,7 +61,36 @@ module Ro
       content
     end
 
-    def self.render_erb(content, options = {})
+    def Template.render_html(html)
+      HTML.new(html)
+    end
+
+    def Template.render_json(json)
+      data = JSON.parse(json)
+      Ro.mapify(data)
+    end
+
+    def Template.render_yaml(yaml)
+      data = YAML.load(yaml)
+      Ro.mapify(data)
+    end
+
+    def Template.render_ruby(code)
+      string = IO.popen('ruby', 'w+'){|ruby| ruby.puts(code); ruby.close_write; ruby.read}
+
+      if $? == 0
+        string
+      else
+        Ro.error!("ruby:\n\n#{ code }")
+      end
+    end
+
+    def Template.render_text(text)
+      html = Text.render(text)
+      HTML.new(html)
+    end
+
+    def Template.render_erb(content, options = {})
       content = String(content).force_encoding('utf-8')
       options = Map.for(options.is_a?(Hash) ? options : { context: options })
       context = options[:context]
@@ -82,7 +109,7 @@ module Ro
       HTML.new(html)
     end
 
-    def self.render_markdown(content, options = {})
+    def Template.render_markdown(content, options = {})
       content = String(content).force_encoding('utf-8')
       options = Map.for(options.is_a?(Hash) ? options : { context: options })
 
@@ -102,7 +129,7 @@ module Ro
       )
     end
 
-    def self.render_src(path, options = {})
+    def Template.render_src(path, options = {})
       path = File.expand_path(path.to_s.strip)
       options = Map.for(options.is_a?(Hash) ? options : { context: options })
 

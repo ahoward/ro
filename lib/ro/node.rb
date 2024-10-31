@@ -274,12 +274,6 @@ module Ro
       to_hash.to_yaml(...)
     end
 
-    def _mapify(data)
-      converted = 'this_recursively_converts_nested_hashes_into_maps'
-
-      Map.for(converted => data)[converted]
-    end
-
     def files
       path.glob('**/**').select { |entry| entry.file? }.sort
     end

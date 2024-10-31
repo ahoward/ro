@@ -199,10 +199,11 @@ module Ro
               path = value
 
               if node.path_for(path).exist?
-                url = expand_url(node, path)
+                url = node.url_for(path)
                 attribute.value = url
               else
-                Ro.error!("invalid asset=`#{ path }` in node=`#{ node.path }`")
+                #Ro.error!("invalid asset=`#{ path }` in node=`#{ node.path }`")
+                :noop
               end
             end
           end
@@ -219,20 +220,17 @@ module Ro
         path = match[%r`assets/[^'"\s]+`]
 
         if node.path_for(path).exist?
-          url = expand_url(node, path)
+          url = node.url_for(path)
           "='#{url}'"
         else
-          Ro.error!("invalid asset=`#{ path }` in node=`#{ node.path }`")
+          #Ro.error!("invalid asset=`#{ path }` in node=`#{ node.path }`")
+          match
         end
       end
     end
 
-    def expand_url(node, path)
-      node.url_for(path)
-    end
-
   #
-    DEFAULT_IMAGE_EXTENSIONS = %w[
+    DEFAULT_IMAGE_EXTENSIONS = %i[
       webp jpg jpeg png gif tif tiff svg
     ]
 
@@ -249,14 +247,12 @@ module Ro
     end
 
     def is_image?(path)
-      !!(path.to_s =~ Ro.image_pattern)
+      !!(URI.parse(path.to_s).path =~ Ro.image_pattern)
     end
 
     def image_info(path)
       is = ImageSize.path(path)
-
       format, width, height = is.format.to_s, is.width, is.height
-
       {format:, width:, height:}
     end
 
