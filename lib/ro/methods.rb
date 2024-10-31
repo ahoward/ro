@@ -51,7 +51,7 @@ module Ro
     # v
     def url_for(path, *args)
       options = Map.extract_options!(args)
-      base = options[:base] || options[:url] || Ro.config.url
+      base = options.delete(:base) || options.delete(:url) || Ro.config.url
 
       path = Path.for(path, *args)
 
@@ -63,8 +63,7 @@ module Ro
       uri.path = '' if uri.path == '/'
 
       uri.query = query_string_for(query) unless query.empty?
-
-      uri.fragment = fragment if fragment
+      uri.fragment = fragment unless fragment.nil?
 
       uri.to_s
     end
