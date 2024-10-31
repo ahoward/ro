@@ -54,15 +54,15 @@ module Ro
 
       base = (options.delete(:base) || options.delete(:url))
 
+      path = Path.for(path, *args)
+
       base ||= (
         if Ro.is_image?(path)
-          Ro.config.image_url
+          Ro.config.img_url
         else
           Ro.config.url
         end
       )
-
-      path = Path.for(path, *args)
 
       fragment = options.delete(:fragment)
       query = options.delete(:query) || options
