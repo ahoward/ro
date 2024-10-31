@@ -227,10 +227,6 @@ module Ro
       nil
     end
 
-    def cdn_url_for(relative_path, options = {})
-      Ro.cdn_url_for(self.relative_path, relative_path, options)
-    end
-
     def url_for(relative_path, options = {})
       Ro.url_for(self.relative_path, relative_path, options)
     end

@@ -210,7 +210,7 @@ module Ro
               path = value
 
               if node.path_for(path).exist?
-                url = expanded_url_for(node, path)
+                url = expand_url(node, path)
                 attribute.value = url
               else
                 Ro.error!("invalid asset=`#{ path }` in node=`#{ node.path }`")
@@ -230,28 +230,16 @@ module Ro
         path = match[%r`assets/[^'"\s]+`]
 
         if node.path_for(path).exist?
-          url = expanded_url_for(node, path)
+          url = expand_url(node, path)
           "='#{url}'"
         else
           Ro.error!("invalid asset=`#{ path }` in node=`#{ node.path }`")
-          #match
         end
       end
     end
 
-    def expanded_url_for(node, path)
-      query =
-        {}
-
-      if is_image?(path)
-        image_path = node.path_for(path)
-
-        if image_path.exist?
-          query = image_info(image_path)
-        end
-      end
-
-      node.cdn_url_for(path, query:)
+    def expand_url(node, path)
+      node.url_for(path)
     end
 
     DEFAULT_IMAGE_EXTENSIONS = %w[

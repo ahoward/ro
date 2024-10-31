@@ -2,7 +2,7 @@ module Ro
   class Asset < ::String
     include Klass
 
-    attr_reader :path, :node, :relative_path, :name, :url, :cdn_url
+    attr_reader :path, :node, :relative_path, :name, :url
 
     def initialize(arg, *args)
       options = args.last.is_a?(Hash) ? args.pop : {}
@@ -16,8 +16,6 @@ module Ro
       @name = @relative_path
 
       @url = @node.url_for(@relative_path)
-
-      @cdn_url = @node.cdn_url_for(@relative_path)
 
       super(@path)
     end
