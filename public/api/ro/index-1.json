@@ -1,23 +1,61 @@
 {
   "data": {
+    "people/ara-t-howard": {
+      "assets": {
+      },
+      "_meta": {
+        "identifier": "people/ara-t-howard",
+        "type": "people",
+        "id": "ara-t-howard",
+        "urls": [
+
+        ],
+        "created_at": null,
+        "updated_at": null,
+        "rel": {
+          "curr": "people/ara-t-howard",
+          "prev": null,
+          "next": "posts/first_post"
+        }
+      }
+    },
     "posts/first_post": {
       "title": "First Post",
       "author": "people/alice",
+      "a": "42\n",
+      "b": "<a href='https//drawohara.io'>https://drawohara.io</a>\n",
+      "blurb": "<div class=\"ro markdown\">\n  <ul>\n  <li>a</li>\n  <li>b</li>\n  <li>c</li>\n</ul>\n\n<p>generated_at: 2024-11-01T21:26:46Z<br>\n<br><br>\nSecond Post</p>\n\n</div>",
+      "body": "<div class=\"ro markdown\">\n  <ul>\n  <li>one</li>\n  <li>two</li>\n  <li>three</li>\n</ul>\n\n<div class=\"language-ruby highlighter-rouge\"><code class=\"code\" style=\"white-space:pre;\"><div class=\"code-line code-line-1\">  <span style=\"font-weight: bold\">class</span>  <span style=\"font-weight: bold\">C</span>\n</div>\n<div class=\"code-line code-line-2\">    <span style=\"color: #000000;background-color: #ffffff\">@a</span> <span style=\"font-weight: bold\">=</span> <span style=\"color: #000000;background-color: #ffffff\">42</span>\n</div>\n<div class=\"code-line code-line-3\">  <span style=\"font-weight: bold\">end</span>\n</div></code></div>\n\n<hr>\n\n<p><img src=\"/ro/posts/first_post/assets/foo.jpg\"><br>\n<br></p>\n\n<p><img src=\"/ro/posts/first_post/assets/foo/bar/baz.jpg\"></p>\n\n</div>",
+      "testing": "<p>\n43\n</p>\n\n<p>\n42\n</p>",
       "assets": {
         "assets/foo.jpg": {
           "url": "/ro/posts/first_post/assets/foo.jpg",
           "path": "posts/first_post/assets/foo.jpg",
+          "size": 8,
+          "img": {
+            "format": "jpeg",
+            "width": 4080,
+            "height": 3072
+          },
           "src": null
         },
         "assets/foo/bar/baz.jpg": {
           "url": "/ro/posts/first_post/assets/foo/bar/baz.jpg",
           "path": "posts/first_post/assets/foo/bar/baz.jpg",
+          "size": 8,
+          "img": {
+            "format": "jpeg",
+            "width": 639,
+            "height": 751
+          },
           "src": null
         },
         "assets/src/foo/bar.rb": {
           "url": "/ro/posts/first_post/assets/src/foo/bar.rb",
           "path": "posts/first_post/assets/src/foo/bar.rb",
-          "src": "<div class=\"ro markdown src\">\n  <code class='code' style='white-space:pre;'><div class='code-line code-line-1'><span style=\"color: #cf222e\">class</span>&nbsp;<span style=\"color: #953800\">C</span>\n</div><div class='code-line code-line-2'>&nbsp;&nbsp;<span style=\"color: #953800\">A</span>&nbsp;<span style=\"color: #0550ae\">=</span>&nbsp;<span style=\"color: #0550ae\">42</span>\n</div><div class='code-line code-line-3'><span style=\"color: #cf222e\">end</span>\n</div></code>\n</div>\n"
+          "size": 8,
+          "img": null,
+          "src": "<div class=\"ro markdown src\">\n  <code class='code' style='white-space:pre;'><div class='code-line code-line-1'><span style=\"font-weight: bold\">class</span>&nbsp;<span style=\"font-weight: bold\">C</span>\n</div><div class='code-line code-line-2'>&nbsp;&nbsp;<span style=\"color: #000000;background-color: #ffffff\">A</span>&nbsp;<span style=\"font-weight: bold\">=</span>&nbsp;<span style=\"color: #000000;background-color: #ffffff\">42</span>\n</div><div class='code-line code-line-3'><span style=\"font-weight: bold\">end</span>\n</div></code>\n</div>\n"
         }
       },
       "_meta": {
@@ -25,42 +63,59 @@
         "type": "posts",
         "id": "first_post",
         "urls": [
+          "/ro/posts/first_post/a.rb",
           "/ro/posts/first_post/assets/foo.jpg",
           "/ro/posts/first_post/assets/foo/bar/baz.jpg",
           "/ro/posts/first_post/assets/src/foo/bar.rb",
           "/ro/posts/first_post/attributes.yml",
+          "/ro/posts/first_post/b.html.rb",
           "/ro/posts/first_post/blurb.erb.md",
           "/ro/posts/first_post/body.md",
           "/ro/posts/first_post/testing.txt"
         ],
+        "created_at": "2024-08-25 19:16:36 +0000",
+        "updated_at": "2024-10-31 18:26:39 +0000",
         "rel": {
           "curr": "posts/first_post",
-          "prev": null,
+          "prev": "people/ara-t-howard",
           "next": "posts/second_post"
         }
-      },
-      "posts": {
-        "first_post": "43\n\n42\n"
       }
     },
     "posts/second_post": {
       "title": "Second Post",
       "author": "people/alice",
+      "blurb": "<div class=\"ro markdown\">\n  <ul>\n  <li>a</li>\n  <li>b</li>\n  <li>c</li>\n</ul>\n\n<p>generated_at: 2024-11-01T21:26:45Z</p>\n\n</div>",
+      "body": "<div class=\"ro markdown\">\n  <ul>\n  <li>one</li>\n  <li>two</li>\n  <li>three</li>\n</ul>\n\n<div class=\"language-ruby highlighter-rouge\"><code class=\"code\" style=\"white-space:pre;\"><div class=\"code-line code-line-1\">  <span style=\"font-weight: bold\">class</span>  <span style=\"font-weight: bold\">C</span>\n</div>\n<div class=\"code-line code-line-2\">    <span style=\"color: #000000;background-color: #ffffff\">@a</span> <span style=\"font-weight: bold\">=</span> <span style=\"color: #000000;background-color: #ffffff\">42</span>\n</div>\n<div class=\"code-line code-line-3\">  <span style=\"font-weight: bold\">end</span>\n</div></code></div>\n\n<hr>\n\n<p><img src=\"/ro/posts/second_post/assets/foo.jpg\"><br>\n<br></p>\n\n<p><img src=\"/ro/posts/second_post/assets/foo/bar/baz.jpg\"></p>\n\n</div>",
       "assets": {
         "assets/foo.jpg": {
           "url": "/ro/posts/second_post/assets/foo.jpg",
           "path": "posts/second_post/assets/foo.jpg",
+          "size": 8,
+          "img": {
+            "format": "jpeg",
+            "width": 4080,
+            "height": 3072
+          },
           "src": null
         },
         "assets/foo/bar/baz.jpg": {
           "url": "/ro/posts/second_post/assets/foo/bar/baz.jpg",
           "path": "posts/second_post/assets/foo/bar/baz.jpg",
+          "size": 8,
+          "img": {
+            "format": "jpeg",
+            "width": 639,
+            "height": 751
+          },
           "src": null
         },
         "assets/src/foo/bar.rb": {
           "url": "/ro/posts/second_post/assets/src/foo/bar.rb",
           "path": "posts/second_post/assets/src/foo/bar.rb",
-          "src": "<div class=\"ro markdown src\">\n  <code class='code' style='white-space:pre;'><div class='code-line code-line-1'><span style=\"color: #cf222e\">class</span>&nbsp;<span style=\"color: #953800\">C</span>\n</div><div class='code-line code-line-2'>&nbsp;&nbsp;<span style=\"color: #953800\">A</span>&nbsp;<span style=\"color: #0550ae\">=</span>&nbsp;<span style=\"color: #0550ae\">42</span>\n</div><div class='code-line code-line-3'><span style=\"color: #cf222e\">end</span>\n</div></code>\n</div>\n"
+          "size": 8,
+          "img": null,
+          "src": "<div class=\"ro markdown src\">\n  <code class='code' style='white-space:pre;'><div class='code-line code-line-1'><span style=\"font-weight: bold\">class</span>&nbsp;<span style=\"font-weight: bold\">C</span>\n</div><div class='code-line code-line-2'>&nbsp;&nbsp;<span style=\"color: #000000;background-color: #ffffff\">A</span>&nbsp;<span style=\"font-weight: bold\">=</span>&nbsp;<span style=\"color: #000000;background-color: #ffffff\">42</span>\n</div><div class='code-line code-line-3'><span style=\"font-weight: bold\">end</span>\n</div></code>\n</div>\n"
         }
       },
       "_meta": {
@@ -75,34 +130,49 @@
           "/ro/posts/second_post/blurb.erb.md",
           "/ro/posts/second_post/body.md"
         ],
+        "created_at": "2024-08-25 19:16:36 +0000",
+        "updated_at": "2024-08-28 23:03:12 +0000",
         "rel": {
           "curr": "posts/second_post",
           "prev": "posts/first_post",
           "next": "posts/third_post"
         }
-      },
-      "posts": {
-        "second_post": "<div class='ro markdown'>\n  <ul>\n  <li>one</li>\n  <li>two</li>\n  <li>three</li>\n</ul>\n\n<div class='language-ruby highlighter-rouge'><code class='code' style='white-space:pre;'><div class='code-line code-line-1'>&nbsp;&nbsp;<span style='color: #cf222e'>class</span>&nbsp;&nbsp;<span style='color: #953800'>C</span>\n</div><div class='code-line code-line-2'>&nbsp;&nbsp;&nbsp;&nbsp;<span style='color: #0550ae'>@a</span>&nbsp;<span style='color: #0550ae'>=</span>&nbsp;<span style='color: #0550ae'>42</span>\n</div><div class='code-line code-line-3'>&nbsp;&nbsp;<span style='color: #cf222e'>end</span>\n</div></code></div>\n\n<hr/>\n\n<p><img src='/ro/posts/second_post/assets/foo.jpg'/><br/>\n<br/></p>\n\n<p><img src='/ro/posts/second_post/assets/foo/bar/baz.jpg'/></p>\n\n</div>"
       }
     },
     "posts/third_post": {
       "title": "First Post",
       "author": "people/alice",
+      "blurb": "<div class=\"ro markdown\">\n  <ul>\n  <li>a</li>\n  <li>b</li>\n  <li>c</li>\n</ul>\n\n<p>generated_at: 2024-11-01T21:26:45Z</p>\n\n</div>",
+      "body": "<div class=\"ro markdown\">\n  <ul>\n  <li>one</li>\n  <li>two</li>\n  <li>three</li>\n</ul>\n\n<div class=\"language-ruby highlighter-rouge\"><code class=\"code\" style=\"white-space:pre;\"><div class=\"code-line code-line-1\">  <span style=\"font-weight: bold\">class</span>  <span style=\"font-weight: bold\">C</span>\n</div>\n<div class=\"code-line code-line-2\">    <span style=\"color: #000000;background-color: #ffffff\">@a</span> <span style=\"font-weight: bold\">=</span> <span style=\"color: #000000;background-color: #ffffff\">42</span>\n</div>\n<div class=\"code-line code-line-3\">  <span style=\"font-weight: bold\">end</span>\n</div></code></div>\n\n<hr>\n\n<p><img src=\"/ro/posts/third_post/assets/foo.jpg\"><br>\n<br></p>\n\n<p><img src=\"/ro/posts/third_post/assets/foo/bar/baz.jpg\"></p>\n\n</div>",
       "assets": {
         "assets/foo.jpg": {
           "url": "/ro/posts/third_post/assets/foo.jpg",
           "path": "posts/third_post/assets/foo.jpg",
+          "size": 8,
+          "img": {
+            "format": "jpeg",
+            "width": 4080,
+            "height": 3072
+          },
           "src": null
         },
         "assets/foo/bar/baz.jpg": {
           "url": "/ro/posts/third_post/assets/foo/bar/baz.jpg",
           "path": "posts/third_post/assets/foo/bar/baz.jpg",
+          "size": 8,
+          "img": {
+            "format": "jpeg",
+            "width": 639,
+            "height": 751
+          },
           "src": null
         },
         "assets/src/foo/bar.rb": {
           "url": "/ro/posts/third_post/assets/src/foo/bar.rb",
           "path": "posts/third_post/assets/src/foo/bar.rb",
-          "src": "<div class=\"ro markdown src\">\n  <code class='code' style='white-space:pre;'><div class='code-line code-line-1'><span style=\"color: #cf222e\">class</span>&nbsp;<span style=\"color: #953800\">C</span>\n</div><div class='code-line code-line-2'>&nbsp;&nbsp;<span style=\"color: #953800\">A</span>&nbsp;<span style=\"color: #0550ae\">=</span>&nbsp;<span style=\"color: #0550ae\">42</span>\n</div><div class='code-line code-line-3'><span style=\"color: #cf222e\">end</span>\n</div></code>\n</div>\n"
+          "size": 8,
+          "img": null,
+          "src": "<div class=\"ro markdown src\">\n  <code class='code' style='white-space:pre;'><div class='code-line code-line-1'><span style=\"font-weight: bold\">class</span>&nbsp;<span style=\"font-weight: bold\">C</span>\n</div><div class='code-line code-line-2'>&nbsp;&nbsp;<span style=\"color: #000000;background-color: #ffffff\">A</span>&nbsp;<span style=\"font-weight: bold\">=</span>&nbsp;<span style=\"color: #000000;background-color: #ffffff\">42</span>\n</div><div class='code-line code-line-3'><span style=\"font-weight: bold\">end</span>\n</div></code>\n</div>\n"
         }
       },
       "_meta": {
@@ -117,20 +187,20 @@
           "/ro/posts/third_post/blurb.erb.md",
           "/ro/posts/third_post/body.md"
         ],
+        "created_at": "2024-08-25 19:16:36 +0000",
+        "updated_at": "2024-08-25 19:16:36 +0000",
         "rel": {
           "curr": "posts/third_post",
           "prev": "posts/second_post",
           "next": null
         }
-      },
-      "posts": {
-        "third_post": "<div class='ro markdown'>\n  <ul>\n  <li>one</li>\n  <li>two</li>\n  <li>three</li>\n</ul>\n\n<div class='language-ruby highlighter-rouge'><code class='code' style='white-space:pre;'><div class='code-line code-line-1'>&nbsp;&nbsp;<span style='color: #cf222e'>class</span>&nbsp;&nbsp;<span style='color: #953800'>C</span>\n</div><div class='code-line code-line-2'>&nbsp;&nbsp;&nbsp;&nbsp;<span style='color: #0550ae'>@a</span>&nbsp;<span style='color: #0550ae'>=</span>&nbsp;<span style='color: #0550ae'>42</span>\n</div><div class='code-line code-line-3'>&nbsp;&nbsp;<span style='color: #cf222e'>end</span>\n</div></code></div>\n\n<hr/>\n\n<p><img src='/ro/posts/third_post/assets/foo.jpg'/><br/>\n<br/></p>\n\n<p><img src='/ro/posts/third_post/assets/foo/bar/baz.jpg'/></p>\n\n</div>"
       }
     }
   },
   "_meta": {
     "url": "/ro",
     "types": [
+      "people",
       "posts"
     ],
     "page": {

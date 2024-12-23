@@ -1,0 +1,28 @@
+{
+  "data": {
+    "people/ara-t-howard": {
+      "assets": {
+      },
+      "_meta": {
+        "identifier": "people/ara-t-howard",
+        "type": "people",
+        "id": "ara-t-howard",
+        "urls": [
+
+        ],
+        "created_at": null,
+        "updated_at": null,
+        "rel": {
+          "curr": "people/ara-t-howard",
+          "prev": null,
+          "next": null
+        }
+      }
+    }
+  },
+  "_meta": {
+    "url": "/ro",
+    "type": "people",
+    "id": "ara-t-howard"
+  }
+}

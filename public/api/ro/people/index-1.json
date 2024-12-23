@@ -1,0 +1,37 @@
+{
+  "data": {
+    "people/ara-t-howard": {
+      "assets": {
+      },
+      "_meta": {
+        "identifier": "people/ara-t-howard",
+        "type": "people",
+        "id": "ara-t-howard",
+        "urls": [
+
+        ],
+        "created_at": null,
+        "updated_at": null,
+        "rel": {
+          "curr": "people/ara-t-howard",
+          "prev": null,
+          "next": null
+        }
+      }
+    }
+  },
+  "_meta": {
+    "url": "/ro",
+    "type": "people",
+    "page": {
+      "count": 1,
+      "size": 42,
+      "first": 0,
+      "last": 0,
+      "index": 0,
+      "curr": 0,
+      "prev": null,
+      "next": null
+    }
+  }
+}

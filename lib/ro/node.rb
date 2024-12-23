@@ -148,11 +148,18 @@ module Ro
     end
 
     def _render(file)
+      node = self
+
       value = Ro.render(file, _render_context)
 
       if value.is_a?(Ro::Template::HTML)
         html = value
-        value = Ro.expand_asset_urls(html, self)
+        value = Ro.expand_asset_urls(html, node)
+      end
+
+      if value.is_a?(Hash)
+        attributes = value
+        value = Ro.expand_asset_values(attributes, node)
       end
 
       value

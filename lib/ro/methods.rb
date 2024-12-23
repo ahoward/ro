@@ -202,8 +202,12 @@ module Ro
 
       doc.traverse do |element|
         if element.respond_to?(:attributes)
+          attributes = element.attributes
+          expand_asset_values!(attributes) unless attributes.empty?
+=begin
           element.attributes.each do |attr, attribute|
             value = attribute.value
+
             if value =~ %r{(?:./)?assets/(.+)$}
               path = value
 
@@ -216,6 +220,7 @@ module Ro
               end
             end
           end
+=end
         end
       end
 
@@ -235,6 +240,35 @@ module Ro
           #Ro.error!("invalid asset=`#{ path }` in node=`#{ node.path }`")
           match
         end
+      end
+    end
+
+   def expand_asset_values(hash, node)
+      src = Map.for(hash)
+      dst = Map.new
+
+      return dst if src.empty?
+
+      re = %r{\A(?:[.]/)?(assets/[^\s]+)\s*\z}
+
+      src.depth_first_each do |key, value|
+        next unless value.is_a?(String)
+
+        if (match = re.match(value.strip))
+          path = match[1].strip
+          url = node.url_for(path)
+          value = url
+        end
+
+        dst.set(key, value)
+      end
+
+      dst.to_hash
+    end
+
+    def expand_asset_values!(hash, node)
+      expand_asset_values(hash, node).each do |key, value|
+        hash[key] = value
       end
     end
 

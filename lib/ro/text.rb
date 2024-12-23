@@ -98,9 +98,7 @@ module Ro
 end
 
 
-
-
-END {
+if $0 == __FILE__
   text = <<~____
     this is a paragraph that is very long this is a paragraph that is very long this is a paragraph that is very long this is a paragraph that is very long
     this is a paragraph that is very long this is a paragraph that is very long this is a paragraph that is very long this is a paragraph that is very long
@@ -119,4 +117,4 @@ END {
   ____
 
   puts Ro::Text.render(text)
-}
+end
