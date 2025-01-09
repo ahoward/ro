@@ -3,7 +3,7 @@
 
 Gem::Specification::new do |spec|
   spec.name = "ro"
-  spec.version = "4.2.1"
+  spec.version = "4.2.3"
   spec.required_ruby_version = '>= 3.0'
   spec.platform = Gem::Platform::RUBY
   spec.summary = "all your content in github, as god intended"
@@ -29,6 +29,8 @@ Gem::Specification::new do |spec|
  "lib/ro/collection/list.rb",
  "lib/ro/config.rb",
  "lib/ro/error.rb",
+ "lib/ro/html.rb",
+ "lib/ro/html_safe.rb",
  "lib/ro/klass.rb",
  "lib/ro/methods.rb",
  "lib/ro/model.rb",
@@ -45,11 +47,17 @@ Gem::Specification::new do |spec|
  "lib/ro/template",
  "lib/ro/template.rb",
  "lib/ro/template/rouge_formatter.rb",
+ "lib/ro/text.rb",
  "public",
  "public/api",
  "public/api/ro",
  "public/api/ro/index-1.json",
  "public/api/ro/index.json",
+ "public/api/ro/people",
+ "public/api/ro/people/ara-t-howard",
+ "public/api/ro/people/ara-t-howard/index.json",
+ "public/api/ro/people/index-1.json",
+ "public/api/ro/people/index.json",
  "public/api/ro/posts",
  "public/api/ro/posts/first_post",
  "public/api/ro/posts/first_post/index.json",
@@ -64,6 +72,7 @@ Gem::Specification::new do |spec|
  "public/ro/people/ara-t-howard",
  "public/ro/posts",
  "public/ro/posts/first_post",
+ "public/ro/posts/first_post/a.rb",
  "public/ro/posts/first_post/assets",
  "public/ro/posts/first_post/assets/foo",
  "public/ro/posts/first_post/assets/foo.jpg",
@@ -73,6 +82,7 @@ Gem::Specification::new do |spec|
  "public/ro/posts/first_post/assets/src/foo",
  "public/ro/posts/first_post/assets/src/foo/bar.rb",
  "public/ro/posts/first_post/attributes.yml",
+ "public/ro/posts/first_post/b.html.rb",
  "public/ro/posts/first_post/blurb.erb.md",
  "public/ro/posts/first_post/body.md",
  "public/ro/posts/first_post/testing.txt",
@@ -116,10 +126,6 @@ Gem::Specification::new do |spec|
     spec.add_dependency(*["kramdown-parser-gfm", "~> 1.1", " >= 1.1.0"])
   
     spec.add_dependency(*["rouge", "~> 4.1", " >= 4.1.1"])
-  
-    spec.add_dependency(*["ak47", "~> 0.2"])
-  
-    spec.add_dependency(*["webrick", "~> 1.8.1"])
   
     spec.add_dependency(*["image_size", "~> 3.4"])
   

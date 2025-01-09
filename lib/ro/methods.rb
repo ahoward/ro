@@ -198,54 +198,41 @@ module Ro
     end
 
     def accurate_expand_asset_urls(html, node)
-      doc = Nokogiri::HTML.fragment(html)
+      doc = Nokogiri::HTML.fragment(html.to_str)
 
       doc.traverse do |element|
         if element.respond_to?(:attributes)
           attributes = element.attributes
           expand_asset_values!(attributes) unless attributes.empty?
-=begin
-          element.attributes.each do |attr, attribute|
-            value = attribute.value
-
-            if value =~ %r{(?:./)?assets/(.+)$}
-              path = value
-
-              if node.path_for(path).exist?
-                url = node.url_for(path)
-                attribute.value = url
-              else
-                #Ro.error!("invalid asset=`#{ path }` in node=`#{ node.path }`")
-                :noop
-              end
-            end
-          end
-=end
         end
       end
 
-      doc.to_s.strip
+      expanded = doc.to_s.strip
+
+      HTML.new(expanded)
     end
 
     def sloppy_expand_asset_urls(html, node)
       re = %r`\s*=\s*['"](?:[.]/)?(assets/[^'"\s]+)['"]`
 
-      html.gsub(re) do |match|
-        path = match[%r`assets/[^'"\s]+`]
+      expanded =
+        html.to_str.gsub(re) do |match|
+          path = match[%r`assets/[^'"\s]+`]
 
-        if node.path_for(path).exist?
-          url = node.url_for(path)
-          "='#{url}'"
-        else
-          #Ro.error!("invalid asset=`#{ path }` in node=`#{ node.path }`")
-          match
+          if node.path_for(path).exist?
+            url = node.url_for(path)
+            "='#{url}'"
+          else
+            match
+          end
         end
-      end
+
+      HTML.new(expanded)
     end
 
    def expand_asset_values(hash, node)
       src = Map.for(hash)
-      dst = Map.new
+      dst = Map.new(hash)
 
       return dst if src.empty?
 

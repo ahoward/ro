@@ -152,7 +152,7 @@ module Ro
 
       value = Ro.render(file, _render_context)
 
-      if value.is_a?(Ro::Template::HTML)
+      if value.is_a?(HTML)
         html = value
         value = Ro.expand_asset_urls(html, node)
       end

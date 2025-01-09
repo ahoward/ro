@@ -1,5 +1,5 @@
 module Ro
-  VERSION = '4.2.1' unless defined?(VERSION)
+  VERSION = '4.2.3' unless defined?(VERSION)
 
   class << self
     def version
@@ -28,7 +28,7 @@ module Ro
 
     def libs
       %w[
-        fileutils pathname yaml json logger erb cgi time date thread securerandom
+        fileutils pathname yaml json logger erb cgi uri time date thread securerandom
       ]
     end
 
@@ -46,11 +46,11 @@ module Ro
         'rouge' =>
           ['rouge', '~> 4.1', ' >= 4.1.1'],
 
-        'ak47' =>
-          ['ak47', '~> 0.2'],
+        #'ak47' =>
+          #['ak47', '~> 0.2'],
 
-        'webrick' =>
-          ['webrick', '~> 1.8.1'],
+        #'webrick' =>
+          #['webrick', '~> 1.9.1'],
 
         'image_size' =>
           ['image_size', '~> 3.4'],

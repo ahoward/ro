@@ -63,6 +63,7 @@ module Ro
     # v
     def initialize!
       Ro.load %w[
+        html.rb
         error.rb
         klass.rb
         slug.rb

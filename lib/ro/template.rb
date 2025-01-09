@@ -5,10 +5,8 @@ module Ro
     require 'kramdown'
     require 'kramdown-parser-gfm'
 
+    require_relative 'html.rb'
     require_relative 'template/rouge_formatter.rb'
-
-    class HTML < ::String
-    end
 
     def Template.render(*args, &block)
       render_file(*args, &block)
@@ -22,7 +20,12 @@ module Ro
       engines = File.basename(path).split('.')[1..-1]
       context = options[:context]
 
-      render_string(content, path: path, engines: engines, context: context)
+      begin
+        render_string(content, path: path, engines: engines, context: context)
+      rescue Ro::Error => e
+        msg = e.message
+        Ro.error! "failed to render #{ path } with `#{ msg }`"
+      end
     end
 
     def Template.render_string(content, options = {})
@@ -47,12 +50,14 @@ module Ro
               render_erb(content, context:)
             when 'md', 'markdown'
               render_markdown(content)
-            when 'yml'
+            when 'yml', 'yaml'
               render_yaml(content)
             when 'json'
               render_json(content)
             when 'rb'
               render_ruby(content)
+            when 'txt', 'text'
+              render_text(content)
             else
               Ro.error!("no engine found for engine=#{ engine.inspect } engines=#{ engines.inspect }")
           end
