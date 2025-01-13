@@ -172,6 +172,10 @@ module Ro
       end
     end
 
+    def fetch(*args)
+      attributes.fetch(*args)
+    end
+
     def get(*args)
       attributes.get(*args)
     end

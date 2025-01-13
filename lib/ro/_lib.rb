@@ -1,5 +1,5 @@
 module Ro
-  VERSION = '4.2.3' unless defined?(VERSION)
+  VERSION = '4.2.4' unless defined?(VERSION)
 
   class << self
     def version
@@ -45,6 +45,12 @@ module Ro
 
         'rouge' =>
           ['rouge', '~> 4.1', ' >= 4.1.1'],
+
+        'front_matter_parser' =>
+          ['front_matter_parser', '~> 1.0'],
+
+        'rinku' =>
+          ['rinku', '~> 2.0'],
 
         #'ak47' =>
           #['ak47', '~> 0.2'],

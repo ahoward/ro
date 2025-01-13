@@ -120,18 +120,25 @@ module Ro
 
       theme = options.fetch(:theme) { Ro.config.md_theme }
 
+      parsed = FrontMatterParser::Parser.new(:md).call(content)
+      front_matter = parsed.front_matter
+      content = parsed.content
+
       opts = {
         input: 'GFM',
         syntax_highlighter_opts: { formatter: RougeFormatter, theme: theme }
       }
 
-      HTML.new(
+      div =
         <<~_____
           <div class="ro markdown">
             #{ ::Kramdown::Document.new(content, opts).to_html }
           </div>
         _____
-      )
+
+      html = Rinku.auto_link(div, :all, 'target="_blank"')
+
+      HTML.new(html, front_matter:)
     end
 
     def Template.render_src(path, options = {})
