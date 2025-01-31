@@ -126,6 +126,7 @@ module Ro
 
       opts = {
         input: 'GFM',
+        hard_wrap: false,
         syntax_highlighter_opts: { formatter: RougeFormatter, theme: theme }
       }
 

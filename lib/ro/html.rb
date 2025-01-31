@@ -4,6 +4,7 @@ module Ro
   class HTML < ::ActiveSupport::SafeBuffer
     def initialize(*args, **kws, &block)
       self.front_matter = kws.fetch(:front_matter){ {} }
+
       super(args.join)
     end
 

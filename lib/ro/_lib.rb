@@ -1,5 +1,5 @@
 module Ro
-  VERSION = '4.2.4' unless defined?(VERSION)
+  VERSION = '4.3.0' unless defined?(VERSION)
 
   class << self
     def version

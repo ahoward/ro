@@ -1,8 +1,13 @@
 module Ro
   class Error < ::StandardError
-    def initialize(message, context = nil)
-      super(message)
+    attr_reader :context
+
+    def initialize(message, **context)
       @context = context
+
+      msg = context.empty? ? "#{ message }" : "#{ message }, #{ context.inspect }"
+
+      super(msg)
     end
   end
 end

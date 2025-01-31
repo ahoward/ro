@@ -55,26 +55,13 @@ module Ro
     end
 
     def _load_base_attributes
-      disallowed =
-        %w[
-          assets
-          _meta
-        ]
-
-      glob =
-        "attributes.{yml,yaml,json}"
+      glob = "attributes.{yml,yaml,json}"
 
       @path.glob(glob) do |file|
         attrs = _render(file)
-
-        disallowed.each do |key|
-          Ro.error!("#{ file } must not contain the key #{key.inspect}") if attrs.has_key?(key)
-        end
-
-        @attributes.update(attrs)
+        update_attributes!(attrs, file:)
       end
     end
-
 
     def _load_asset_attributes
       {}.tap do |hash|
@@ -123,14 +110,44 @@ module Ro
         base = basename.split('.', 2).first
         key.push(base)
 
-        if @attributes.has?(key)
-          raise Error.new("#{ @path } clobbers #{ key.inspect }!")
+        value = _render(file)
+
+        if value.is_a?(HTML)
+          attrs = value.front_matter
+          update_attributes!(attrs, file:)
         end
 
-        value = _render(file)
+        if @attributes.has?(key)
+          raise Error.new("path=#{ @path.inspect } masks #{ key.inspect } in #{ @attributes.inspect }!")
+        end
 
         @attributes.set(key => value)
       end
+    end
+
+    def update_attributes!(attrs = {}, **context)
+      attrs = Map.for(attrs)
+
+      blacklist = %w[
+        assets
+        _meta
+      ]
+
+      blacklist.each do |key|
+        if attrs.has_key?(key)
+          Ro.error!("#{ key } is blacklisted!", **context)
+        end
+      end
+
+      keys = @attributes.depth_first_keys
+
+      attrs.depth_first_keys.each do |key|
+        if keys.include?(key)
+          Ro.error!("#{ attrs.inspect } clobbers #{ @attributes.inspect }!", **context)
+        end
+      end
+
+      @attributes.update(attrs)
     end
 
     def _ignored_files
@@ -153,8 +170,9 @@ module Ro
       value = Ro.render(file, _render_context)
 
       if value.is_a?(HTML)
-        html = value
-        value = Ro.expand_asset_urls(html, node)
+        front_matter = value.front_matter
+        html = Ro.expand_asset_urls(value, node)
+        value = HTML.new(html, front_matter:)
       end
 
       if value.is_a?(Hash)

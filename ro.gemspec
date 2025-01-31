@@ -3,7 +3,7 @@
 
 Gem::Specification::new do |spec|
   spec.name = "ro"
-  spec.version = "4.2.3"
+  spec.version = "4.3.0"
   spec.required_ruby_version = '>= 3.0'
   spec.platform = Gem::Platform::RUBY
   spec.summary = "all your content in github, as god intended"
@@ -17,8 +17,10 @@ Gem::Specification::new do |spec|
  "README.md",
  "README.md.erb",
  "Rakefile",
+ "a.rb",
  "bin",
  "bin/ro",
+ "gem-details.oe",
  "lib",
  "lib/ro",
  "lib/ro.rb",
@@ -126,6 +128,10 @@ Gem::Specification::new do |spec|
     spec.add_dependency(*["kramdown-parser-gfm", "~> 1.1", " >= 1.1.0"])
   
     spec.add_dependency(*["rouge", "~> 4.1", " >= 4.1.1"])
+  
+    spec.add_dependency(*["front_matter_parser", "~> 1.0"])
+  
+    spec.add_dependency(*["rinku", "~> 2.0"])
   
     spec.add_dependency(*["image_size", "~> 3.4"])
   

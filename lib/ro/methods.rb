@@ -135,8 +135,8 @@ module Ro
         end
     end
 
-    def error!(message, context = nil)
-      error = Error.new(message, context)
+    def error!(message, **context)
+      error = Error.new(message, **context)
 
       begin
         raise error
