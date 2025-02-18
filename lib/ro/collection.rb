@@ -42,13 +42,46 @@ module Ro
       @path.subdirectory_for(name)
     end
 
-    def each(&block)
+    def each(offset:nil, limit:nil, &block)
       accum = []
 
-      subdirectories do |subdirectory|
-        node = node_for(subdirectory)
+      if offset
+        i = -1
+        n = 0
+        subdirectories do |subdirectory|
+          i += 1
+          next if i < offset
+          node = node_for(subdirectory)
+          block ? block.call(node) : accum.push(node)
+          n += 1
+          break if limit && n >= limit
+        end
+      else
+        subdirectories do |subdirectory|
+          node = node_for(subdirectory)
+          block ? block.call(node) : accum.push(node)
+        end
+      end
 
-        block ? block.call(node) : accum.push(node)
+      block ? self : accum
+    end
+
+    def page(number, size: 10, &block)
+      offset = [(number - 1), 0].max * size
+      limit = [size, 1].max
+
+      each(offset:, limit:, &block)
+    end
+
+    def paginate(size: 10, &block)
+      number = 0
+      accum = []
+
+      loop do
+        number += 1
+        page = self.page(number, size:)
+        break if page.empty?
+        block ? block.call(page) : accum.push(page)
       end
 
       block ? self : accum

@@ -4,9 +4,7 @@ module Ro
 
     def initialize(message, **context)
       @context = context
-
       msg = context.empty? ? "#{ message }" : "#{ message }, #{ context.inspect }"
-
       super(msg)
     end
   end
