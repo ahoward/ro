@@ -66,11 +66,21 @@ module Ro
       block ? self : accum
     end
 
-    def page(number, size: 10, &block)
+    class Page < ::Array
+      attr_accessor :number
+
+      def initialize(nodes = [], number: 1)
+        replace(nodes)
+        @number = number
+      end
+    end
+
+    def page(number, size: 10)
       offset = [(number - 1), 0].max * size
       limit = [size, 1].max
 
-      each(offset:, limit:, &block)
+      nodes = each(offset:, limit:)
+      Page.new(nodes, number:)
     end
 
     def paginate(size: 10, &block)
