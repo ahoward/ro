@@ -1,0 +1,7 @@
+og:
+  title: 'super fast embeddings with rust, javascript, ruby, ollama, and mistral.'
+  description: >-
+    T.I.L how to generate fast embeddings locally with open source tools
+  image:
+    url: ./assets/giraffe.jpeg
+    width: 2048

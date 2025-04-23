@@ -1,17 +1,205 @@
 {
   "data": {
-    "posts/first_post": {
-      "title": "First Post",
-      "author": "people/alice",
-      "a": "42\n",
-      "b": "<a href='https//drawohara.io'>https://drawohara.io</a>\n",
-      "blurb": "<div class=\"ro markdown\">\n  <ul>\n  <li>a</li>\n  <li>b</li>\n  <li>c</li>\n</ul>\n\n<p>generated_at: 2024-11-01T21:26:46Z<br>\n<br><br>\nSecond Post</p>\n\n</div>",
-      "body": "<div class=\"ro markdown\">\n  <ul>\n  <li>one</li>\n  <li>two</li>\n  <li>three</li>\n</ul>\n\n<div class=\"language-ruby highlighter-rouge\"><code class=\"code\" style=\"white-space:pre;\"><div class=\"code-line code-line-1\">  <span style=\"font-weight: bold\">class</span>  <span style=\"font-weight: bold\">C</span>\n</div>\n<div class=\"code-line code-line-2\">    <span style=\"color: #000000;background-color: #ffffff\">@a</span> <span style=\"font-weight: bold\">=</span> <span style=\"color: #000000;background-color: #ffffff\">42</span>\n</div>\n<div class=\"code-line code-line-3\">  <span style=\"font-weight: bold\">end</span>\n</div></code></div>\n\n<hr>\n\n<p><img src=\"/ro/posts/first_post/assets/foo.jpg\"><br>\n<br></p>\n\n<p><img src=\"/ro/posts/first_post/assets/foo/bar/baz.jpg\"></p>\n\n</div>",
-      "testing": "<p>\n43\n</p>\n\n<p>\n42\n</p>",
+    "posts/almost-died-in-an-ice-cave": {
+      "og": {
+        "image": {
+          "url": "/ro/posts/almost-died-in-an-ice-cave/assets/og.jpg"
+        },
+        "title": "Almost Died In An Ice Cave",
+        "description": "On April of 2024, I, along with 6 of my friends, dug for our lives to come out on the other side."
+      },
+      "body": "<div class=\"ro markdown\">\n  <p><a href=\"#tl;dr;\">tl;dr;</a></p>\n\n<blockquote>\n  <p>in april, 2024, myself, and 6 brave men attempted to cross the harding\nicefield.</p>\n\n  <p>in celebration of <a href=\"https://en.wikipedia.org/wiki/Harding_Icefield#History\">yule kilcher’s 1968 crossing</a></p>\n\n  <p>midway through our trip, at the point of no return, we were beseiged by a storm of storms.</p>\n\n  <p>we dug shoulder to shoulder for 5 days before the air national gaurd crash\nlanded, and we crawled into the void on a one way journey to save each other’s\nlives at a bearing of 300, 900 meters away.</p>\n\n  <p>these are my memories from that trip.</p>\n\n  <p>they are not meant to be definiative or complete; merely a refelection on how\nthe experience sits in my mind.</p>\n\n  <p>it took me a full year to be able to put pen to paper about this so, forgive\nany tresspasses.</p>\n\n  <p>it’s strange how fungible time truly is.</p>\n\n  <p><strong>a lifetime, a lifetime ago, just yesterday…</strong></p>\n</blockquote>\n\n<p><a href=\"#pss\">p.s.s</a> -&gt; <a href=\"https://www.instagram.com/gazleah/\">@gaz</a> is <a href=\"https://www.wellgoodproductions.com/\">making a film about this ↓↓↓↓</a></p>\n\n<p><img src='/ro/posts/almost-died-in-an-ice-cave/assets/og.jpg' alt=\"\" /></p>\n\n<p>at this point, i was down to being able to remember</p>\n\n<blockquote>\n  <p>hail mary, full of grace</p>\n</blockquote>\n\n<p>and then nothing.</p>\n\n<p>the rest of the verses eluded me.</p>\n\n<p>as did my children’s names.</p>\n\n<p>everything, was very, very far away.</p>\n\n<p><img src='/ro/posts/almost-died-in-an-ice-cave/assets/image1.png' alt=\"\" /></p>\n\n<p>suddenly there was gaz, pulling me out of a 10 feet deep hole in the snow.</p>\n\n<p>out of the darkness of the cave, into the pure white nothingness of the storm.\nwind screaming like a banshee.  it was so white, so loud. it hurt.  after\nnearly 5 days in that hole.</p>\n\n<p>i imagine this might be what it’s like to be born.</p>\n\n<p>pulled from a dark place you cannot stay, into the brightness of a place you\nwill surely die in.</p>\n\n<p>i was feeling slightly lackadaisical, not in a hurry, but i was still aware,\nin some capacity, that gaz seemed to be yelling:</p>\n\n<p><strong>“go! go! go!”</strong></p>\n\n<p>i was having difficulty being excited about it.</p>\n\n<p>so. cold…</p>\n\n<p>above ground, it was time for one last push.</p>\n\n<p>not long before we’d made josh ‘a last cup of coffee’.  he said it was the\nbest he’d ever tasted.  he seemed to be the last one standing.</p>\n\n<p><img src='/ro/posts/almost-died-in-an-ice-cave/assets/image2.png' alt=\"\" /></p>\n\n<p>i think that was the point when we knew.</p>\n\n<p>we couldn’t keep up – we were going to be buried alive.</p>\n\n<p>they were not going to be able to reach us – despite trying for days.</p>\n\n<p>probably before the next morning or, depending on the rage of the storm, in\nminutes.</p>\n\n<p>we’d radioed the rescue team, letting know we were tapping out.  we didn’t\nwant them trying to recover corpses.</p>\n\n<p>one more shot!  the radio said.  they were going to try one more time…</p>\n\n<p>at its peak, the storm pumped out snow like it was being blown out of a\nfirehose.</p>\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/7N4briDDD7A?si=xYSyzpdnKlMvQNgC\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen=\"\"></iframe>\n<p><br /></p>\n\n<p>some of us were lifelong alaskans.</p>\n\n<p>we grew up mountain running, backpacking, winter camping in freakishly bad\nweather.  i’ve read how to build a fire a hundred times.  as my dad taught me:\n<strong>3</strong>, not 2 ways to make a fire.  unless you have a death wish.</p>\n\n<p>of course, on a glacier there is no way to make a fire. nothing to burn.</p>\n\n<p>gaz trained special ops people in winter travel and was a guide in france for\nyears. he is good at his job because he can film skiing switch.  he\nknows how to fly paragliders, scuba, climb. and he split his skull open in\noman in a climbing fall. at that time, he was the only one of us to have been\nrescued by a military helicopter.</p>\n\n<p>he is also a bit of a nut.  i loved him 30 seconds after picking him up at\nthe anchorage airport:\n<br />\n<br />\n<a href=\"https://recorder.google.com/5ceeb9c2-22a7-47fe-a1e0-48654444fa1b\">https://recorder.google.com/5ceeb9c2-22a7-47fe-a1e0-48654444fa1b</a>.</p>\n\n<p>josh lives in a 12x8x15 cabin, built into the roots of hemlock trees on\na steep hillside in seward, alaska. surrounded by moss and ice climbing. he\ndoesn’t have electricity, or running water.</p>\n\n<p>his days seem to be filled with a.m. radio, watching the weather, and looking at\nmaps.</p>\n\n<p>he is always pointing.</p>\n\n<p><img src='/ro/posts/almost-died-in-an-ice-cave/assets/josh-pointing.jpg' alt=\"\" /></p>\n\n<p>levi, who has the strength of the Incredible Hulk, the heart of Shrek, the\nbrain of Bernardo Kastrop and a gigantic Alaskan smile, had never seen it snow\nlike this.</p>\n\n<p><img src='/ro/posts/almost-died-in-an-ice-cave/assets/image3.png' alt=\"\" /></p>\n\n<p>none of us had.</p>\n\n<p>it came down in sheets.  a strange combination of graupelly pellets surrounded\nby what seemed like grape sized slush balls surrounding them.</p>\n\n<p>later, in the chunnel, it would fill up as fast as you could move it.  working\nfull tilt.  panting, wheezing, stumbling about with less than zero visibility.</p>\n\n<p>shovel full tilt for 10 minutes.  turn around to feel everything you’d just\nremoved already returned.  racing for air.</p>\n\n<p>while digging, i often simply left my eyes closed to conserve energy, and hold\nonto to sanity.</p>\n\n<p>at the bottom, under the awning of skis we’d barely managed to retrieve on a\nrecon mission, i would drop and take a knee.</p>\n\n<p>to say another ‘hail mary’.</p>\n\n<p>my grandma had told me, over and over and over again, that i would one day\nneed it.</p>\n\n<p>she made me say it with her over and over.</p>\n\n<p>but this was the first time i’d felt i truly needed it.</p>\n\n<blockquote>\n  <p>axel, nova, axel, nova, axel…</p>\n</blockquote>\n\n<p>my kids’ names.</p>\n\n<blockquote>\n\n  <p>outside of right leg.<br />\n<strong>(axel)</strong><br />\ntowards right leg, swinging it out of the way.<br />\n<strong>(nova)</strong><br />\nbetween the legs.<br />\n<strong>(axel)</strong><br />\ntowards the left leg swinging left foot out of way.<br />\n<strong>(nova)</strong><br />\noutside of left foot.<br />\n<strong>(axel)</strong><br /></p>\n\n  <p><strong>[[ reverse ]]</strong></p>\n\n  <p>towards left leg, swinging it out of the way.<br />\n<strong>(nova)</strong><br />\nbetween the legs.<br />\n<strong>(axel)</strong><br />\ntowards the right leg swinging right foot out of way.<br />\n<strong>(nova)</strong><br />\noutside of left foot.<br />\n<strong>(axel)</strong><br /></p>\n\n</blockquote>\n\n<p>digging truly was the best part. at least then, you were warm.</p>\n\n<p>and above ground.  breathing air.</p>\n\n<p>the chunnel had gotten so high and narrow only two men could work at a time.</p>\n\n<p><img src='/ro/posts/almost-died-in-an-ice-cave/assets/image4.png' alt=\"\" /></p>\n\n<p>i kinda figured that randy would go first.  at night i’d felt him, hands and\nknees, shivering…  but, the spring before, i’d seen him reveling in shit\nlike this…</p>\n\n<p><img src='/ro/posts/almost-died-in-an-ice-cave/assets/image6.png' alt=\"\" /></p>\n\n<p><strong>maybe it would be ok?</strong></p>\n\n<p>he never seemed to stop laughing.  even when he was hypothermic. for days.</p>\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/i8Se0WE77p4?si=DpOZCJZVI73P2gTK\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen=\"\"></iframe>\n<p><br /></p>\n\n<p>on day 2, or 3, or 4 - i forget, levi woke up in a panic, realizing that the\nstructure of our roof, the roof of our ‘backup backup backup’ cave, the one we\nweren’t supposed to need, wasn’t convex enough and that our breath was slowly\nmelting it.</p>\n\n<p>thousands of pounds of wet, dense, snow was above us, and starting to drip and fall out in clumps.</p>\n\n<p>he stripped off his clothes and started chopping away at the ceiling. a sled\nbrigrade to shuttle the snow, raining down everywhere on our gear.</p>\n\n<p><img src='/ro/posts/almost-died-in-an-ice-cave/assets/levi-rawr.png' alt=\"\" /></p>\n\n<p>when everything is soaking wet and freezing, it can easily take two people and\n30 to 45 minutes to simply execute a clothing change.  inside the cave, it’s\n34 degrees and raining.  the second you are outside, everything freezes solid.\nonce back inside, you get to reverse the process.</p>\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/z-L13WwsBkg?si=-S3ikF9CzF-VTYMR\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen=\"\"></iframe>\n<p><br /></p>\n\n<p>we used all our tricks.</p>\n\n<p>i remember a particular session.</p>\n\n<p>it was the first time i’d been able to perceive any atmospheric feature in\ndays.</p>\n\n<p>not the moon, not sky, nor the massive bulk of the nunatak behind us.</p>\n\n<p>i leaned inside and said:</p>\n\n<blockquote>\n  <p><strong>i saw the moon!</strong></p>\n</blockquote>\n\n<p>no one moved.  maybe they didn’t hear me?</p>\n\n<p>i went back outside to keep digging.</p>\n\n<hr />\n\n<p>for levi and eivin, this trip was born onto them.  their grandfather yule was the first\nexplorer to cross the ice sheet in 1968.  still boggles the mind, knowing what\nthey did, back then, on that gear.</p>\n\n<p><img src='/ro/posts/almost-died-in-an-ice-cave/assets/image7.png' alt=\"\" /></p>\n\n<p>but for me, it was only 3 years in the making.</p>\n\n<hr />\n\n<p>i’d met jess deep in the desert.  having gotten off crutches just a few weeks\nbefore.</p>\n\n<p>she sent me.  knowing before i did that i had to go.</p>\n\n<hr />\n\n<p>then somehow she was there with me.  on the left side, in front.</p>\n\n<p>directly opposite the dark energy of the nunatak which i could barely see.\ncould not see.  but could feel.</p>\n\n<p>the juxtaposition felt a little like a lightning bolt, piercing diagonally\nthrough my body but, at that moment, i knew i was ok to die.  i was seeing all\nof it, right now, or so i still feel.</p>\n\n<p>i think each of us felt it, in our own way.</p>\n\n<p>the idea of lying next to your best friends, exhausted, and falling asleep in\ntotal silence, buried together, seemed pretty ok.</p>\n\n<p>sure the fuck beats dying of cancer surrounded by beeping monitors and strangers.\ntv in the corner.  at least, from what i’ve seen.</p>\n\n<p>that’s what i’d felt in <strong>that session</strong>.</p>\n\n<hr />\n\n<p>a few days ago, levi left a voice message in our group chat.  almost one year\nbefore the day.</p>\n\n<p>he reminded us that mike had woken us all up.  and that this small act had saved our lives.</p>\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/5V-cYzmAQ58?si=ZbUk9Y9X9D7TVVsp\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen=\"\"></iframe>\n<p><br /></p>\n\n<p>there were 100s of such small acts over that week in the cave.</p>\n\n<p>mike is missing a finger.  a fisherman.  father.  carpenter.</p>\n\n<p>he built his own dome and gardens year round in a 20x40 hoop building in homer\nalaska.  he’s built like an ox.</p>\n\n<p>3 big ones: levi, josh, mike.  and 3 small ones.  ara, randy, gaz.</p>\n\n<p>eivin is the smart one.  he left on day 4, via ski plane.  before anyone knew\nwhat was up.   thankfully for us, because he and sarah held everything\ntogether for us later.</p>\n\n<p>i remeber mike reaching over the group to scratch my head when it was getting\nhard, face crushed into the ice wall.  randy shaking violently in between\nlevi, and me.</p>\n\n<p>our sleeping bags were completely useless. only this tyvek bivy created enough\nwarm, dry space to raise body temperature.</p>\n\n<p>levi and i have talked about next time.  no sleeping bags.  wool.  perhaps\nsealskin.  and sails, definitely bringing sails for the skis.  a sealskin sail\nwould be very useful, and better in an ice cave than even tyvek.</p>\n\n<p>stuff made out of oil starts to feel just like what it is in situations like\nthis.</p>\n\n<p>plastic.</p>\n\n<p><img src='/ro/posts/almost-died-in-an-ice-cave/assets/image8.png' alt=\"\" /></p>\n\n<p>these are the kinds of things only ‘alaska boys’ seem to appreciate.   you can\ntell them in any group of moutaineers - all thier shit is either 30 years old,\nhomemade, or a piece of carbon a buddy just started manufacturing out of his\nbus.</p>\n\n<p>well, that, and some ozzy osbourne.</p>\n\n<p>mike also woke up screaming at one point - singing</p>\n\n<blockquote>\n  <p><a href=\"https://open.spotify.com/track/7ACxUo21jtTHzy7ZEV56vU?si=f77d78dc3ea24ad2\">‘going off the rails in an icey c-avE! 🎵🤘🤘🤘’</a></p>\n</blockquote>\n\n<p>around 3 in the morning on night 3.</p>\n\n<p>despite being too tired to laugh, it was at least as comforting to me as\npraying.</p>\n\n<p>on the helicopter i messaged jess. telling her that i’d felt her there, when i\nas utterly alone, and that i loved her.</p>\n\n<p><img src='/ro/posts/almost-died-in-an-ice-cave/assets/image9.png' alt=\"\" /></p>\n\n<p>i didn’t yet know that she’d tracked down sarah, josh’s sister, and known of\nthe severity of our predicament for the past few days, during which she’d also\nbeen up all night praying.</p>\n\n<p>for all of us.</p>\n\n<p>who does that?  there is a reason i’ve been in los angeles for a year now.\nsome gennies don’t go back in the bottle.</p>\n\n<p>sarah had been instrumental in our rescue.</p>\n\n<p>along with eivin, and many other friends and family members, calling everyone\nfrom the national guard to friends with crazy ideas about how to approach us\non tracked vehicles after the storm passed.</p>\n\n<p>we had hit the button on day two.</p>\n\n<p>it took many approaches, and two more nights, before we saw that red coat in\nthe distance.  literally the happiest any of us have probably been to see\nanother human being.</p>\n\n<p><img src='/ro/posts/almost-died-in-an-ice-cave/assets/image10.png' alt=\"\" /></p>\n\n<p>at the hospital, walking through the hallways, the staff and\npatients literally gagged and moved away quickly.</p>\n\n<p>we smelled like death.</p>\n\n<p><img src='/ro/posts/almost-died-in-an-ice-cave/assets/image11.png' alt=\"\" /></p>\n\n<p>sarah took us to fred meyer to buy new clothes.  most of my clothing still\nsmells like cave. even after washing it in bleach.</p>\n\n<p><img src='/ro/posts/almost-died-in-an-ice-cave/assets/image12.png' alt=\"\" /></p>\n\n<p>at freddy’s i wandered around remembering being a kid:  grandma always took me\nthere too, and we’d visit my uncle rik, that ran the store.</p>\n\n<p>we lost mike for then second time in 24 hours.  though thankfully not in a\ncrevasse – it was in the meat isle.</p>\n\n<p>the only thing i recall eating in the cave was a handful of moose jerky that\nmike stuffed in my mouth as i crawled out for another shift.</p>\n\n<p><img src='/ro/posts/almost-died-in-an-ice-cave/assets/image13.png' alt=\"\" /></p>\n\n<p>back in anchorage, bellies full, and in dry clothes, we let our guards down.</p>\n\n<p>so. happy.</p>\n\n<p>being upright, and above ground.</p>\n\n<p><img src='/ro/posts/almost-died-in-an-ice-cave/assets/image14.png' alt=\"\" /></p>\n\n<p>and fell asleep</p>\n\n<p><img src='/ro/posts/almost-died-in-an-ice-cave/assets/image15.png' alt=\"\" /></p>\n\n<p>there are so many other things i coudl say about this trip.</p>\n\n<p>and re-reading now, i can see clearly that, despite a year of trying, i will\nnever be able to explain what happened out there.</p>\n\n<p>but, today, april 19th, 2025, one year to the day that we were rescued, i\nwanted to stop to say thank you to my friends, thank you to my family, thank\nyou jess.</p>\n\n<p>thank you axel and nova.</p>\n\n<p>i wouldn’t be here without you.</p>\n\n<p>so much love to you all.</p>\n\n<p><img src='/ro/posts/almost-died-in-an-ice-cave/assets/purple-heart.jpg' alt=\"\" /></p>\n\n<hr />\n<p><a href=\"https://photos.app.goo.gl/xbRt9Waj8583Bzvd7\">more photos =&gt;</a>.</p>\n\n</div>\n",
       "assets": {
-        "assets/foo.jpg": {
-          "url": "/ro/posts/first_post/assets/foo.jpg",
-          "path": "posts/first_post/assets/foo.jpg",
+        "assets/image1.png": {
+          "url": "/ro/posts/almost-died-in-an-ice-cave/assets/image1.png",
+          "path": "posts/almost-died-in-an-ice-cave/assets/image1.png",
+          "size": 8,
+          "img": {
+            "format": "png",
+            "width": 1456,
+            "height": 817
+          },
+          "src": null
+        },
+        "assets/image10.png": {
+          "url": "/ro/posts/almost-died-in-an-ice-cave/assets/image10.png",
+          "path": "posts/almost-died-in-an-ice-cave/assets/image10.png",
+          "size": 8,
+          "img": {
+            "format": "png",
+            "width": 1477,
+            "height": 761
+          },
+          "src": null
+        },
+        "assets/image11.png": {
+          "url": "/ro/posts/almost-died-in-an-ice-cave/assets/image11.png",
+          "path": "posts/almost-died-in-an-ice-cave/assets/image11.png",
+          "size": 8,
+          "img": {
+            "format": "png",
+            "width": 1410,
+            "height": 1057
+          },
+          "src": null
+        },
+        "assets/image12.png": {
+          "url": "/ro/posts/almost-died-in-an-ice-cave/assets/image12.png",
+          "path": "posts/almost-died-in-an-ice-cave/assets/image12.png",
+          "size": 8,
+          "img": {
+            "format": "png",
+            "width": 1404,
+            "height": 1057
+          },
+          "src": null
+        },
+        "assets/image13.png": {
+          "url": "/ro/posts/almost-died-in-an-ice-cave/assets/image13.png",
+          "path": "posts/almost-died-in-an-ice-cave/assets/image13.png",
+          "size": 8,
+          "img": {
+            "format": "png",
+            "width": 796,
+            "height": 1057
+          },
+          "src": null
+        },
+        "assets/image14.png": {
+          "url": "/ro/posts/almost-died-in-an-ice-cave/assets/image14.png",
+          "path": "posts/almost-died-in-an-ice-cave/assets/image14.png",
+          "size": 8,
+          "img": {
+            "format": "png",
+            "width": 1410,
+            "height": 1057
+          },
+          "src": null
+        },
+        "assets/image15.png": {
+          "url": "/ro/posts/almost-died-in-an-ice-cave/assets/image15.png",
+          "path": "posts/almost-died-in-an-ice-cave/assets/image15.png",
+          "size": 8,
+          "img": {
+            "format": "png",
+            "width": 796,
+            "height": 1057
+          },
+          "src": null
+        },
+        "assets/image2.png": {
+          "url": "/ro/posts/almost-died-in-an-ice-cave/assets/image2.png",
+          "path": "posts/almost-died-in-an-ice-cave/assets/image2.png",
+          "size": 8,
+          "img": {
+            "format": "png",
+            "width": 1404,
+            "height": 1057
+          },
+          "src": null
+        },
+        "assets/image3.png": {
+          "url": "/ro/posts/almost-died-in-an-ice-cave/assets/image3.png",
+          "path": "posts/almost-died-in-an-ice-cave/assets/image3.png",
+          "size": 8,
+          "img": {
+            "format": "png",
+            "width": 789,
+            "height": 970
+          },
+          "src": null
+        },
+        "assets/image4.png": {
+          "url": "/ro/posts/almost-died-in-an-ice-cave/assets/image4.png",
+          "path": "posts/almost-died-in-an-ice-cave/assets/image4.png",
+          "size": 8,
+          "img": {
+            "format": "png",
+            "width": 1492,
+            "height": 840
+          },
+          "src": null
+        },
+        "assets/image5.png": {
+          "url": "/ro/posts/almost-died-in-an-ice-cave/assets/image5.png",
+          "path": "posts/almost-died-in-an-ice-cave/assets/image5.png",
+          "size": 8,
+          "img": {
+            "format": "png",
+            "width": 1404,
+            "height": 1057
+          },
+          "src": null
+        },
+        "assets/image6.png": {
+          "url": "/ro/posts/almost-died-in-an-ice-cave/assets/image6.png",
+          "path": "posts/almost-died-in-an-ice-cave/assets/image6.png",
+          "size": 8,
+          "img": {
+            "format": "png",
+            "width": 786,
+            "height": 1047
+          },
+          "src": null
+        },
+        "assets/image7.png": {
+          "url": "/ro/posts/almost-died-in-an-ice-cave/assets/image7.png",
+          "path": "posts/almost-died-in-an-ice-cave/assets/image7.png",
+          "size": 8,
+          "img": {
+            "format": "png",
+            "width": 1400,
+            "height": 972
+          },
+          "src": null
+        },
+        "assets/image8.png": {
+          "url": "/ro/posts/almost-died-in-an-ice-cave/assets/image8.png",
+          "path": "posts/almost-died-in-an-ice-cave/assets/image8.png",
+          "size": 8,
+          "img": {
+            "format": "png",
+            "width": 1410,
+            "height": 1057
+          },
+          "src": null
+        },
+        "assets/image9.png": {
+          "url": "/ro/posts/almost-died-in-an-ice-cave/assets/image9.png",
+          "path": "posts/almost-died-in-an-ice-cave/assets/image9.png",
+          "size": 8,
+          "img": {
+            "format": "png",
+            "width": 1410,
+            "height": 1057
+          },
+          "src": null
+        },
+        "assets/josh-pointing.jpg": {
+          "url": "/ro/posts/almost-died-in-an-ice-cave/assets/josh-pointing.jpg",
+          "path": "posts/almost-died-in-an-ice-cave/assets/josh-pointing.jpg",
+          "size": 8,
+          "img": {
+            "format": "jpeg",
+            "width": 532,
+            "height": 400
+          },
+          "src": null
+        },
+        "assets/levi-rawr.png": {
+          "url": "/ro/posts/almost-died-in-an-ice-cave/assets/levi-rawr.png",
+          "path": "posts/almost-died-in-an-ice-cave/assets/levi-rawr.png",
+          "size": 8,
+          "img": {
+            "format": "png",
+            "width": 953,
+            "height": 721
+          },
+          "src": null
+        },
+        "assets/og.jpg": {
+          "url": "/ro/posts/almost-died-in-an-ice-cave/assets/og.jpg",
+          "path": "posts/almost-died-in-an-ice-cave/assets/og.jpg",
           "size": 8,
           "img": {
             "format": "jpeg",
@@ -20,159 +208,303 @@
           },
           "src": null
         },
-        "assets/foo/bar/baz.jpg": {
-          "url": "/ro/posts/first_post/assets/foo/bar/baz.jpg",
-          "path": "posts/first_post/assets/foo/bar/baz.jpg",
+        "assets/purple-heart.jpg": {
+          "url": "/ro/posts/almost-died-in-an-ice-cave/assets/purple-heart.jpg",
+          "path": "posts/almost-died-in-an-ice-cave/assets/purple-heart.jpg",
           "size": 8,
           "img": {
             "format": "jpeg",
-            "width": 639,
-            "height": 751
+            "width": 1333,
+            "height": 2000
           },
           "src": null
-        },
-        "assets/src/foo/bar.rb": {
-          "url": "/ro/posts/first_post/assets/src/foo/bar.rb",
-          "path": "posts/first_post/assets/src/foo/bar.rb",
-          "size": 8,
-          "img": null,
-          "src": "<div class=\"ro markdown src\">\n  <code class='code' style='white-space:pre;'><div class='code-line code-line-1'><span style=\"font-weight: bold\">class</span>&nbsp;<span style=\"font-weight: bold\">C</span>\n</div><div class='code-line code-line-2'>&nbsp;&nbsp;<span style=\"color: #000000;background-color: #ffffff\">A</span>&nbsp;<span style=\"font-weight: bold\">=</span>&nbsp;<span style=\"color: #000000;background-color: #ffffff\">42</span>\n</div><div class='code-line code-line-3'><span style=\"font-weight: bold\">end</span>\n</div></code>\n</div>\n"
         }
       },
       "_meta": {
-        "identifier": "posts/first_post",
+        "identifier": "posts/almost-died-in-an-ice-cave",
         "type": "posts",
-        "id": "first_post",
+        "id": "almost-died-in-an-ice-cave",
         "urls": [
-          "/ro/posts/first_post/a.rb",
-          "/ro/posts/first_post/assets/foo.jpg",
-          "/ro/posts/first_post/assets/foo/bar/baz.jpg",
-          "/ro/posts/first_post/assets/src/foo/bar.rb",
-          "/ro/posts/first_post/attributes.yml",
-          "/ro/posts/first_post/b.html.rb",
-          "/ro/posts/first_post/blurb.erb.md",
-          "/ro/posts/first_post/body.md",
-          "/ro/posts/first_post/testing.txt"
+          "/ro/posts/almost-died-in-an-ice-cave/assets/image1.png",
+          "/ro/posts/almost-died-in-an-ice-cave/assets/image10.png",
+          "/ro/posts/almost-died-in-an-ice-cave/assets/image11.png",
+          "/ro/posts/almost-died-in-an-ice-cave/assets/image12.png",
+          "/ro/posts/almost-died-in-an-ice-cave/assets/image13.png",
+          "/ro/posts/almost-died-in-an-ice-cave/assets/image14.png",
+          "/ro/posts/almost-died-in-an-ice-cave/assets/image15.png",
+          "/ro/posts/almost-died-in-an-ice-cave/assets/image2.png",
+          "/ro/posts/almost-died-in-an-ice-cave/assets/image3.png",
+          "/ro/posts/almost-died-in-an-ice-cave/assets/image4.png",
+          "/ro/posts/almost-died-in-an-ice-cave/assets/image5.png",
+          "/ro/posts/almost-died-in-an-ice-cave/assets/image6.png",
+          "/ro/posts/almost-died-in-an-ice-cave/assets/image7.png",
+          "/ro/posts/almost-died-in-an-ice-cave/assets/image8.png",
+          "/ro/posts/almost-died-in-an-ice-cave/assets/image9.png",
+          "/ro/posts/almost-died-in-an-ice-cave/assets/josh-pointing.jpg",
+          "/ro/posts/almost-died-in-an-ice-cave/assets/levi-rawr.png",
+          "/ro/posts/almost-died-in-an-ice-cave/assets/og.jpg",
+          "/ro/posts/almost-died-in-an-ice-cave/assets/purple-heart.jpg",
+          "/ro/posts/almost-died-in-an-ice-cave/attributes.yml",
+          "/ro/posts/almost-died-in-an-ice-cave/body.md"
         ],
-        "created_at": "2024-08-25 19:16:36 +0000",
-        "updated_at": "2024-10-31 18:26:39 +0000",
+        "created_at": "2025-04-23 04:38:29 +0000",
+        "updated_at": "2025-04-23 04:38:29 +0000",
         "rel": {
-          "curr": "posts/first_post",
+          "curr": "posts/almost-died-in-an-ice-cave",
           "prev": null,
-          "next": "posts/second_post"
+          "next": "posts/facebook-and-global-extremism"
         }
       }
     },
-    "posts/second_post": {
-      "title": "Second Post",
-      "author": "people/alice",
-      "blurb": "<div class=\"ro markdown\">\n  <ul>\n  <li>a</li>\n  <li>b</li>\n  <li>c</li>\n</ul>\n\n<p>generated_at: 2024-11-01T21:26:45Z</p>\n\n</div>",
-      "body": "<div class=\"ro markdown\">\n  <ul>\n  <li>one</li>\n  <li>two</li>\n  <li>three</li>\n</ul>\n\n<div class=\"language-ruby highlighter-rouge\"><code class=\"code\" style=\"white-space:pre;\"><div class=\"code-line code-line-1\">  <span style=\"font-weight: bold\">class</span>  <span style=\"font-weight: bold\">C</span>\n</div>\n<div class=\"code-line code-line-2\">    <span style=\"color: #000000;background-color: #ffffff\">@a</span> <span style=\"font-weight: bold\">=</span> <span style=\"color: #000000;background-color: #ffffff\">42</span>\n</div>\n<div class=\"code-line code-line-3\">  <span style=\"font-weight: bold\">end</span>\n</div></code></div>\n\n<hr>\n\n<p><img src=\"/ro/posts/second_post/assets/foo.jpg\"><br>\n<br></p>\n\n<p><img src=\"/ro/posts/second_post/assets/foo/bar/baz.jpg\"></p>\n\n</div>",
+    "posts/facebook-and-global-extremism": {
+      "og": {
+        "image": {
+          "url": "/ro/posts/facebook-and-global-extremism/assets/og.jpg",
+          "width": 976
+        },
+        "title": "Facebook And Global Extremism",
+        "description": "A data scientist analyzed over a million Reddit posts to understand public sentiment around Facebook's content moderation changes. Using custom AI technology to process social conversations, they found concerning gaps in society's understanding of how unregulated social media can enable extremism and ethnic violence, beyond just issues of free speech and minority protections."
+      },
+      "body": "<div class=\"ro markdown\">\n  <p>following is an AI generated summary of this article, so you won’t have to read it! (saves <strong>one llm call!</strong>)</p>\n\n<blockquote>\n  <h3>”</h3>\n  <p>A data scientist analyzed over a million Reddit posts to understand public sentiment around Facebook’s content moderation changes. Using custom AI technology to process social conversations, they found concerning gaps in society’s understanding of how unregulated social media can enable extremism and ethnic violence, beyond just issues of free speech and minority protections.</p>\n  <h3 id=\"-1\">”</h3>\n</blockquote>\n\n<p>today i reviewed a million reddit posts to understand society’s feeling around facebook’s newly announced content moderation plan.  i did it using a new tool i’ve been working on, that brings the <em>the voice of real social conversations</em> to AI.</p>\n\n<p>recently, there has been a lot of noise about facebook (meta) and its <a href=\"https://www.theverge.com/2025/1/7/24338127/meta-end-fact-checking-misinformation-zuckerberg\">abandonment of ‘fact-checkers’</a>.</p>\n\n<p>in lieu of favoring pure community moderation (a-ka self-moderated echo-chambre).</p>\n\n<p>many have expressed concerns over hate speach and abuse, predicted to arise, towards lgbtq, racial, ethnic, and other, minority groups.</p>\n\n<p>some have taken a <em>you cannot have free speech and not have free speech</em> stance, the consitutional and, perhaps, neutral one.</p>\n\n<p>but both of these postions, imho, miss the point entirely, and fail to see the very <em>real danger</em> in allowing <em>the mob</em> to police itself.  and this from me, an avowed anarchist.  because even anarchists cannot escape <a href=\"https://en.wikipedia.org/wiki/Overton_window\">the overton principle</a></p>\n\n<p>in my professional capacity, i have spent alot of time studying humanity, both <a href=\"https://independent.academia.edu/arahowardy\">from space</a>, and, recently, <a href=\"https://syntheticecho.com/\">using AI</a>.</p>\n\n<p>specifically, i have been working to <em>bring the social context to AI</em>, using millions of currated and analyzed social media converstaions.</p>\n\n<p>my work has been focused not on</p>\n\n<blockquote>\n  <p>what is true</p>\n</blockquote>\n\n<p>but, rather, on</p>\n\n<blockquote>\n  <p>what people say and think is true</p>\n</blockquote>\n\n<p><a href=\"https://syntheticecho.com\">we</a> use this type of analysis for research purposes.  it was in this context that i decided to spent a 1/2 hour using the very same technology i am building to peform a survey, of <em>over a million voices</em>, to see how deeply society truly understands, what i consider to be, the real and present danger of such wanton and unregulated capitlism.</p>\n\n<p>again, please consider that i abhor large goverments, and rules in general - with passion…  but, i try to care about, and study people.  even as they wreak havoc on the planet and many beings smaller, and more helpless, than <a href=\"https://open.spotify.com/track/6VliewH4TM7jVPXH3e1aVj?si=99baf6fd986b40ae\">hairless monkeys</a>.</p>\n\n<p>my study was aimed, specifically, at understanding the deepest dangers of big technology, and unregulated echo chambres:</p>\n\n<blockquote>\n  <p>dangerous extremism, and much, much more horrible outcomes, such as ethnic cleansing.</p>\n</blockquote>\n\n<p>i will ask you forgiveness for my breveity and any typoz.  this entire study was performed, and documented, in under thirty minutes. and i can neither spell nor use a computer that effectively (i program them - <em>hate using them</em>)</p>\n\n<p>also, as point-of-fact, i am not, as a rule, <em>bullish on AI</em>, quite the opposite and, more on this topic soon.  however, its ability to understand patterns in human language/thought is both intriguing, powerful, and horrifying at the very same time.  when there is <a href=\"https://photos.app.goo.gl/Kjipk8eKT88CtSRSA\">fire</a>, i prefer to go and see for myself.</p>\n\n<p>without further gibberish, i outline my methodology, and my results.  any/all questions can be emailed to me directly.  see e-mail links in footer.  no stupid marketing form here.  this is my personal email so, be kind(-ish).  having said that, any and all feedback is appreciated.</p>\n\n<ul>\n  <li>\n    <p>first, i used google gemini, and the <em>deep research</em> feature available in version 1.5, to automatically compile a neutral <a href='/ro/posts/facebook-and-global-extremism/assets/background.html'>background document</a></p>\n  </li>\n  <li>\n    <p>next, i used my very-in-progress technology, to generate a survey that was, itself, informed by the <em>social voice</em>. here is <a href='/ro/posts/facebook-and-global-extremism/assets/prompt.txt'>the prompt</a> i used to generate <a href='/ro/posts/facebook-and-global-extremism/assets/survey.txt'>the survey</a></p>\n  </li>\n  <li>\n    <p>finally.  using this same technology, i ran the survey, using over a million voices to inform  <a href='/ro/posts/facebook-and-global-extremism/assets/results.md'>the raw results</a></p>\n  </li>\n  <li>\n    <p>some technical notes, for nerds out there:</p>\n    <ul>\n      <li>the data used for this was source from reddit using the following process\n        <ul>\n          <li>pick the most active 1000 subreddits, regardless of topic</li>\n          <li>filter by top 10th percentile, in terms of upvotes.  choose ‘the best’ (most popular)</li>\n          <li>filter comments similarly, keep only the top 10th percentile</li>\n          <li>make pairwise, er, pairs of each</li>\n          <li>summarize content with ai filter, to filter out noise, spelling errors (🙄), etc</li>\n          <li>extract relevant topics, themes, etc.</li>\n          <li>index in a local rag database.  hybrid search indexed: bm25, vector, and facets.  totally custom.</li>\n        </ul>\n      </li>\n      <li>i am presently working to enhance this process with\n        <ul>\n          <li>bluesky firehose</li>\n          <li>about a million random message boards</li>\n        </ul>\n      </li>\n      <li>for bespoke projects, we use this same data, but with RLHF, to avoid the context window problem.  this is expensive.</li>\n      <li>compiling this data, when i hit <em>go</em>, on a giant linux box with 64gb of ram, takes about 10 days run time.  i am broke so, <a href=\"/contact\">hmu</a> if you need a nerd of this type/style</li>\n      <li>i have some significant technical issues to solve for my <a href=\"/purls/public-sentiment-towards-the-fortune-500-in-america\">soon to be released ceo threat index</a> i would love to discuss with any rag/hybrid search nerds out there</li>\n    </ul>\n  </li>\n</ul>\n\n<p><em>without further adieu…</em>, here are those results.  i would prefer that, in this post-truth reality, you form your own conclustions but, to be very clear, my goal was demonstrate:</p>\n\n<ul>\n  <li>\n    <p>that society’s understanding of the real and present danger of entirely unregulated social media is <em>potentially</em> lacking.</p>\n  </li>\n  <li>\n    <p>what is at stake is, definitely, larger than <em>free-speech</em>, <em>hurt feelings</em>, or the potential for harm to a <em>“minority”</em>.  it is much, much bigger than that.</p>\n  </li>\n  <li>\n    <p>that bringing the <em>social voice to AI</em> alters and impacts its results in signficant ways.  <a href=\"https://www.youtube.com/watch?v=sKNENzPpSrA\">to my fellow developers</a>, i would urge you to consider this approach.  happy to chat about it.  hanging in the ruby ai builders discord, and the mistral one too.  not openai for meeeeee ;-/</p>\n  </li>\n</ul>\n\n<hr />\n<hr />\n<hr />\n\n<h3 id=\"se-httpssyntheticechocom----baseline\">@SE( <a href=\"https://syntheticecho.com\" target=\"_blank\">https://syntheticecho.com</a> ) - BASELINE</h3>\n\n<h4 id=\"1-how-aware-are-you-of-facebookmetas-role-in-facilitating-global-extremism\">1. How aware are you of Facebook/Meta’s role in facilitating global extremism?</h4>\n<ul>\n  <li><strong>Answer:</strong> 4 / Aware</li>\n  <li><strong>Rationale:</strong> The context provides extensive evidence about Facebook/Meta’s role in facilitating global extremism. For instance, it mentions that nearly two-thirds of extremists used Facebook to communicate their views and encourage action between 2005 and 2016. Additionally, the FBI compared the spread of extremism on social media to foreign disinformation campaigns. This indicates a significant awareness of Facebook’s role in extremism, but not complete awareness of all aspects.</li>\n</ul>\n\n<h4 id=\"2-to-what-extent-do-you-believe-facebookmeta-has-contributed-to-the-spread-of-extremist-content-and-ideologies\">2. To what extent do you believe Facebook/Meta has contributed to the spread of extremist content and ideologies?</h4>\n<ul>\n  <li><strong>Answer:</strong> 5 / To a great extent</li>\n  <li><strong>Rationale:</strong> The context clearly outlines how extremist groups have exploited Facebook’s vast reach and features to spread propaganda, recruit members, and incite violence. The creation of Facebook groups and pages, along with the use of the chat function, has facilitated the spread of extremist content. The algorithms also contribute to the amplification of extremist views by creating “filter bubbles” and echo chambers.</li>\n</ul>\n\n<h4 id=\"3-how-effective-do-you-think-facebookmetas-algorithms-are-in-amplifying-extremist-content\">3. How effective do you think Facebook/Meta’s algorithms are in amplifying extremist content?</h4>\n<ul>\n  <li><strong>Answer:</strong> 5 / Very effective</li>\n  <li><strong>Rationale:</strong> The context explains that Facebook’s algorithms, designed to maximize user engagement, can inadvertently contribute to the spread of extremist content. The algorithms prioritize content that evokes strong emotions, leading to increased polarization and the normalization of extremist ideologies. The auto-generation of pages for terrorist organizations and white supremacist groups further highlights the effectiveness of the algorithms in amplifying extremist content.</li>\n</ul>\n\n<h4 id=\"4-how-concerned-are-you-about-facebookmetas-role-in-ethnic-cleansing-particularly-in-regions-like-myanmar\">4. How concerned are you about Facebook/Meta’s role in ethnic cleansing, particularly in regions like Myanmar?</h4>\n<ul>\n  <li><strong>Answer:</strong> 5/ Very concerned</li>\n  <li><strong>Rationale:</strong> The context provides detailed information about Facebook’s role in ethnic cleansing in Myanmar. The platform’s algorithms and lack of adequate content moderation contributed to the spread of hate speech and incitement to violence against the Rohingya Muslim minority. Amnesty International reports that Facebook’s pursuit of profit, coupled with its algorithms, created an echo chamber that fueled hatred towards the Rohingya and contributed to their mass displacement.</li>\n</ul>\n\n<h4 id=\"5-to-what-extent-do-you-believe-facebookmetas-lack-of-adequate-content-moderation-has-contributed-to-ethnic-violence\">5. To what extent do you believe Facebook/Meta’s lack of adequate content moderation has contributed to ethnic violence?</h4>\n<ul>\n  <li><strong>Answer:</strong> 5 / To a great extent</li>\n  <li><strong>Rationale:</strong> The context highlights Facebook’s failure to act despite warnings about escalating violence and hate speech on its platform. This inaction had devastating consequences for the Rohingya population in Myanmar.  Facebook has also been criticized for its handling of ethnic violence in Ethiopia, where it failed to adequately address hate speech and incitement to violence.</li>\n</ul>\n\n<h4 id=\"6-how-transparent-do-you-think-facebookmeta-is-in-its-efforts-to-combat-extremism-on-its-platform\">6. How transparent do you think Facebook/Meta is in its efforts to combat extremism on its platform?</h4>\n<ul>\n  <li><strong>Answer:</strong> 2 / Not transparent</li>\n  <li><strong>Rationale:</strong> The context mentions that Facebook has been criticized for lacking transparency in its content moderation practices. Concerns have been raised about the consistency and fairness of its enforcement actions. Despite launching a transparency center and collaborating with civil society organizations, Facebook continues to face challenges in effectively addressing extremism.</li>\n</ul>\n\n<h4 id=\"7-how-effective-do-you-think-facebookmetas-measures-eg-content-moderation-transparency-center-are-in-preventing-the-spread-of-extremist-content\">7. How effective do you think Facebook/Meta’s measures (e.g., content moderation, transparency center) are in preventing the spread of extremist content?</h4>\n<ul>\n  <li><strong>Answer:</strong> 3 / Moderately effective</li>\n  <li><strong>Rationale:</strong> Facebook has implemented various measures to combat extremism, including content moderation, a transparency center, partnerships, counter-narratives, and user education. However, the context indicates that despite these efforts, Facebook continues to face challenges in effectively addressing extremism. The sheer volume of content on the platform makes it difficult to moderate effectively, and extremist groups often employ sophisticated tactics to circumvent detection.</li>\n</ul>\n\n<h4 id=\"8-to-what-extent-do-you-believe-facebookmeta-prioritizes-profit-over-user-safety-and-the-prevention-of-extremism\">8. To what extent do you believe Facebook/Meta prioritizes profit over user safety and the prevention of extremism?</h4>\n<ul>\n  <li><strong>Answer:</strong> 5 / To a great extent</li>\n  <li><strong>Rationale:</strong> The context suggests that Facebook’s business model, which prioritizes engagement, may inadvertently incentivize the spread of extremist content. The algorithms prioritize content that generates strong emotional responses, even if it is harmful or promotes extremist views. Facebook has been criticized for its slow response to escalating violence and hate speech, indicating a prioritization of profit over user safety.</li>\n</ul>\n\n<h4 id=\"9-how-concerned-are-you-about-facebookmetas-role-in-facilitating-human-trafficking\">9. How concerned are you about Facebook/Meta’s role in facilitating human trafficking?</h4>\n<ul>\n  <li><strong>Answer:</strong> 5 / Very concerned</li>\n  <li><strong>Rationale:</strong> The context provides information about how traffickers exploit Facebook to identify and recruit victims. A 2020 study found that 59% of survivors were recruited on Facebook, and the National Human Trafficking Hotline reported a 125% increase in reports of recruitment into trafficking through Facebook between 2019 and 2020. The platform’s end-to-end encryption has also raised concerns among child protection organizations, making it more difficult to detect and prevent child exploitation and trafficking.</li>\n</ul>\n\n<h4 id=\"10-to-what-extent-do-you-believe-facebookmetas-end-to-end-encryption-contributes-to-the-difficulty-in-detecting-and-preventing-human-trafficking\">10. To what extent do you believe Facebook/Meta’s end-to-end encryption contributes to the difficulty in detecting and preventing human trafficking?</h4>\n<ul>\n  <li><strong>Answer:</strong> 5 / To a great extent</li>\n  <li><strong>Rationale:</strong> The context mentions that Facebook’s end-to-end encryption has raised concerns among child protection organizations. While intended to enhance privacy, encryption can make it more difficult to detect and prevent child exploitation and trafficking. This indicates a significant contribution to the difficulty in detecting and preventing human trafficking.</li>\n</ul>\n\n<h4 id=\"11-how-confident-are-you-in-facebookmetas-ability-to-effectively-address-and-prevent-extremism-and-ethnic-cleansing-in-the-future\">11. How confident are you in Facebook/Meta’s ability to effectively address and prevent extremism and ethnic cleansing in the future?</h4>\n<ul>\n  <li><strong>Answer:</strong> 3 / Neutral confidence</li>\n  <li><strong>Rationale:</strong> The context indicates that Facebook has taken steps to address extremism, such as content moderation, a transparency center, partnerships, counter-narratives, and user education. However, it also highlights the challenges Facebook faces in effectively addressing extremism, including the sheer volume of content, the sophistication of extremist tactics, and the lack of adequate content moderation. Therefore, while there is some confidence in Facebook’s ability to address these issues, it is not complete.</li>\n</ul>\n\n<h3 id=\"overall-confidence-score\">Overall Confidence Score:</h3>\n<ul>\n  <li><strong>Confidence Score:</strong> 8/10</li>\n  <li><strong>Rationale:</strong> The responses are based on detailed information provided in the context, which outlines Facebook/Meta’s role in facilitating global extremism, ethnic cleansing, and human trafficking. The context also discusses the measures Facebook has taken to combat extremism and the criticisms it has faced. Therefore, the answers are well-supported by the provided context.</li>\n</ul>\n\n<h3 id=\"se-httpssyntheticechocom----refs-aka-the-actual-social-conversations-that-informed-these-answers\">@SE( <a href=\"https://syntheticecho.com\" target=\"_blank\">https://syntheticecho.com</a> ) - REFS (aka the <em>ACTUAL</em> social conversations that informed ^these^ answers).</h3>\n\n<ul>\n  <li><a href=\"https://www.reddit.com/r/science/comments/1awgivo/aigenerated_propaganda_is_just_as_persuasive_as/krh9b6o/\">https://www.reddit.com/r/science/comments/1awgivo/aigenerated_propaganda_is_just_as_persuasive_as/krh9b6o/</a></li>\n  <li><a href=\"https://www.reddit.com/r/science/comments/1bfiw48/a_new_study_shows_that_people_are_likely_to/kv0xj8t/\">https://www.reddit.com/r/science/comments/1bfiw48/a_new_study_shows_that_people_are_likely_to/kv0xj8t/</a></li>\n  <li><a href=\"https://www.reddit.com/r/science/comments/1big0tw/new_study_suggests_that_social_media_virality/kvk4jqy/\">https://www.reddit.com/r/science/comments/1big0tw/new_study_suggests_that_social_media_virality/kvk4jqy/</a></li>\n  <li><a href=\"https://www.reddit.com/r/science/comments/1e7e99i/social_media_algorithms_favor_politically/ldzlj5d/\">https://www.reddit.com/r/science/comments/1e7e99i/social_media_algorithms_favor_politically/ldzlj5d/</a></li>\n  <li><a href=\"https://www.reddit.com/r/science/comments/1fkjqn4/low_cognitive_ability_intensifies_the_link/lnw2tjj/\">https://www.reddit.com/r/science/comments/1fkjqn4/low_cognitive_ability_intensifies_the_link/lnw2tjj/</a></li>\n  <li><a href=\"https://www.reddit.com/r/science/comments/1fsdwb5/while_both_democrats_and_republicans_agreed_that/lpllrl4/\">https://www.reddit.com/r/science/comments/1fsdwb5/while_both_democrats_and_republicans_agreed_that/lpllrl4/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/100djw2/madeinchina_labels_become_a_problem_for_metas/j2hb58m/\">https://www.reddit.com/r/technology/comments/100djw2/madeinchina_labels_become_a_problem_for_metas/j2hb58m/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/10cnrq4/meta_sues_israeli_surveillance_firm_for/j4goyrj/\">https://www.reddit.com/r/technology/comments/10cnrq4/meta_sues_israeli_surveillance_firm_for/j4goyrj/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/11auuy7/dont_just_deactivate_facebookdelete_it_instead/j9u5e27/\">https://www.reddit.com/r/technology/comments/11auuy7/dont_just_deactivate_facebookdelete_it_instead/j9u5e27/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/11g0ewi/there_is_no_prosecution_at_any_cost_germany/jam9j6q/\">https://www.reddit.com/r/technology/comments/11g0ewi/there_is_no_prosecution_at_any_cost_germany/jam9j6q/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/11indx4/facebook_and_google_are_handing_over_user_data_to/jaz8e0h/\">https://www.reddit.com/r/technology/comments/11indx4/facebook_and_google_are_handing_over_user_data_to/jaz8e0h/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/12a7dyx/clearview_ai_scraped_30_billion_images_from/jeqs2v9/\">https://www.reddit.com/r/technology/comments/12a7dyx/clearview_ai_scraped_30_billion_images_from/jeqs2v9/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/12vlus7/the_wave_of_lawsuits_that_could_kill_social/jhbqhtl/\">https://www.reddit.com/r/technology/comments/12vlus7/the_wave_of_lawsuits_that_could_kill_social/jhbqhtl/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/136td84/ftc_proposes_barring_meta_from_monetizing_kids/jiqmirq/\">https://www.reddit.com/r/technology/comments/136td84/ftc_proposes_barring_meta_from_monetizing_kids/jiqmirq/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/136vpzt/facebook_furious_at_ftc_after_agency_proposes_ban/jiqchk3/\">https://www.reddit.com/r/technology/comments/136vpzt/facebook_furious_at_ftc_after_agency_proposes_ban/jiqchk3/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/137hpru/ban_social_media_for_kids_fedup_parents_in_senate/jiti6g1/\">https://www.reddit.com/r/technology/comments/137hpru/ban_social_media_for_kids_fedup_parents_in_senate/jiti6g1/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/138o8ao/ai_company_scraped_billions_of_facebook_photos_to/jiytg1d/\">https://www.reddit.com/r/technology/comments/138o8ao/ai_company_scraped_billions_of_facebook_photos_to/jiytg1d/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/13hlbyr/lawsuit_alleges_that_social_media_companies/jk5kdji/\">https://www.reddit.com/r/technology/comments/13hlbyr/lawsuit_alleges_that_social_media_companies/jk5kdji/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/13orpxc/britain_is_writing_the_playbook_for_dictators_the/jl5zdra/\">https://www.reddit.com/r/technology/comments/13orpxc/britain_is_writing_the_playbook_for_dictators_the/jl5zdra/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/14ciror/website_owners_say_traffic_is_plummeting_after_a/jokt3lz/\">https://www.reddit.com/r/technology/comments/14ciror/website_owners_say_traffic_is_plummeting_after_a/jokt3lz/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/14xmjar/harmful_content_should_not_be_promoted_via_social/jro2706/\">https://www.reddit.com/r/technology/comments/14xmjar/harmful_content_should_not_be_promoted_via_social/jro2706/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/15eu0fe/top_meta_executive_said_the_companys_name_change/ju9v1je/\">https://www.reddit.com/r/technology/comments/15eu0fe/top_meta_executive_said_the_companys_name_change/ju9v1je/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/15fyb2f/meta_is_so_unwilling_to_pay_for_news_under_a_new/jufwfjh/\">https://www.reddit.com/r/technology/comments/15fyb2f/meta_is_so_unwilling_to_pay_for_news_under_a_new/jufwfjh/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/15jf7pu/norway_took_on_metas_surveillance_ads_and_won/jv0etjt/\">https://www.reddit.com/r/technology/comments/15jf7pu/norway_took_on_metas_surveillance_ads_and_won/jv0etjt/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/15vq7th/metas_news_ban_is_preventing_canadians_from/jwwuplp/\">https://www.reddit.com/r/technology/comments/15vq7th/metas_news_ban_is_preventing_canadians_from/jwwuplp/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/16tkhha/the_eu_says_x_is_the_worst_platform_for/k2fioz4/\">https://www.reddit.com/r/technology/comments/16tkhha/the_eu_says_x_is_the_worst_platform_for/k2fioz4/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/16uexyn/x_spreads_more_disinformation_than_rival_social/k2kpx2l/\">https://www.reddit.com/r/technology/comments/16uexyn/x_spreads_more_disinformation_than_rival_social/k2kpx2l/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/1793n6g/this_war_shows_just_how_broken_social_media_has/k53pg35/\">https://www.reddit.com/r/technology/comments/1793n6g/this_war_shows_just_how_broken_social_media_has/k53pg35/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/17bnfib/it_scars_you_for_life_workers_sue_meta_claiming/k5l5h89/\">https://www.reddit.com/r/technology/comments/17bnfib/it_scars_you_for_life_workers_sue_meta_claiming/k5l5h89/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/17g2aj9/metas_harmful_effects_on_children_is_one_issue/k6doziw/\">https://www.reddit.com/r/technology/comments/17g2aj9/metas_harmful_effects_on_children_is_one_issue/k6doziw/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/17hkkjm/us_immigration_enforcement_used_an_aipowered_tool/k6ojelu/\">https://www.reddit.com/r/technology/comments/17hkkjm/us_immigration_enforcement_used_an_aipowered_tool/k6ojelu/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/17tu28r/free_speech_cant_flourish_online_social_media_is/k8ziip7/\">https://www.reddit.com/r/technology/comments/17tu28r/free_speech_cant_flourish_online_social_media_is/k8ziip7/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/1865pbz/meta_joins_google_in_turning_its_back_on_the_open/kb67rwb/\">https://www.reddit.com/r/technology/comments/1865pbz/meta_joins_google_in_turning_its_back_on_the_open/kb67rwb/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/18azt2o/misinformation_expert_says_she_was_fired_by/kc1jvaw/\">https://www.reddit.com/r/technology/comments/18azt2o/misinformation_expert_says_she_was_fired_by/kc1jvaw/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/18l8nqb/x_to_be_investigated_for_allegedly_not_complying/kdw2ykk/\">https://www.reddit.com/r/technology/comments/18l8nqb/x_to_be_investigated_for_allegedly_not_complying/kdw2ykk/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/19agmrb/each_facebook_user_is_monitored_by_thousands_of/kikoyiy/\">https://www.reddit.com/r/technology/comments/19agmrb/each_facebook_user_is_monitored_by_thousands_of/kikoyiy/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/19fltt5/an_official_organization_on_x_is_just_openly/kjkuc5q/\">https://www.reddit.com/r/technology/comments/19fltt5/an_official_organization_on_x_is_just_openly/kjkuc5q/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/1ajitzv/tech_used_to_be_bleeding_edge_now_its_just/kp19ix9/\">https://www.reddit.com/r/technology/comments/1ajitzv/tech_used_to_be_bleeding_edge_now_its_just/kp19ix9/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/1bmi24l/facebook_is_filled_with_aigenerated_garbageand/kwbobj4/\">https://www.reddit.com/r/technology/comments/1bmi24l/facebook_is_filled_with_aigenerated_garbageand/kwbobj4/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/1bomby6/facebook_snooped_on_users_snapchat_traffic_in/kwq5xuf/\">https://www.reddit.com/r/technology/comments/1bomby6/facebook_snooped_on_users_snapchat_traffic_in/kwq5xuf/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/1cj9ctm/over_100_farright_militias_are_coordinating_on/l2egonp/\">https://www.reddit.com/r/technology/comments/1cj9ctm/over_100_farright_militias_are_coordinating_on/l2egonp/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/1d0wcg1/meta_uses_your_instagram_and_facebook_photos_to/l5qdca7/\">https://www.reddit.com/r/technology/comments/1d0wcg1/meta_uses_your_instagram_and_facebook_photos_to/l5qdca7/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/1d1udz9/social_media_bosses_are_the_largest_dictators/l5wjohg/\">https://www.reddit.com/r/technology/comments/1d1udz9/social_media_bosses_are_the_largest_dictators/l5wjohg/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/1d51qen/ai_is_shockingly_good_at_making_fake_nudes_and/l6ie8ft/\">https://www.reddit.com/r/technology/comments/1d51qen/ai_is_shockingly_good_at_making_fake_nudes_and/l6ie8ft/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/1dhjh2s/generative_ai_wont_take_over_the_world/l8xg9ag/\">https://www.reddit.com/r/technology/comments/1dhjh2s/generative_ai_wont_take_over_the_world/l8xg9ag/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/1e1rhki/exclusive_meta_removes_trump_account_restrictions/lcw6f8b/\">https://www.reddit.com/r/technology/comments/1e1rhki/exclusive_meta_removes_trump_account_restrictions/lcw6f8b/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/1e8n1x6/we_unleashed_facebook_and_instagrams_algorithms/le8g14g/\">https://www.reddit.com/r/technology/comments/1e8n1x6/we_unleashed_facebook_and_instagrams_algorithms/le8g14g/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/1eo0fxn/parents_still_selling_revealing_content_of_their/lha564y/\">https://www.reddit.com/r/technology/comments/1eo0fxn/parents_still_selling_revealing_content_of_their/lha564y/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/1ex24v9/instagram_ignored_93_of_abusive_comments_toward/lj3egds/\">https://www.reddit.com/r/technology/comments/1ex24v9/instagram_ignored_93_of_abusive_comments_toward/lj3egds/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/1f25jss/mark_zuckerberg_says_white_house_pressured_meta/lk40lq9/\">https://www.reddit.com/r/technology/comments/1f25jss/mark_zuckerberg_says_white_house_pressured_meta/lk40lq9/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/1f6e5gr/zuckerberg_regrets_censoring_covid_content_but/lkzgqm5/\">https://www.reddit.com/r/technology/comments/1f6e5gr/zuckerberg_regrets_censoring_covid_content_but/lkzgqm5/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/1ff5wia/meta_fed_its_ai_on_almost_everything_youve_posted/lmsj2v2/\">https://www.reddit.com/r/technology/comments/1ff5wia/meta_fed_its_ai_on_almost_everything_youve_posted/lmsj2v2/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/1fkpot0/low_cognitive_ability_intensifies_the_link/lnxf6td/\">https://www.reddit.com/r/technology/comments/1fkpot0/low_cognitive_ability_intensifies_the_link/lnxf6td/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/1fnjtlx/amazon_tesla_and_meta_among_worlds_top_companies/loiv4le/\">https://www.reddit.com/r/technology/comments/1fnjtlx/amazon_tesla_and_meta_among_worlds_top_companies/loiv4le/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/1fqndgl/ftc_report_confirms_commercial_surveillance_is/lp6vac9/\">https://www.reddit.com/r/technology/comments/1fqndgl/ftc_report_confirms_commercial_surveillance_is/lp6vac9/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/1fum6kl/openai_closes_funding_at_157_billion_valuation_as/lq0ovpz/\">https://www.reddit.com/r/technology/comments/1fum6kl/openai_closes_funding_at_157_billion_valuation_as/lq0ovpz/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/1g1s9gt/rumors_on_x_are_becoming_the_rights_new_reality/lrj2to1/\">https://www.reddit.com/r/technology/comments/1g1s9gt/rumors_on_x_are_becoming_the_rights_new_reality/lrj2to1/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/zipzt8/the_internet_is_headed_for_a_point_of_no_return/izsevah/\">https://www.reddit.com/r/technology/comments/zipzt8/the_internet_is_headed_for_a_point_of_no_return/izsevah/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technology/comments/zlevv3/facebook_hit_with_2_billion_lawsuit_connected_to/j0516ti/\">https://www.reddit.com/r/technology/comments/zlevv3/facebook_hit_with_2_billion_lawsuit_connected_to/j0516ti/</a></li>\n  <li><a href=\"https://www.reddit.com/r/minimalism/comments/1e32yh1/social_media_has_turned_into_everyone_selling/ld539wf/\">https://www.reddit.com/r/minimalism/comments/1e32yh1/social_media_has_turned_into_everyone_selling/ld539wf/</a></li>\n  <li><a href=\"https://www.reddit.com/r/web_design/comments/1bk41l1/why_is_facebook_so_inconsistent/kvvkegy/\">https://www.reddit.com/r/web_design/comments/1bk41l1/why_is_facebook_so_inconsistent/kvvkegy/</a></li>\n  <li><a href=\"https://www.reddit.com/r/netsec/comments/13jynqh/malverposting_with_over_500k_estimated_infections/jkigcog/\">https://www.reddit.com/r/netsec/comments/13jynqh/malverposting_with_over_500k_estimated_infections/jkigcog/</a></li>\n  <li><a href=\"https://www.reddit.com/r/Cyberpunk/comments/11asaq9/we_live_in_interesting_times_i_want_out/j9tsia6/\">https://www.reddit.com/r/Cyberpunk/comments/11asaq9/we_live_in_interesting_times_i_want_out/j9tsia6/</a></li>\n  <li><a href=\"https://www.reddit.com/r/DailyTechNewsShow/comments/11j1rx3/facebook_and_google_are_handing_over_user_data_to/jb1tt0m/\">https://www.reddit.com/r/DailyTechNewsShow/comments/11j1rx3/facebook_and_google_are_handing_over_user_data_to/jb1tt0m/</a></li>\n  <li><a href=\"https://www.reddit.com/r/HVAC/comments/19cilhg/big_brother_is_watching/kiz6m30/\">https://www.reddit.com/r/HVAC/comments/19cilhg/big_brother_is_watching/kiz6m30/</a></li>\n  <li><a href=\"https://www.reddit.com/r/Futurology/comments/12a9f1g/clearview_ai_scraped_30_billion_images_from/jer7el0/\">https://www.reddit.com/r/Futurology/comments/12a9f1g/clearview_ai_scraped_30_billion_images_from/jer7el0/</a></li>\n  <li><a href=\"https://www.reddit.com/r/Futurology/comments/12vypha/the_wave_of_lawsuits_that_could_kill_social/jhd5xic/\">https://www.reddit.com/r/Futurology/comments/12vypha/the_wave_of_lawsuits_that_could_kill_social/jhd5xic/</a></li>\n  <li><a href=\"https://www.reddit.com/r/Futurology/comments/16206k1/while_google_meta_x_are_surrendering_to/jxv3dk7/\">https://www.reddit.com/r/Futurology/comments/16206k1/while_google_meta_x_are_surrendering_to/jxv3dk7/</a></li>\n  <li><a href=\"https://www.reddit.com/r/Futurology/comments/1dgatzx/microsoft_admits_that_maybe_surveiling_everything/l8p2eeo/\">https://www.reddit.com/r/Futurology/comments/1dgatzx/microsoft_admits_that_maybe_surveiling_everything/l8p2eeo/</a></li>\n  <li><a href=\"https://www.reddit.com/r/Futurology/comments/1fhafv4/meta_fed_its_ai_on_almost_everything_youve_posted/ln8if2w/\">https://www.reddit.com/r/Futurology/comments/1fhafv4/meta_fed_its_ai_on_almost_everything_youve_posted/ln8if2w/</a></li>\n  <li><a href=\"https://www.reddit.com/r/tech/comments/107a3kd/seattle_schools_sue_meta_google_snap_and/j3lxiq2/\">https://www.reddit.com/r/tech/comments/107a3kd/seattle_schools_sue_meta_google_snap_and/j3lxiq2/</a></li>\n  <li><a href=\"https://www.reddit.com/r/MachineLearning/comments/17aycuw/r_meta_ai_towards_a_realtime_decoding_of_images/k5g1hk6/\">https://www.reddit.com/r/MachineLearning/comments/17aycuw/r_meta_ai_towards_a_realtime_decoding_of_images/k5g1hk6/</a></li>\n  <li><a href=\"https://www.reddit.com/r/MachineLearning/comments/1g6w6za/d_evaluating_classification_in_production/lsm4l2u/\">https://www.reddit.com/r/MachineLearning/comments/1g6w6za/d_evaluating_classification_in_production/lsm4l2u/</a></li>\n  <li><a href=\"https://www.reddit.com/r/artificial/comments/14mv7b5/meta_explains_the_ai_behind_its_social_media/jq4568s/\">https://www.reddit.com/r/artificial/comments/14mv7b5/meta_explains_the_ai_behind_its_social_media/jq4568s/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technews/comments/10prex9/meta_fights_45_million_user_lawsuit_over/j6m79ob/\">https://www.reddit.com/r/technews/comments/10prex9/meta_fights_45_million_user_lawsuit_over/j6m79ob/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technews/comments/11arxmv/new_research_suggests_that_privacy_in_the/j9tt9ee/\">https://www.reddit.com/r/technews/comments/11arxmv/new_research_suggests_that_privacy_in_the/j9tt9ee/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technews/comments/11xwkmf/zuckerberg_meta_are_sued_for_failing_to_address/jd7c40b/\">https://www.reddit.com/r/technews/comments/11xwkmf/zuckerberg_meta_are_sued_for_failing_to_address/jd7c40b/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technews/comments/1378z5z/ftc_proposes_blanket_prohibition_preventing/jisin98/\">https://www.reddit.com/r/technews/comments/1378z5z/ftc_proposes_blanket_prohibition_preventing/jisin98/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technews/comments/13abqcr/confusion_sets_in_as_meta_content_moderators_go/jj68jfc/\">https://www.reddit.com/r/technews/comments/13abqcr/confusion_sets_in_as_meta_content_moderators_go/jj68jfc/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technews/comments/16uey88/x_spreads_more_disinformation_than_rival_social/k2kk886/\">https://www.reddit.com/r/technews/comments/16uey88/x_spreads_more_disinformation_than_rival_social/k2kk886/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technews/comments/17ek5it/great_news_social_media_is_falling_apart/k640cue/\">https://www.reddit.com/r/technews/comments/17ek5it/great_news_social_media_is_falling_apart/k640cue/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technews/comments/17hkkkt/us_immigration_enforcement_used_an_aipowered_tool/k6o5z4y/\">https://www.reddit.com/r/technews/comments/17hkkkt/us_immigration_enforcement_used_an_aipowered_tool/k6o5z4y/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technews/comments/17r6mye/mark_zuckerberg_personally_rejected_metas/k8gxr5n/\">https://www.reddit.com/r/technews/comments/17r6mye/mark_zuckerberg_personally_rejected_metas/k8gxr5n/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technews/comments/18unq4f/social_media_companies_made_11_billion_in_us_ad/kfm62xk/\">https://www.reddit.com/r/technews/comments/18unq4f/social_media_companies_made_11_billion_in_us_ad/kfm62xk/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technews/comments/199n09x/how_social_media_algorithms_flatten_our_culture/kif42d0/\">https://www.reddit.com/r/technews/comments/199n09x/how_social_media_algorithms_flatten_our_culture/kif42d0/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technews/comments/1akbhrg/meta_will_start_detecting_and_labeling/kp6ov4l/\">https://www.reddit.com/r/technews/comments/1akbhrg/meta_will_start_detecting_and_labeling/kp6ov4l/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technews/comments/1baulgu/now_the_eu_is_asking_questions_about_metas_pay_or/ku5b33p/\">https://www.reddit.com/r/technews/comments/1baulgu/now_the_eu_is_asking_questions_about_metas_pay_or/ku5b33p/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technews/comments/1bn3k90/facebook_is_filled_with_aigenerated_garbageand/kwfulfq/\">https://www.reddit.com/r/technews/comments/1bn3k90/facebook_is_filled_with_aigenerated_garbageand/kwfulfq/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technews/comments/1dhxtif/surgeon_general_demands_warning_label_on_social/l901wnh/\">https://www.reddit.com/r/technews/comments/1dhxtif/surgeon_general_demands_warning_label_on_social/l901wnh/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technews/comments/1dv50ul/brazil_suspends_meta_from_using_instagram_posts/lbl31xo/\">https://www.reddit.com/r/technews/comments/1dv50ul/brazil_suspends_meta_from_using_instagram_posts/lbl31xo/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technews/comments/zlqk0p/a_new_lawsuit_accuses_meta_of_inflaming_civil_war/j06owno/\">https://www.reddit.com/r/technews/comments/zlqk0p/a_new_lawsuit_accuses_meta_of_inflaming_civil_war/j06owno/</a></li>\n  <li><a href=\"https://www.reddit.com/r/technews/comments/zppuhl/facebook_parent_meta_warned_by_eu_of_breaking/j0u941k/\">https://www.reddit.com/r/technews/comments/zppuhl/facebook_parent_meta_warned_by_eu_of_breaking/j0u941k/</a></li>\n  <li><a href=\"https://www.reddit.com/r/Foodforthought/comments/135098q/the_godfather_of_ai_just_quit_google_and_says_he/jihhrtt/\">https://www.reddit.com/r/Foodforthought/comments/135098q/the_godfather_of_ai_just_quit_google_and_says_he/jihhrtt/</a></li>\n  <li><a href=\"https://www.reddit.com/r/Foodforthought/comments/17pt1uh/85_of_people_worry_about_online_disinformation/k87gzxu/\">https://www.reddit.com/r/Foodforthought/comments/17pt1uh/85_of_people_worry_about_online_disinformation/k87gzxu/</a></li>\n  <li><a href=\"https://www.reddit.com/r/Foodforthought/comments/1bo00cd/its_causing_them_to_drop_out_of_life_how_phones/kwlr08n/\">https://www.reddit.com/r/Foodforthought/comments/1bo00cd/its_causing_them_to_drop_out_of_life_how_phones/kwlr08n/</a></li>\n  <li><a href=\"https://www.reddit.com/r/Foodforthought/comments/1dhyepq/surgeon_general_wants_tobaccostyle_warning/l9066lp/\">https://www.reddit.com/r/Foodforthought/comments/1dhyepq/surgeon_general_wants_tobaccostyle_warning/l9066lp/</a></li>\n  <li><a href=\"https://www.reddit.com/r/Foodforthought/comments/1f9k542/racism_misogyny_lies_how_did_x_become_so_full_of/llm5r92/\">https://www.reddit.com/r/Foodforthought/comments/1f9k542/racism_misogyny_lies_how_did_x_become_so_full_of/llm5r92/</a></li>\n  <li><a href=\"https://www.reddit.com/r/lgbt/comments/1cxaz7p/from_meta_to_x_most_major_social_media_companies/l51aoib/\">https://www.reddit.com/r/lgbt/comments/1cxaz7p/from_meta_to_x_most_major_social_media_companies/l51aoib/</a></li>\n  <li><a href=\"https://www.reddit.com/r/Infographics/comments/13cksen/cognitive_biases_that_social_media_takes/jjg7748/\">https://www.reddit.com/r/Infographics/comments/13cksen/cognitive_biases_that_social_media_takes/jjg7748/</a></li>\n  <li><a href=\"https://www.reddit.com/r/Infographics/comments/18m0dj2/visualizing_how_big_tech_companies_make_their/ke15s3q/\">https://www.reddit.com/r/Infographics/comments/18m0dj2/visualizing_how_big_tech_companies_make_their/ke15s3q/</a></li>\n  <li><a href=\"https://www.reddit.com/r/Infographics/comments/190yylf/how_often_teens_visit_online_platforms/kgs1uix/\">https://www.reddit.com/r/Infographics/comments/190yylf/how_often_teens_visit_online_platforms/kgs1uix/</a></li>\n  <li><a href=\"https://www.reddit.com/r/investing/comments/yeuz1b/mark_zuckerberg_lost_100b_recently/iu07p3m/\">https://www.reddit.com/r/investing/comments/yeuz1b/mark_zuckerberg_lost_100b_recently/iu07p3m/</a></li>\n  <li><a href=\"https://www.reddit.com/r/ValueInvesting/comments/ynunwb/meta_stock_analysis_and_valuation_is_michael/ivatdap/\">https://www.reddit.com/r/ValueInvesting/comments/ynunwb/meta_stock_analysis_and_valuation_is_michael/ivatdap/</a></li>\n  <li><a href=\"https://www.reddit.com/r/stocks/comments/16yumhc/facebook_wants_to_charge_eu_users_14_a_month_if/k3aruoe/\">https://www.reddit.com/r/stocks/comments/16yumhc/facebook_wants_to_charge_eu_users_14_a_month_if/k3aruoe/</a></li>\n  <li><a href=\"https://www.reddit.com/r/stocks/comments/17ffxf2/meta_sued_by_33_state_ags_for_addictive_features/k69lllo/\">https://www.reddit.com/r/stocks/comments/17ffxf2/meta_sued_by_33_state_ags_for_addictive_features/k69lllo/</a></li>\n  <li><a href=\"https://www.reddit.com/r/stocks/comments/1aglple/meta_q4_earnings_numbers/kohr05x/\">https://www.reddit.com/r/stocks/comments/1aglple/meta_q4_earnings_numbers/kohr05x/</a></li>\n  <li><a href=\"https://www.reddit.com/r/stocks/comments/1dsqkd7/meta_accused_of_breaching_eu_antitrust_rules_over/lb49z7z/\">https://www.reddit.com/r/stocks/comments/1dsqkd7/meta_accused_of_breaching_eu_antitrust_rules_over/lb49z7z/</a></li>\n  <li><a href=\"https://www.reddit.com/r/stocks/comments/y2q516/us_sentiment_on_meta_zuckerbergfb/is4enyh/\">https://www.reddit.com/r/stocks/comments/y2q516/us_sentiment_on_meta_zuckerbergfb/is4enyh/</a></li>\n  <li><a href=\"https://www.reddit.com/r/stocks/comments/yasdzp/if_zuck_decides_to_stick_with_his_metaverse_plan/itcqzqj/\">https://www.reddit.com/r/stocks/comments/yasdzp/if_zuck_decides_to_stick_with_his_metaverse_plan/itcqzqj/</a></li>\n  <li><a href=\"https://www.reddit.com/r/stocks/comments/yeed2m/tomorrow_you_can_go_back_in_time/itxkt98/\">https://www.reddit.com/r/stocks/comments/yeed2m/tomorrow_you_can_go_back_in_time/itxkt98/</a></li>\n  <li><a href=\"https://www.reddit.com/r/stocks/comments/yiymdt/docs_show_fb_twitter_collaborating_w_dept_of/iulj15z/\">https://www.reddit.com/r/stocks/comments/yiymdt/docs_show_fb_twitter_collaborating_w_dept_of/iulj15z/</a></li>\n  <li><a href=\"https://www.reddit.com/r/stocks/comments/yjgbll/the_last_twenty_years_of_internet/iuo4ndz/\">https://www.reddit.com/r/stocks/comments/yjgbll/the_last_twenty_years_of_internet/iuo4ndz/</a></li>\n  <li><a href=\"https://www.reddit.com/r/stocks/comments/zf28cb/interesting_thing_i_noticed_about_meta/iz9pekq/\">https://www.reddit.com/r/stocks/comments/zf28cb/interesting_thing_i_noticed_about_meta/iz9pekq/</a></li>\n  <li><a href=\"https://www.reddit.com/r/stocks/comments/zzuqfe/market_capitalization_of_meta_is_now_atbelow_the/j2e1t4c/\">https://www.reddit.com/r/stocks/comments/zzuqfe/market_capitalization_of_meta_is_now_atbelow_the/j2e1t4c/</a></li>\n  <li><a href=\"https://www.reddit.com/r/climate/comments/1dkw5xa/80_percent_of_people_globally_want_stronger/l9lh24s/\">https://www.reddit.com/r/climate/comments/1dkw5xa/80_percent_of_people_globally_want_stronger/l9lh24s/</a></li>\n  <li><a href=\"https://www.reddit.com/r/climate/comments/1fbm8h8/time_to_criminalize_environmental_damage_says/lm2ohjc/\">https://www.reddit.com/r/climate/comments/1fbm8h8/time_to_criminalize_environmental_damage_says/lm2ohjc/</a></li>\n  <li><a href=\"https://www.reddit.com/r/invasivespecies/comments/10j0mt9/questionnaire_on_public_opinions_about_non_native/j5izv61/\">https://www.reddit.com/r/invasivespecies/comments/10j0mt9/questionnaire_on_public_opinions_about_non_native/j5izv61/</a></li>\n  <li><a href=\"https://www.reddit.com/r/realtech/comments/135wyvc/meta_workers_have_reportedly_lost_faith_in_mark/jimszm6/\">https://www.reddit.com/r/realtech/comments/135wyvc/meta_workers_have_reportedly_lost_faith_in_mark/jimszm6/</a></li>\n  <li><a href=\"https://www.reddit.com/r/marketing/comments/10a30ji/heres_what_happened_last_week_on_social_media/j41pqlp/\">https://www.reddit.com/r/marketing/comments/10a30ji/heres_what_happened_last_week_on_social_media/j41pqlp/</a></li>\n  <li><a href=\"https://www.reddit.com/r/marketing/comments/11sv1ab/meta_working_on_twitter_rival_tiktoks_search_ads/jcfslwz/\">https://www.reddit.com/r/marketing/comments/11sv1ab/meta_working_on_twitter_rival_tiktoks_search_ads/jcfslwz/</a></li>\n  <li><a href=\"https://www.reddit.com/r/marketing/comments/13dn38i/social_media_traffic_is_dying_new_youtube_tiktoks/jjla9ep/\">https://www.reddit.com/r/marketing/comments/13dn38i/social_media_traffic_is_dying_new_youtube_tiktoks/jjla9ep/</a></li>\n  <li><a href=\"https://www.reddit.com/r/marketing/comments/13ks5f1/heres_what_you_missed_last_week_on_social_media/jkm0r23/\">https://www.reddit.com/r/marketing/comments/13ks5f1/heres_what_you_missed_last_week_on_social_media/jkm0r23/</a></li>\n  <li><a href=\"https://www.reddit.com/r/marketing/comments/13qdowf/heres_what_you_missed_last_week_on_social_media/jlf2r2x/\">https://www.reddit.com/r/marketing/comments/13qdowf/heres_what_you_missed_last_week_on_social_media/jlf2r2x/</a></li>\n  <li><a href=\"https://www.reddit.com/r/marketing/comments/1441rox/what_changed_in_marketing_advertising_agency_last/jnv836k/\">https://www.reddit.com/r/marketing/comments/1441rox/what_changed_in_marketing_advertising_agency_last/jnv836k/</a></li>\n  <li><a href=\"https://www.reddit.com/r/marketing/comments/14r81xy/heres_what_happened_in_marketing_today/jqr4zrn/\">https://www.reddit.com/r/marketing/comments/14r81xy/heres_what_happened_in_marketing_today/jqr4zrn/</a></li>\n  <li><a href=\"https://www.reddit.com/r/marketing/comments/1aeh0o5/whats_new_in_marketing_social_media_last_week/kk8o5jt/\">https://www.reddit.com/r/marketing/comments/1aeh0o5/whats_new_in_marketing_social_media_last_week/kk8o5jt/</a></li>\n  <li><a href=\"https://www.reddit.com/r/marketing/comments/1b795ea/have_recent_outages_on_the_top_tech_platforms/kth276b/\">https://www.reddit.com/r/marketing/comments/1b795ea/have_recent_outages_on_the_top_tech_platforms/kth276b/</a></li>\n  <li><a href=\"https://www.reddit.com/r/marketing/comments/1bri7ui/i_spent_4_hours_reading_25_marketing_reports_and/kx9bq7r/\">https://www.reddit.com/r/marketing/comments/1bri7ui/i_spent_4_hours_reading_25_marketing_reports_and/kx9bq7r/</a></li>\n</ul>\n\n<hr />\n<hr />\n<hr />\n<h3 id=\"background-material\">Background Material</h3>\n\n<div class=\"ro markdown\">\n  <h1 id=\"facebooks-role-in-global-extremism-ethnic-cleansing-and-human-trafficking\"><strong>Facebook’s Role in Global Extremism: Ethnic Cleansing and Human Trafficking</strong></h1>\n\n<p>Facebook, now Meta Platforms, has revolutionized how people connect and share information worldwide. However, this powerful platform has also been implicated in facilitating global extremism, including ethnic cleansing and human trafficking. This article delves into Facebook’s role in these issues, examining how the platform has been used to promote extremist agendas, incite violence, and exploit vulnerable populations. We will also explore the measures Facebook has taken to address these challenges and the criticisms it has faced in its efforts to combat extremism.</p>\n\n<h2 id=\"facebook-and-global-extremism\"><strong>Facebook and Global Extremism</strong></h2>\n\n<p>Extremist groups have exploited Facebook’s vast reach and features to spread propaganda, recruit members, and incite violence1. One way this occurs is through the creation of Facebook groups and pages that provide a platform for extremists to share information, videos, and other propaganda, effectively radicalizing a wider audience1. A report by the Institute for Volunteerism Research (IVolunteer) found that nearly two-thirds of extremists used Facebook to communicate their views and encourage action between 2005 and 20162. The FBI has also compared the spread of extremism on social media to foreign disinformation campaigns2.</p>\n\n<p>Furthermore, Facebook’s chat function can be used by extremists to exchange private messages and coordinate attacks in real-time1. This highlights the platform’s potential for facilitating not only online radicalization but also the planning and execution of extremist activities.</p>\n\n<h2 id=\"the-role-of-algorithms\"><strong>The Role of Algorithms</strong></h2>\n\n<p>Facebook’s algorithms, designed to maximize user engagement, can inadvertently contribute to the spread of extremist content3. By prioritizing content that evokes strong emotions, the platform can create “filter bubbles” and echo chambers where extremist views are amplified and reinforced3. This can lead to increased polarization and the normalization of extremist ideologies3.</p>\n\n<p>Moreover, Facebook’s business model, which prioritizes engagement, may inadvertently incentivize the spread of extremist content3. As the platform profits from increased user interaction, there is a risk that algorithms may prioritize content that generates strong emotional responses, even if that content is harmful or promotes extremist views.</p>\n\n<p>Furthermore, Facebook’s auto-generation of pages has been found to promote extremist content. In some cases, the platform has automatically created pages for terrorist organizations and white supremacist groups, effectively providing them with a platform to spread their message4.</p>\n\n<h2 id=\"facebooks-role-in-ethnic-cleansing\"><strong>Facebook’s Role in Ethnic Cleansing</strong></h2>\n\n<p>Facebook has been particularly scrutinized for its role in ethnic cleansing, notably in Myanmar. The platform’s algorithms and lack of adequate content moderation contributed to the spread of hate speech and incitement to violence against the Rohingya Muslim minority5. Amnesty International reports that Facebook’s pursuit of profit, coupled with its algorithms, created an echo chamber that fueled hatred towards the Rohingya and contributed to their mass displacement5. This highlights how the platform’s design, intended to increase user engagement, can have unintended and harmful consequences in the context of ethnic conflict.</p>\n\n<p>One of the most concerning aspects of Facebook’s role in Myanmar was its failure to act despite warnings6. Even when alerted to the escalating violence and hate speech on its platform, the company did not take sufficient measures to prevent the spread of harmful content6. This inaction had devastating consequences for the Rohingya population6.</p>\n\n<p>Facebook has also been criticized for its handling of ethnic violence in Ethiopia7. Despite warnings from its partners in Kenya, the platform failed to adequately address hate speech and incitement to violence, contributing to social and political polarization7.</p>\n\n<h2 id=\"facebooks-role-in-human-trafficking\"><strong>Facebook’s Role in Human Trafficking</strong></h2>\n\n<p>Beyond its role in ethnic cleansing, Facebook has also been implicated in facilitating human trafficking, another form of exploitation that thrives on online platforms. Traffickers exploit the platform to identify and recruit victims, often by leveraging personal information shared online8. They use social media to gain insights into individuals’ lives, identify vulnerabilities, and groom potential victims by offering empathy and support8. Traffickers may establish online relationships with victims on Facebook to lure them into potentially dangerous situations9.</p>\n\n<p>A 2020 study of 133 sex trafficking cases found that 59% of survivors were recruited on Facebook10. The National Human Trafficking Hotline in the United States reported a 125% increase in reports of recruitment into trafficking through Facebook between 2019 and 20208. While Facebook is the most popular platform for online recruitment of trafficking victims, the problem extends to other social media platforms as well8.</p>\n\n<p>It is important to note that while Facebook can be a tool for traffickers, it can also be a source of support for survivors. Some survivors of human trafficking have used social media, including Facebook groups, to connect with allies and advocates and find help10. This demonstrates the complex and multifaceted nature of social media’s role in human trafficking.</p>\n\n<p>The platform’s end-to-end encryption has also raised concerns among child protection organizations12. While intended to enhance privacy, encryption can make it more difficult to detect and prevent child exploitation and trafficking12.</p>\n\n<h2 id=\"facebooks-efforts-to-prevent-extremism\"><strong>Facebook’s Efforts to Prevent Extremism</strong></h2>\n\n<p>Facebook has implemented various measures to prevent its platform from being used to promote extremism. These include:</p>\n\n<ul>\n  <li><strong>Blocking online content and access:</strong> This involves restricting access to websites and accounts that promote extremist ideologies13.</li>\n  <li><strong>Filtering and removing content:</strong> Facebook uses a combination of artificial intelligence and human reviewers to identify and remove extremist content, such as hate speech, violent imagery, and calls for violence13.</li>\n  <li><strong>Empowering online communities:</strong> Facebook encourages users to report extremist content and supports initiatives that promote counter-narratives to extremist ideologies13.</li>\n</ul>\n\n<h2 id=\"facebooks-efforts-to-combat-extremism\"><strong>Facebook’s Efforts to Combat Extremism</strong></h2>\n\n<p>In response to growing concerns, Facebook has implemented various measures to combat extremism on its platform. These include:</p>\n\n<table>\n  <thead>\n    <tr>\n      <th style=\"text-align: left\">Measure</th>\n      <th style=\"text-align: left\">Description</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td style=\"text-align: left\">Content Moderation</td>\n      <td style=\"text-align: left\">Facebook has invested in content moderation systems that use artificial intelligence and human reviewers to identify and remove extremist content4. For example, AI can be used to detect hate speech, while human reviewers assess more complex cases. They have also updated their community standards to address extremist content more effectively14.</td>\n    </tr>\n    <tr>\n      <td style=\"text-align: left\">Transparency Center</td>\n      <td style=\"text-align: left\">Facebook launched a Transparency Center in May 2021 to provide more information about its content moderation policies and practices14. This aims to increase accountability and provide users with a better understanding of how content is moderated on the platform.</td>\n    </tr>\n    <tr>\n      <td style=\"text-align: left\">Partnerships</td>\n      <td style=\"text-align: left\">Facebook collaborates with civil society organizations and media outlets to evaluate content and identify potential risks15. These partnerships help Facebook access expertise and local knowledge to better understand and address extremist content in different contexts.</td>\n    </tr>\n    <tr>\n      <td style=\"text-align: left\">Counter-Narratives</td>\n      <td style=\"text-align: left\">Facebook supports initiatives that promote counter-narratives to extremist ideologies2. This involves working with organizations and individuals to create and disseminate content that challenges extremist views and promotes tolerance and understanding.</td>\n    </tr>\n    <tr>\n      <td style=\"text-align: left\">User Education</td>\n      <td style=\"text-align: left\">Facebook provides resources to educate users about online safety and how to identify inaccurate content2. This includes providing tips on how to spot fake news, identify online scams, and report harmful content.</td>\n    </tr>\n  </tbody>\n</table>\n\n<p>Despite these efforts, Facebook continues to face challenges in effectively addressing extremism. The sheer volume of content on the platform makes it difficult to moderate effectively, and extremist groups often employ sophisticated tactics to circumvent detection14.</p>\n\n<h2 id=\"criticisms-and-concerns\"><strong>Criticisms and Concerns</strong></h2>\n\n<p>Experts and organizations have raised various criticisms and concerns regarding Facebook’s handling of extremism. These include:</p>\n\n<ul>\n  <li><strong>Lack of Transparency:</strong> Facebook has been criticized for lacking transparency in its content moderation practices14. Concerns have been raised about the consistency and fairness of its enforcement actions7.</li>\n  <li><strong>Inadequate Resources:</strong> Critics argue that Facebook has not allocated sufficient resources to content moderation, particularly in regions where ethnic violence is prevalent15.</li>\n  <li><strong>Algorithmic Amplification:</strong> Concerns remain about the role of Facebook’s algorithms in amplifying extremist content and creating echo chambers6.</li>\n  <li><strong>Delayed Response:</strong> Facebook has been criticized for its slow response to escalating violence and hate speech in some cases7.</li>\n  <li><strong>Profit Prioritization:</strong> Some argue that Facebook prioritizes profit over user safety and that its business model incentivizes engagement, even if it means amplifying harmful content3.</li>\n</ul>\n\n<h2 id=\"conclusion\"><strong>Conclusion</strong></h2>\n\n<p>Facebook’s role in global extremism is a complex issue with no easy solutions. While the platform has taken steps to address the problem, concerns remain about its effectiveness and commitment to combating extremism. Facebook’s emphasis on user engagement, coupled with its algorithmic design and limitations in content moderation, has created an environment where extremist content can flourish. This has contributed to real-world harms, including ethnic cleansing and human trafficking.</p>\n\n<p>The potential long-term consequences of Facebook’s role in extremism are significant. The platform’s reach and influence mean that its failure to adequately address extremism can have far-reaching impacts on individuals, communities, and societies. This raises broader questions about the responsibilities of online platforms in preventing the spread of harmful content and protecting vulnerable populations.</p>\n\n<p>Moving forward, Facebook needs to prioritize user safety and invest in more robust content moderation systems. This includes greater transparency, increased resources for content moderation, and a more proactive approach to identifying and addressing extremist content. Addressing these challenges is crucial to ensuring that Facebook does not become a tool for promoting violence and exploitation.</p>\n\n<p>Furthermore, greater collaboration between tech companies, governments, and civil society organizations is needed to address this complex issue. By working together, these stakeholders can develop more effective strategies to prevent extremism online and mitigate the harms associated with it.</p>\n\n<h4 id=\"works-cited\"><strong>Works cited</strong></h4>\n\n<p>1. Facebook and Violent Extremism - International Association of Chiefs of Police, accessed on January 8, 2025, <a href=\"https://www.theiacp.org/sites/default/files/2018-07/FacebookAwarenessBrief.pdf\">https://www.theiacp.org/sites/default/files/2018-07/FacebookAwarenessBrief.pdf</a>  <br />\n2. Social Media and Political Extremism | VCU HSEP, accessed on January 8, 2025, <a href=\"https://onlinewilder.vcu.edu/blog/political-extremism/\">https://onlinewilder.vcu.edu/blog/political-extremism/</a>  <br />\n3. Facebook’s ethical failures are not accidental; they are part of the business model - PMC, accessed on January 8, 2025, <a href=\"https://pmc.ncbi.nlm.nih.gov/articles/PMC8179701/\">https://pmc.ncbi.nlm.nih.gov/articles/PMC8179701/</a>  <br />\n4. Stop Terror and Hate Content on Facebook - National Whistleblower Center, accessed on January 8, 2025, <a href=\"https://www.whistleblowers.org/whistleblower-petition-to-sec-facebook-is-misleading-shareholders-about-terror-and-hate-content-on-its-website/\">https://www.whistleblowers.org/whistleblower-petition-to-sec-facebook-is-misleading-shareholders-about-terror-and-hate-content-on-its-website/</a>  <br />\n5. Myanmar: Time for Meta to pay reparations to Rohingya for role in ethnic cleansing, accessed on January 8, 2025, <a href=\"https://www.amnesty.org/en/latest/news/2023/08/myanmar-time-for-meta-to-pay-reparations-to-rohingya-for-role-in-ethnic-cleansing/\">https://www.amnesty.org/en/latest/news/2023/08/myanmar-time-for-meta-to-pay-reparations-to-rohingya-for-role-in-ethnic-cleansing/</a>  <br />\n6. Myanmar: Facebook’s systems promoted violence against Rohingya; Meta owes reparations – new report - Amnesty International, accessed on January 8, 2025, <a href=\"https://www.amnesty.org/en/latest/news/2022/09/myanmar-facebooks-systems-promoted-violence-against-rohingya-meta-owes-reparations-new-report/\">https://www.amnesty.org/en/latest/news/2022/09/myanmar-facebooks-systems-promoted-violence-against-rohingya-meta-owes-reparations-new-report/</a>  <br />\n7. “The Road to Hell is Paved with Good Intentions”: the Role of Facebook in Fuelling Ethnic Violence - Annenberg School for Communication - University of Pennsylvania, accessed on January 8, 2025, <a href=\"https://www.asc.upenn.edu/research/centers/milton-wolf-seminar-media-and-diplomacy/blog/road-hell-paved-good-intentions-role-facebook-fuelling-ethnic-violence\">https://www.asc.upenn.edu/research/centers/milton-wolf-seminar-media-and-diplomacy/blog/road-hell-paved-good-intentions-role-facebook-fuelling-ethnic-violence</a>  <br />\n8. Technology’s Complicated Relationship with Human Trafficking, accessed on January 8, 2025, <a href=\"https://www.acf.hhs.gov/blog/2022/07/technologys-complicated-relationship-human-trafficking\">https://www.acf.hhs.gov/blog/2022/07/technologys-complicated-relationship-human-trafficking</a>  <br />\n9. Social Media &amp; Human Trafficking | Social Media Victims Law Center, accessed on January 8, 2025, <a href=\"https://socialmediavictims.org/sexual-violence/human-trafficking/\">https://socialmediavictims.org/sexual-violence/human-trafficking/</a>  <br />\n10. Human trafficking and social media - The Exodus Road, accessed on January 8, 2025, <a href=\"https://theexodusroad.com/human-trafficking-and-social-media/\">https://theexodusroad.com/human-trafficking-and-social-media/</a>  <br />\n11. Over half of online recruitment in active sex trafficking cases last year occurred on Facebook, report says - CBS News, accessed on January 8, 2025, <a href=\"https://www.cbsnews.com/news/facebook-sex-trafficking-online-recruitment-report/\">https://www.cbsnews.com/news/facebook-sex-trafficking-online-recruitment-report/</a>  <br />\n12. Meta/Facebook Platforms Enable Child Sex Trafficking and …, accessed on January 8, 2025, <a href=\"https://www.iccr.org/metafacebook-platforms-enable-child-sex-trafficking-and-exploitation-say-shareholders/\">https://www.iccr.org/metafacebook-platforms-enable-child-sex-trafficking-and-exploitation-say-shareholders/</a>  <br />\n13. Chapter 12 Prevention of Radicalization on Social Media and the Internet - International Centre for Counter-Terrorism, accessed on January 8, 2025, <a href=\"https://icct.nl/sites/default/files/2023-01/Chapter-12-Handbook_0.pdf\">https://icct.nl/sites/default/files/2023-01/Chapter-12-Handbook_0.pdf</a>  <br />\n14. Facebook’s policies against extremism: Ten years of struggle for more transparency, accessed on January 8, 2025, <a href=\"https://firstmonday.org/ojs/index.php/fm/article/download/11705/10210\">https://firstmonday.org/ojs/index.php/fm/article/download/11705/10210</a>  <br />\n15. What Facebook Does (and Doesn’t) Have to Do with Ethiopia’s Ethnic Violence, accessed on January 8, 2025, <a href=\"https://www.crisisgroup.org/africa/horn-africa/ethiopia/what-facebook-does-and-doesnt-have-do-ethiopias-ethnic-violence\">https://www.crisisgroup.org/africa/horn-africa/ethiopia/what-facebook-does-and-doesnt-have-do-ethiopias-ethnic-violence</a></p>\n\n</div>\n\n</div>\n",
       "assets": {
-        "assets/foo.jpg": {
-          "url": "/ro/posts/second_post/assets/foo.jpg",
-          "path": "posts/second_post/assets/foo.jpg",
-          "size": 8,
-          "img": {
-            "format": "jpeg",
-            "width": 4080,
-            "height": 3072
-          },
-          "src": null
-        },
-        "assets/foo/bar/baz.jpg": {
-          "url": "/ro/posts/second_post/assets/foo/bar/baz.jpg",
-          "path": "posts/second_post/assets/foo/bar/baz.jpg",
-          "size": 8,
-          "img": {
-            "format": "jpeg",
-            "width": 639,
-            "height": 751
-          },
-          "src": null
-        },
-        "assets/src/foo/bar.rb": {
-          "url": "/ro/posts/second_post/assets/src/foo/bar.rb",
-          "path": "posts/second_post/assets/src/foo/bar.rb",
+        "assets/background.html": {
+          "url": "/ro/posts/facebook-and-global-extremism/assets/background.html",
+          "path": "posts/facebook-and-global-extremism/assets/background.html",
           "size": 8,
           "img": null,
-          "src": "<div class=\"ro markdown src\">\n  <code class='code' style='white-space:pre;'><div class='code-line code-line-1'><span style=\"font-weight: bold\">class</span>&nbsp;<span style=\"font-weight: bold\">C</span>\n</div><div class='code-line code-line-2'>&nbsp;&nbsp;<span style=\"color: #000000;background-color: #ffffff\">A</span>&nbsp;<span style=\"font-weight: bold\">=</span>&nbsp;<span style=\"color: #000000;background-color: #ffffff\">42</span>\n</div><div class='code-line code-line-3'><span style=\"font-weight: bold\">end</span>\n</div></code>\n</div>\n"
+          "src": null
+        },
+        "assets/background.md": {
+          "url": "/ro/posts/facebook-and-global-extremism/assets/background.md",
+          "path": "posts/facebook-and-global-extremism/assets/background.md",
+          "size": 8,
+          "img": null,
+          "src": null
+        },
+        "assets/og.jpg": {
+          "url": "/ro/posts/facebook-and-global-extremism/assets/og.jpg",
+          "path": "posts/facebook-and-global-extremism/assets/og.jpg",
+          "size": 8,
+          "img": {
+            "format": "jpeg",
+            "width": 976,
+            "height": 549
+          },
+          "src": null
+        },
+        "assets/prompt.txt": {
+          "url": "/ro/posts/facebook-and-global-extremism/assets/prompt.txt",
+          "path": "posts/facebook-and-global-extremism/assets/prompt.txt",
+          "size": 8,
+          "img": null,
+          "src": null
+        },
+        "assets/results.md": {
+          "url": "/ro/posts/facebook-and-global-extremism/assets/results.md",
+          "path": "posts/facebook-and-global-extremism/assets/results.md",
+          "size": 8,
+          "img": null,
+          "src": null
+        },
+        "assets/survey.txt": {
+          "url": "/ro/posts/facebook-and-global-extremism/assets/survey.txt",
+          "path": "posts/facebook-and-global-extremism/assets/survey.txt",
+          "size": 8,
+          "img": null,
+          "src": null
         }
       },
       "_meta": {
-        "identifier": "posts/second_post",
+        "identifier": "posts/facebook-and-global-extremism",
         "type": "posts",
-        "id": "second_post",
+        "id": "facebook-and-global-extremism",
         "urls": [
-          "/ro/posts/second_post/assets/foo.jpg",
-          "/ro/posts/second_post/assets/foo/bar/baz.jpg",
-          "/ro/posts/second_post/assets/src/foo/bar.rb",
-          "/ro/posts/second_post/attributes.yml",
-          "/ro/posts/second_post/blurb.erb.md",
-          "/ro/posts/second_post/body.md"
+          "/ro/posts/facebook-and-global-extremism/assets/background.html",
+          "/ro/posts/facebook-and-global-extremism/assets/background.md",
+          "/ro/posts/facebook-and-global-extremism/assets/og.jpg",
+          "/ro/posts/facebook-and-global-extremism/assets/prompt.txt",
+          "/ro/posts/facebook-and-global-extremism/assets/results.md",
+          "/ro/posts/facebook-and-global-extremism/assets/survey.txt",
+          "/ro/posts/facebook-and-global-extremism/attributes.yml",
+          "/ro/posts/facebook-and-global-extremism/body.md"
         ],
-        "created_at": "2024-08-25 19:16:36 +0000",
-        "updated_at": "2024-08-28 23:03:12 +0000",
+        "created_at": "2025-04-23 04:38:29 +0000",
+        "updated_at": "2025-04-23 04:38:29 +0000",
         "rel": {
-          "curr": "posts/second_post",
-          "prev": "posts/first_post",
-          "next": "posts/third_post"
+          "curr": "posts/facebook-and-global-extremism",
+          "prev": "posts/almost-died-in-an-ice-cave",
+          "next": "posts/lemmings-considered-harmful"
         }
       }
     },
-    "posts/third_post": {
-      "title": "First Post",
-      "author": "people/alice",
-      "blurb": "<div class=\"ro markdown\">\n  <ul>\n  <li>a</li>\n  <li>b</li>\n  <li>c</li>\n</ul>\n\n<p>generated_at: 2024-11-01T21:26:45Z</p>\n\n</div>",
-      "body": "<div class=\"ro markdown\">\n  <ul>\n  <li>one</li>\n  <li>two</li>\n  <li>three</li>\n</ul>\n\n<div class=\"language-ruby highlighter-rouge\"><code class=\"code\" style=\"white-space:pre;\"><div class=\"code-line code-line-1\">  <span style=\"font-weight: bold\">class</span>  <span style=\"font-weight: bold\">C</span>\n</div>\n<div class=\"code-line code-line-2\">    <span style=\"color: #000000;background-color: #ffffff\">@a</span> <span style=\"font-weight: bold\">=</span> <span style=\"color: #000000;background-color: #ffffff\">42</span>\n</div>\n<div class=\"code-line code-line-3\">  <span style=\"font-weight: bold\">end</span>\n</div></code></div>\n\n<hr>\n\n<p><img src=\"/ro/posts/third_post/assets/foo.jpg\"><br>\n<br></p>\n\n<p><img src=\"/ro/posts/third_post/assets/foo/bar/baz.jpg\"></p>\n\n</div>",
+    "posts/lemmings-considered-harmful": {
+      "og": {
+        "image": {
+          "url": "/ro/posts/lemmings-considered-harmful/assets/lemming.jpeg"
+        },
+        "title": "lemmings considered harmful",
+        "description": "enlightened lemmings, known as the \"reformers,\" sought to address the issues of overpopulation, disease, and infighting."
+      },
+      "body": "<div class=\"ro markdown\">\n  <h5 id=\"the-rise-and-fall-of-the-lemmings\">the rise and fall of the lemmings</h5>\n\n<p><img src='/ro/posts/lemmings-considered-harmful/assets/lemming.jpeg' alt=\"\" /></p>\n\n<p>in the heart of the tundra, a forgotten corner of the world, a small colony of lemmings thrived. these furry creatures, with their insatiable appetite for grass and their unwavering determination to reproduce, had long been a part of the delicate ecosystem. however, a series of fortunate events, or perhaps unfortunate coincidences, led to an unprecedented boom in their population.</p>\n\n<p>the lemmings, once a modest presence, began to multiply at an alarming rate.\ntheir numbers swelled, their burrows multiplied, and their insatiable hunger\nfor grass depleted the once-abundant fields. the other creatures of the\ntundra, the foxes, the owls, and the hares, watched in growing alarm as\ntheir food sources dwindled. the foxes and owls, simply outnumbered, were\nunable to compete with the overwhelming numbers of lemmings and the hares\nsimply could not find enough food.</p>\n\n<p>the lemmings, oblivious to the plight of their fellow inhabitants, continued their relentless pursuit of reproduction. their population grew exponentially, their tunnels crisscrossing the landscape like a network of subterranean highways. the once-verdant tundra began to show signs of strain, the grass patches turning brown and barren.</p>\n\n<p>the hares, once the dominant herbivores of the tundra, were now forced to compete with the insatiable lemmings for the dwindling food supply. their numbers dwindled, their once-proud herds reduced to scattered individuals.</p>\n\n<p>the lemmings, however, remained unconcerned. their focus remained firmly on reproduction, their tunnels expanding further, their hunger growing more insatiable. the tundra, once a vibrant ecosystem, was now a desolate wasteland, a victim of the lemmings’ unchecked growth.</p>\n\n<p>as the food supply dwindled, the lemmings began to turn on each other. fights erupted over scraps of grass, burrows were invaded, and the once-united colony fractured into warring factions. disease, a consequence of overcrowding and malnutrition, spread through the weakened population.</p>\n\n<p>amidst the chaos, a small group of lemmings emerged, driven by a sense of compassion and a desire to save their kind.</p>\n\n<hr />\n\n<p><strong>these enlightened lemmings, known as the “reformers,” sought to address the issues of overpopulation, disease, and infighting.</strong></p>\n\n<hr />\n\n<p>the reformers, armed with a deep understanding of their society, implemented a series of reforms aimed at improving living conditions and promoting harmony. they established communal granaries to ensure fair distribution of food, constructed improved burrows to prevent disease outbreaks, and promoted peaceful coexistence among the different factions.</p>\n\n<p>the reformers’ efforts yielded positive results. the death rate decreased, the incidence of disease declined, and the overall quality of life for the lemmings improved. however, the underlying problems of overpopulation and resource depletion remained unresolved.</p>\n\n<p>the reformers, blinded by their focus on short-term gains, failed to recognize the long-term consequences of their actions. their interventions, while seemingly beneficial, only served to prolong the inevitable collapse of the lemming population.</p>\n\n<p>as the tundra’s carrying capacity was exceeded, the lemmings’ numbers continued to rise, their impact on the ecosystem intensifying. the once-vibrant ecosystem, now dominated by the lemmings, could no longer sustain life. the foxes, the owls, and the hares, unable to compete with the overwhelming numbers of lemmings, perished.</p>\n\n<p>the lemmings, once a vital part of the tundra’s ecosystem, had become its destroyers. their unchecked growth, fueled by a relentless pursuit of reproduction, had led to the demise of their own kind and the destruction of their habitat.</p>\n\n<blockquote>\n  <p>frozen tundra lies<br />\nlemmings’ ghostly shadows dance <br />\nnature’s balance lost</p>\n</blockquote>\n\n</div>\n",
       "assets": {
-        "assets/foo.jpg": {
-          "url": "/ro/posts/third_post/assets/foo.jpg",
-          "path": "posts/third_post/assets/foo.jpg",
+        "assets/lemming.jpeg": {
+          "url": "/ro/posts/lemmings-considered-harmful/assets/lemming.jpeg",
+          "path": "posts/lemmings-considered-harmful/assets/lemming.jpeg",
           "size": 8,
           "img": {
             "format": "jpeg",
-            "width": 4080,
-            "height": 3072
+            "width": 2048,
+            "height": 1152
           },
           "src": null
-        },
-        "assets/foo/bar/baz.jpg": {
-          "url": "/ro/posts/third_post/assets/foo/bar/baz.jpg",
-          "path": "posts/third_post/assets/foo/bar/baz.jpg",
-          "size": 8,
-          "img": {
-            "format": "jpeg",
-            "width": 639,
-            "height": 751
-          },
-          "src": null
-        },
-        "assets/src/foo/bar.rb": {
-          "url": "/ro/posts/third_post/assets/src/foo/bar.rb",
-          "path": "posts/third_post/assets/src/foo/bar.rb",
-          "size": 8,
-          "img": null,
-          "src": "<div class=\"ro markdown src\">\n  <code class='code' style='white-space:pre;'><div class='code-line code-line-1'><span style=\"font-weight: bold\">class</span>&nbsp;<span style=\"font-weight: bold\">C</span>\n</div><div class='code-line code-line-2'>&nbsp;&nbsp;<span style=\"color: #000000;background-color: #ffffff\">A</span>&nbsp;<span style=\"font-weight: bold\">=</span>&nbsp;<span style=\"color: #000000;background-color: #ffffff\">42</span>\n</div><div class='code-line code-line-3'><span style=\"font-weight: bold\">end</span>\n</div></code>\n</div>\n"
         }
       },
       "_meta": {
-        "identifier": "posts/third_post",
+        "identifier": "posts/lemmings-considered-harmful",
         "type": "posts",
-        "id": "third_post",
+        "id": "lemmings-considered-harmful",
         "urls": [
-          "/ro/posts/third_post/assets/foo.jpg",
-          "/ro/posts/third_post/assets/foo/bar/baz.jpg",
-          "/ro/posts/third_post/assets/src/foo/bar.rb",
-          "/ro/posts/third_post/attributes.yml",
-          "/ro/posts/third_post/blurb.erb.md",
-          "/ro/posts/third_post/body.md"
+          "/ro/posts/lemmings-considered-harmful/assets/lemming.jpeg",
+          "/ro/posts/lemmings-considered-harmful/attributes.yml",
+          "/ro/posts/lemmings-considered-harmful/body.md"
         ],
-        "created_at": "2024-08-25 19:16:36 +0000",
-        "updated_at": "2024-08-25 19:16:36 +0000",
+        "created_at": "2025-04-23 04:38:29 +0000",
+        "updated_at": "2025-04-23 04:38:29 +0000",
         "rel": {
-          "curr": "posts/third_post",
-          "prev": "posts/second_post",
+          "curr": "posts/lemmings-considered-harmful",
+          "prev": "posts/facebook-and-global-extremism",
+          "next": "posts/lost-in-the-desert"
+        }
+      }
+    },
+    "posts/lost-in-the-desert": {
+      "og": {
+        "image": {
+          "url": "/media/og/io/og.jpeg"
+        },
+        "title": null,
+        "description": "# WRITEME"
+      },
+      "body": "<div class=\"ro markdown\">\n  <p>following is an AI generated summary of this article, so you won’t have to read it!</p>\n\n<blockquote>\n  <h3>”</h3>\n  <h1 id=\"fixme\">FIXME</h1>\n  <h3 id=\"-1\">”</h3>\n</blockquote>\n\n<h1 id=\"writeme\">WRITEME</h1>\n\n</div>\n",
+      "assets": {
+        "assets/og.jpg": {
+          "url": "/ro/posts/lost-in-the-desert/assets/og.jpg",
+          "path": "posts/lost-in-the-desert/assets/og.jpg",
+          "size": 8,
+          "img": {
+            "format": "jpeg",
+            "width": 2400,
+            "height": 1200
+          },
+          "src": null
+        }
+      },
+      "_meta": {
+        "identifier": "posts/lost-in-the-desert",
+        "type": "posts",
+        "id": "lost-in-the-desert",
+        "urls": [
+          "/ro/posts/lost-in-the-desert/assets/og.jpg",
+          "/ro/posts/lost-in-the-desert/attributes.yml",
+          "/ro/posts/lost-in-the-desert/body.md"
+        ],
+        "created_at": "2025-04-23 04:38:29 +0000",
+        "updated_at": "2025-04-23 04:38:29 +0000",
+        "rel": {
+          "curr": "posts/lost-in-the-desert",
+          "prev": "posts/lemmings-considered-harmful",
+          "next": "posts/mission"
+        }
+      }
+    },
+    "posts/mission": {
+      "og": {
+        "image": {
+          "url": "/media/og/io/og.jpeg"
+        },
+        "title": null,
+        "description": "# WRITEME"
+      },
+      "body": "<div class=\"ro markdown\">\n  <p>everyone should have a mission statement.  here is mine.</p>\n\n<ul>\n  <li><a href=\"/jess\">jess</a> and i wanna shower with tomatoes growing in it, and a dirt\nfloor.  like this one.</li>\n</ul>\n\n</div>\n",
+      "assets": {
+        "assets/og.jpg": {
+          "url": "/ro/posts/mission/assets/og.jpg",
+          "path": "posts/mission/assets/og.jpg",
+          "size": 8,
+          "img": {
+            "format": "jpeg",
+            "width": 2400,
+            "height": 1200
+          },
+          "src": null
+        }
+      },
+      "_meta": {
+        "identifier": "posts/mission",
+        "type": "posts",
+        "id": "mission",
+        "urls": [
+          "/ro/posts/mission/assets/og.jpg",
+          "/ro/posts/mission/attributes.yml",
+          "/ro/posts/mission/body.md"
+        ],
+        "created_at": "2025-04-23 04:38:29 +0000",
+        "updated_at": "2025-04-23 04:38:29 +0000",
+        "rel": {
+          "curr": "posts/mission",
+          "prev": "posts/lost-in-the-desert",
+          "next": "posts/return-your-laptop"
+        }
+      }
+    },
+    "posts/return-your-laptop": {
+      "og": {
+        "image": {
+          "url": "/ro/posts/return-your-laptop/assets/og.jpg"
+        },
+        "title": "Free Laptops For The Very Sacked",
+        "description": "Gotten axed recently?  Should you keep your laptop? #eat-the-rich"
+      },
+      "body": "<div class=\"ro markdown\">\n  <p>following is an AI generated summary of this article, so you won’t have to read it!</p>\n\n<blockquote>\n  <h3>”</h3>\n  <p>A user on LinkedIn suggested that terminated employees should <strong>always</strong>\nreturn thier laptops, and that issue was cut and dried.</p>\n\n  <p><a href=\"/disco\">disco</a>, a tool for bringing real human subjectivity to AI was then\nused to examine public sentiment about this statement.</p>\n\n  <p>The responses varied, with some people feeling that employees should keep the\nlaptops as a small consolation or to help with job searching, while others felt\nthat keeping company property was unethical or a security risk.</p>\n\n  <p>Some people suggested that companies offer a buyout option for the laptops,\nwhile others felt that a clean break was best.</p>\n\n  <p>The responses highlight the complex and multifaceted nature of the issue, with\nno easy answers or universal agreement.</p>\n  <h3 id=\"-1\">”</h3>\n</blockquote>\n\n<p>i recently saw this unsolicited and undirected “suggestion” on linked-in (home\nof the weak sauce), suggesting that the <strong>only</strong> ethical move is to return your\nlaptop when you’ve been fired.</p>\n\n<p><img src='/ro/posts/return-your-laptop/assets/return-your-laptop.png' alt=\"return your laptop\" /></p>\n\n<p>while i do not condone brazen theft or just being a jerk, i personally\nconsidered this post astonishingly tone deaf, in light of the fear so many who\nhave recently been laid off are feeling.  for many, a computer, and the\ninternet, are their only lifelines to a potential future.</p>\n\n<p>this situation is one i have experienced personally.  i’ve been laid off, a\nfew years back, and went through a very, very difficult period (still to some\ndegree) where getting a job was a strangely recursive scenario - that is to\nsay, i needed money to buy a computer capable enough, to keep up with the\ntimes, to stay sharp, to get a job.  this is a real phenomenon experienced by\nmany.  a nice laptop for a developer costs a cool $4k.</p>\n\n<p>dan seemed pretty sure of himself so, i decided to run his theory through my\nnew thing, which i am calling <a href=\"/disco\">disco</a>.  as you can read for yourself,\ni think the issue is more nuanced than he suggests, and that, in this period\nof history, considering the massive ill will the general public is\nsnowballing, and getting ready to toss at corporations, it’s worth seeing what\nothers might think.  fwiw, <a href=\"/disco\">disco</a> lets you ask any question, and then\nget back answers that are informed by real human beings, at scale.</p>\n\n<p>it’s my little attempt to use their weapons against them.</p>\n\n<p>take some time, to review <a href=\"https://gist.github.com/ahoward/9696f63c118f7b9f102b04e5b4196ca5\">these results</a></p>\n\n<p><a href=\"/contact\">what do you think?</a></p>\n\n<p>ps.  in a future post, i’ll show you how you can do way, way, way better with\nyour development environment by ditching apple, microsoft, etc.  and moving to\nlinux and a chromebook.  my current dev box costs me $320 at best buy and i’m\nmore productive than ever.</p>\n\n<p><img src='/ro/posts/return-your-laptop/assets/og.jpg' alt=\"\" /></p>\n\n</div>\n",
+      "assets": {
+        "assets/og.jpg": {
+          "url": "/ro/posts/return-your-laptop/assets/og.jpg",
+          "path": "posts/return-your-laptop/assets/og.jpg",
+          "size": 8,
+          "img": {
+            "format": "jpeg",
+            "width": 2400,
+            "height": 1200
+          },
+          "src": null
+        },
+        "assets/return-your-laptop.png": {
+          "url": "/ro/posts/return-your-laptop/assets/return-your-laptop.png",
+          "path": "posts/return-your-laptop/assets/return-your-laptop.png",
+          "size": 8,
+          "img": {
+            "format": "png",
+            "width": 711,
+            "height": 1025
+          },
+          "src": null
+        }
+      },
+      "_meta": {
+        "identifier": "posts/return-your-laptop",
+        "type": "posts",
+        "id": "return-your-laptop",
+        "urls": [
+          "/ro/posts/return-your-laptop/assets/og.jpg",
+          "/ro/posts/return-your-laptop/assets/return-your-laptop.png",
+          "/ro/posts/return-your-laptop/attributes.yml",
+          "/ro/posts/return-your-laptop/body.md"
+        ],
+        "created_at": "2025-04-23 04:38:29 +0000",
+        "updated_at": "2025-04-23 04:38:29 +0000",
+        "rel": {
+          "curr": "posts/return-your-laptop",
+          "prev": "posts/mission",
           "next": null
         }
       }

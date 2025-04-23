@@ -33,7 +33,7 @@ jobs:
         # NOTE: this enables git-lfs and caching
         # - https://github.com/actions/checkout/issues/834
         # - https://github.com/nschloe/action-cached-lfs-checkout
-        uses: nschloe/action-cached-lfs-checkout@v1 
+        uses: nschloe/action-cached-lfs-checkout@v1
         # you may use this instead, if you don't want git-lfs caching
         #uses: actions/checkout@v4
         #with:
@@ -52,7 +52,7 @@ jobs:
             bundle exec ro site public
             tree ./public
       - name: upload artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v4
         with:
           path: "./public"
       - name: deploy gh-pages

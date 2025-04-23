@@ -1,0 +1,49 @@
+{
+  "data": {
+    "posts/lost-in-the-desert": {
+      "og": {
+        "image": {
+          "url": "/media/og/io/og.jpeg"
+        },
+        "title": null,
+        "description": "# WRITEME"
+      },
+      "body": "<div class=\"ro markdown\">\n  <p>following is an AI generated summary of this article, so you won’t have to read it!</p>\n\n<blockquote>\n  <h3>”</h3>\n  <h1 id=\"fixme\">FIXME</h1>\n  <h3 id=\"-1\">”</h3>\n</blockquote>\n\n<h1 id=\"writeme\">WRITEME</h1>\n\n</div>\n",
+      "assets": {
+        "assets/og.jpg": {
+          "url": "/ro/posts/lost-in-the-desert/assets/og.jpg",
+          "path": "posts/lost-in-the-desert/assets/og.jpg",
+          "size": 8,
+          "img": {
+            "format": "jpeg",
+            "width": 2400,
+            "height": 1200
+          },
+          "src": null
+        }
+      },
+      "_meta": {
+        "identifier": "posts/lost-in-the-desert",
+        "type": "posts",
+        "id": "lost-in-the-desert",
+        "urls": [
+          "/ro/posts/lost-in-the-desert/assets/og.jpg",
+          "/ro/posts/lost-in-the-desert/attributes.yml",
+          "/ro/posts/lost-in-the-desert/body.md"
+        ],
+        "created_at": "2025-04-23 04:38:29 +0000",
+        "updated_at": "2025-04-23 04:38:29 +0000",
+        "rel": {
+          "curr": "posts/lost-in-the-desert",
+          "prev": "posts/lemmings-considered-harmful",
+          "next": "posts/mission"
+        }
+      }
+    }
+  },
+  "_meta": {
+    "url": "/ro",
+    "type": "posts",
+    "id": "lost-in-the-desert"
+  }
+}

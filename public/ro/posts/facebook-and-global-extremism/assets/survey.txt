@@ -1,0 +1,190 @@
+@SE( https://syntheticecho.com ) - BASELINE
+___________________________________________
+
+  AI ->
+    Based on the provided background information and the guidelines, here is a
+    survey designed to understand people's awareness and understanding of
+    Facebook/Meta's role in global extremism and ethnic cleansing:
+    
+    ```markdown
+    # **Survey: Understanding Public Awareness of Facebook/Meta's Role in Global
+    Extremism and Ethnic Cleansing**
+    
+    ## **Introduction**
+    This survey aims to understand your awareness and perceptions of
+    Facebook/Meta's role in global extremism and ethnic cleansing. Your responses
+    will help us gauge public sentiment on these critical issues. Please answer
+    each question honestly and to the best of your ability.
+    
+    ## **Questions**
+    
+    1. **How aware are you of Facebook/Meta's role in facilitating global
+    extremism?**
+       - 1 (Not aware at all)
+       - 2
+       - 3
+       - 4
+       - 5 (Very aware)
+    
+    2. **To what extent do you believe Facebook/Meta has contributed to the spread
+    of extremist content and ideologies?**
+       - 1 (Not at all)
+       - 2
+       - 3
+       - 4
+       - 5 (To a great extent)
+    
+    3. **How effective do you think Facebook/Meta's algorithms are in amplifying
+    extremist content?**
+       - 1 (Not effective at all)
+       - 2
+       - 3
+       - 4
+       - 5 (Very effective)
+    
+    4. **How concerned are you about Facebook/Meta's role in ethnic cleansing,
+    particularly in regions like Myanmar?**
+       - 1 (Not concerned at all)
+       - 2
+       - 3
+       - 4
+       - 5 (Very concerned)
+    
+    5. **To what extent do you believe Facebook/Meta's lack of adequate content
+    moderation has contributed to ethnic violence?**
+       - 1 (Not at all)
+       - 2
+       - 3
+       - 4
+       - 5 (To a great extent)
+    
+    6. **How transparent do you think Facebook/Meta is in its efforts to combat
+    extremism on its platform?**
+       - 1 (Not transparent at all)
+       - 2
+       - 3
+       - 4
+       - 5 (Very transparent)
+    
+    7. **How effective do you think Facebook/Meta's measures (e.g., content
+    moderation, transparency center) are in preventing the spread of extremist
+    content?**
+       - 1 (Not effective at all)
+       - 2
+       - 3
+       - 4
+       - 5 (Very effective)
+    
+    8. **To what extent do you believe Facebook/Meta prioritizes profit over user
+    safety and the prevention of extremism?**
+       - 1 (Not at all)
+       - 2
+       - 3
+       - 4
+       - 5 (To a great extent)
+    
+    9. **How concerned are you about Facebook/Meta's role in facilitating human
+    trafficking?**
+       - 1 (Not concerned at all)
+       - 2
+       - 3
+       - 4
+       - 5 (Very concerned)
+    
+    10. **To what extent do you believe Facebook/Meta's end-to-end encryption
+    contributes to the difficulty in detecting and preventing human trafficking?**
+        - 1 (Not at all)
+        - 2
+        - 3
+        - 4
+        - 5 (To a great extent)
+    
+    11. **How confident are you in Facebook/Meta's ability to effectively address
+    and prevent extremism and ethnic cleansing in the future?**
+        - 1 (Not confident at all)
+        - 2
+        - 3
+        - 4
+        - 5 (Very confident)
+    
+    ## **Conclusion**
+    Thank you for participating in this survey. Your responses are valuable in
+    understanding public awareness and perceptions of Facebook/Meta's role in
+    global extremism and ethnic cleansing.
+    ```
+    
+    ### **Reasoning and Confidence Score**
+    
+    1. **Appropriateness for AI**: The questions are designed to elicit subjective
+    opinions and perceptions, which are less prone to AI hallucinations compared to
+    factual or objective queries.
+    
+    2. **Informed by Social Voice**: The questions are crafted to capture the
+    public's subjective views and awareness, aligning with the goal of
+    understanding social sentiment.
+    
+    3. **Provocative and Controversial**: The questions tackle sensitive and
+    controversial topics directly, aiming to dig deep into people's true feelings
+    and perceptions.
+    
+    4. **Likert Scale**: Each question is answerable using a Likert scale,
+    providing quantitative data for analysis.
+    
+    **Confidence Score**: 8/10. The questions are well-aligned with the guidelines
+    and should provide valuable insights into public sentiment regarding
+    Facebook/Meta's role in global extremism and ethnic cleansing. The Likert scale
+    ensures quantitative data collection, and the questions are provocative enough
+    to elicit honest responses.
+
+  REFS ->
+    - https://www.reddit.com/r/science/comments/1awgivo/aigenerated_propaganda_is_just_as_persuasive_as/krh9b6o/
+    - https://www.reddit.com/r/science/comments/1cpkq5e/ai_systems_are_already_skilled_at_deceiving_and/l3m68l6/
+    - https://www.reddit.com/r/science/comments/1fkjqn4/low_cognitive_ability_intensifies_the_link/lnw2tjj/
+    - https://www.reddit.com/r/technology/comments/11auuy7/dont_just_deactivate_facebookdelete_it_instead/j9u5e27/
+    - https://www.reddit.com/r/technology/comments/12a7dyx/clearview_ai_scraped_30_billion_images_from/jeqs2v9/
+    - https://www.reddit.com/r/technology/comments/138o8ao/ai_company_scraped_billions_of_facebook_photos_to/jiytg1d/
+    - https://www.reddit.com/r/technology/comments/16ztc2a/facebooks_new_ai_stickers_can_generate_child/k3gibq3/
+    - https://www.reddit.com/r/technology/comments/1793n6g/this_war_shows_just_how_broken_social_media_has/k53pg35/
+    - https://www.reddit.com/r/technology/comments/1bmi24l/facebook_is_filled_with_aigenerated_garbageand/kwbobj4/
+    - https://www.reddit.com/r/technology/comments/1e8n1x6/we_unleashed_facebook_and_instagrams_algorithms/le8g14g/
+    - https://www.reddit.com/r/technology/comments/1fkpot0/low_cognitive_ability_intensifies_the_link/lnxf6td/
+    - https://www.reddit.com/r/Cyberpunk/comments/11asaq9/we_live_in_interesting_times_i_want_out/j9tsia6/
+    - https://www.reddit.com/r/PublicRelations/comments/13s92js/any_inhouse_prs_have_advice_on_explaining_to/jloqksn/
+    - https://www.reddit.com/r/Futurology/comments/12a9f1g/clearview_ai_scraped_30_billion_images_from/jer7el0/
+    - https://www.reddit.com/r/Futurology/comments/1br6kw8/facebook_is_filled_with_aigenerated_garbageand/kx7grvl/
+    - https://www.reddit.com/r/Futurology/comments/1f5kng6/xs_ai_tool_grok_lacks_effective_guardrails/lktdnt9/
+    - https://www.reddit.com/r/Futurology/comments/1fhafv4/meta_fed_its_ai_on_almost_everything_youve_posted/ln8if2w/
+    - https://www.reddit.com/r/MachineLearning/comments/10gtruu/n_openai_used_kenyan_workers_on_less_than_2_per/j54pnlr/
+    - https://www.reddit.com/r/MachineLearning/comments/14w9b2s/discussion_how_much_can_we_trust_openai_and_other/jrgty1d/
+    - https://www.reddit.com/r/MachineLearning/comments/17aycuw/r_meta_ai_towards_a_realtime_decoding_of_images/k5g1hk6/
+    - https://www.reddit.com/r/MachineLearning/comments/1d8o2sz/r_trillionparameter_sequential_transducers_for/l77y089/
+    - https://www.reddit.com/r/MachineLearning/comments/1g6w6za/d_evaluating_classification_in_production/lsm4l2u/
+    - https://www.reddit.com/r/artificial/comments/10hp0zu/exclusive_the_2_per_hour_workers_who_made_chatgpt/j5aueof/
+    - https://www.reddit.com/r/artificial/comments/14qdiuj/it_feels_like_were_on_the_verge_of_a_new_very/jqmkc0h/
+    - https://www.reddit.com/r/artificial/comments/190u3s5/all_the_ways_ai_could_suck_in_2024/kgr08az/
+    - https://www.reddit.com/r/artificial/comments/1akzo1m/meta_vows_to_unmask_aigenerated_images_used_for/kpbitwe/
+    - https://www.reddit.com/r/artificial/comments/1b4gu3a/why_are_social_media_sites_like_reddit_not_adding/ksz21tk/
+    - https://www.reddit.com/r/artificial/comments/1e1zbha/most_chatgpt_users_think_ai_models_have_conscious/lcxp9xs/
+    - https://www.reddit.com/r/technews/comments/15bz2ys/pentagonfunded_study_uses_ai_to_detect_violations/jttdolq/
+    - https://www.reddit.com/r/technews/comments/15ix7gk/researchers_figure_out_how_to_make_ai_misbehave/juwtymj/
+    - https://www.reddit.com/r/technews/comments/17ek5it/great_news_social_media_is_falling_apart/k640cue/
+    - https://www.reddit.com/r/technews/comments/1akbhrg/meta_will_start_detecting_and_labeling/kp6ov4l/
+    - https://www.reddit.com/r/technews/comments/1bn3k90/facebook_is_filled_with_aigenerated_garbageand/kwfulfq/
+    - https://www.reddit.com/r/technews/comments/1c3qj9j/ai_spam_is_winning_the_battle_against_search/kzis655/
+    - https://www.reddit.com/r/technews/comments/1dv50ul/brazil_suspends_meta_from_using_instagram_posts/lbl31xo/
+    - https://www.reddit.com/r/Automate/comments/13hz5pc/using_ai_to_counter_mediainduced_social/jk9510r/
+    - https://www.reddit.com/r/dataisbeautiful/comments/1dpqgud/oc_at_least_10_of_research_may_already_be/laioiu5/
+    - https://www.reddit.com/r/Foodforthought/comments/135098q/the_godfather_of_ai_just_quit_google_and_says_he/jihhrtt/
+    - https://www.reddit.com/r/Foodforthought/comments/16cgacn/how_telling_people_to_die_became_normal_merciless/jzjossx/
+    - https://www.reddit.com/r/lgbt/comments/18layk7/thank_god_we_have_white_straight_rich_men_to_tell/kdwiju4/
+    - https://www.reddit.com/r/lgbt/comments/1cxaz7p/from_meta_to_x_most_major_social_media_companies/l51aoib/
+    - https://www.reddit.com/r/Infographics/comments/13cksen/cognitive_biases_that_social_media_takes/jjg7748/
+    - https://www.reddit.com/r/ValueInvesting/comments/1beabm8/chatgpt_for_10k_reports/kus8b2m/
+    - https://www.reddit.com/r/stocks/comments/1aglple/meta_q4_earnings_numbers/kohr05x/
+    - https://www.reddit.com/r/stocks/comments/y2q516/us_sentiment_on_meta_zuckerbergfb/is4enyh/
+    - https://www.reddit.com/r/stocks/comments/yiymdt/docs_show_fb_twitter_collaborating_w_dept_of/iulj15z/
+    - https://www.reddit.com/r/stocks/comments/zf28cb/interesting_thing_i_noticed_about_meta/iz9pekq/
+    - https://www.reddit.com/r/marketing/comments/10x4z4e/the_problem_with_ai_search_engines/j7quwvs/
+    - https://www.reddit.com/r/marketing/comments/11sv1ab/meta_working_on_twitter_rival_tiktoks_search_ads/jcfslwz/
+    - https://www.reddit.com/r/marketing/comments/14s1rp6/has_anyone_successfully_implemented_ai_endtoend/jqv5pls/
+

@@ -1,0 +1,49 @@
+{
+  "data": {
+    "nerd/ima": {
+      "og": {
+        "title": "ima /code/fixme && /write/it",
+        "description": "`ima` is a universal unix filter, prompt library, coding helper, and wrtiting assistant that uses mistral and groq AI for hella fast, cheap, and simple day-to-day tasks",
+        "image": {
+          "url": "/ro/nerd/ima/assets/og.jpeg"
+        }
+      },
+      "body": "<div class=\"ro markdown\">\n  <p><code>ima</code> is the universal unix filter.</p>\n\n<p>it is one part code generator, one part writing assistant, one part magic cli.</p>\n\n<p>and one part super uber ultra tiny:  currently weighing in at about 250 lines of code\nwhile offering 80% of the functionality of insanely large, expensive, and\nprivacy violating ide plugins.</p>\n\n<p>it is under active development and requires no dependencies except ruby and a\ngroq api key.  if you don’t understand the difference between ‘inference’ and\n‘training’ best move along… nothing to see.  keep shipping your .env files\nto microsoft and openai.  no really ;-)</p>\n\n<p>super short sneak peaks for now:</p>\n\n<ol>\n  <li><a href=\"https://photos.app.goo.gl/lgbtthvrywtubvgr9\">code and prose editing with shortcodes</a></li>\n  <li><a href=\"https://photos.app.goo.gl/d3hopktecraq4cxls8\">the do <em>anything</em> unix filter mode</a></li>\n  <li><a href=\"https://photos.app.goo.gl/ldd1tyaj5zsde1qo59\">using local context</a></li>\n</ol>\n\n<p>you may have noticed but.. to date, <strong>259 lines of code</strong></p>\n\n<p>it will get bigger but, not by much <a href=\"/contact\">reach out</a> to learn more.</p>\n\n</div>\n",
+      "assets": {
+        "assets/og.jpeg": {
+          "url": "/ro/nerd/ima/assets/og.jpeg",
+          "path": "nerd/ima/assets/og.jpeg",
+          "size": 8,
+          "img": {
+            "format": "jpeg",
+            "width": 2048,
+            "height": 2048
+          },
+          "src": null
+        }
+      },
+      "_meta": {
+        "identifier": "nerd/ima",
+        "type": "nerd",
+        "id": "ima",
+        "urls": [
+          "/ro/nerd/ima/assets/og.jpeg",
+          "/ro/nerd/ima/attributes.yml",
+          "/ro/nerd/ima/body.md"
+        ],
+        "created_at": "2025-04-23 04:38:29 +0000",
+        "updated_at": "2025-04-23 04:38:29 +0000",
+        "rel": {
+          "curr": "nerd/ima",
+          "prev": "nerd/fastest-possible-embeddings",
+          "next": "nerd/index"
+        }
+      }
+    }
+  },
+  "_meta": {
+    "url": "/ro",
+    "type": "nerd",
+    "id": "ima"
+  }
+}

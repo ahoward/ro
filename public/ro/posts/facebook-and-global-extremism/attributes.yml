@@ -1,0 +1,7 @@
+og:
+  image:
+    url: ./assets/og.jpg
+    width: 976
+  title: Facebook And Global Extremism
+  description: |-
+    A data scientist analyzed over a million Reddit posts to understand public sentiment around Facebook's content moderation changes. Using custom AI technology to process social conversations, they found concerning gaps in society's understanding of how unregulated social media can enable extremism and ethnic violence, beyond just issues of free speech and minority protections.

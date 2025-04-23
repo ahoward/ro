@@ -1,0 +1,8 @@
+og:
+  title: 'ima /code/fixme && /write/it'
+  description: >-
+    `ima` is a universal unix filter, prompt library, coding helper, and
+    wrtiting assistant that uses mistral and groq AI for hella fast, cheap,
+    and simple day-to-day tasks
+  image:
+    url: ./assets/og.jpeg
