@@ -1,21 +1,19 @@
-NAME
-----
-ro
-
 TL;DR:
 ------
 
-ro, 'r-ead o-only' is a git backed, filesytem based, 'perfect' database for web content.
+`ro` stands for `read only`, and it is the tiniest, best, headless cms.
 
-it lets you keep your content in github, as god intended.
+it lets you keep all your content in github, as god intended.
 
-it is one part cms, one part database, and one part api.
+it is one part cms, one part database, one part api, and one part magic.
 
-if you used a headless cms, it's like that, before they existed.
+if you used a headless cms, it's like that, before they existed, except way better, and free.
 
-with ro, you can seperate your content, from presentation, like a decent human being.
+with `ro`, you can seperate your content from presentation, like a sane and decent human being.
 
-__down with wordpress.  up with github.  long live markdown!__
+> silent code whispers
+> github's gentle, peaceful hush
+> simplicity reigns
 
 README
 ------
@@ -265,7 +263,7 @@ __WUT!?!?!___
 - add a build step to build the js api and deploy it via gh-pages
 - consume that 'static cms api' via fetch
 
-free, image ready, headless CMS
+*free*, image ready, headless CMS.  yep.
 
 ... 🤯🤯🤯
 
@@ -273,7 +271,9 @@ free, image ready, headless CMS
 
 finally, and, truly, this is possibly the *coup de grâce*, you can just
 friggin use github as your CMS now!  why?  because the markdown previw on
-gh... just works.
+gh... just works. 🤤
+
+eg.  https://github.com/ahoward/ro/blob/main/public/ro/posts/almost-died-in-an-ice-cave/body.md
 
 ADVANCED
 ---------
@@ -290,10 +290,16 @@ ADVANCED
 BORING SHIT
 -----------
 
-- install
-
 ```sh
 
   ~> gem install ro
 
 ```
+
+LICENSE
+-------
+[Komorebi](LICENSE.md)
+
+AI
+--
+suck it 🤖s!
