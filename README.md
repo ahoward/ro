@@ -301,6 +301,27 @@ ADVANCED
   https://github.com/ahoward/ro/blob/main/lib/ro/model.rb , it supports
   pagination and all the things.  rails ready.
 
+- explore built-in support for syntax highlighted source code.  just put a
+  file in ./assets/src/a.rb and it 'just works'
+
+- explore the api in the repl, you'll find POLS stuff like
+
+```ruby
+
+  ro.get('posts').get('almost-died-in-an-ice-cave')
+
+  ro.get('posts/almost-died-in-an-ice-cave')
+
+  ro.get('posts').get('almost-died-in-an-ice-cave').assets.first.img
+
+  #=> {:format=>"png", :width=>1456, :height=>817}
+
+```
+
+DOCS
+----
+1) vibe it AI
+2) RTFC
 
 BORING SHIT
 -----------
@@ -313,7 +334,7 @@ BORING SHIT
 
 LICENSE
 -------
-[Komorebi](LICENSE.md)
+https://github.com/LGUG2Z/komorebi-license
 
 AI
 --
