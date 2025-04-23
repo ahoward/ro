@@ -3,7 +3,7 @@
 
 Gem::Specification::new do |spec|
   spec.name = "ro"
-  spec.version = "4.4.0"
+  spec.version = "4.4.1"
   spec.required_ruby_version = '>= 3.0'
   spec.platform = Gem::Platform::RUBY
   spec.summary = "all your content in github, as god intended"
