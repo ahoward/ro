@@ -51,16 +51,14 @@ for a real site.
 
 in this example you can see a few things, regarding the layout of a `ro` directory:
 
-- `ro` content often, but is not required, to live in public.  more on this below.
+- `ro` content often, but is not required, to live in `public`.  more on this below.
 
 - the essential layout is
 
 ```ruby
 
     @root       = "ro"
-
     @collection = "posts"
-
     @id          = "almost-died-in-an-ice-cave"
 
     "#{ @root }/#{ @collection }/#{ @id }"
@@ -87,37 +85,36 @@ if you learn best by example, you can examine the `ro` directory of my own websi
 
 more about this can be rtfm'd here -> https://github.com/ahoward/ro/blob/main/lib/ro.rb#L29-L55
 
-because not having a REPL sucks, `ro` has one.
+because not having a repl sucks, so `ro` has one.  you should too.
 
 ```sh
-drawohara@drawohara.dev:ro[main] #=> ro console ./public/ro/
+
+# fire up the KONSOULLLLL!
+
+~> ro console ./public/ro/
+
 ```
 
 ```ruby
 
-###
 ro.posts.almost_died_in_an_ice_cave.attributes.keys #=>
 
   ["og", "body", "assets", "_meta"]
 
-###
 ro.posts.almost_died_in_an_ice_cave.attributes.og #=>
 
   {"image"=>{"url"=>"/ro/posts/almost-died-in-an-ice-cave/assets/og.jpg"},
    "title"=>"Almost Died In An Ice Cave",
    "description"=>"On April of 2024, I, along with 6 of my friends, dug for our lives to come out on the other side."}
 
-###
 ro.posts.almost_died_in_an_ice_cave.attributes.body.slice(0,420) #=>
 
   "<div class=\"ro markdown\">\n  <p><a href=\"#tl;dr;\">tl;dr;</a></p>\n\n<blockquote>\n  <p>in april, 2024, myself, and 6 brave men attempted to cross the harding\nicefield.</p>\n\n  <p>in celebration of <a href=\"https://en.wikipedia.org/wiki/Harding_Icefield#History\">yule kilcher’s 1968 crossing</a></p>\n\n  <p>midway through our trip, at the point of no return, we were beseiged by a storm of storms.</p>\n\n  <p>we dug shoulder to "
 
-###
 ro.posts.almost_died_in_an_ice_cave.assets.first #=>
 
   "public/ro/posts/almost-died-in-an-ice-cave/assets/image1.png"
 
-###
 ro.posts.almost_died_in_an_ice_cave.assets.first.url #=>
 
   "/ro/posts/almost-died-in-an-ice-cave/assets/image1.png"
@@ -171,7 +168,12 @@ __OH MAN THAT SUX I DO NOT WANT MY IMAGES STORED IN GH!!!!__
 
 *sit down... breathe...*
 
-recall what we said about `public` and `RO_URL`?  by default, this is is `/ro`...
+and enable [git-lfs](https://git-lfs.com/)
+
+it used to be fragile but, since everyone the in the world is now checking in massive jupyter notebooks it 'just works'
+
+---
+now, recall what we said about `public` and `RO_URL`?  by default, this is is `/ro`...
 
 therefore, if we have:
 
