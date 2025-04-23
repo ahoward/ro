@@ -245,7 +245,8 @@ Gem::Specification::new do |spec|
     spec.add_dependency(*["image_size", "~> 3.4"])
   
     spec.add_dependency(*["nokogiri", "~> 1"])
-  
+
+    spec.add_dependency(*["webrick", "~> 1.9", ">= 1.9.1"])
 
   spec.extensions.push(*[])
 
