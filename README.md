@@ -179,7 +179,9 @@ therefore, if we have:
 
 `./public/ro/posts/foobar/...'
 
-paths found under `public` are going to start with `/ro`.  *boom*.
+paths found under `public` are going to start with `/ro`...
+
+> are you tracking yet?
 
 also, if you do not host your `ro` directory under public (but why not?  it
 *is* public content after all..), then you will need to set `RO_URL` to be the
@@ -209,10 +211,10 @@ it's tight, and you can trust it.
 a bit about markdown...
 
 markdown is.  the web.  also AI, but i digress... if you aren't writing in
-markdown, you are probably writing `perl`... (nothing wrong with that!)
+markdown, you are probably writing `perl`... (nothing wrong with that btw!)
 
 but markdown has a lot of edge cases, not least of which syntax highlighting
-and css b.s. to deal with.
+and bs css to deal with.
 
 `ro`, again, 'just works' here.
 
@@ -237,6 +239,10 @@ ultra, ultra, ultra easy to consume.  no stupid graphql thing, no bullsxxx
 api_key, no vendor lock-in to prismic, dato, contentful, or some other
 extorsionist regime., just a lil `fetch` and you are __GTG BRO!__
 
+you don't even have to render the stuff, it's pre-rendered html in the api ready to `dangerouslySetInnerHTM`!
+
+__(alsoCamelCaseMakeAPIHARDToReadWithEMPHASIS)__
+
 you can see an example here -> https://github.com/ahoward/ro/tree/main/public/api/ro
 
 i won't explain more now except to say that all you need to do to make a js
@@ -248,8 +254,15 @@ bundle is
 
 ```
 
-look carefully, it makes it easy to 'grab everything stupid style' or to
-paginate client side.
+and then look carefully, it makes it easy to 'grab everything stupid style' or
+to paginate client side.  each collection has a `index.js` with everything, a
+`index-$pageno.js` with details about the next page, iff any, and of course, it
+produces an `index.json` file, complete with those gnarly *width* and *height*
+numbers you need to *fight FUOC* and layout shift.
+
+if you don't know what that means, probably use [wordpress](https://drawohara.io/dojo4/archive/irish-dance-and-wordpress-the-soul-destroyer/)
+
+lil detail about that link^, it is from *10 years ago*, when dojo4 was still running, and running on `ro`.
 
 ---
 
