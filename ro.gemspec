@@ -248,6 +248,8 @@ Gem::Specification::new do |spec|
 
     spec.add_dependency(*["webrick", "~> 1.9", ">= 1.9.1"])
 
+    spec.add_dependency(*["ak47", "~> 0.2.5"])
+
   spec.extensions.push(*[])
 
   spec.author = "Ara T. Howard"
