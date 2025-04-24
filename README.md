@@ -158,7 +158,7 @@ you will end up with html that looks like so:
 
 <a href='/ro/posts/foo-bar/assets/report.pdf'>linky</a>
 
-<img src='/ro/posts/foo-bar/assets/pretty.png'>alty</a>
+<img src='/ro/posts/foo-bar/assets/pretty.png' alt='alty'>
 
 
 ```
