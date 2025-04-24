@@ -29,6 +29,11 @@ jobs:
           ruby-version: "3.2"
           bundler-cache: true
 
+     - name: Install dependencies
+       run: |
+         bundle config set frozen false
+         bundle install
+
       - name: Build site with ro
         run: |
           export RO_URL=${{ steps.gh-pages.outputs.base_url }}/ro
