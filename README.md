@@ -9,7 +9,7 @@ it is one part cms, one part database, one part api, and one part magic.
 
 if you used a headless cms, it's like that, before they existed, except way better, and free.
 
-with `ro`, you can seperate your content from presentation, like a sane and decent human being.
+with `ro`, you can separate your content from presentation, like a sane and decent human being.
 
 > silent code whispers
 > github's gentle, peaceful hush
