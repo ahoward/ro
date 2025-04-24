@@ -85,7 +85,7 @@ if you learn best by example, you can examine the `ro` directory of my own websi
 
 more about this can be rtfm'd here -> https://github.com/ahoward/ro/blob/main/lib/ro.rb#L29-L55
 
-because not having a repl sucks, so `ro` has one.  you should too.
+because not having a repl sucks, `ro` has one.  you should too.
 
 ```sh
 
