@@ -266,7 +266,7 @@ lil detail about that link^, it is from *10 years ago*, when dojo4 was still run
 
 ---
 
-one super comman pattern, is to add a build step to a github workflow, and
+one super common pattern, is to add a build step to a github workflow, and
 then publish the js api via gh-pages. see an example here:
 
 https://github.com/ahoward/ro/blob/main/.github/workflows/gh-pages.yml
