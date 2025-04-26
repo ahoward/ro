@@ -9,7 +9,7 @@ module Ro
     def initialize(script:)
       @script = script
 
-      @port = @script.opts.fetch(:port)
+      @port = @script.options.fetch(:port, Ro.defaults.port)
     end
 
     def run!

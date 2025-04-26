@@ -3,7 +3,7 @@
 
 Gem::Specification::new do |spec|
   spec.name = "ro"
-  spec.version = "4.4.0"
+  spec.version = "4.4.1"
   spec.required_ruby_version = '>= 3.0'
   spec.platform = Gem::Platform::RUBY
   spec.summary = "all your content in github, as god intended"
@@ -245,7 +245,10 @@ Gem::Specification::new do |spec|
     spec.add_dependency(*["image_size", "~> 3.4"])
   
     spec.add_dependency(*["nokogiri", "~> 1"])
-  
+
+    spec.add_dependency(*["webrick", "~> 1.9", ">= 1.9.1"])
+
+    spec.add_dependency(*["ak47", "~> 0.2.5"])
 
   spec.extensions.push(*[])
 
