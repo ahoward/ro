@@ -9,7 +9,7 @@ it is one part cms, one part database, one part api, and one part magic.
 
 if you used a headless cms, it's like that, before they existed, except way better, and free.
 
-with `ro`, you can seperate your content from presentation, like a sane and decent human being.
+with `ro`, you can separate your content from presentation, like a sane and decent human being.
 
 > silent code whispers
 > github's gentle, peaceful hush
@@ -85,7 +85,7 @@ if you learn best by example, you can examine the `ro` directory of my own websi
 
 more about this can be rtfm'd here -> https://github.com/ahoward/ro/blob/main/lib/ro.rb#L29-L55
 
-because not having a repl sucks, so `ro` has one.  you should too.
+because not having a repl sucks, `ro` has one.  you should too.
 
 ```sh
 
@@ -158,7 +158,7 @@ you will end up with html that looks like so:
 
 <a href='/ro/posts/foo-bar/assets/report.pdf'>linky</a>
 
-<img src='/ro/posts/foo-bar/assets/pretty.png'>alty</a>
+<img src='/ro/posts/foo-bar/assets/pretty.png' alt='alty'>
 
 
 ```
