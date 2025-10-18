@@ -1,0 +1,143 @@
+#!/usr/bin/env ruby
+
+# Ro asset structure migration tool
+# Migrates from old structure (identifier/attributes.yml + identifier/assets/)
+# to new structure (identifier.yml + identifier/)
+
+require 'pathname'
+require 'optparse'
+
+# Load ro library
+lib_path = Pathname.new(__FILE__).parent.parent / 'lib'
+$LOAD_PATH.unshift(lib_path) unless $LOAD_PATH.include?(lib_path.to_s)
+require 'ro'
+
+# Parse command line options
+options = {
+  dry_run: false,
+  backup: true,
+  verbose: false,
+  force: false
+}
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: ro-migrate [options] ROOT_PATH"
+  opts.separator ""
+  opts.separator "Migrates Ro assets from old structure to new simplified structure"
+  opts.separator ""
+  opts.separator "Options:"
+
+  opts.on("-d", "--dry-run", "Preview migration without making changes") do
+    options[:dry_run] = true
+    options[:verbose] = true
+  end
+
+  opts.on("-b", "--[no-]backup", "Create backup before migrating (default: true)") do |b|
+    options[:backup] = b
+  end
+
+  opts.on("-v", "--verbose", "Show detailed progress") do
+    options[:verbose] = true
+  end
+
+  opts.on("-f", "--force", "Force migration even if new structure detected") do
+    options[:force] = true
+  end
+
+  opts.on("-h", "--help", "Show this help message") do
+    puts opts
+    exit
+  end
+end.parse!
+
+# Get root path from arguments
+if ARGV.empty?
+  puts "Error: ROOT_PATH required"
+  puts "Usage: ro-migrate [options] ROOT_PATH"
+  puts "Run 'ro-migrate --help' for more information"
+  exit 1
+end
+
+root_path = Pathname.new(ARGV[0]).expand_path
+
+unless root_path.directory?
+  puts "Error: #{root_path} is not a directory"
+  exit 1
+end
+
+# Create migrator
+migrator = Ro::Migrator.new(root_path, options)
+
+puts "Ro Asset Structure Migration Tool"
+puts "=" * 50
+puts "Root: #{root_path}"
+puts "Options: #{options.inspect}"
+puts ""
+
+# Validate structure
+puts "Validating structure..."
+validation = migrator.validate
+
+puts "Collections found: #{validation[:collections].size}"
+puts "Old structure nodes: #{validation[:old_nodes].size}"
+puts "New structure nodes: #{validation[:new_nodes].size}"
+puts ""
+
+# Check if migration needed
+if validation[:old_nodes].empty?
+  puts "✓ No old structure nodes found - migration not needed"
+  exit 0
+end
+
+if validation[:has_new_structure] && !options[:force]
+  puts "⚠ Warning: Both old and new structures detected!"
+  puts "This may indicate a partial migration."
+  puts "Use --force to proceed anyway, or check your data first."
+  exit 1
+end
+
+# Show preview
+if options[:dry_run] || options[:verbose]
+  puts "Migration plan:"
+  puts "-" * 50
+  plan = migrator.preview
+  plan.each_with_index do |step, i|
+    puts "\n#{i + 1}. #{step[:collection]}/#{step[:node_id]}"
+    step[:actions].each do |action|
+      puts "   - #{action}"
+    end
+  end
+  puts ""
+end
+
+if options[:dry_run]
+  puts "✓ Dry run complete - no changes made"
+  exit 0
+end
+
+# Confirm migration
+unless options[:force]
+  print "Proceed with migration? [y/N] "
+  response = STDIN.gets.chomp
+  unless response.downcase == 'y'
+    puts "Migration cancelled"
+    exit 0
+  end
+end
+
+# Run migration
+puts "\nStarting migration..."
+result = migrator.migrate
+
+if result[:success]
+  puts "\n✓ Migration complete!"
+  puts "  Nodes migrated: #{result[:nodes_migrated]}"
+  puts "  Collections migrated: #{result[:collections_migrated]}"
+
+  if options[:backup]
+    puts "\n  Backup created - use 'ro-migrate --rollback' if needed"
+  end
+else
+  puts "\n✗ Migration failed"
+  exit 1
+end
