@@ -137,7 +137,7 @@ module Ro
       $stderr.puts "Collections will NOT automatically discover old-structure nodes."
       $stderr.puts ""
       $stderr.puts "To migrate your data, run:"
-      $stderr.puts "  #{$0.include?('bin/') ? './bin/ro-migrate' : 'ro-migrate'} #{self}"
+      $stderr.puts "  #{$0.include?('bin/') ? './bin/ro' : 'ro'} migrate #{self}"
       $stderr.puts ""
       $stderr.puts "Or see MIGRATION.md for details."
       $stderr.puts "=" * 70

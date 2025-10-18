@@ -22,7 +22,7 @@ Ro v5.0 uses a simplified NEW structure:
 Collections will NOT automatically discover old-structure nodes.
 
 To migrate your data, run:
-  ro-migrate /path/to/your/data
+  ro migrate /path/to/your/data
 ```
 
 **This warning does NOT stop your program** - it's informational to help you know you need to migrate. The warning appears once per root directory when `Ro::Root.new` is called.
@@ -61,13 +61,13 @@ Ro v5.0 includes a migration tool to automate the conversion from old to new str
 
 ```bash
 # Preview migration (dry run)
-./bin/ro-migrate --dry-run /path/to/your/ro/root
+./bin/ro migrate --dry-run /path/to/your/ro/root
 
 # Run migration with backup (recommended)
-./bin/ro-migrate /path/to/your/ro/root
+./bin/ro migrate /path/to/your/ro/root
 
 # Run migration without backup (not recommended)
-./bin/ro-migrate --no-backup /path/to/your/ro/root
+./bin/ro migrate --no-backup /path/to/your/ro/root
 ```
 
 ### Options
@@ -133,7 +133,7 @@ This will restore from the most recent backup.
 
 - [ ] Review migration plan with `--dry-run`
 - [ ] Backup your data (migration creates backup automatically)
-- [ ] Run migration: `./bin/ro-migrate /path/to/ro/root`
+- [ ] Run migration: `./bin/ro migrate /path/to/ro/root`
 - [ ] Verify migrated data loads correctly
 - [ ] Test your application with new structure
 - [ ] Update code to Ro v5.0 if needed
