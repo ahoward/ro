@@ -55,24 +55,24 @@ class NodeTest < RoTestCase
     assert !node.id.end_with?('.json'), "Node ID should not include .json extension"
   end
 
-  # T015: Test Node#asset_dir returns node directory (not assets/ subdirectory)
-  def test_asset_dir_returns_node_directory
+  # T015: Test Node#asset_dir returns assets/ subdirectory
+  def test_asset_dir_returns_assets_subdirectory
     node = Ro::Node.new(@collection, @metadata_file)
-    expected_dir = new_structure_path / 'posts' / 'sample-post'
+    expected_dir = new_structure_path / 'posts' / 'sample-post' / 'assets'
 
-    assert_equal expected_dir.to_s, node.asset_dir.to_s, "asset_dir should return node directory"
+    assert_equal expected_dir.to_s, node.asset_dir.to_s, "asset_dir should return assets/ subdirectory"
   end
 
-  def test_asset_dir_not_assets_subdirectory
+  def test_asset_dir_ends_with_assets
     node = Ro::Node.new(@collection, @metadata_file)
 
-    assert !node.asset_dir.to_s.end_with?('/assets'), "asset_dir should NOT end with /assets"
+    assert node.asset_dir.to_s.end_with?('/assets'), "asset_dir should end with /assets"
   end
 
   def test_asset_dir_for_metadata_only_node
     metadata_only_file = new_structure_path / 'posts' / 'metadata-only.yml'
     node = Ro::Node.new(@collection, metadata_only_file)
-    expected_dir = new_structure_path / 'posts' / 'metadata-only'
+    expected_dir = new_structure_path / 'posts' / 'metadata-only' / 'assets'
 
     # asset_dir should still return the expected path even if directory doesn't exist
     assert_equal expected_dir.to_s, node.asset_dir.to_s
@@ -117,8 +117,8 @@ if __FILE__ == $0
     :test_id_derived_from_metadata_filename,
     :test_id_strips_yml_extension,
     :test_id_handles_json_extension,
-    :test_asset_dir_returns_node_directory,
-    :test_asset_dir_not_assets_subdirectory,
+    :test_asset_dir_returns_assets_subdirectory,
+    :test_asset_dir_ends_with_assets,
     :test_asset_dir_for_metadata_only_node,
     :test_load_base_attributes_from_metadata_file,
     :test_attributes_loaded_from_correct_file,

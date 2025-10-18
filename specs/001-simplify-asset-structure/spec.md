@@ -2,8 +2,10 @@
 
 **Feature Branch**: `001-simplify-asset-structure`
 **Created**: 2025-10-17
-**Status**: Draft
-**Input**: User description: "attm, ro stores assets in a directory structure like ./ro/posts/teh-slug/attributes.yml, ./ro/posts/teh-slug/assets/**.**.  we want to, instead, use a more simple structure like ./ro/posts/teh-slug.yml and ./ro/posts/teh-slug/**.**.  that is to say '$identifier.yml' (or json, etc) for the main data and '($identifier/**.**) for additional data"
+**Status**: In Progress
+**Input**: User description: "attm, ro stores assets in a directory structure like ./ro/posts/teh-slug/attributes.yml, ./ro/posts/teh-slug/assets/**.**.  we want to, instead, use a more simple structure like ./ro/posts/teh-slug.yml and ./ro/posts/teh-slug/assets/**.**.  that is to say '$identifier.yml' (or json, etc) for the main data and '$identifier/assets/**.**' for asset files"
+
+**Clarification**: Assets remain in the `assets/` subdirectory to prevent non-asset files (like markdown, ERB templates) from being treated as assets. Only the metadata file moves from `$identifier/attributes.yml` to `$identifier.yml`.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -17,8 +19,8 @@ Users need to access asset metadata and associated files using a simpler, more i
 
 **Acceptance Scenarios**:
 
-1. **Given** an asset with identifier "my-post", **When** the system reads the asset, **Then** it loads metadata from `my-post.yml` and assets from `my-post/` directory
-2. **Given** multiple assets exist, **When** the system lists assets, **Then** it correctly identifies each asset by matching `identifier.yml` files with corresponding `identifier/` directories
+1. **Given** an asset with identifier "my-post", **When** the system reads the asset, **Then** it loads metadata from `my-post.yml` and assets from `my-post/assets/` directory
+2. **Given** multiple assets exist, **When** the system lists assets, **Then** it correctly identifies each asset by matching `identifier.yml` files with corresponding `identifier/assets/` directories
 
 ---
 
@@ -32,9 +34,9 @@ Users need to create and update assets in the new simplified structure, with met
 
 **Acceptance Scenarios**:
 
-1. **Given** a new asset identifier "new-post", **When** the system creates the asset, **Then** it creates `new-post.yml` for metadata and `new-post/` directory for associated files
+1. **Given** a new asset identifier "new-post", **When** the system creates the asset, **Then** it creates `new-post.yml` for metadata and `new-post/assets/` directory for associated files
 2. **Given** an existing asset, **When** metadata is updated, **Then** changes are written to the `identifier.yml` file
-3. **Given** new files are added to an asset, **When** the system saves them, **Then** files are stored in the `identifier/` directory
+3. **Given** new files are added to an asset, **When** the system saves them, **Then** files are stored in the `identifier/assets/` directory
 
 ---
 
@@ -48,8 +50,8 @@ Users need to migrate assets from the old structure (`identifier/attributes.yml`
 
 **Acceptance Scenarios**:
 
-1. **Given** assets in old format (`slug/attributes.yml`), **When** migration runs, **Then** metadata is moved to `slug.yml` and asset files are moved from `slug/assets/` to `slug/`
-2. **Given** an asset with both metadata and files, **When** migration completes, **Then** all data is accessible in the new structure and old structure can be safely removed
+1. **Given** assets in old format (`slug/attributes.yml` + `slug/assets/`), **When** migration runs, **Then** metadata is moved to `slug.yml` and asset files remain in `slug/assets/`
+2. **Given** an asset with both metadata and files, **When** migration completes, **Then** all data is accessible in the new structure with only the metadata file location changed
 3. **Given** migration fails partway through, **When** the error occurs, **Then** the system can resume or rollback without data corruption
 
 ---
@@ -66,15 +68,15 @@ Users need to migrate assets from the old structure (`identifier/attributes.yml`
 
 ### Functional Requirements
 
-- **FR-001**: System MUST read asset metadata from files named `{identifier}.yml` (or .json, .toml, etc.) located at the root collection level
-- **FR-002**: System MUST read asset files from directories named `{identifier}/` located at the same level as the metadata file
-- **FR-003**: System MUST write new asset metadata to `{identifier}.yml` format at the root collection level
-- **FR-004**: System MUST write asset files to `{identifier}/` directory structure
+- **FR-001**: System MUST read asset metadata from files named `{identifier}.yml` (or .json, .toml, etc.) located at the collection level
+- **FR-002**: System MUST read asset files from directories named `{identifier}/assets/` located at the same collection level
+- **FR-003**: System MUST write new asset metadata to `{identifier}.yml` format at the collection level
+- **FR-004**: System MUST write asset files to `{identifier}/assets/` directory structure
 - **FR-005**: System MUST support multiple metadata formats (YAML, JSON, TOML, etc.) based on file extension
 - **FR-006**: System MUST correctly identify assets by detecting metadata files with supported extensions
 - **FR-007**: System MUST handle assets that have metadata only (no directory)
 - **FR-008**: System MUST handle assets that have files only (no metadata file)
-- **FR-009**: System MUST provide migration capability to convert from old structure (`identifier/attributes.yml` + `identifier/assets/`) to new structure (`identifier.yml` + `identifier/`)
+- **FR-009**: System MUST provide migration capability to convert from old structure (`identifier/attributes.yml` + `identifier/assets/`) to new structure (`identifier.yml` + `identifier/assets/`)
 - **FR-010**: System MUST preserve all data during migration without loss
 - **FR-011**: System MUST prefer old structure (`identifier/attributes.yml`) when both old and new structures exist for the same identifier, until explicit migration is performed
 - **FR-012**: This is a one-time breaking change requiring a major version bump; migration must be completed before upgrading to the new version

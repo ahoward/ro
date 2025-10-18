@@ -11,34 +11,34 @@ class AssetTest < RoTestCase
     @node = Ro::Node.new(@collection, @metadata_file)
   end
 
-  # T017: Test Asset path resolution without assets/ prefix
-  def test_asset_path_without_assets_prefix
-    asset_path = new_structure_path / 'posts' / 'sample-post' / 'image.jpg'
+  # T017: Test Asset path resolution with assets/ subdirectory
+  def test_asset_path_with_assets_subdirectory
+    asset_path = new_structure_path / 'posts' / 'sample-post' / 'assets' / 'image.jpg'
 
-    # In new structure, asset paths should NOT contain /assets/ segment
-    assert !asset_path.to_s.include?('/assets/'), "Asset path should not contain /assets/ in new structure"
+    # Both old and new structure use assets/ subdirectory
+    assert asset_path.to_s.include?('/assets/'), "Asset path should contain /assets/ subdirectory"
   end
 
   def test_asset_relative_path_calculation
-    asset_path = new_structure_path / 'posts' / 'sample-post' / 'image.jpg'
+    asset_path = new_structure_path / 'posts' / 'sample-post' / 'assets' / 'image.jpg'
     asset = Ro::Asset.new(asset_path)
 
-    # Relative path should be calculated correctly (no assets/ prefix to strip)
+    # Relative path should be calculated correctly (relative to asset_dir which is node/assets/)
     relative = asset.relative_path
 
     assert_not_nil relative, "Relative path should not be nil"
-    # In new structure, relative path is simpler (no assets/ to strip)
+    # Relative path is relative to asset_dir (node/assets/), so just the filename
     assert_equal 'image.jpg', relative.to_s, "Relative path should be image.jpg"
   end
 
   def test_nested_asset_path
     # Test with nested subdirectory structure
-    asset_path = new_structure_path / 'posts' / 'nested-test' / 'subdirectory' / 'image.png'
+    asset_path = new_structure_path / 'posts' / 'nested-test' / 'assets' / 'subdirectory' / 'image.png'
     asset = Ro::Asset.new(asset_path)
 
     relative = asset.relative_path
 
-    # Should preserve subdirectory structure
+    # Should preserve subdirectory structure (relative to assets/)
     assert_equal 'subdirectory/image.png', relative.to_s, "Nested asset should preserve directory structure"
   end
 
@@ -70,7 +70,7 @@ if __FILE__ == $0
   puts "Running Asset unit tests..."
 
   tests = [
-    :test_asset_path_without_assets_prefix,
+    :test_asset_path_with_assets_subdirectory,
     :test_asset_relative_path_calculation,
     :test_nested_asset_path,
     :test_asset_url_generation,

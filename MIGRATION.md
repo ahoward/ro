@@ -31,7 +31,7 @@ To migrate your data, run:
 ```
 posts/
   sample-post/
-    attributes.yml       # Metadata file
+    attributes.yml       # Metadata file INSIDE node directory
     assets/             # Assets subdirectory
       image.jpg
       document.pdf
@@ -40,10 +40,11 @@ posts/
 ### New Structure (v5.0)
 ```
 posts/
-  sample-post.yml       # Metadata file at collection level
-  sample-post/          # Assets directly in node directory
-    image.jpg
-    document.pdf
+  sample-post.yml       # Metadata file at COLLECTION level (moved out)
+  sample-post/          # Node directory (same location)
+    assets/             # Assets subdirectory (SAME location as before!)
+      image.jpg
+      document.pdf
 ```
 
 ## Benefits
@@ -85,10 +86,8 @@ The migration tool:
 1. **Validates** the structure to detect old/new/mixed formats
 2. **Creates a backup** (unless `--no-backup` is specified)
 3. **For each old-structure node**:
-   - Moves `identifier/attributes.yml` → `identifier.yml`
-   - Moves `identifier/assets/*` → `identifier/`
-   - Removes `identifier/assets/` directory
-   - Removes `identifier/` directory if empty
+   - Moves `identifier/attributes.yml` → `identifier.yml` (at collection level)
+   - Assets remain in `identifier/assets/` (no change needed!)
 
 ### Safety Features
 
@@ -101,18 +100,14 @@ The migration tool:
 
 If you prefer to migrate manually:
 
-1. **For each asset**:
+1. **For each node**:
    ```bash
    cd posts
 
-   # Move metadata file
+   # Move metadata file out to collection level
    mv sample-post/attributes.yml sample-post.yml
 
-   # Move assets out of assets/ subdirectory
-   mv sample-post/assets/* sample-post/
-
-   # Remove empty assets/ directory
-   rmdir sample-post/assets
+   # That's it! Assets stay in sample-post/assets/
    ```
 
 2. **Update your code** to use Ro v5.0
@@ -154,11 +149,11 @@ node = Ro::Node.new(collection, metadata_file)
 
 **Asset paths**:
 ```ruby
-# Old (v4.x)
+# Both old and new structure
 node.asset_dir  # => identifier/assets/
 
-# New (v5.0)
-node.asset_dir  # => identifier/
+# The assets/ subdirectory stays the same!
+# Only the metadata file location changes
 ```
 
 ### What Stays the Same
@@ -200,8 +195,8 @@ Ensure you're running the migration from the correct root directory.
 
 Check that:
 1. Metadata files are at collection level (e.g., `posts/sample-post.yml`)
-2. Asset directories are at collection level (e.g., `posts/sample-post/`)
-3. No `assets/` subdirectory remains
+2. Node directories exist at collection level (e.g., `posts/sample-post/`)
+3. Assets are in the `assets/` subdirectory (e.g., `posts/sample-post/assets/image.jpg`)
 
 ## Examples
 
@@ -221,9 +216,10 @@ After:
 ```
 ro_data/
   posts/
-    welcome.yml
+    welcome.yml          ← Metadata moved out
     welcome/
-      banner.jpg
+      assets/
+        banner.jpg       ← Assets stay in same location
 ```
 
 ### Example 2: Multiple Collections
@@ -249,11 +245,13 @@ ro_data/
   posts/
     post-1.yml
     post-1/
-      image.jpg
+      assets/
+        image.jpg
   pages/
     about.yml
     about/
-      photo.png
+      assets/
+        photo.png
 ```
 
 ### Example 3: Metadata-Only Node

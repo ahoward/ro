@@ -94,9 +94,7 @@ module Ro
           new_asset_dir: new_asset_dir,
           actions: [
             "Move #{old_path}/attributes.yml → #{new_metadata_file}",
-            "Move #{old_path}/assets/* → #{new_asset_dir}/",
-            "Remove #{old_path}/assets/",
-            "Remove #{old_path}/ (if empty)"
+            "Assets remain in #{old_path}/assets/ (no change needed)"
           ]
         }
       end
@@ -121,7 +119,8 @@ module Ro
       end
 
       new_metadata_file = collection_path.join("#{node_id}.yml")
-      new_asset_dir = collection_path.join(node_id)
+      new_node_dir = collection_path.join(node_id)
+      new_assets_dir = new_node_dir.join('assets')
       old_assets_dir = old_node_path.join('assets')
 
       # Move attributes.yml to collection level
@@ -130,22 +129,13 @@ module Ro
         FileUtils.mv(old_attributes_file.to_s, new_metadata_file.to_s)
       end
 
-      # Move assets from assets/ subdirectory to node directory
-      if old_assets_dir.exist?
-        old_assets_dir.glob('*') do |asset_file|
-          target_path = new_asset_dir.join(asset_file.basename)
-          unless dry_run?
-            log "  Moving #{asset_file} → #{target_path}"
-            FileUtils.mv(asset_file.to_s, target_path.to_s)
-          end
-        end
+      # Assets stay in assets/ subdirectory, but parent directory moves up
+      # Old: collection/identifier/assets/foo.png
+      # New: collection/identifier/assets/foo.png (same, but metadata moved out)
+      # So actually, we don't need to move assets at all - just the attributes file!
 
-        # Remove old assets/ directory
-        unless dry_run?
-          log "  Removing #{old_assets_dir}"
-          FileUtils.rm_rf(old_assets_dir.to_s)
-        end
-      end
+      # No asset moving needed - they stay in the same place
+      # Just remove the old attributes.yml (already moved above)
 
       { success: true, node_id: node_id }
     end

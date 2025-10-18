@@ -189,22 +189,16 @@ module Ro
 
     # T028: Updated ignore patterns for new structure
     def _ignored_files
-      if @metadata_file
-        # New structure: ALL files in node directory are assets, not attribute files
-        # Return all files to prevent them from being loaded as attributes
-        @path.glob('**/**').select(&:file?)
-      else
-        # Old structure: ignore attributes and assets subdirectory
-        ignored_files =
-          %w[
-            attributes.yml
-            attributes.yaml
-            attributes.json
-            ./assets/**/**
-          ].map do |glob|
-            @path.glob(glob).select(&:file?)
-          end.flatten
-      end
+      # Both old and new structure: ignore attributes files and assets/ subdirectory
+      ignored_files =
+        %w[
+          attributes.yml
+          attributes.yaml
+          attributes.json
+          ./assets/**/**
+        ].map do |glob|
+          @path.glob(glob).select(&:file?)
+        end.flatten
     end
 
     def _render(file)
@@ -249,15 +243,11 @@ module Ro
       path.relative_to(root)
     end
 
-    # T027: Updated to return node directory (not assets/ subdirectory) in new structure
+    # T027: Updated to return assets/ subdirectory in both old and new structure
     def asset_dir
-      if @metadata_file
-        # New structure: assets are directly in node directory
-        path
-      else
-        # Old structure: assets are in assets/ subdirectory
-        path.join('assets')
-      end
+      # Both old and new structure use assets/ subdirectory
+      # This prevents files from being rendered as templates
+      path.join('assets')
     end
 
     def asset_paths

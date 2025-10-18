@@ -88,12 +88,12 @@ class MigratorTest < RoTestCase
     assert metadata_file.exist?, "Metadata file should exist at collection level"
     assert asset_dir.directory?, "Asset directory should exist"
 
-    # Check old structure was removed
+    # Check old attributes file was removed, but assets/ directory remains
     old_attributes_file = asset_dir / 'attributes.yml'
-    old_assets_dir = asset_dir / 'assets'
+    assets_dir = asset_dir / 'assets'
 
     assert !old_attributes_file.exist?, "Old attributes.yml should be removed"
-    assert !old_assets_dir.exist?, "Old assets/ directory should be removed"
+    assert assets_dir.exist?, "Assets/ directory should still exist (not moved)"
   end
 
   # T047: Test Migrator#migrate_collection for entire collection

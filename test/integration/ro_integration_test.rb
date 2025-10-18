@@ -45,11 +45,11 @@ class RoIntegrationTest < RoTestCase
 
     assert asset_paths.any?, "Node should have assets"
 
-    # Assets should be in node directory (not assets/ subdirectory)
+    # Assets should be in node/assets/ subdirectory
     asset_paths.each do |path|
-      expected_dir = new_structure_path / 'posts' / 'sample-post'
-      assert path.to_s.start_with?(expected_dir.to_s), "Assets should be in node directory"
-      assert !path.to_s.include?('/assets/'), "Asset paths should not contain /assets/ subdirectory"
+      expected_dir = new_structure_path / 'posts' / 'sample-post' / 'assets'
+      assert path.to_s.start_with?(expected_dir.to_s), "Assets should be in assets/ subdirectory"
+      assert path.to_s.include?('/assets/'), "Asset paths should contain /assets/ subdirectory"
     end
   end
 
