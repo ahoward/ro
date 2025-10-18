@@ -55,17 +55,37 @@ module Ro
           result[:has_new_structure] = true
         end
 
-        # Check for old structure (subdirectories with attributes.yml)
+        # Check for old structure (ALL subdirectories, with or without attributes)
+        # We need to migrate ALL nodes, even those without attributes.yml
         collection.subdirectories.each do |subdir|
-          attributes_file = subdir.join('attributes.yml')
-          if attributes_file.exist?
-            result[:old_nodes] << {
-              collection: collection_name,
-              node_id: subdir.basename.to_s,
-              old_path: subdir
-            }
-            result[:has_old_structure] = true
+          node_id = subdir.basename.to_s
+
+          # Skip if this node already has new-structure metadata
+          already_migrated = result[:new_nodes].any? { |n|
+            n[:collection] == collection_name && n[:node_id] == node_id
+          }
+          next if already_migrated
+
+          # Check if there's an attributes file (any format)
+          attributes_file = nil
+          has_attributes = false
+          %w[yml yaml json toml].each do |ext|
+            candidate = subdir.join("attributes.#{ext}")
+            if candidate.exist?
+              attributes_file = candidate
+              has_attributes = true
+              break
+            end
           end
+
+          result[:old_nodes] << {
+            collection: collection_name,
+            node_id: node_id,
+            old_path: subdir,
+            attributes_file: attributes_file,
+            has_attributes: has_attributes
+          }
+          result[:has_old_structure] = true
         end
       end
 
@@ -81,10 +101,20 @@ module Ro
         collection_name = old_node[:collection]
         node_id = old_node[:node_id]
         old_path = old_node[:old_path]
+        has_attributes = old_node[:has_attributes]
+        attributes_file = old_node[:attributes_file]
 
         collection_path = @root_path.join(collection_name)
         new_metadata_file = collection_path.join("#{node_id}.yml")
         new_asset_dir = collection_path.join(node_id)
+
+        actions = []
+        if has_attributes
+          actions << "Move #{attributes_file} → #{new_metadata_file}"
+        else
+          actions << "Create empty #{new_metadata_file} (node has no attributes)"
+        end
+        actions << "Assets remain in #{old_path}/assets/ (no change needed)"
 
         plan << {
           node_id: node_id,
@@ -92,10 +122,8 @@ module Ro
           old_path: old_path,
           new_metadata_file: new_metadata_file,
           new_asset_dir: new_asset_dir,
-          actions: [
-            "Move #{old_path}/attributes.yml → #{new_metadata_file}",
-            "Assets remain in #{old_path}/assets/ (no change needed)"
-          ]
+          has_attributes: has_attributes,
+          actions: actions
         }
       end
 
@@ -113,31 +141,35 @@ module Ro
         return { success: false, error: "Node directory not found: #{old_node_path}" }
       end
 
-      old_attributes_file = old_node_path.join('attributes.yml')
-      unless old_attributes_file.exist?
-        return { success: false, error: "attributes.yml not found: #{old_attributes_file}" }
-      end
-
       new_metadata_file = collection_path.join("#{node_id}.yml")
-      new_node_dir = collection_path.join(node_id)
-      new_assets_dir = new_node_dir.join('assets')
-      old_assets_dir = old_node_path.join('assets')
 
-      # Move attributes.yml to collection level
-      unless dry_run?
-        log "  Moving #{old_attributes_file} → #{new_metadata_file}"
-        FileUtils.mv(old_attributes_file.to_s, new_metadata_file.to_s)
+      # Look for attributes file in any format
+      old_attributes_file = nil
+      %w[yml yaml json toml].each do |ext|
+        candidate = old_node_path.join("attributes.#{ext}")
+        if candidate.exist?
+          old_attributes_file = candidate
+          break
+        end
       end
 
-      # Assets stay in assets/ subdirectory, but parent directory moves up
+      unless dry_run?
+        if old_attributes_file
+          # Move existing attributes file to collection level
+          log "  Moving #{old_attributes_file} → #{new_metadata_file}"
+          FileUtils.mv(old_attributes_file.to_s, new_metadata_file.to_s)
+        else
+          # Create empty metadata file for nodes without attributes
+          log "  Creating empty metadata #{new_metadata_file} (node had no attributes)"
+          File.write(new_metadata_file.to_s, {}.to_yaml)
+        end
+      end
+
+      # Assets stay in assets/ subdirectory - no moving needed
       # Old: collection/identifier/assets/foo.png
-      # New: collection/identifier/assets/foo.png (same, but metadata moved out)
-      # So actually, we don't need to move assets at all - just the attributes file!
+      # New: collection/identifier/assets/foo.png (same location)
 
-      # No asset moving needed - they stay in the same place
-      # Just remove the old attributes.yml (already moved above)
-
-      { success: true, node_id: node_id }
+      { success: true, node_id: node_id, had_attributes: !old_attributes_file.nil? }
     end
 
     # Migrate an entire collection

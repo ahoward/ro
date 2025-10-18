@@ -139,6 +139,38 @@ class MigratorTest < RoTestCase
     assert result[:success], "Rollback should succeed"
     assert result[:restored_from].to_s == backup_path.to_s, "Should restore from backup"
   end
+
+  # T051: Test Migrator finds nodes without attributes.yml
+  def test_validate_finds_nodes_without_attributes
+    migrator = Ro::Migrator.new(@temp_dir)
+    validation = migrator.validate
+
+    # Should find both sample-post (with attributes) and assets-only (without)
+    assert validation[:old_nodes].size >= 2, "Should find at least 2 nodes"
+
+    assets_only_node = validation[:old_nodes].find { |n| n[:node_id] == 'assets-only' }
+    assert_not_nil assets_only_node, "Should find assets-only node"
+    assert !assets_only_node[:has_attributes], "assets-only should not have attributes"
+  end
+
+  # T052: Test migration creates empty metadata for nodes without attributes
+  def test_migrate_node_without_attributes
+    migrator = Ro::Migrator.new(@temp_dir)
+    posts_dir = @temp_dir / 'posts'
+
+    result = migrator.migrate_node('posts', 'assets-only')
+
+    assert result[:success], "Migration should succeed"
+    assert !result[:had_attributes], "Node should not have had attributes"
+
+    # Check metadata file was created
+    metadata_file = posts_dir / 'assets-only.yml'
+    assert metadata_file.exist?, "Empty metadata file should be created"
+
+    # Check it contains empty hash
+    content = YAML.load_file(metadata_file.to_s)
+    assert content.is_a?(Hash), "Metadata should be a hash"
+  end
 end
 
 # Run the tests
@@ -157,7 +189,9 @@ if __FILE__ == $0
     :test_migrate_collection,
     :test_migrate_full_root,
     :test_backup_creates_backup,
-    :test_rollback_restores_from_backup
+    :test_rollback_restores_from_backup,
+    :test_validate_finds_nodes_without_attributes,
+    :test_migrate_node_without_attributes
   ]
 
   tests.each do |test_method|

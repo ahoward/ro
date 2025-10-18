@@ -85,9 +85,12 @@ The migration tool:
 
 1. **Validates** the structure to detect old/new/mixed formats
 2. **Creates a backup** (unless `--no-backup` is specified)
-3. **For each old-structure node**:
-   - Moves `identifier/attributes.yml` → `identifier.yml` (at collection level)
+3. **For each old-structure node directory**:
+   - **If node has attributes file**: Moves `identifier/attributes.yml` → `identifier.yml` (at collection level)
+   - **If node has NO attributes**: Creates empty `identifier.yml` with `{}` content
    - Assets remain in `identifier/assets/` (no change needed!)
+
+**Important**: The migrator processes ALL node directories, even those without an attributes file. This ensures every node is discoverable in the new structure.
 
 ### Safety Features
 
@@ -100,17 +103,27 @@ The migration tool:
 
 If you prefer to migrate manually:
 
-1. **For each node**:
+1. **For each node WITH attributes**:
    ```bash
    cd posts
 
    # Move metadata file out to collection level
    mv sample-post/attributes.yml sample-post.yml
 
-   # That's it! Assets stay in sample-post/assets/
+   # Assets stay in sample-post/assets/
    ```
 
-2. **Update your code** to use Ro v5.0
+2. **For each node WITHOUT attributes** (assets-only):
+   ```bash
+   cd posts
+
+   # Create empty metadata file at collection level
+   echo '{}' > orphan-assets.yml
+
+   # Assets stay in orphan-assets/assets/
+   ```
+
+3. **Update your code** to use Ro v5.0
 
 ## Rollback
 
@@ -269,6 +282,27 @@ After:
 ro_data/
   posts/
     text-only.yml
+```
+
+### Example 4: Assets-Only Node (No Attributes)
+
+Before:
+```
+ro_data/
+  posts/
+    orphan-assets/     ← Directory with no attributes.yml
+      assets/
+        image.jpg
+```
+
+After:
+```
+ro_data/
+  posts/
+    orphan-assets.yml  ← Empty metadata file created: {}
+    orphan-assets/
+      assets/
+        image.jpg
 ```
 
 ## Support
