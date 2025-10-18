@@ -38,7 +38,17 @@ module Ro
           force: false
         }
 
-        argv = @script.argv.dup
+        # Use ARGV directly because the Ro.script DSL may have consumed flags
+        # We need to find 'migrate' in ARGV and parse everything after it
+        argv = []
+        found_migrate = false
+        ARGV.each do |arg|
+          if arg == 'migrate'
+            found_migrate = true
+            next
+          end
+          argv << arg if found_migrate
+        end
 
         while argv.any?
           arg = argv.shift
@@ -96,11 +106,17 @@ module Ro
           exit 0
         end
 
-        if validation[:has_new_structure] && !@options[:force]
-          puts "⚠ Warning: Both old and new structures detected!"
-          puts "This may indicate a partial migration."
-          puts "Use --force to proceed anyway, or check your data first."
-          exit 1
+        if validation[:has_new_structure]
+          if @options[:force]
+            puts "⚠ Warning: Both old and new structures detected!"
+            puts "Proceeding with partial migration (--force enabled)..."
+            puts ""
+          else
+            puts "⚠ Warning: Both old and new structures detected!"
+            puts "This may indicate a partial migration."
+            puts "Use --force to proceed anyway, or check your data first."
+            exit 1
+          end
         end
 
         if @options[:dry_run] || @options[:verbose]
