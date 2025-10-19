@@ -72,8 +72,10 @@ module Ro
 
     def is_src?
       key = relative_path.parts
-      subdir = key.size > 2 ? key[1] : nil
-      !!(subdir == 'src')
+      # Check if the first directory in the path is 'src'
+      # e.g., src/file.js or src/subdir/file.js
+      first_dir = key.size >= 2 ? key[0] : nil
+      !!(first_dir == 'src')
     end
 
     alias is_src is_src?
