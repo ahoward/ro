@@ -9,7 +9,7 @@ it is one part cms, one part database, one part api, and one part magic.
 
 if you used a headless cms, it's like that, before they existed, except way better, and free.
 
-with `ro`, you can seperate your content from presentation, like a sane and decent human being.
+with `ro`, you can separate your content from presentation, like a sane and decent human being.
 
 > silent code whispers
 > github's gentle, peaceful hush
@@ -266,7 +266,7 @@ lil detail about that link^, it is from *10 years ago*, when dojo4 was still run
 
 ---
 
-one super comman pattern, is to add a build step to a github workflow, and
+one super common pattern, is to add a build step to a github workflow, and
 then publish the js api via gh-pages. see an example here:
 
 https://github.com/ahoward/ro/blob/main/.github/workflows/gh-pages.yml
