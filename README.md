@@ -37,15 +37,16 @@ for a real site.
 ```sh
 
   drawohara@drawohara.dev:ro[main] #=> tree public/ro/posts/almost-died-in-an-ice-cave/
-  public/ro/posts/almost-died-in-an-ice-cave/
-  ├── assets
-  │   ├── image1.png
-  │   ├── image2.png
-  │   ├── image3.png
-  │   ├── og.jpg
-  │   └── purple-heart.jpg
-  ├── attributes.yml
-  └── body.md
+  public/ro/posts/
+  ├── almost-died-in-an-ice-cave.yml    # ← metadata file at collection level
+  └── almost-died-in-an-ice-cave/       # ← node directory
+      ├── assets/                        # ← assets subdirectory
+      │   ├── image1.png
+      │   ├── image2.png
+      │   ├── image3.png
+      │   ├── og.jpg
+      │   └── purple-heart.jpg
+      └── body.md                        # ← other content files
 
 ```
 
@@ -53,15 +54,22 @@ in this example you can see a few things, regarding the layout of a `ro` directo
 
 - `ro` content often, but is not required, to live in `public`.  more on this below.
 
-- the essential layout is
+- the essential layout is (v5.0+):
 
 ```ruby
 
     @root       = "ro"
     @collection = "posts"
-    @id          = "almost-died-in-an-ice-cave"
+    @id         = "almost-died-in-an-ice-cave"
 
-    "#{ @root }/#{ @collection }/#{ @id }"
+    # metadata file
+    "#{ @root }/#{ @collection }/#{ @id }.yml"
+
+    # node directory
+    "#{ @root }/#{ @collection }/#{ @id }/"
+
+    # assets
+    "#{ @root }/#{ @collection }/#{ @id }/assets/"
 
 ```
 
@@ -195,13 +203,13 @@ attributes will be expanded too, at any depth.  eg. -> https://github.com/ahowar
 this means code like this:
 
 ```yaml
-# file: public/ro/posts/foo-bar/attributes.yml
+# file: public/ro/posts/foo-bar.yml
 
 og:
   image: ./assets/og.jpg
 ```
 
-will 'just work'. of course, this assumes that 'public/ro/foo-bar/assets/og.jpg' exists!
+will 'just work'. of course, this assumes that 'public/ro/posts/foo-bar/assets/og.jpg' exists!
 
 the code is rather robust here, and is not a simple string bashing approach.
 
