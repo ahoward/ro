@@ -1,1 +1,22 @@
 pkg/
+
+# Ruby gem
+.bundle/
+*.gem
+vendor/bundle/
+
+# Test artifacts
+test/tmp/
+*.log
+.backup.*
+
+# IDE
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
+.vscode/
+.idea/
+
+# Specs directory
+specs/

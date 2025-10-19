@@ -77,6 +77,7 @@ module Ro
         collection/list.rb
         node.rb
         asset.rb
+        migrator.rb
       ]
 
       if defined?(ActiveModel)

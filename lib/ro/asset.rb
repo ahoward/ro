@@ -9,9 +9,48 @@ module Ro
 
       @path = Path.for(arg, *args)
 
-      @node = options.fetch(:node) { Node.for(@path.split('/assets/').first) }
+      # T029: Updated to split on node ID instead of /assets/ segment
+      @node = options.fetch(:node) do
+        # Try to find node by splitting path
+        # In new structure: no /assets/ segment
+        # In old structure: /assets/ segment exists
+        if @path.to_s.include?('/assets/')
+          # Old structure
+          Node.for(@path.split('/assets/').first)
+        else
+          # New structure: find node directory by looking at parent paths
+          # Asset path like: /collection/node-id/file.jpg
+          # Node path should be: /collection/node-id
+          found_node = nil
+          node_path = @path.parent
+          while node_path && !node_path.basename.to_s.match(/\.(yml|yaml|json|toml)$/)
+            # Check if there's a metadata file for this directory
+            collection_path = node_path.parent
+            node_id = node_path.basename.to_s
 
-      @relative_path = @path.relative_to(@node.path)
+            %w[yml yaml json toml].each do |ext|
+              metadata_file = collection_path.join("#{node_id}.#{ext}")
+              if metadata_file.exist?
+                root = Root.for(collection_path.parent)
+                collection = root.collection_for(collection_path)
+                found_node = Node.new(collection, metadata_file)
+                break
+              end
+            end
+
+            break if found_node
+            node_path = node_path.parent
+          end
+
+          # Fallback: old behavior
+          found_node || Node.for(@path.split('/assets/').first)
+        end
+      end
+
+      # T030: Updated relative_path calculation for new structure
+      # In new structure, path is already relative to node.asset_dir
+      # In old structure, need to account for assets/ prefix
+      @relative_path = @path.relative_to(@node.asset_dir)
 
       @name = @relative_path
 
@@ -33,8 +72,10 @@ module Ro
 
     def is_src?
       key = relative_path.parts
-      subdir = key.size > 2 ? key[1] : nil
-      !!(subdir == 'src')
+      # Check if the first directory in the path is 'src'
+      # e.g., src/file.js or src/subdir/file.js
+      first_dir = key.size >= 2 ? key[0] : nil
+      !!(first_dir == 'src')
     end
 
     alias is_src is_src?

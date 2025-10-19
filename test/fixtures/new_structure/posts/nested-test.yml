@@ -1,0 +1,7 @@
+title: "Nested Assets Test"
+author: "Test Author"
+published_at: "2025-01-03"
+tags:
+  - test
+  - nested-assets
+description: "This node has nested subdirectories with assets"

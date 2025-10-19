@@ -2,16 +2,45 @@ module Ro
   class Node
     include Klass
 
-    attr_reader :path, :root
+    attr_reader :path, :root, :metadata_file
 
-    def initialize(path)
-      @path = Path.for(path)
-      @root = Root.for(@path.parent.parent)
+    # T023: Updated to accept (collection, metadata_file) for new structure
+    def initialize(collection_or_path, metadata_file = nil)
+      if metadata_file
+        # New structure: collection + metadata_file
+        @collection = collection_or_path
+        @metadata_file = Path.for(metadata_file)
+
+        # Raise error if metadata file doesn't exist
+        unless @metadata_file.exist?
+          raise Errno::ENOENT, "No such file or directory - #{@metadata_file}"
+        end
+
+        @root = @collection.root
+
+        # Derive node ID from metadata filename (without extension)
+        # T025: ID derived from metadata filename
+        node_id = @metadata_file.basename.to_s.sub(/\.(yml|yaml|json|toml)$/, '')
+
+        # Path is the node directory (sibling to metadata file)
+        @path = @collection.path.join(node_id)
+      else
+        # Old structure compatibility: just a path
+        @path = Path.for(collection_or_path)
+        @root = Root.for(@path.parent.parent)
+        @metadata_file = nil
+      end
+
       @attributes = :lazyload
     end
 
     def name
-      @path.name
+      if @metadata_file
+        # T025: For new structure, name comes from metadata filename
+        @metadata_file.basename.to_s.sub(/\.(yml|yaml|json|toml)$/, '')
+      else
+        @path.name
+      end
     end
 
     def id
@@ -31,7 +60,7 @@ module Ro
     end
 
     def collection
-      @root.collection_for(type)
+      @collection || @root.collection_for(type)
     end
 
     def attributes
@@ -54,12 +83,20 @@ module Ro
       @attributes
     end
 
+    # T026: Modified to load from external metadata_file (new structure)
     def _load_base_attributes
-      glob = "attributes.{yml,yaml,json}"
+      if @metadata_file && @metadata_file.exist?
+        # New structure: load from explicit metadata file
+        attrs = _render(@metadata_file)
+        update_attributes!(attrs, file: @metadata_file)
+      else
+        # Old structure: search for attributes.yml in node directory
+        glob = "attributes.{yml,yaml,json}"
 
-      @path.glob(glob) do |file|
-        attrs = _render(file)
-        update_attributes!(attrs, file:)
+        @path.glob(glob) do |file|
+          attrs = _render(file)
+          update_attributes!(attrs, file:)
+        end
       end
     end
 
@@ -150,7 +187,9 @@ module Ro
       @attributes.update(attrs)
     end
 
+    # T028: Updated ignore patterns for new structure
     def _ignored_files
+      # Both old and new structure: ignore attributes files and assets/ subdirectory
       ignored_files =
         %w[
           attributes.yml
@@ -159,9 +198,7 @@ module Ro
           ./assets/**/**
         ].map do |glob|
           @path.glob(glob).select(&:file?)
-        end
-
-      ignored_files.flatten
+        end.flatten
     end
 
     def _render(file)
@@ -206,7 +243,10 @@ module Ro
       path.relative_to(root)
     end
 
+    # T027: Updated to return assets/ subdirectory in both old and new structure
     def asset_dir
+      # Both old and new structure use assets/ subdirectory
+      # This prevents files from being rendered as templates
       path.join('assets')
     end
 

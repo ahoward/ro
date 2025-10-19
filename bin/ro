@@ -130,6 +130,10 @@ Ro.script do
     site!
   end
 
+  run(:migrate) do
+    migrate!
+  end
+
   def setup!(*which)
     setup_env!
 
@@ -258,6 +262,12 @@ Ro.script do
     index_html = document_root.join('index.html')
     index_html.binwrite(html)
     puts index_html
+  end
+
+  def migrate!
+    require "#{$libdir}/ro/script/migrate.rb"
+
+    Ro::Script::Migrate.run!(script: self)
   end
 end
 

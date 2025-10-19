@@ -1,0 +1,7 @@
+title: "Metadata Only Node"
+author: "Test Author"
+published_at: "2025-01-02"
+tags:
+  - test
+  - metadata-only
+description: "This node has no asset directory - testing FR-007"
