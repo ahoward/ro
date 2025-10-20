@@ -4,7 +4,7 @@
       "title": "@drawohara",
       "body": "<div class=\"ro markdown\">\n  <ul>\n  <li>\n    <p>working on a product that brings millions of real social conversations to\nbear on ai, i am calling it <a href=\"/disco\">disco</a>. its mission, is to show how\npeople think and feel about questions, rather than simply answering them.\nalthough it does that too, in thier own words.</p>\n  </li>\n  <li>\n    <p>my baby micro tiny universal coding/writing companion name <code>ima</code> is <a href=\"/nerd/ima\">live and under active development</a></p>\n  </li>\n  <li>\n    <p>building an open-source and free to run ai agenic framework called\n<a href=\"https://docs.google.com/document/d/1SxdENT1Qh4lzFxq2VlQtoNjcsF7sOnVKQtti2JNn048/edit?usp=sharing\"><code>sunwukong</code></a>\nfor the resistance.  it’s dope and requires zero infrastructue to run.\nwell, nothing but github.  basic setup involves forking a repo, and\nwriting some destructions.  more soon…</p>\n  </li>\n  <li>\n    <p>quietly steathing the new steath agency which is <a href=\"https://mountainhigh.codes\">stealthy</a>.</p>\n  </li>\n  <li>\n    <p>the <a href=\"/nerd\">new nerd blog</a> is starting to get more nerdy…</p>\n  </li>\n  <li>\n    <p>nursing some fairly complex injuries, the <a href=\"https://photos.app.goo.gl/xbRt9Waj8583Bzvd7\">result of a few stupid moves in alaska</a>.</p>\n  </li>\n  <li>\n    <p>on a podcast talking about ^that, and the <a href=\"https://www.youtube.com/watch?v=uRhCufU9epE\">future of society and ai recently</a></p>\n  </li>\n  <li>\n    <p><a href=\"/jess\">jess</a> and i are working likes sons-of-bitches to move out of <a href=\"https://photos.app.goo.gl/Kjipk8eKT88CtSRSA\">la</a>.</p>\n  </li>\n  <li>\n    <p><a href=\"https://youtu.be/VFEZOjtrwls?si=POEz_yU44DYrkH-l&amp;t=48\">super digging this</a>.</p>\n  </li>\n</ul>\n\n</div>\n",
       "assets": {
-        "assets/speak-english-pulp-fiction.gif": {
+        "speak-english-pulp-fiction.gif": {
           "url": "/ro/pages/now/assets/speak-english-pulp-fiction.gif",
           "path": "pages/now/assets/speak-english-pulp-fiction.gif",
           "size": 8,
@@ -22,11 +22,10 @@
         "id": "now",
         "urls": [
           "/ro/pages/now/assets/speak-english-pulp-fiction.gif",
-          "/ro/pages/now/attributes.yml",
           "/ro/pages/now/body.md"
         ],
-        "created_at": "2025-04-23 04:38:28 +0000",
-        "updated_at": "2025-04-23 04:38:28 +0000",
+        "created_at": "2025-10-18 03:05:00 +0000",
+        "updated_at": "2025-10-18 03:05:00 +0000",
         "rel": {
           "curr": "pages/now",
           "prev": "pages/jess",

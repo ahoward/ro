@@ -10,7 +10,7 @@
       },
       "body": "<div class=\"ro markdown\">\n  <p>following is an AI generated summary of this article, so you won’t have to read it!</p>\n\n<blockquote>\n  <h3>”</h3>\n  <p>A user on LinkedIn suggested that terminated employees should <strong>always</strong>\nreturn thier laptops, and that issue was cut and dried.</p>\n\n  <p><a href=\"/disco\">disco</a>, a tool for bringing real human subjectivity to AI was then\nused to examine public sentiment about this statement.</p>\n\n  <p>The responses varied, with some people feeling that employees should keep the\nlaptops as a small consolation or to help with job searching, while others felt\nthat keeping company property was unethical or a security risk.</p>\n\n  <p>Some people suggested that companies offer a buyout option for the laptops,\nwhile others felt that a clean break was best.</p>\n\n  <p>The responses highlight the complex and multifaceted nature of the issue, with\nno easy answers or universal agreement.</p>\n  <h3 id=\"-1\">”</h3>\n</blockquote>\n\n<p>i recently saw this unsolicited and undirected “suggestion” on linked-in (home\nof the weak sauce), suggesting that the <strong>only</strong> ethical move is to return your\nlaptop when you’ve been fired.</p>\n\n<p><img src='/ro/posts/return-your-laptop/assets/return-your-laptop.png' alt=\"return your laptop\" /></p>\n\n<p>while i do not condone brazen theft or just being a jerk, i personally\nconsidered this post astonishingly tone deaf, in light of the fear so many who\nhave recently been laid off are feeling.  for many, a computer, and the\ninternet, are their only lifelines to a potential future.</p>\n\n<p>this situation is one i have experienced personally.  i’ve been laid off, a\nfew years back, and went through a very, very difficult period (still to some\ndegree) where getting a job was a strangely recursive scenario - that is to\nsay, i needed money to buy a computer capable enough, to keep up with the\ntimes, to stay sharp, to get a job.  this is a real phenomenon experienced by\nmany.  a nice laptop for a developer costs a cool $4k.</p>\n\n<p>dan seemed pretty sure of himself so, i decided to run his theory through my\nnew thing, which i am calling <a href=\"/disco\">disco</a>.  as you can read for yourself,\ni think the issue is more nuanced than he suggests, and that, in this period\nof history, considering the massive ill will the general public is\nsnowballing, and getting ready to toss at corporations, it’s worth seeing what\nothers might think.  fwiw, <a href=\"/disco\">disco</a> lets you ask any question, and then\nget back answers that are informed by real human beings, at scale.</p>\n\n<p>it’s my little attempt to use their weapons against them.</p>\n\n<p>take some time, to review <a href=\"https://gist.github.com/ahoward/9696f63c118f7b9f102b04e5b4196ca5\">these results</a></p>\n\n<p><a href=\"/contact\">what do you think?</a></p>\n\n<p>ps.  in a future post, i’ll show you how you can do way, way, way better with\nyour development environment by ditching apple, microsoft, etc.  and moving to\nlinux and a chromebook.  my current dev box costs me $320 at best buy and i’m\nmore productive than ever.</p>\n\n<p><img src='/ro/posts/return-your-laptop/assets/og.jpg' alt=\"\" /></p>\n\n</div>\n",
       "assets": {
-        "assets/og.jpg": {
+        "og.jpg": {
           "url": "/ro/posts/return-your-laptop/assets/og.jpg",
           "path": "posts/return-your-laptop/assets/og.jpg",
           "size": 8,
@@ -21,7 +21,7 @@
           },
           "src": null
         },
-        "assets/return-your-laptop.png": {
+        "return-your-laptop.png": {
           "url": "/ro/posts/return-your-laptop/assets/return-your-laptop.png",
           "path": "posts/return-your-laptop/assets/return-your-laptop.png",
           "size": 8,
@@ -40,11 +40,10 @@
         "urls": [
           "/ro/posts/return-your-laptop/assets/og.jpg",
           "/ro/posts/return-your-laptop/assets/return-your-laptop.png",
-          "/ro/posts/return-your-laptop/attributes.yml",
           "/ro/posts/return-your-laptop/body.md"
         ],
-        "created_at": "2025-04-23 04:38:29 +0000",
-        "updated_at": "2025-04-23 04:38:29 +0000",
+        "created_at": "2025-10-18 03:05:00 +0000",
+        "updated_at": "2025-10-18 03:05:00 +0000",
         "rel": {
           "curr": "posts/return-your-laptop",
           "prev": "posts/mission",

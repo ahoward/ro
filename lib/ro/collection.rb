@@ -34,18 +34,39 @@ module Ro
       Node.new(path)
     end
 
-    # T021: Scan for metadata files in new structure format
+    # T021: Scan for metadata files in both new and old structure formats
+    # Returns array of hashes: [{id: 'node-id', path: Path, type: :new|:old}]
     def metadata_files
       extensions = %w[yml yaml json toml]
-      files = []
+      metadata_map = {}
 
+      # First, scan for new structure: collection-level metadata files (e.g., posts/ara.yml)
       extensions.each do |ext|
         @path.glob("*.#{ext}").each do |file|
-          files << file if file.file?
+          next unless file.file?
+          node_id = file.basename.to_s.sub(/\.(yml|yaml|json|toml)$/, '')
+          metadata_map[node_id] ||= {id: node_id, path: file, type: :new}
         end
       end
 
-      files.sort
+      # Second, scan for old structure: subdirectory attributes files (e.g., posts/ara/attributes.yml)
+      subdirectories.each do |subdir|
+        node_id = subdir.basename.to_s
+
+        # Check if this subdirectory has an attributes file
+        extensions.each do |ext|
+          attributes_file = subdir.join("attributes.#{ext}")
+          if attributes_file.exist? && attributes_file.file?
+            # Only use old structure if new structure doesn't exist
+            # This allows gradual migration - new structure takes precedence
+            metadata_map[node_id] ||= {id: node_id, path: attributes_file, type: :old}
+            break
+          end
+        end
+      end
+
+      # Return sorted array of metadata info
+      metadata_map.values.sort_by { |m| m[:id] }
     end
 
     def subdirectories(...)
@@ -56,28 +77,43 @@ module Ro
       @path.subdirectory_for(name)
     end
 
-    # T020: Modified to discover nodes from metadata files (new structure)
+    # T020: Modified to discover nodes from metadata files (both new and old structure)
     def each(offset:nil, limit:nil, &block)
       # Return enumerator if no block given and no offset/limit
       return to_enum(:each, offset: offset, limit: limit) unless block_given?
 
-      # Use metadata files for new structure instead of subdirectories
-      files = metadata_files
+      # Get metadata from both old and new structure
+      metadata_entries = metadata_files
 
       if offset
         i = -1
         n = 0
-        files.each do |metadata_file|
+        metadata_entries.each do |entry|
           i += 1
           next if i < offset
-          node = Node.new(self, metadata_file)
+
+          # Create node based on structure type
+          node = if entry[:type] == :new
+            Node.new(self, entry[:path])
+          else
+            # Old structure: pass subdirectory path
+            Node.new(entry[:path].parent)
+          end
+
           block.call(node)
           n += 1
           break if limit && n >= limit
         end
       else
-        files.each do |metadata_file|
-          node = Node.new(self, metadata_file)
+        metadata_entries.each do |entry|
+          # Create node based on structure type
+          node = if entry[:type] == :new
+            Node.new(self, entry[:path])
+          else
+            # Old structure: pass subdirectory path
+            Node.new(entry[:path].parent)
+          end
+
           block.call(node)
         end
       end

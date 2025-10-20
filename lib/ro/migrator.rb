@@ -45,12 +45,14 @@ module Ro
         result[:collections] << collection_name
 
         # Check for new structure (metadata files at collection level)
-        collection.metadata_files.each do |metadata_file|
-          node_id = metadata_file.basename.to_s.sub(/\.(yml|yaml|json|toml)$/, '')
+        collection.metadata_files.each do |entry|
+          # Only count new-structure nodes for migration purposes
+          next unless entry[:type] == :new
+
           result[:new_nodes] << {
             collection: collection_name,
-            node_id: node_id,
-            metadata_file: metadata_file
+            node_id: entry[:id],
+            metadata_file: entry[:path]
           }
           result[:has_new_structure] = true
         end

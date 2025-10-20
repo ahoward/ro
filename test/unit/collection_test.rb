@@ -11,31 +11,32 @@ class CollectionTest < RoTestCase
 
   # T011: Test Collection#metadata_files
   def test_metadata_files_returns_yml_and_json_files
-    files = @collection.metadata_files
+    entries = @collection.metadata_files
 
-    assert_not_nil files, "metadata_files should not be nil"
-    assert files.is_a?(Array), "metadata_files should return an Array"
+    assert_not_nil entries, "metadata_files should not be nil"
+    assert entries.is_a?(Array), "metadata_files should return an Array"
 
     # Should find .yml and .json files
-    yml_files = files.select { |f| f.to_s.end_with?('.yml') }
-    assert yml_files.any?, "Should find at least one .yml file"
+    yml_entries = entries.select { |e| e[:path].to_s.end_with?('.yml') }
+    assert yml_entries.any?, "Should find at least one .yml file"
 
-    # Should be Pathname or Ro::Path objects
-    assert files.all? { |f| f.is_a?(Pathname) || f.is_a?(Ro::Path) }, "All files should be Pathname or Ro::Path objects"
+    # Each entry should be a hash with :id, :path, :type
+    assert entries.all? { |e| e.is_a?(Hash) && e[:id] && e[:path] && e[:type] }, "All entries should be hashes with :id, :path, :type"
   end
 
   def test_metadata_files_excludes_directories
-    files = @collection.metadata_files
+    entries = @collection.metadata_files
 
     # Should only return files, not directories
-    assert files.all?(&:file?), "metadata_files should only return files, not directories"
+    assert entries.all? { |e| e[:path].file? }, "metadata_files should only return file entries"
   end
 
   def test_metadata_files_sorted
-    files = @collection.metadata_files
+    entries = @collection.metadata_files
 
-    # Should be sorted
-    assert_equal files.sort.map(&:to_s), files.map(&:to_s), "metadata_files should be sorted"
+    # Should be sorted by id
+    ids = entries.map { |e| e[:id] }
+    assert_equal ids.sort, ids, "metadata_files should be sorted by id"
   end
 
   # T012: Test Collection#each with new structure
