@@ -160,4 +160,73 @@ class DualStructureTest < RoTestCase
     formats = nodes.map { |n| n.attributes[:format] }.sort
     assert_equal ['json', 'json_old', 'yaml', 'yaml_old'], formats
   end
+
+  def test_merges_both_metadata_files_when_both_exist
+    # Create collection-level metadata
+    File.write(@posts_dir.join('merged.yml'), {
+      title: 'Collection Level',
+      author: 'Collection Author',
+      tags: ['collection']
+    }.to_yaml)
+
+    # Create nested attributes - should override collection level
+    merged_dir = @posts_dir.join('merged')
+    merged_dir.mkpath
+    File.write(merged_dir.join('attributes.yml'), {
+      title: 'Nested Wins',  # Override
+      published: true,       # New field
+      tags: ['nested', 'specific']  # Override
+    }.to_yaml)
+
+    root = Ro::Root.new(@ro_dir)
+    posts = root.posts
+    node = posts.to_a.first
+
+    # Nested (deeper, more specific) should win
+    assert_equal 'Nested Wins', node.attributes[:title]
+    assert_equal true, node.attributes[:published]
+    assert_equal ['nested', 'specific'], node.attributes[:tags]
+
+    # Collection-level field that wasn't overridden should still be there
+    assert_equal 'Collection Author', node.attributes[:author]
+  end
+
+  def test_deep_merge_with_nested_hashes
+    # Collection-level with nested structure
+    File.write(@posts_dir.join('deep.yml'), {
+      meta: {
+        created: '2024-01-01',
+        source: 'collection'
+      },
+      settings: {
+        public: true,
+        featured: false
+      }
+    }.to_yaml)
+
+    # Nested attributes with partial override
+    deep_dir = @posts_dir.join('deep')
+    deep_dir.mkpath
+    File.write(deep_dir.join('attributes.yml'), {
+      meta: {
+        updated: '2024-02-01',
+        source: 'nested'  # Override
+      },
+      settings: {
+        featured: true  # Override just this field
+      }
+    }.to_yaml)
+
+    root = Ro::Root.new(@ro_dir)
+    posts = root.posts
+    node = posts.to_a.first
+
+    # Deep merge should preserve non-conflicting values
+    assert_equal '2024-01-01', node.attributes[:meta][:created]
+    assert_equal '2024-02-01', node.attributes[:meta][:updated]
+    assert_equal 'nested', node.attributes[:meta][:source]  # Nested wins
+
+    assert_equal true, node.attributes[:settings][:public]
+    assert_equal true, node.attributes[:settings][:featured]  # Nested wins
+  end
 end
