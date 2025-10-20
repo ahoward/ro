@@ -54,7 +54,8 @@ module Ro
 
       @name = @relative_path
 
-      @url = @node.url_for(@relative_path)
+      # URL needs to include 'assets/' prefix since assets live in assets/ subdirectory
+      @url = @node.url_for(Path.relative('assets', @relative_path))
 
       super(@path)
     end
