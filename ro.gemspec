@@ -3,7 +3,7 @@
 
 Gem::Specification::new do |spec|
   spec.name = "ro"
-  spec.version = "5.0.0"
+  spec.version = "5.1.0"
   spec.required_ruby_version = '>= 3.0'
   spec.platform = Gem::Platform::RUBY
   spec.summary = "all your content in github, as god intended"
@@ -375,6 +375,26 @@ Gem::Specification::new do |spec|
  "test/tmp/migration_test_1760824728.backup.20251018215848/posts/sample-post/assets/body.md",
  "test/tmp/migration_test_1760824728.backup.20251018215848/posts/sample-post/assets/image.jpg",
  "test/tmp/migration_test_1760824728.backup.20251018215848/posts/sample-post/attributes.yml",
+ "test/tmp/migration_test_1760844153.backup.20251019032233",
+ "test/tmp/migration_test_1760844153.backup.20251019032233/migration_test_1760844153",
+ "test/tmp/migration_test_1760844153.backup.20251019032233/migration_test_1760844153/posts",
+ "test/tmp/migration_test_1760844153.backup.20251019032233/migration_test_1760844153/posts/assets-only",
+ "test/tmp/migration_test_1760844153.backup.20251019032233/migration_test_1760844153/posts/assets-only/assets",
+ "test/tmp/migration_test_1760844153.backup.20251019032233/migration_test_1760844153/posts/assets-only/assets/test.txt",
+ "test/tmp/migration_test_1760844153.backup.20251019032233/migration_test_1760844153/posts/sample-post",
+ "test/tmp/migration_test_1760844153.backup.20251019032233/migration_test_1760844153/posts/sample-post/assets",
+ "test/tmp/migration_test_1760844153.backup.20251019032233/migration_test_1760844153/posts/sample-post/assets/body.md",
+ "test/tmp/migration_test_1760844153.backup.20251019032233/migration_test_1760844153/posts/sample-post/assets/image.jpg",
+ "test/tmp/migration_test_1760844153.backup.20251019032233/migration_test_1760844153/posts/sample-post/attributes.yml",
+ "test/tmp/migration_test_1760844153.backup.20251019032233/posts",
+ "test/tmp/migration_test_1760844153.backup.20251019032233/posts/assets-only",
+ "test/tmp/migration_test_1760844153.backup.20251019032233/posts/assets-only/assets",
+ "test/tmp/migration_test_1760844153.backup.20251019032233/posts/assets-only/assets/test.txt",
+ "test/tmp/migration_test_1760844153.backup.20251019032233/posts/sample-post",
+ "test/tmp/migration_test_1760844153.backup.20251019032233/posts/sample-post/assets",
+ "test/tmp/migration_test_1760844153.backup.20251019032233/posts/sample-post/assets/body.md",
+ "test/tmp/migration_test_1760844153.backup.20251019032233/posts/sample-post/assets/image.jpg",
+ "test/tmp/migration_test_1760844153.backup.20251019032233/posts/sample-post/attributes.yml",
  "test/tmp/new_structure_test_1760746452",
  "test/tmp/new_structure_test_1760746452/mixed",
  "test/tmp/new_structure_test_1760746452/mixed/test-json.json",
@@ -416,10 +436,7 @@ Gem::Specification::new do |spec|
     spec.add_dependency(*["image_size", "~> 3.4"])
   
     spec.add_dependency(*["nokogiri", "~> 1"])
-
-    spec.add_dependency(*["webrick", "~> 1.9", ">= 1.9.1"])
-
-    spec.add_dependency(*["ak47", "~> 0.2.5"])
+  
 
   spec.extensions.push(*[])
 
