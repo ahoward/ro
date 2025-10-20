@@ -5,7 +5,8 @@ module Ro
     # v
     def cast(which, arg, *args)
       which = which.to_s
-      values = [arg, *args].join(',').scan(/[^,\s]+/)
+      # Split on commas only, not whitespace, to preserve datetime strings
+      values = [arg, *args].flat_map { |v| v.to_s.split(',') }.map(&:strip).reject(&:empty?)
 
       list_of = which.match(/^list_of_(.+)$/)
       which = list_of[1] if list_of
