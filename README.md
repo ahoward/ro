@@ -36,7 +36,7 @@ for a real site.
 
 ```sh
 
-  drawohara@drawohara.dev:ro[main] #=> tree public/ro/posts/almost-died-in-an-ice-cave/
+  drawohara@drawohara.dev:ro[main] #=> tree public/ro/posts/
   public/ro/posts/
   ├── almost-died-in-an-ice-cave.yml    # ← metadata file at collection level
   └── almost-died-in-an-ice-cave/       # ← node directory
