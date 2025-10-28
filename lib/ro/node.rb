@@ -85,19 +85,26 @@ module Ro
 
     # T026: Modified to load from external metadata_file (new structure)
     def _load_base_attributes
+      # Start with collection-level metadata (new structure) if it exists
+      base_attrs = Map.new
+
       if @metadata_file && @metadata_file.exist?
         # New structure: load from explicit metadata file
         attrs = _render(@metadata_file)
-        update_attributes!(attrs, file: @metadata_file)
-      else
-        # Old structure: search for attributes.yml in node directory
-        glob = "attributes.{yml,yaml,json}"
-
-        @path.glob(glob) do |file|
-          attrs = _render(file)
-          update_attributes!(attrs, file:)
-        end
+        base_attrs = Map.for(attrs)
       end
+
+      # Then merge in nested attributes.yml (old structure) if it exists
+      # "Deeper more specific wins" - nested attributes override collection-level
+      glob = "attributes.{yml,yaml,json}"
+      @path.glob(glob) do |file|
+        nested_attrs = _render(file)
+        # Use Map's smart merge: base.apply(override) means override wins
+        base_attrs = base_attrs.apply(Map.for(nested_attrs))
+      end
+
+      # Update with the merged result
+      update_attributes!(base_attrs.to_hash, file: @metadata_file || @path) if base_attrs.any?
     end
 
     def _load_asset_attributes
