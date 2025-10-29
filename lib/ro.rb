@@ -75,6 +75,7 @@ module Ro
         core_ext/map.rb
         config_loader.rb
         config_validator.rb
+        config_dsl.rb
         config_hierarchy.rb
         root.rb
         collection.rb

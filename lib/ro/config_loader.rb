@@ -108,12 +108,22 @@ module Ro
       # Load Ruby DSL configuration file
       #
       def load_ruby(file_path)
-        # Ruby DSL support will be implemented in Phase 6 (US4)
-        # For now, raise an error indicating it's not yet supported
-        raise ConfigEvaluationError.new(
-          "Ruby DSL (.ro.rb) support not yet implemented",
+        ConfigDSL.evaluate(file_path)
+      rescue Errno::EACCES => e
+        raise ConfigPermissionError.new(
+          "Cannot read config file (permission denied)",
           file_path: file_path.to_s,
-          suggestion: "Use .ro.yml format for now, or wait for P4 implementation"
+          original_error: e,
+          suggestion: "Run: chmod +r #{file_path}"
+        )
+      rescue ConfigError => e
+        # Re-raise config errors (already properly formatted)
+        raise e
+      rescue => e
+        raise ConfigError.new(
+          "Failed to load Ruby config file",
+          file_path: file_path.to_s,
+          original_error: e
         )
       end
 
