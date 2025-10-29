@@ -1,0 +1,20 @@
+# Example Ro Configuration File (.ro.yml)
+#
+# Place this file at the root of your Ro directory to configure behavior.
+# You can also place config files at collection or node level to override.
+#
+# Precedence: node > collection > root > defaults
+
+# Metadata structure preference
+# - 'new': Use new structure (posts/my-post.yml)
+# - 'old': Use old structure (posts/my-post/attributes.yml)
+# - 'dual': Support both (new preferred)
+structure: dual
+
+# Enable attribute merging when both metadata files exist
+# When true, merges posts/my-post.yml + posts/my-post/attributes.yml
+enable_merge: true
+
+# Custom configuration keys (add your own)
+# These are preserved and accessible via root.config[:key]
+# my_custom_setting: value
