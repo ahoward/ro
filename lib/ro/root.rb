@@ -2,13 +2,24 @@ module Ro
   class Root < Path
     @@warned_paths = {}
 
+    attr_reader :hierarchy_config
+
     def identifier
       self
     end
 
     def initialize(*)
       super
+      load_config!
       check_for_unmigrated_structure!
+    end
+
+    # Get effective configuration for this root
+    #
+    # @return [Map] Effective configuration
+    #
+    def config
+      @config ||= @hierarchy_config&.resolve || ConfigValidator.defaults
     end
 
     def collections(&block)
@@ -142,6 +153,14 @@ module Ro
       $stderr.puts "Or see MIGRATION.md for details."
       $stderr.puts "=" * 70
       $stderr.puts ""
+    end
+
+    def load_config!
+      @hierarchy_config = ConfigHierarchy.new(root_path: self.to_s)
+    rescue ConfigError => e
+      # Log config errors but don't fail initialization
+      $stderr.puts "Warning: Config error in #{self}: #{e.message}" if Ro.config.debug
+      @hierarchy_config = nil
     end
   end
 end

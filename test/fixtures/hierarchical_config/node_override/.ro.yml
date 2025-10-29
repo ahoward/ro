@@ -1,0 +1,3 @@
+# Root-level config
+structure: new
+enable_merge: true

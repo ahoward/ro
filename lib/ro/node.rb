@@ -59,6 +59,28 @@ module Ro
       identifier
     end
 
+    # Get effective configuration for this node
+    #
+    # Merges node-level config with collection and root configs
+    #
+    # @return [Map] Effective configuration
+    #
+    def config
+      @config ||= begin
+        # Node config path is the node directory (not the metadata file location)
+        # For new structure: posts/my-post/ (sibling to posts/my-post.yml)
+        # For old structure: posts/my-post/ (contains attributes.yml)
+        node_config_path = @path
+
+        hierarchy = ConfigHierarchy.new(
+          root_path: @root.to_s,
+          collection_path: @path.parent.to_s,
+          node_path: node_config_path.to_s
+        )
+        hierarchy.resolve
+      end
+    end
+
     def collection
       @collection || @root.collection_for(type)
     end
