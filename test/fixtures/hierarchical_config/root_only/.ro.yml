@@ -1,0 +1,4 @@
+# Root-level configuration fixture
+structure: new
+enable_merge: true
+custom_setting: root_value

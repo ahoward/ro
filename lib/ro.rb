@@ -72,6 +72,10 @@ module Ro
         template.rb
         methods.rb
         config.rb
+        core_ext/map.rb
+        config_loader.rb
+        config_validator.rb
+        config_hierarchy.rb
         root.rb
         collection.rb
         collection/list.rb

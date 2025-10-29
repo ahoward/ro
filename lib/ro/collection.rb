@@ -30,6 +30,22 @@ module Ro
       identifier
     end
 
+    # Get effective configuration for this collection
+    #
+    # Merges collection-level config with root config
+    #
+    # @return [Map] Effective configuration
+    #
+    def config
+      @config ||= begin
+        hierarchy = ConfigHierarchy.new(
+          root_path: @root.to_s,
+          collection_path: @path.to_s
+        )
+        hierarchy.resolve
+      end
+    end
+
     def node_for(path)
       Node.new(path)
     end

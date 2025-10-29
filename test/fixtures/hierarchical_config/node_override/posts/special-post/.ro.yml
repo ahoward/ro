@@ -1,0 +1,3 @@
+# Node-level override
+merge_attributes: false
+custom_node_setting: node_value

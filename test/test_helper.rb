@@ -143,7 +143,12 @@ class RoTestCase
     end
   end
 
+  def skip(message = "Test skipped")
+    raise SkipError, message
+  end
+
   class AssertionError < StandardError; end
+  class SkipError < StandardError; end
 end
 
 puts "Test helper loaded successfully"
